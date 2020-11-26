@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -16,3 +17,24 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+$router->get('/config', [
+    'as' => 'config',
+    'uses' => 'ConfigController@getConfig'
+]);
+
+$router->get('/cv', [
+    'as' => 'cv',
+    'uses' => 'PageController@getCv'
+]);
+
+$router->get('/projects', [
+    'as' => 'projects',
+    'uses' => 'ProjectController@getProjects'
+]);
+
+$router->get('/posts', [
+    'as' => 'posts',
+    'uses' => 'PostController@getPosts'
+]);

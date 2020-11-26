@@ -20,6 +20,7 @@ class CreatePostTable extends Migration
             $table->string(Post::TITLE);
             $table->string(Post::SUB_TITLE);
             $table->text(Post::TEXT);
+            $table->date(Post::DATE);
             $table->boolean(Post::STATUS);
             $table->json(Post::REFERENCES);
             $table->string(Post::IMAGE);

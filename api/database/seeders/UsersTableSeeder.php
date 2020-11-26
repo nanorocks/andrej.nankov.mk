@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table(User::TABLE)->insert([
-            User::EMAIL => 'andrejnankov@gmail.com',
+            User::EMAIL => env('DEFAULT_USER_EMAIL'),
             User::NAME => 'Andrej Nankov',
             User::INTRO => 'Hello, and welcome to my personal website. My name is Andrej Nankov but I introduce myself as nanorocks. I use this nick as better introduction to myself on the internet. This nick is tide connect to my social life and my field of work.
                             On this site you can find content most about my work as a software engineer, experience in various fields of IT, open-source, solved problems, how to grow as an engineer and blog posts related to contend that is interesting to read and know.
