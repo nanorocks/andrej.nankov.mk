@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 
@@ -14,27 +16,41 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+Route::get('/', function () use ($router) {
     return $router->app->version();
 });
 
 
-$router->get('/config', [
+Route::get('/swagger', function () use ($router) {
+    return redirect('/api/documentation');
+});
+
+Route::post('/login', [
+    'as' => 'login',
+    'uses' => 'AdminSide\AuthController@login'
+]);
+
+
+Route::group(['middleware' => ['jwt']], function () {
+
+    Route::get('/cv', [
+        'as' => 'cv',
+        'uses' => 'ClientSide\PageController@getCv'
+    ]);
+
+});
+
+Route::get('/config', [
     'as' => 'config',
-    'uses' => 'ConfigController@getConfig'
+    'uses' => 'ClientSide\ConfigController@getConfig'
 ]);
 
-$router->get('/cv', [
-    'as' => 'cv',
-    'uses' => 'PageController@getCv'
-]);
-
-$router->get('/projects', [
+Route::get('/projects', [
     'as' => 'projects',
-    'uses' => 'ProjectController@getProjects'
+    'uses' => 'ClientSide\ProjectController@getProjects'
 ]);
 
-$router->get('/posts', [
+Route::get('/posts', [
     'as' => 'posts',
-    'uses' => 'PostController@getPosts'
+    'uses' => 'ClientSide\PostController@getPosts'
 ]);
