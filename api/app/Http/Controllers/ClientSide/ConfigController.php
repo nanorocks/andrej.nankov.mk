@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ClientSide;
 
-use App\Models\Config;
 use App\Models\Post;
+use App\Models\Config;
+use App\Http\Controllers\Controller;
 
 class ConfigController extends Controller
 {

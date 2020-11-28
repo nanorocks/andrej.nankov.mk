@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ClientSide;
 
 use App\Models\User;
 use App\Models\Project;
+use App\Http\Controllers\Controller;
 
 class ProjectController extends Controller
 {
