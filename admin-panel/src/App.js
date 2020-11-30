@@ -46,6 +46,9 @@ function App() {
                 </Link>
               </li>
             </ul>
+            <ul className="navbar-nav ml-auto">
+              <button className="btn btn-success btn-sm my-2 my-sm-0" type="submit"><strong>View Blog</strong></button>
+            </ul>
           </div>
         </nav>
         <div className="pt-5">
