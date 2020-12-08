@@ -4,7 +4,7 @@ namespace App\Http\Controllers\AdminSide;
 
 use App\Models\User;
 use ReallySimpleJWT\Token;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,7 +61,7 @@ class AuthController
      *   @OA\Response(response=500, description="Internal Server error")
      * )
      */
-    public function login(LoginRequest $request)
+    public function login(LoginUserRequest $request)
     {
         $email = $request->getParams()->get('email');
         $password = $request->getParams()->get('password');

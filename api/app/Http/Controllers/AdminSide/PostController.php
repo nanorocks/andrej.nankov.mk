@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ClientSide;
+namespace App\Http\Controllers\AdminSide;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -37,8 +37,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        return Post::destroy($id);
     }
 }

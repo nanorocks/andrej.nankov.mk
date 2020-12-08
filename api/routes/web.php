@@ -36,6 +36,24 @@ Route::group(['middleware' => ['jwt']], function () {
 
 });
 
+
+Route::delete('/projects/{id}', [
+    'as' => 'projects.destroy',
+    'uses' => 'AdminSide\ProjectController@destroy'
+]);
+
+Route::delete('/post/{id}', [
+    'as' => 'post.destroy',
+    'uses' => 'AdminSide\ProjectController@destroy'
+]);
+
+Route::delete('/config/{id}', [
+    'as' => 'config.destroy',
+    'uses' => 'AdminSide\ConfigController@destroy'
+]);
+
+
+
 Route::get('/cv', [
     'as' => 'cv',
     'uses' => 'ClientSide\PageController@index'

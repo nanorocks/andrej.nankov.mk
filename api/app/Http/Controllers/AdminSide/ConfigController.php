@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ClientSide;
+namespace App\Http\Controllers\AdminSide;
 
 use App\Models\Post;
 use App\Models\Config;
@@ -39,8 +39,8 @@ class ConfigController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        return Config::destroy($id);
     }
 }

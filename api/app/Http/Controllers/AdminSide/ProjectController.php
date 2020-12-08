@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ClientSide;
+namespace App\Http\Controllers\AdminSide;
 
 use App\Models\User;
 use App\Models\Project;
@@ -18,7 +18,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -28,7 +28,7 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         //
     }
@@ -39,8 +39,8 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        return Project::destroy($id);
     }
 }
