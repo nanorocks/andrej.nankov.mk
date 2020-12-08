@@ -14,7 +14,7 @@ class ConfigController extends Controller
      *
      * @return void
      */
-    public function getConfig()
+    public function index()
     {
         return Config::all(Config::PAGE_TITLE, Config::PAGE_DESCRIPTION);
     }

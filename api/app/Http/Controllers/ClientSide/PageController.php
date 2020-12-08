@@ -9,12 +9,16 @@ class PageController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/",
+     *     path="/cv",
      *     description="Get CV",
-     *     @OA\Response(response="default", description="Welcome page")
+     *     @OA\Contact(
+     *          email="andrejnankov@gmail.com",
+     *          name="Andrej Nankov"
+     *     ),
+     *     @OA\Response(response="200", description="Get information from my personal cv")
      * )
      */
-    public function getCv()
+    public function index()
     {
         return User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->get();
     }

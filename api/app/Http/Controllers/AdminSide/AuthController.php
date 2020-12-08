@@ -3,43 +3,81 @@
 namespace App\Http\Controllers\AdminSide;
 
 use App\Models\User;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\Request;
+use ReallySimpleJWT\Token;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\UnauthorizedException;
-use ReallySimpleJWT\Token;
 
-class AuthController{
+class AuthController
+{
 
     /**
-     * login
-     *
-     * @param  mixed $request
-     * @return void
+     * @OA\Post(path="/login",
+     *   tags={"Auth"},
+     *   summary="Login user and use your JWT",
+     *   description="",
+     *   operationId="loginUser",
+     *   @OA\Parameter(
+     *     name="email",
+     *     required=true,
+     *     in="query",
+     *     description="The email for login",
+     *     @OA\Schema(
+     *         type="string"
+     *     )
+     *   ),
+     *   @OA\Parameter(
+     *     name="password",
+     *     required=true,
+     *     in="query",
+     *     @OA\Schema(
+     *         type="string",
+     *     ),
+     *     description="The password for login in clear text",
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="Get JWT",
+     *     @OA\Schema(type="string"),
+     *     @OA\Header(
+     *       header="X-Rate-Limit",
+     *       @OA\Schema(
+     *           type="integer",
+     *           format="int32"
+     *       ),
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @OA\Header(
+     *       header="X-Expires-After",
+     *       @OA\Schema(
+     *          type="string",
+     *          format="date-time",
+     *       ),
+     *       description="date in UTC when token expires"
+     *     )
+     *   ),
+     *   @OA\Response(response=422, description="Unprocessable Entity"),
+     *   @OA\Response(response=401, description="Invalid email or password."),
+     *   @OA\Response(response=500, description="Internal Server error")
+     * )
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validate = Validator::make($request->all(),[
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $email = $request->getParams()->get('email');
+        $password = $request->getParams()->get('password');
 
-        if($validate->fails()){
-            return $validate->getMessageBag();
+        $user = User::where('email', $email)->first();
+
+        if (empty($user) || !Hash::check($password, $user->password)) {
+            return response()->json(['message' => 'Invalid email or password.'], 401);
         }
 
-        $user = User::where('email', $request->email)->first();
-
-        if(!Hash::check($request->password, $user->password)){
-            return response('Invalid email or password.', 401);
-        }
-
-        $userId = $user->id;
-        $secret = env('JWT_SECRET');
-        $time = time() + 3600;
-        $issuer = 'localhost';
-        $token = Token::create($userId, $secret, $time, $issuer);
+        $token = Token::create(
+            $user->id,
+            env('JWT_SECRET'),
+            $time = time() + 3600,
+            env('APP_URL')
+        );
 
         return response()->json([
             'access_token' => $token,
@@ -47,6 +85,4 @@ class AuthController{
             'expires_in' => $time
         ]);
     }
-
 }
-

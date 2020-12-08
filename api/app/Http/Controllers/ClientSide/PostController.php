@@ -7,8 +7,25 @@ use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
-    public function getPosts()
+    /**
+     *
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         return Post::orderBy(Post::DATE, 'desc')->paginate(4);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(int $id)
+    {
+        return Post::find($id);
     }
 }
