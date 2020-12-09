@@ -30,9 +30,45 @@ Route::post('/login', [
 ]);
 
 
+// Admin
 Route::group(['middleware' => ['jwt']], function () {
 
 
+
+});
+
+// Client
+Route::group(['middleware' => ['hmac', 'api-key']], function () {
+
+    Route::get('/cv', [
+        'as' => 'cv',
+        'uses' => 'ClientSide\PageController@index'
+    ]);
+
+    Route::get('/config', [
+        'as' => 'config',
+        'uses' => 'ClientSide\ConfigController@index'
+    ]);
+
+    Route::get('/projects', [
+        'as' => 'projects',
+        'uses' => 'ClientSide\ProjectController@index'
+    ]);
+
+    Route::get('/projects/{id}', [
+        'as' => 'projects',
+        'uses' => 'ClientSide\ProjectController@show'
+    ]);
+
+    Route::get('/posts', [
+        'as' => 'posts',
+        'uses' => 'ClientSide\PostController@index'
+    ]);
+
+    Route::get('/posts/{id}', [
+        'as' => 'posts',
+        'uses' => 'ClientSide\PostController@show'
+    ]);
 
 });
 
@@ -54,32 +90,3 @@ Route::delete('/config/{id}', [
 
 
 
-Route::get('/cv', [
-    'as' => 'cv',
-    'uses' => 'ClientSide\PageController@index'
-]);
-
-Route::get('/config', [
-    'as' => 'config',
-    'uses' => 'ClientSide\ConfigController@index'
-]);
-
-Route::get('/projects', [
-    'as' => 'projects',
-    'uses' => 'ClientSide\ProjectController@index'
-]);
-
-Route::get('/projects/{id}', [
-    'as' => 'projects',
-    'uses' => 'ClientSide\ProjectController@show'
-]);
-
-Route::get('/posts', [
-    'as' => 'posts',
-    'uses' => 'ClientSide\PostController@index'
-]);
-
-Route::get('/posts/{id}', [
-    'as' => 'posts',
-    'uses' => 'ClientSide\PostController@show'
-]);

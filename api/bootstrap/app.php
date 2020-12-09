@@ -79,7 +79,9 @@ $app->configure('swagger-lume');
 
 $app->routeMiddleware([
     // 'auth' => App\Http\Middleware\Authenticate::class,
-    'jwt' => App\Http\Middleware\JwtMiddleware::class
+    'jwt' => App\Http\Middleware\JwtMiddleware::class,
+    'hmac' => App\Http\Middleware\HmacSignature::class,
+    'api-key' => App\Http\Middleware\ApiKeyMiddleware::class,
 ]);
 
 /*
