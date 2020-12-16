@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\GenerateUniqueId;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -18,6 +19,7 @@ class PostsTableSeeder extends Seeder
     {
         DB::table(Post::TABLE)->insert([
             Post::TITLE => 'Post title 1',
+            Post::UNIQUE_ID => GenerateUniqueId::uuid(),
             Post::SUB_TITLE => 'Post sub title 1',
             Post::TEXT => "This is my post text 1",
             Post::DATE => "2020.01.03",
@@ -31,6 +33,7 @@ class PostsTableSeeder extends Seeder
 
         DB::table(Post::TABLE)->insert([
             Post::TITLE => 'Post title 2',
+            Post::UNIQUE_ID => GenerateUniqueId::uuid(),
             Post::SUB_TITLE => 'Post sub title 2',
             Post::TEXT => "This is my post text 2",
             Post::DATE => "2020.01.03",

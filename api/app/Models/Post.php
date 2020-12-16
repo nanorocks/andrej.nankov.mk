@@ -11,6 +11,8 @@ class Post extends Model
 
     public const TITLE = 'title';
 
+    public const UNIQUE_ID = 'unique_id';
+
     public const SUB_TITLE = 'subTitle';
 
     public const TEXT = 'text';
@@ -36,6 +38,7 @@ class Post extends Model
      */
     protected $fillable = [
         self::TITLE,
+        self::UNIQUE_ID,
         self::SUB_TITLE,
         self::TEXT,
         self::DATE,
