@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model{
@@ -37,4 +38,10 @@ class Project extends Model{
         self::IMAGE,
         self::USER_ID
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

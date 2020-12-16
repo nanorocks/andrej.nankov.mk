@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Config extends Model{
@@ -22,4 +23,10 @@ class Config extends Model{
         self::PAGE_TITLE,
         self::PAGE_DESCRIPTION,
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
