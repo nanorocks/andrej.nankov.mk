@@ -108,19 +108,48 @@
                     "422": {
                         "description": "Unprocessable Entity"
                     },
-                    "401": {
-                        "description": "Invalid token"
-                    },
                     "500": {
-                        "description": "Internal Server error"
+                        "description": "Internal Server error| Invalid token signature"
                     }
                 }
             }
         },
         "/cv": {
             "get": {
+                "tags": [
+                    "ClientSide"
+                ],
                 "description": "Get CV",
-                "operationId": "App\\Http\\Controllers\\ClientSide\\PageController::index",
+                "operationId": "loginUser",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "HMAC_SHARED_API_KEY",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "in": "query",
+                        "description": "BASE_64_ENCODE_DATA",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "signature",
+                        "in": "query",
+                        "description": "BASE_64_ENCODE_SIGNATURE",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Get information from my personal cv"
