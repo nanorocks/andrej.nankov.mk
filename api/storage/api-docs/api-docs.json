@@ -66,10 +66,61 @@
                 }
             }
         },
+        "/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh JWT",
+                "description": "",
+                "operationId": "RefreshJWT",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "expired JWT",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Refresh JWT",
+                        "headers": {
+                            "X-Rate-Limit": {
+                                "description": "calls per hour allowed by the user",
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            },
+                            "X-Expires-After": {
+                                "description": "date in UTC when token expires",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "401": {
+                        "description": "Invalid token"
+                    },
+                    "500": {
+                        "description": "Internal Server error"
+                    }
+                }
+            }
+        },
         "/cv": {
             "get": {
                 "description": "Get CV",
-                "operationId": "App\\Http\\Controllers\\ClientSide\\PageController::getCv",
+                "operationId": "App\\Http\\Controllers\\ClientSide\\PageController::index",
                 "responses": {
                     "200": {
                         "description": "Get information from my personal cv"

@@ -29,6 +29,11 @@ Route::post('/login', [
     'uses' => 'AdminSide\AuthController@login'
 ]);
 
+Route::post('/refresh', [
+    'as' => 'refresh',
+    'uses' => 'AdminSide\AuthController@refresh'
+]);
+
 
 // Admin
 Route::group(['middleware' => ['jwt']], function () {
