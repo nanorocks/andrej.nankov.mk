@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Project\IndexResource;
+use App\Http\Resources\Project\ShowResource;
 
 class ProjectController extends Controller
 {
@@ -15,9 +17,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(int $limit=7)
     {
-        return Project::orderBy(Project::DATE, 'desc')->paginate(7);
+        return new IndexResource(Project::orderBy(Project::DATE, 'desc')->paginate($limit));
     }
 
     /**
@@ -28,6 +30,6 @@ class ProjectController extends Controller
      */
     public function show(int $id)
     {
-        return Project::find($id);
+        return new ShowResource(Project::find($id));
     }
 }

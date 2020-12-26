@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ClientSide;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\User\IndexResource;
 
 class PageController extends Controller
 {
@@ -45,6 +46,6 @@ class PageController extends Controller
      */
     public function index()
     {
-        return User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->get();
+        return new IndexResource(User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->get());
     }
 }
