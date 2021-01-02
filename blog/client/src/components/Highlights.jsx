@@ -1,6 +1,6 @@
 import { React, Component } from "react";
 
-class Experience extends Component {
+class Highlights extends Component {
   state = {};
   constructor(props) {
     super(props);
@@ -8,7 +8,7 @@ class Experience extends Component {
 
   render() {
     return (
-      <section class="resume-section" id="experience">
+      <section class="resume-section" id="highlights">
         <div class="resume-section-content">
           <h2 class="mb-5">Experience</h2>
           <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -81,4 +81,4 @@ class Experience extends Component {
   }
 }
 
-export default Experience;
+export default Highlights;

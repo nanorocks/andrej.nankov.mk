@@ -1,6 +1,6 @@
 import { React, Component } from "react";
 
-class Interests extends Component {
+class Posts extends Component {
   state = {};
   constructor(props) {
     super(props);
@@ -8,7 +8,7 @@ class Interests extends Component {
 
   render() {
     return (
-      <section class="resume-section" id="interests">
+      <section class="resume-section" id="latest-posts">
         <div class="resume-section-content">
           <h2 class="mb-5">Interests</h2>
           <p>
@@ -29,4 +29,4 @@ class Interests extends Component {
   }
 }
 
-export default Interests;
+export default Posts;
