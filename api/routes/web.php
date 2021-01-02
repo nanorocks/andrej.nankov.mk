@@ -35,34 +35,53 @@ Route::post('/refresh', [
 Route::group(['middleware' => ['jwt']], function () {
 
     Route::get('/cv', [
-        'as' => 'cv',
+        'as' => 'cv.index',
         'uses' => 'ClientSide\PageController@index'
     ]);
 
     Route::get('/config', [
-        'as' => 'config',
+        'as' => 'config.index',
         'uses' => 'ClientSide\ConfigController@index'
     ]);
 
     Route::get('/projects', [
-        'as' => 'projects',
+        'as' => 'projects.index',
         'uses' => 'ClientSide\ProjectController@index'
     ]);
 
     Route::get('/projects/{id}', [
-        'as' => 'projects',
+        'as' => 'projects.show',
         'uses' => 'ClientSide\ProjectController@show'
     ]);
 
     Route::get('/posts', [
-        'as' => 'posts',
+        'as' => 'posts.index',
         'uses' => 'ClientSide\PostController@index'
     ]);
 
     Route::get('/posts/{id}', [
-        'as' => 'posts',
+        'as' => 'posts.show',
         'uses' => 'ClientSide\PostController@show'
     ]);
+
+
+
+    Route::delete('/projects/{id}', [
+        'as' => 'projects.destroy',
+        'uses' => 'AdminSide\ProjectController@destroy'
+    ]);
+
+    Route::delete('/post/{id}', [
+        'as' => 'post.destroy',
+        'uses' => 'AdminSide\ProjectController@destroy'
+    ]);
+
+    Route::delete('/config/{id}', [
+        'as' => 'config.destroy',
+        'uses' => 'AdminSide\ConfigController@destroy'
+    ]);
+
+
 
 });
 
@@ -70,52 +89,41 @@ Route::group(['middleware' => ['jwt']], function () {
 Route::group(['middleware' => ['hmac', 'api-key']], function () {
 
     Route::get('/cv', [
-        'as' => 'cv',
+        'as' => 'cv.index',
         'uses' => 'ClientSide\PageController@index'
     ]);
 
     Route::get('/config', [
-        'as' => 'config',
+        'as' => 'config.index',
         'uses' => 'ClientSide\ConfigController@index'
     ]);
 
     Route::get('/projects', [
-        'as' => 'projects',
+        'as' => 'projects.index',
         'uses' => 'ClientSide\ProjectController@index'
     ]);
 
     Route::get('/projects/{id}', [
-        'as' => 'projects',
+        'as' => 'projects.show',
         'uses' => 'ClientSide\ProjectController@show'
     ]);
 
     Route::get('/posts', [
-        'as' => 'posts',
+        'as' => 'posts.index',
         'uses' => 'ClientSide\PostController@index'
     ]);
 
     Route::get('/posts/{id}', [
-        'as' => 'posts',
+        'as' => 'posts.show',
         'uses' => 'ClientSide\PostController@show'
     ]);
 
+    Route::get('/posts/uuid/{id}', [
+        'as' => 'posts.showByUuid',
+        'uses' => 'ClientSide\PostController@showByUuid'
+    ]);
+
 });
-
-
-Route::delete('/projects/{id}', [
-    'as' => 'projects.destroy',
-    'uses' => 'AdminSide\ProjectController@destroy'
-]);
-
-Route::delete('/post/{id}', [
-    'as' => 'post.destroy',
-    'uses' => 'AdminSide\ProjectController@destroy'
-]);
-
-Route::delete('/config/{id}', [
-    'as' => 'config.destroy',
-    'uses' => 'AdminSide\ConfigController@destroy'
-]);
 
 
 

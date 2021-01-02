@@ -32,8 +32,19 @@ class UsersTableSeeder extends Seeder
             User::SOC_MEDIA => json_encode([
                 "facebook" => "https://www.facebook.com/nanorocks",
                 "github"   => "https://github.com/nanorocks",
-                "linkedIn" => "https://www.linkedin.com/in/nanorocks" ]),
-            User::PASSWORD => Hash::make('secret')
+                "linkedIn" => "https://www.linkedin.com/in/nanorocks"
+            ], true),
+            User::PASSWORD => Hash::make('secret'),
+            User::HIGHLIGHTS => json_encode([
+                "2018" => [
+                    "By a new car",
+                    "Get a new computer"
+                ],
+                "2020" => [
+                    "Begin to work in interworks",
+                    "Bachelor Degree degree"
+                ]
+            ])
         ]);
     }
 }

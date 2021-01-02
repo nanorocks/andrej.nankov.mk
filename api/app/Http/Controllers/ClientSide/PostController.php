@@ -30,4 +30,10 @@ class PostController extends Controller
     {
         return new ShowResource(Post::find($id));
     }
+
+
+    public function showByUuid(string $id)
+    {
+        return new ShowResource(Post::where(Post::UNIQUE_ID, $id)->first());
+    }
 }

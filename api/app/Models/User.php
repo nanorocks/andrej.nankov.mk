@@ -41,6 +41,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public const PASSWORD = 'password';
 
+    public const HIGHLIGHTS = 'highlights';
+
 
     /**
      * The attributes that are mass assignable.
