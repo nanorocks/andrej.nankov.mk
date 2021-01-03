@@ -1,41 +1,76 @@
 import { React, Component } from "react";
 
 class Welcome extends Component {
-  state = {};
+ 
   constructor(props) {
     super(props);
+    this.state = {
+      quotes: () => {
+        let quotesList = '';
+        for (const [key, value] of Object.entries(this.props.quotes)) {
+          quotesList += `<strong>${key}: ${value}</strong>`
+        }
+        return quotesList;
+      }
+      
+    }
   }
 
   render() {
     return (
-      <section class="resume-section" id="welcome">
-        <div class="resume-section-content">
-          <h1 class="mb-0">
-            Andrej
-            <span class="text-primary">Nankov</span>
+      <section className="resume-section" id="welcome">
+        <div className="resume-section-content">
+          <h1 className="mb-0">
+            {this.props.name.split(" ")[0]}
+            <span className="text-primary">
+              {" "}
+              {this.props.name.split(" ")[1]}
+            </span>
           </h1>
-          <div class="subheading mb-5">
-            3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 ·
-            <a href="mailto:name@email.com">name@email.com</a>
+          <div className="subheading mb-5">
+            {this.props.address} · {this.props.phone} ·
+            <a href={`mailto:` + this.props.email}>{this.props.email}</a>
           </div>
-          <p class="lead mb-5">
-            I am experienced in leveraging agile frameworks to provide a robust
-            synopsis for high level overviews. Iterative approaches to corporate
-            strategy foster collaborative thinking to further the overall value
-            proposition.
-          </p>
-          <div class="social-icons">
-            <a class="social-icon" href="#">
-              <i class="fab fa-linkedin-in"></i>
+          <p
+            className="lead mb-3"
+            dangerouslySetInnerHTML={{ __html: this.props.intro }}
+          ></p>
+          <p
+            className="lead mb-5 font-weight-strong"
+            dangerouslySetInnerHTML={{ __html: this.state.quotes() }}
+          ></p>
+          <div className="social-icons">
+            <a
+              className="social-icon"
+              href={this.props.socMedia.linkedIn}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i className="fab fa-linkedin-in"></i>
             </a>
-            <a class="social-icon" href="#">
-              <i class="fab fa-github"></i>
+            <a
+              className="social-icon"
+              href={this.props.socMedia.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i className="fab fa-github"></i>
             </a>
-            <a class="social-icon" href="#">
-              <i class="fab fa-twitter"></i>
+            <a
+              className="social-icon"
+              href={this.props.socMedia.facebook}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i className="fab fa-facebook-f"></i>
             </a>
-            <a class="social-icon" href="#">
-              <i class="fab fa-facebook-f"></i>
+            <a
+              className="social-icon"
+              href={this.props.socMedia.facebook}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i className="fab fa-instagram"></i>
             </a>
           </div>
         </div>
