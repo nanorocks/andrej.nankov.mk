@@ -1,100 +1,51 @@
 import { React, Component } from "react";
 
 class Summary extends Component {
-  state = {};
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <section className="resume-section" id="summary">
         <div className="resume-section-content">
           <h2 className="mb-5">Summary</h2>
-          <p>
-            Apart from being a web developer, I enjoy most of my time being
-            outdoors. In the winter, I am an avid skier and novice ice climber.
-            During the warmer months here in Colorado, I enjoy mountain biking,
-            free climbing, and kayaking.
-          </p>
-          <p className="mb-4">
-            When forced indoors, I follow a number of sci-fi and fantasy genre
-            movies and television shows, I am an aspiring chef, and I spend a
-            large amount of my free time exploring the latest technology
-            advancements in the front-end web development world.
-          </p>
-          <p>
+          <div className="subheading mb-3">Education and Experience</div>
+          <p dangerouslySetInnerHTML={{ __html: this.props.summary }}></p>
+          <div className="subheading mb-3">Current area of work</div>
+          <p className="mb-3">{this.props.currentWork}</p>
+          <div>
             <div className="resume-section-content">
               <div className="subheading mb-3">
-                Programming Languages & Tools
+                Programming Languages / Tools / Frameworks
               </div>
               <ul className="list-inline dev-icons">
-                <li className="list-inline-item">
-                  <i className="fab fa-html5"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-css3-alt"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-js-square"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-angular"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-react"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-node-js"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-sass"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-node"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-wordpress"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-gulp"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-grunt"></i>
-                </li>
-                <li className="list-inline-item">
-                  <i className="fab fa-npm"></i>
-                </li>
+                {this.props.topProgrammingLanguages.split(";").map((pl, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="list-inline-item"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title={pl.replace("fab fa-", "").replace("fa fa-", "")}
+                      >
+                        <i className={pl}></i>
+                      </li>
+                    );
+                  })}
+                ...
               </ul>
-              <div className="subheading mb-3">Workflow</div>
+              <div className="subheading mb-3">Goals</div>
               <ul className="fa-ul mb-0">
-                <li>
-                  <span className="fa-li">
-                    <i className="fas fa-check"></i>
-                  </span>
-                  Mobile-First, Responsive Design
-                </li>
-                <li>
-                  <span className="fa-li">
-                    <i className="fas fa-check"></i>
-                  </span>
-                  Cross Browser Testing & Debugging
-                </li>
-                <li>
-                  <span className="fa-li">
-                    <i className="fas fa-check"></i>
-                  </span>
-                  Cross Functional Teams
-                </li>
-                <li>
-                  <span className="fa-li">
-                    <i className="fas fa-check"></i>
-                  </span>
-                  Agile Development & Scrum
-                </li>
+                {this.props.goals.split(";").map((goal, index) => {
+                  return (
+                    <li key={index}>
+                      <span className="fa-li">
+                        <i className="fas fa-check"></i>
+                      </span>
+                      {goal}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
-          </p>
+          </div>
         </div>
       </section>
     );

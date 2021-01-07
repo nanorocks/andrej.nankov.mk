@@ -40,38 +40,19 @@ class Welcome extends Component {
             dangerouslySetInnerHTML={{ __html: this.state.quotes() }}
           ></p>
           <div className="social-icons">
-            <a
-              className="social-icon"
-              href={this.props.socMedia.linkedIn}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="fab fa-linkedin-in"></i>
-            </a>
-            <a
-              className="social-icon"
-              href={this.props.socMedia.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="fab fa-github"></i>
-            </a>
-            <a
-              className="social-icon"
-              href={this.props.socMedia.facebook}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a
-              className="social-icon"
-              href={this.props.socMedia.facebook}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="fab fa-instagram"></i>
-            </a>
+            {this.props.socMediaKeys.map((soc, index) => {
+              return (
+                <a
+                  key={index}
+                  className="social-icon"
+                  href={this.props.socMediaValues[index]}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className={`fab fa-` + soc}></i>
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>
