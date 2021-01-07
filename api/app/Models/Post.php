@@ -9,6 +9,7 @@ class Post extends Model
 {
     public const TABLE = 'posts';
 
+    public const ID = 'id';
 
     public const TITLE = 'title';
 

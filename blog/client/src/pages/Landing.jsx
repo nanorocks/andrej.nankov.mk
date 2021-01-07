@@ -9,7 +9,6 @@ import {
 } from "./../components/_index";
 import { mapper } from "./../config/mapper";
 import { read } from "./../services/apiReader";
-import { Fade } from "react-awesome-reveal";
 import { withRouter } from "react-router-dom";
 
 class Landing extends Component {
@@ -56,8 +55,6 @@ class Landing extends Component {
     return (
       <div>
         <Navbar email={this.state.email} name={this.state.name} />
-
-        {/* <Fade delay={180}> */}
           <Welcome
             intro={this.state.intro}
             email={this.state.email}
@@ -84,7 +81,6 @@ class Landing extends Component {
             highlightsKeys={Object.keys(this.state.highlights)}
             highlightsValues={Object.values(this.state.highlights)}
           />
-        {/* </Fade> */}
       </div>
     );
   }

@@ -27,6 +27,8 @@ class CreateUserTable extends Migration
             $table->json(User::SOC_MEDIA);
             $table->string(User::PASSWORD);
             $table->json(User::HIGHLIGHTS)->nullable();
+            $table->string(User::ADDRESS);
+            $table->string(User::PHONE);
             $table->timestamps();
         });
     }

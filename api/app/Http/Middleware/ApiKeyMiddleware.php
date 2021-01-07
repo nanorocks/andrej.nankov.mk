@@ -26,6 +26,6 @@ class ApiKeyMiddleware
             'error' => 'Unauthorized',
             'message' => 'Invalid api key',
             'attributes' => ['error' => 'Invalid api key']
-        ]);
+        ], 401);
     }
 }

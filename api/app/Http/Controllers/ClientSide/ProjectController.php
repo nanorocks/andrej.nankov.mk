@@ -17,7 +17,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(int $limit=7)
+    public function index(int $limit=4)
     {
         return new IndexResource(Project::orderBy(Project::DATE, 'desc')->paginate($limit));
     }

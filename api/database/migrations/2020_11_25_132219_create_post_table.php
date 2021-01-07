@@ -19,13 +19,13 @@ class CreatePostTable extends Migration
             $table->id();
             $table->string(Post::UNIQUE_ID)->unique();
             $table->string(Post::TITLE);
-            $table->string(Post::SUB_TITLE);
+            $table->string(Post::SUB_TITLE)->nullable();
             $table->text(Post::TEXT);
             $table->date(Post::DATE);
             $table->boolean(Post::STATUS);
-            $table->json(Post::REFERENCES);
-            $table->string(Post::IMAGE);
-            $table->json(Post::META_BUDGES);
+            $table->text(Post::REFERENCES)->nullable();
+            $table->string(Post::IMAGE)->nullable();
+            $table->text(Post::META_BUDGES);
             $table->string(Post::CATEGORY);
             $table->unsignedBigInteger(Post::USER_ID);
             $table->foreign(Post::USER_ID)->references(User::ID)->on(User::TABLE);

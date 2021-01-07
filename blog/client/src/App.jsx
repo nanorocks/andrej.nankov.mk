@@ -2,7 +2,7 @@ import { Component, React } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Landing, SinglePost, ErrorPage } from "./pages/_index";
-// import "./services/googleAnalytics";
+import "./services/GoogleAnalytics";
 
 class App extends Component {
   render() {

@@ -43,6 +43,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public const HIGHLIGHTS = 'highlights';
 
+    public const ADDRESS = 'address';
+
+    public const PHONE = 'phone';
+
+
 
     /**
      * The attributes that are mass assignable.
@@ -70,9 +75,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         self::PASSWORD
     ];
 
-    public function posts()
+    public function post()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasOne(Post::class);
     }
 
     public function projects()

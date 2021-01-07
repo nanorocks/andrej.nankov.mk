@@ -21,7 +21,6 @@ class HmacSignature
         $signature = base64_decode($request->query('signature'));
         $data = base64_decode($request->query('data'));
         $hmacSignatureSecret = env('HMAC_SHARED_SECRET_KEY');
-
         if ($this->verifySignature($data, $signature, $hmacSignatureSecret) !== false) {
             return $next($request);
         }
@@ -31,7 +30,7 @@ class HmacSignature
             'error' => 'Unauthorized',
             'message' => 'Invalid Signature',
             'attributes' => ['error' => 'Invalid Signature']
-        ]);
+        ], 401);
     }
 
     private function verifySignature($data, $signature, $secret)

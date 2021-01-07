@@ -18,16 +18,16 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         DB::table(Post::TABLE)->insert([
-            Post::TITLE => 'Post title 1',
+            Post::TITLE => 'Welcome post',
             Post::UNIQUE_ID => GenerateUniqueId::uuid(),
-            Post::SUB_TITLE => 'Post sub title 1',
-            Post::TEXT => "This is my post text 1",
+            Post::SUB_TITLE => 'Just another regular template for welcome post.',
+            Post::TEXT => "This is my welcome post new content coming up in short time.",
             Post::DATE => "2020.01.03",
             Post::STATUS => true,
-            Post::REFERENCES => '{"1":"link1", "2":"link2"}',
-            Post::IMAGE => 'no-img',
-            Post::META_BUDGES => '{"budge-docker":"docker", "budge-php":"php"}',
-            Post::CATEGORY => 'category1',
+            Post::REFERENCES => 'link1;link2',
+            Post::IMAGE => 'https://secure.gravatar.com/avatar/78fcb9f09832d6d4053d415433f2ee43?s=150',
+            Post::META_BUDGES => 'docker;php',
+            Post::CATEGORY => 'web development',
             Post::USER_ID => User::all()->random()->id
         ]);
 
@@ -38,9 +38,8 @@ class PostsTableSeeder extends Seeder
             Post::TEXT => "This is my post text 2",
             Post::DATE => "2020.01.03",
             Post::STATUS => false,
-            Post::REFERENCES => '{"1":"link1", "2":"link2"}',
-            Post::IMAGE => 'no-img',
-            Post::META_BUDGES => '{"budge-rpm":"rpm", "budge-py":"py"}',
+            Post::REFERENCES => 'link1;link2',
+            Post::META_BUDGES => 'rpm;py',
             Post::CATEGORY => 'category2',
             Post::USER_ID => User::all()->random()->id
         ]);

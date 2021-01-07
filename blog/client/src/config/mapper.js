@@ -5,5 +5,5 @@ export const mapper = {
   showProject: "/projects/:id",
   displayPosts: "/posts",
   showPost: "/posts/:id",
-  showPostByUuid: "posts/uuid/:id",
+  showPostByUuid: "/posts/uuid/:id",
 };

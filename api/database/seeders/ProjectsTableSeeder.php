@@ -23,7 +23,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DATE => '25.11.2020',
             Project::STATUS => 'maintained',
             Project::LINK => 'https://github.com/nanorocks/blog-api',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -44,7 +43,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DATE => '01.10.2020',
             Project::STATUS => 'maintained',
             Project::LINK => 'https://github.com/nanorocks/smc',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -54,7 +52,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DATE => '12.01.2020',
             Project::STATUS => 'active',
             Project::LINK => 'https://github.com/nanorocks/console-keychain',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -63,8 +60,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "An api service that prepare data for exchange rates and VueJs and Angular SPA apps.",
             Project::DATE => '08.09.2020',
             Project::STATUS => 'maintained',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -73,8 +68,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "Web app and service for manage players, levels on android game. With external services integration. Developed with PHP/Slim/Custom Bootstrap/JavaScript.",
             Project::DATE => '29.12.2019',
             Project::STATUS => 'active',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -83,8 +76,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "Web app for short url's. Developed with PHP/JavaScript.",
             Project::DATE => '09.12.2019',
             Project::STATUS => 'active',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -93,8 +84,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "Web app for minify css & js. Developed with HTML/Material design/PHP.",
             Project::DATE => '01.12.2019',
             Project::STATUS => 'active',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -103,8 +92,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "It's an English dictionary where you can find description for your beloved word. Developed with flight php and bootstrap material.",
             Project::DATE => '31.08.2019',
             Project::STATUS => 'active',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -113,8 +100,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "Web app for listening music from YOUTUBE in forever loop. Developed with html/css/js.",
             Project::DATE => '31.07.2019',
             Project::STATUS => 'active',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
 
@@ -123,8 +108,6 @@ class ProjectsTableSeeder extends Seeder
             Project::DESCRIPTION => "System for management personal biography. Contains Web app, Api service, Frontend app and Wordpress. With focus on php-laravel and vue.js.",
             Project::DATE => '20.02.2019',
             Project::STATUS => 'active',
-            Project::LINK => 'no-link',
-            Project::IMAGE => 'no-img',
             Project::USER_ID => User::all()->random()->id
         ]);
     }

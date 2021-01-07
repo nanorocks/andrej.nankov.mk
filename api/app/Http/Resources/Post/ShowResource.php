@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Post;
 
+use App\Models\Post;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ShowResource extends JsonResource

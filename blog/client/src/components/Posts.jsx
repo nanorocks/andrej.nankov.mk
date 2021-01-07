@@ -64,8 +64,9 @@ class Posts extends Component {
         <div className="resume-section-content">
           <h2 className="mb-5">Latest Posts</h2>
           <ul className="fa-ul mb-0">
-            {this.state.posts.map((post, index) => {
-              return (
+            {this.state.posts.length === 0 ? 'No published posts yet.' :
+            this.state.posts.map((post, index) => {
+              return !post.status ? '' : (
                 <li key={index} className="mb-3">
                   <h5 className="fa-li">
                     <i className="fas fa-file text-warning"></i>
@@ -80,12 +81,13 @@ class Posts extends Component {
           <div className="d-flex mt-5">
             <div className="pr-2">
               <ul className="pagination">
-                {this.state.links.map((link, index) => {
+                {this.state.posts.length === 0 ? '' :
+                this.state.links.map((link, index) => {
                   return (
                     <li
                       key={index}
                       className={
-                        link.url == null
+                        link.url === null
                           ? `page-item disabled`
                           : link.active
                           ? `page-item active`
