@@ -11,8 +11,7 @@ class PageController extends Controller
     /**
      * @OA\Get(
      *     path="/cv",
-     *     description="Get CV",
-     *     operationId="loginUser",
+     *     operationId="pageUser",
      *     @OA\Parameter(
      *       name="key",
      *       required=false,

@@ -11,9 +11,39 @@ class ConfigController extends Controller
 {
 
     /**
-     * getConfigInfo
-     *
-     * @return void
+     * @OA\Get(
+     *     path="/config",
+     *     operationId="configUser",
+     *     @OA\Parameter(
+     *       name="key",
+     *       required=false,
+     *       in="query",
+     *       description="HMAC_SHARED_API_KEY",
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="data",
+     *       required=false,
+     *       in="query",
+     *       description="BASE_64_ENCODE_DATA",
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
+     *     @OA\Parameter(
+     *       name="signature",
+     *       required=false,
+     *       in="query",
+     *       description="BASE_64_ENCODE_SIGNATURE",
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
+     *     tags={"ClientSide"},
+     *     @OA\Response(response="200", description="Get information for config")
+     * )
      */
     public function index()
     {
