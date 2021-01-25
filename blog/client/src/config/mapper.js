@@ -1,6 +1,6 @@
 export const mapper = {
-  getCv: "/cv",
-  getConfig: "/config",
+  getCv: "/profile",
+  getConfig: "/configs",
   displayProjects: "/projects",
   showProject: "/projects/:id",
   displayPosts: "/posts",

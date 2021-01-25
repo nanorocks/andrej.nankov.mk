@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Config;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Config;
 
-class ConfigStoreRequest extends Controller
+class UpdateRequest extends Controller
 {
     public function __construct(Request $request)
     {

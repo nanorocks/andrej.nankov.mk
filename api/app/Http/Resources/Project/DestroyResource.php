@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Projects;
+namespace App\Http\Resources\Project;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -8,7 +8,7 @@ class DestroyResource extends JsonResource
 {
     public function toArray($request)
     {
-        if (is_null($this->resource)) {
+        if ($this->resource == 0) {
             return [
                 'code' => 404,
                 'data' => [],
@@ -18,7 +18,7 @@ class DestroyResource extends JsonResource
 
         return is_array($this->resource) ? $this->resource : [
             'code' => 200,
-            'data' => $this->resource->toArray(),
+            'data' => $this->resource,
             'message' => 'Successfully deleted project!'
         ];
     }

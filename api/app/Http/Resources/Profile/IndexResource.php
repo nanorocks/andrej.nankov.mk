@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\User;
+namespace App\Http\Resources\Profile;
 
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;

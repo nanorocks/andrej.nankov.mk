@@ -5,36 +5,33 @@ namespace App\Http\Controllers\AdminSide;
 use App\Models\User;
 use ReallySimpleJWT\Token;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\RefreshTokenRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RefreshTokenRequest;
 
 class AuthController
 {
 
     /**
-     * @OA\Post(path="/login",
-     *   tags={"Auth"},
+     * @OA\Post(path="/auth/login",
+     *   tags={"AdminSide Auth"},
      *   summary="Login user and use your JWT",
-     *   description="",
      *   operationId="loginUser",
-     *   @OA\Parameter(
-     *     name="email",
-     *     required=true,
-     *     in="query",
-     *     description="The email for login",
-     *     @OA\Schema(
-     *         type="string"
-     *     )
-     *   ),
-     *   @OA\Parameter(
-     *     name="password",
-     *     required=true,
-     *     in="query",
-     *     @OA\Schema(
-     *         type="string",
+     *   @OA\RequestBody(
+     *      @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string"
+     *                 ),
+     *                 example={"email": "andrejnankov@gmail.com", "password": "secret"}
+     *             )
+     *         )
      *     ),
-     *     description="The password for login in clear text",
-     *   ),
      *   @OA\Response(
      *     response=200,
      *     description="Get JWT",
@@ -61,7 +58,7 @@ class AuthController
      *   @OA\Response(response=500, description="Internal Server error")
      * )
      */
-    public function login(LoginUserRequest $request)
+    public function login(LoginRequest $request)
     {
         $email = $request->getParams()->get('email');
         $password = $request->getParams()->get('password');
@@ -87,8 +84,8 @@ class AuthController
     }
 
     /**
-     * @OA\Post(path="/refresh",
-     *   tags={"Auth"},
+     * @OA\Post(path="/auth/refresh",
+     *   tags={"AdminSide Auth"},
      *   summary="Refresh JWT",
      *   description="",
      *   operationId="RefreshJWT",

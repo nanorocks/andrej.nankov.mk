@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\User;
+namespace App\Http\Resources\Profile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DestroyResource extends JsonResource
+class StoreResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -12,14 +12,14 @@ class DestroyResource extends JsonResource
             return [
                 'code' => 404,
                 'data' => [],
-                'message' => "No resources for delete action!",
+                'message' => "No resources for create action!"
             ];
         }
 
         return is_array($this->resource) ? $this->resource : [
             'code' => 200,
             'data' => $this->resource->toArray(),
-            'message' => 'Successfully deleted profile!'
+            'message' => 'Successfully created profile!'
         ];
     }
 }

@@ -20,110 +20,46 @@ Route::get('/', function () use ($router) {
     return $router->app->version();
 });
 
-Route::post('/login', [
-    'as' => 'login',
-    'uses' => 'AdminSide\AuthController@login'
-]);
+# Admin side Auth
+Route::post('auth/login', 'AdminSide\AuthController@login');
+Route::post('auth/refresh', 'AdminSide\AuthController@refresh');
 
-Route::post('/refresh', [
-    'as' => 'refresh',
-    'uses' => 'AdminSide\AuthController@refresh'
-]);
-
-
-// Admin
+# Admin side
 Route::group(['middleware' => ['jwt']], function () {
+    # Profile
+    Route::get('/admin/profile', 'AdminSide\ProfileController@show');
+    // Update profile
 
-    Route::get('/cv', [
-        'as' => 'cv.index',
-        'uses' => 'ClientSide\PageController@index'
-    ]);
+    # Projects
+    Route::get('/admin/projects', 'AdminSide\ProjectController@index');
+    Route::get('/admin/projects/{id}', 'AdminSide\ProjectController@show');
+    Route::delete('/admin/projects/{id}', 'AdminSide\ProjectController@destroy');
+    // Create/Update project
 
-    Route::get('/config', [
-        'as' => 'config.index',
-        'uses' => 'ClientSide\ConfigController@index'
-    ]);
+    # Posts
+    Route::get('/admin/posts', 'AdminSide\PostController@index');
+    Route::get('/admin/posts/{id}', 'AdminSide\PostController@show');
+    Route::delete('/admin/posts/{id}', 'AdminSide\PostController@destroy');
+    // Create/Update post
 
-    Route::get('/projects', [
-        'as' => 'projects.index',
-        'uses' => 'ClientSide\ProjectController@index'
-    ]);
-
-    Route::get('/projects/{id}', [
-        'as' => 'projects.show',
-        'uses' => 'ClientSide\ProjectController@show'
-    ]);
-
-    Route::get('/posts', [
-        'as' => 'posts.index',
-        'uses' => 'ClientSide\PostController@index'
-    ]);
-
-    Route::get('/posts/{id}', [
-        'as' => 'posts.show',
-        'uses' => 'ClientSide\PostController@show'
-    ]);
-
-
-
-    Route::delete('/projects/{id}', [
-        'as' => 'projects.destroy',
-        'uses' => 'AdminSide\ProjectController@destroy'
-    ]);
-
-    Route::delete('/post/{id}', [
-        'as' => 'post.destroy',
-        'uses' => 'AdminSide\ProjectController@destroy'
-    ]);
-
-    Route::delete('/config/{id}', [
-        'as' => 'config.destroy',
-        'uses' => 'AdminSide\ConfigController@destroy'
-    ]);
-
-
-
+    #Configs
+    Route::get('/admin/configs', 'AdminSide\ConfigController@index');
+    Route::get('/admin/configs/{id}', 'AdminSide\ConfigController@show');
+    Route::delete('/admin/configs/{id}', 'AdminSide\ConfigController@destroy');
+    // Create/Update config
 });
 
-// Client
+# Client side
 Route::group(['middleware' => ['hmac', 'api-key']], function () {
-
-    Route::get('/cv', [
-        'as' => 'cv.index',
-        'uses' => 'ClientSide\PageController@index'
-    ]);
-
-    Route::get('/config', [
-        'as' => 'config.index',
-        'uses' => 'ClientSide\ConfigController@index'
-    ]);
-
-    Route::get('/projects', [
-        'as' => 'projects.index',
-        'uses' => 'ClientSide\ProjectController@index'
-    ]);
-
-    Route::get('/projects/{id}', [
-        'as' => 'projects.show',
-        'uses' => 'ClientSide\ProjectController@show'
-    ]);
-
-    Route::get('/posts', [
-        'as' => 'posts.index',
-        'uses' => 'ClientSide\PostController@index'
-    ]);
-
-    Route::get('/posts/{id}', [
-        'as' => 'posts.show',
-        'uses' => 'ClientSide\PostController@show'
-    ]);
-
-    Route::get('/posts/uuid/{id}', [
-        'as' => 'posts.showByUuid',
-        'uses' => 'ClientSide\PostController@showByUuid'
-    ]);
-
+    # Profile
+    Route::get('/profile', 'ClientSide\ProfileController@index');
+    # Config
+    Route::get('/configs', 'ClientSide\ConfigController@index');
+    # Projects
+    Route::get('/projects', 'ClientSide\ProjectController@index');
+    Route::get('/projects/{id}', 'ClientSide\ProjectController@show');
+    # Posts
+    Route::get('/posts', 'ClientSide\PostController@index');
+    Route::get('/posts/{id}', 'ClientSide\PostController@show');
+    Route::get('/posts/uuid/{id}', 'ClientSide\PostController@showByUuid');
 });
-
-
-

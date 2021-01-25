@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\User;
+namespace App\Http\Resources\Profile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StoreResource extends JsonResource
+class UpdateResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -12,14 +12,14 @@ class StoreResource extends JsonResource
             return [
                 'code' => 404,
                 'data' => [],
-                'message' => "No resources for create action!"
+                'message' => "No resources for update action!"
             ];
         }
 
         return is_array($this->resource) ? $this->resource : [
             'code' => 200,
             'data' => $this->resource->toArray(),
-            'message' => 'Successfully created profile!'
+            'message' => 'Successfully updated profile!'
         ];
     }
 }

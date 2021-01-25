@@ -8,7 +8,7 @@ class DestroyResource extends JsonResource
 {
     public function toArray($request)
     {
-        if (is_null($this->resource)) {
+        if ($this->resource === 0) {
             return [
                 'code' => 404,
                 'data' => [],
@@ -16,9 +16,9 @@ class DestroyResource extends JsonResource
             ];
         }
 
-        return is_array($this->resource) ? $this->resource : [
+        return [
             'code' => 200,
-            'data' => $this->resource->toArray(),
+            'data' => $this->resource,
             'message' => 'Successfully deleted post!'
         ];
     }

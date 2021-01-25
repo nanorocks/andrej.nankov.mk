@@ -4,9 +4,9 @@ namespace App\Http\Controllers\ClientSide;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\User\IndexResource;
+use App\Http\Resources\Profile\IndexResource;
 
-class PageController extends Controller
+class ProfileController extends Controller
 {
     /**
      * @OA\Get(

@@ -50,7 +50,7 @@ class SinglePost extends Component {
   render() {
     return (
       <div>
-        <Navbar name={this.state.title}></Navbar>
+        <Navbar name={this.state.name}></Navbar>
         <section className="resume-section" id="summary">
           <div className="resume-section-content">
             <div className="mb-1 font-italic small text-capitalize">

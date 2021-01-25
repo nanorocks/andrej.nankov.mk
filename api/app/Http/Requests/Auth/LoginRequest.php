@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
-class RefreshTokenRequest extends Controller
+class LoginRequest extends Controller
 {
     public function __construct(Request $request)
     {
         $this->validate(
             $request,
             [
-                'token' => 'required',
+                User::EMAIL => 'required|email',
+                User::PASSWORD => 'required',
             ]
         );
 
