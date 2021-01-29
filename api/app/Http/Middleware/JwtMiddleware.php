@@ -20,7 +20,7 @@ class JwtMiddleware
         $token = $request->bearerToken();
         $secret = env('JWT_SECRET');
 
-        if (Token::validate($token, $secret)) {
+        if (!is_null($token) && Token::validate($token, $secret) ) {
             return $next($request);
         }
 

@@ -5,34 +5,117 @@ namespace App\Http\Controllers\AdminSide;
 use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Config\StoreRequest;
+use App\Http\Requests\Config\UpdateRequest;
 use App\Http\Resources\Config\ShowResource;
 use App\Http\Resources\Config\IndexResource;
 use App\Http\Resources\Config\DestroyResource;
+use App\Http\Resources\Config\StoreResource;
+use App\Http\Resources\Config\UpdateResource;
 
 class ConfigController extends Controller
 {
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/admin/configs",
+     *     tags={"AdminSide Config Model CRUD"},
+     *     operationId="storeConfig",
+     *     security={
+     *          {"bearerAuth": {}}
+     *      },
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string"
+     *                  ),
+     *                  example={"pageTitle": "Page1", "pageDescription": "page1-description"}
+     *              )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Store config.",
+     *          @OA\JsonContent(type="object",
+     *          @OA\Property(property="code", type="integer"),
+     *          @OA\Property(property="message", type="string"),
+     *          @OA\Property(property="data", type="array",
+     *          @OA\Items(type="object",
+     *              @OA\Property(property="pageTitle", type="string"),
+     *              @OA\Property(property="pageDescription", type="string"),
+     *              @OA\Property(property="updated_at", type="string"),
+     *              @OA\Property(property="created_at", type="string"),
+     *              @OA\Property(property="id", type="integer"),
+     *                    ),
+     *                ),
+     *            ),
+     *      ),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     @OA\Response(response=500, description="Token has expired | Internal Server error")
+     * )
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        return new StoreResource(Config::create($request->convertToDto()->toArray()));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/admin/configs/{id}",
+     *     tags={"AdminSide Config Model CRUD"},
+     *     operationId="updateConfig",
+     *     security={
+     *          {"bearerAuth": {}}
+     *      },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *        @OA\Schema(
+     *              type="integer"
+     *        )
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string"
+     *                  ),
+     *                  example={"pageTitle": "Page1", "pageDescription": "page1-description"}
+     *              )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Update resource in configs.",
+     *          @OA\JsonContent(type="object",
+     *          @OA\Property(property="code", type="integer"),
+     *          @OA\Property(property="message", type="string"),
+     *          @OA\Property(property="data", type="array",
+     *          @OA\Items(type="object",
+     *              @OA\Property(property="pageTitle", type="string"),
+     *              @OA\Property(property="pageDescription", type="string"),
+     *              @OA\Property(property="updated_at", type="string"),
+     *              @OA\Property(property="created_at", type="string"),
+     *              @OA\Property(property="id", type="integer"),
+     *                    ),
+     *                ),
+     *            ),
+     *      ),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     @OA\Response(response=500, description="Token has expired | Internal Server error")
+     * )
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, int $id)
     {
-        //
+        $config = Config::find($id);
+        $config->update($request->convertToDto()->toArray());
+        return new UpdateResource($config);
     }
 
     /**
@@ -67,7 +150,9 @@ class ConfigController extends Controller
      */
     public function destroy(int $id)
     {
-        return new DestroyResource(Config::destroy($id));
+        $config = Config::findOrFail($id);
+        $config->delete();
+        return new DestroyResource($config);
     }
 
     /**

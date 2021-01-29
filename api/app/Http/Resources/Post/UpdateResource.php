@@ -18,7 +18,7 @@ class UpdateResource extends JsonResource
 
         return is_array($this->resource) ? $this->resource : [
             'code' => 200,
-            'data' => $this->resource->toArray(),
+            'data' => $this->resource,
             'message' => 'Successfully updated post!'
         ];
     }

@@ -32,21 +32,22 @@ Route::group(['middleware' => ['jwt']], function () {
 
     # Projects
     Route::get('/admin/projects', 'AdminSide\ProjectController@index');
+    Route::post('/admin/projects', 'AdminSide\ProjectController@store');
+    //TODO: Route::put('/admin/projects/{id}', 'AdminSide\ProjectController@update'); // Later make it POST request for images
     Route::get('/admin/projects/{id}', 'AdminSide\ProjectController@show');
     Route::delete('/admin/projects/{id}', 'AdminSide\ProjectController@destroy');
-    // Create/Update project
-
     # Posts
     Route::get('/admin/posts', 'AdminSide\PostController@index');
+    Route::post('/admin/posts', 'AdminSide\PostController@store');
+    Route::put('/admin/posts/{id}', 'AdminSide\PostController@update'); // Later make it POST request for images
     Route::get('/admin/posts/{id}', 'AdminSide\PostController@show');
     Route::delete('/admin/posts/{id}', 'AdminSide\PostController@destroy');
-    // Create/Update post
-
     #Configs
     Route::get('/admin/configs', 'AdminSide\ConfigController@index');
+    Route::post('/admin/configs', 'AdminSide\ConfigController@store');
+    Route::put('/admin/configs/{id}', 'AdminSide\ConfigController@update');
     Route::get('/admin/configs/{id}', 'AdminSide\ConfigController@show');
     Route::delete('/admin/configs/{id}', 'AdminSide\ConfigController@destroy');
-    // Create/Update config
 });
 
 # Client side

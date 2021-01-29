@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Config;
 
+use App\Domain\Dtos\Config\CreateDto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Config;
@@ -19,5 +20,10 @@ class StoreRequest extends Controller
         );
 
         parent::__construct($request);
+    }
+
+    public function convertToDto(): CreateDto
+    {
+        return CreateDto::fromRequest($this);
     }
 }
