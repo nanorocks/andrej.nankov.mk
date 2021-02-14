@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PostsTableSeeder extends Seeder
+class PostsBootstrapSeeder extends Seeder
 {
     /**
      * Run the database seeds.

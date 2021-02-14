@@ -6,7 +6,7 @@ use App\Models\Config;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ConfigsTableSeeder extends Seeder
+class ConfigsBootstrapSeeder extends Seeder
 {
     /**
      * Run the database seeds.
