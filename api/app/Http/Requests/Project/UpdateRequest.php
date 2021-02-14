@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Project;
 
+use App\Models\Project;
+use ReallySimpleJWT\Token;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Project;
+use App\Domain\Dtos\Project\UpdateDto;
 
 class UpdateRequest extends Controller
 {
@@ -18,11 +20,16 @@ class UpdateRequest extends Controller
                 Project::DATE => 'required',
                 Project::STATUS => 'required',
                 Project::LINK => 'required',
-                Project::IMAGE => 'required',
-                Project::USER_ID => 'required',
+                Project::IMAGE => 'image',
             ]
         );
 
         parent::__construct($request);
+    }
+
+    public function convertToDto(): UpdateDto
+    {
+        $this->userId = Token::getPayload($this->request->bearerToken(), env('JWT_SECRET'))['user_id'];
+        return UpdateDto::fromRequest($this);
     }
 }

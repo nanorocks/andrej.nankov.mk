@@ -3,6 +3,7 @@ import { Navbar } from "./../components/_index";
 import { withRouter } from "react-router-dom";
 import { read } from "./../services/apiReader";
 import { mapper } from "./../config/mapper";
+
 class SinglePost extends Component {
   constructor(props) {
     super(props);
@@ -28,22 +29,32 @@ class SinglePost extends Component {
     let uuid = this.props.match.params.uuid;
     read(mapper.showPostByUuid.replace(":id", uuid))
       .then((result) => {
-        console.log(result);
+        const {
+          title,
+          subTitle,
+          name,
+          date,
+          text,
+          category,
+          reference,
+          metaBudges,
+          image,
+        } = result.data;
         this.setState({
-          title: result.data.title,
-          subTitle: result.data.subTitle,
-          name: result.data.name,
-          date: result.data.date,
-          text: result.data.text,
-          category: result.data.category,
-          references: result.data.references,
-          metaBudges: result.data.metaBudges,
-          image: result.data.image
+          title,
+          subTitle,
+          name,
+          date,
+          text,
+          category,
+          reference,
+          metaBudges,
+          image,
         });
       })
       .catch((error) => {
-         console.log(error);
-         this.props.history.push("/500");
+        console.log(error);
+        this.props.history.push("/500");
       });
   }
 

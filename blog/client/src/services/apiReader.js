@@ -1,22 +1,12 @@
 import { CONN } from "./../config/app";
 import axios from "axios";
 
-const urlBuilder = (path, query="&") => {
-  return (
-    CONN.url +
-    path +
-    "?key=" +
-    CONN.key +
-    "&data=" +
-    CONN.data +
-    "&signature=" +
-    CONN.signature + 
-    query
-  );
+const urlBuilder = (path, query = "&") => {
+  return `${CONN.url}${path}?key=${CONN.key}&data=${CONN.data}&signature=${CONN.signature}${query}`;
 };
 
-export const read = (path = "/cv", query="") => {
-  const URL = (query !== "") ? urlBuilder(path, query) : urlBuilder(path);
+export const read = (path = "/cv", query = "") => {
+  const URL = query !== "" ? urlBuilder(path, query) : urlBuilder(path);
 
   return new Promise((resolve, reject) => {
     axios
