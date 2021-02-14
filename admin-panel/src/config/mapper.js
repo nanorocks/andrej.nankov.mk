@@ -1,8 +1,8 @@
 export const mapper = {
-    "login" : {
-        "post": "/login"
+    "accessToken" : {
+        "post": "auth/login"
     },
-    "refresh": {
-        "post" : "/refresh"
+    "refreshToken": {
+        "post" : "auth/refresh"
     }
 }
