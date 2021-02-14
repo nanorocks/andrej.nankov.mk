@@ -1,38 +1,29 @@
 <?php
 
-namespace App\Domain\Dtos\Post;
+namespace App\Domain\Dtos\Project;
 
-use App\Helpers\GenerateUniqueId;
-use App\Http\Requests\Post\UpdateRequest;
+use App\Http\Requests\Project\UpdateRequest;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class UpdateDto extends DataTransferObject
 {
     public string $title;
-    public string $unique_id;
-    public string $subTitle;
-    public string $text;
+    public string $description;
     public string $date;
     public string $status;
-    public string $references;
+    public string $link;
     public string $image;
-    public string $metaBudges;
-    public string $category;
     public int $userId;
 
     public static function fromRequest(UpdateRequest $request): self
     {
         return new self([
             'title' => $request->getParams()->title,
-            'unique_id' => GenerateUniqueId::uuid(),
-            'subTitle' => $request->getParams()->subTitle,
-            'text' => $request->getParams()->text,
+            'description' => $request->getParams()->description,
             'date' => $request->getParams()->date,
             'status' => $request->getParams()->status,
-            'references' => $request->getParams()->references,
+            'link' => $request->getParams()->link,
             'image' => $request->getParams()->image,
-            'metaBudges' => $request->getParams()->metaBudges,
-            'category' => $request->getParams()->category,
             'userId' => $request->userId
         ]);
     }

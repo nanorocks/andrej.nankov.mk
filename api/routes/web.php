@@ -20,47 +20,49 @@ Route::get('/', function () use ($router) {
     return $router->app->version();
 });
 
-# Admin side Auth
-Route::post('auth/login', 'AdminSide\AuthController@login');
-Route::post('auth/refresh', 'AdminSide\AuthController@refresh');
+# Auth
+Route::group(['namespace' => 'AdminSide'], function () {
+    # Admin side Auth
+    Route::post('auth/login', 'AuthController@login');
+    Route::post('auth/refresh', 'AuthController@refresh');
+});
 
 # Admin side
-Route::group(['middleware' => ['jwt']], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'AdminSide', 'middleware' => ['jwt']], function () {
     # Profile
-    Route::get('/admin/profile', 'AdminSide\ProfileController@show');
-    // Update profile
-
+    Route::get('/profile', 'ProfileController@show');
+    Route::post('/profile', 'ProfileController@update');
     # Projects
-    Route::get('/admin/projects', 'AdminSide\ProjectController@index');
-    Route::post('/admin/projects', 'AdminSide\ProjectController@store');
-    //TODO: Route::put('/admin/projects/{id}', 'AdminSide\ProjectController@update'); // Later make it POST request for images
-    Route::get('/admin/projects/{id}', 'AdminSide\ProjectController@show');
-    Route::delete('/admin/projects/{id}', 'AdminSide\ProjectController@destroy');
+    Route::get('/projects', 'ProjectController@index');
+    Route::post('/projects', 'ProjectController@store');
+    Route::put('/projects/{id}', 'ProjectController@update'); // Later make it POST request for images
+    Route::get('/projects/{id}', 'ProjectController@show');
+    Route::delete('/projects/{id}', 'ProjectController@destroy');
     # Posts
-    Route::get('/admin/posts', 'AdminSide\PostController@index');
-    Route::post('/admin/posts', 'AdminSide\PostController@store');
-    Route::put('/admin/posts/{id}', 'AdminSide\PostController@update'); // Later make it POST request for images
-    Route::get('/admin/posts/{id}', 'AdminSide\PostController@show');
-    Route::delete('/admin/posts/{id}', 'AdminSide\PostController@destroy');
+    Route::get('/posts', 'PostController@index');
+    Route::post('/posts', 'PostController@store');
+    Route::put('/posts/{id}', 'PostController@update'); // Later make it POST request for images
+    Route::get('/posts/{id}', 'PostController@show');
+    Route::delete('/posts/{id}', 'PostController@destroy');
     #Configs
-    Route::get('/admin/configs', 'AdminSide\ConfigController@index');
-    Route::post('/admin/configs', 'AdminSide\ConfigController@store');
-    Route::put('/admin/configs/{id}', 'AdminSide\ConfigController@update');
-    Route::get('/admin/configs/{id}', 'AdminSide\ConfigController@show');
-    Route::delete('/admin/configs/{id}', 'AdminSide\ConfigController@destroy');
+    Route::get('/configs', 'ConfigController@index');
+    Route::post('/configs', 'ConfigController@store');
+    Route::put('/configs/{id}', 'ConfigController@update');
+    Route::get('/configs/{id}', 'ConfigController@show');
+    Route::delete('/configs/{id}', 'ConfigController@destroy');
 });
 
 # Client side
-Route::group(['middleware' => ['hmac', 'api-key']], function () {
+Route::group(['namespace' => 'ClientSide', 'middleware' => ['hmac', 'api-key']], function () {
     # Profile
-    Route::get('/profile', 'ClientSide\ProfileController@index');
+    Route::get('/profile', 'ProfileController@index');
     # Config
-    Route::get('/configs', 'ClientSide\ConfigController@index');
+    Route::get('/configs', 'ConfigController@index');
     # Projects
-    Route::get('/projects', 'ClientSide\ProjectController@index');
-    Route::get('/projects/{id}', 'ClientSide\ProjectController@show');
+    Route::get('/projects', 'ProjectController@index');
+    Route::get('/projects/{id}', 'ProjectController@show');
     # Posts
-    Route::get('/posts', 'ClientSide\PostController@index');
-    Route::get('/posts/{id}', 'ClientSide\PostController@show');
-    Route::get('/posts/uuid/{id}', 'ClientSide\PostController@showByUuid');
+    Route::get('/posts', 'PostController@index');
+    Route::get('/posts/{id}', 'PostController@show');
+    Route::get('/posts/uuid/{id}', 'PostController@showByUuid');
 });

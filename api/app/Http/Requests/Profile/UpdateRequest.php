@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Profile;
 
+use App\Models\User;
+use ReallySimpleJWT\Token;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Domain\Dtos\Profile\UpdateDto;
 
 class UpdateRequest extends Controller
 {
@@ -22,12 +24,18 @@ class UpdateRequest extends Controller
                 User::GOALS => 'required',
                 User::QUOTES => 'required',
                 User::SOC_MEDIA => 'required',
-                User::HIGHLIGHTS => 'required',
+                User::HIGHLIGHTS => 'nullable',
                 User::ADDRESS => 'required',
                 User::PHONE => 'required',
             ]
         );
 
         parent::__construct($request);
+    }
+
+    public function convertToDto(): UpdateDto
+    {
+        $this->userId = Token::getPayload($this->request->bearerToken(), env('JWT_SECRET'))['user_id'];
+        return UpdateDto::fromRequest($this);
     }
 }

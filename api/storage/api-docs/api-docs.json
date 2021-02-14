@@ -970,9 +970,9 @@
         "/admin/profile": {
             "get": {
                 "tags": [
-                    "AdminSide User Model CRUD"
+                    "AdminSide Profile Model CRUD"
                 ],
-                "operationId": "chunkUser",
+                "operationId": "chunkProfile",
                 "responses": {
                     "200": {
                         "description": "Get profile.",
@@ -1035,6 +1035,97 @@
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Token has expired | Internal Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "AdminSide Profile Model CRUD"
+                ],
+                "operationId": "updateProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "andrejnankov@gmail.com",
+                                    "name": "andrejnankov",
+                                    "intro": "andrejnankov intro",
+                                    "summary": "andrejnankov summary",
+                                    "currentWork": "andrejnankov current work",
+                                    "topProgrammingLanguages": "PHP;JS",
+                                    "goals": "Generalist with focus on concepts.;Believer that success in career depends on persistence and willingness to learn.;Understanding client requirements and communicating the progress of the project are core values in achieving the project goals.",
+                                    "quotes": {
+                                        "q1": "aaaa"
+                                    },
+                                    "socMedia": {
+                                        "fb": "fb.com"
+                                    },
+                                    "highlights": {
+                                        "1995": [
+                                            "By a new car",
+                                            "Get a new computer"
+                                        ]
+                                    },
+                                    "address": "Skopje, Macedonia",
+                                    "phone": "(+389)712-16813"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update resource in project.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "date": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -1332,6 +1423,115 @@
                     }
                 ]
             },
+            "put": {
+                "tags": [
+                    "AdminSide Project Model CRUD"
+                ],
+                "operationId": "updateProject",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "title": "Page1",
+                                    "description": "Project sub title",
+                                    "date": "2020-01-03",
+                                    "status": "1",
+                                    "link": "http://www.google.com",
+                                    "image": ""
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update resource in project.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "date": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "link": {
+                                                        "type": "string"
+                                                    },
+                                                    "image": {
+                                                        "type": "string"
+                                                    },
+                                                    "userId": {
+                                                        "type": "integer"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "id": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Token has expired | Internal Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/project/{id}": {
             "delete": {
                 "tags": [
                     "AdminSide Project Model CRUD"
@@ -1341,7 +1541,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of project",
+                        "description": "ID of Project",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -1351,7 +1551,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Deleted project",
+                        "description": "Deleted Project",
                         "content": {
                             "application/json": {
                                 "schema": {
