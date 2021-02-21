@@ -53,19 +53,16 @@ class AuthController
      *       description="date in UTC when token expires"
      *     )
      *   ),
-     *   @OA\Response(response=422, description="Unprocessable Entity"),
+     *   @OA\Response(response=422, description="Not Processable Entity"),
      *   @OA\Response(response=401, description="Invalid email or password."),
      *   @OA\Response(response=500, description="Internal Server error")
      * )
      */
     public function login(LoginRequest $request)
     {
-        $email = $request->getParams()->get('email');
-        $password = $request->getParams()->get('password');
+        $user = User::where('email', $request->convertToDto()->email)->first();
 
-        $user = User::where('email', $email)->first();
-
-        if (empty($user) || !Hash::check($password, $user->password)) {
+        if (empty($user) || !Hash::check($request->convertToDto()->password, $user->password)) {
             return response()->json(['message' => 'Invalid email or password.'], 401);
         }
 
@@ -119,18 +116,18 @@ class AuthController
      *       description="date in UTC when token expires"
      *     )
      *   ),
-     *   @OA\Response(response=422, description="Unprocessable Entity"),
+     *   @OA\Response(response=422, description="Not Processable Entity"),
      *   @OA\Response(response=500, description="Internal Server error| Invalid token signature")
      * )
      */
     public function refresh(RefreshTokenRequest $request)
     {
-        $token = Token::getPayload($request->getParams()->get('token'), env('JWT_SECRET'));
+        $token = $request->convertToDto()->token;
         $time = time();
 
         // var_dump(date('h:i:sa',$time), date('h:i:sa', $token['exp']));
 
-        if($time <= $token['exp']){
+        if ($time <= $token['exp']) {
             return response()->json([
                 'access_token' => $request->getParams()->get('token'),
                 'token_type' => 'Bearer',
