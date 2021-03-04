@@ -1,10 +1,12 @@
 import { Component, React } from "react";
-import { accessToken, setToken } from "./../services/_index";
+import { accessToken, Token } from "./../services/_index";
+import { RouteMapper } from "./../config/_index";
+import { withRouter } from "react-router-dom";
+import Alert from "../components/Alert";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: "",
@@ -13,10 +15,18 @@ class Login extends Component {
 
   loginUser = () => {
     const { email, password } = this.state;
-    accessToken(email, password).then((result) => {
-      // console.log(result);
-      setToken(result[1]);
-    });
+    accessToken(email, password)
+      .then((result) => {
+        Token.set(result[1]);
+        this.props.history.push(RouteMapper.dashboard);
+        Alert("success", "Welcome my friend !");
+      })
+      .catch((errors) => {
+        console.log(errors);
+        if (errors[0] !== 500) {
+          alert(errors[1].message);
+        }
+      });
   };
 
   render() {
@@ -29,6 +39,7 @@ class Login extends Component {
               type="email"
               className="form-control"
               onChange={(e) => this.setState({ email: e.target.value })}
+              required
             />
           </div>
           <div className="form-group">
@@ -37,13 +48,8 @@ class Login extends Component {
               type="password"
               className="form-control"
               onChange={(e) => this.setState({ password: e.target.value })}
+              required
             />
-          </div>
-          <div className="form-group form-check">
-            <input type="checkbox" className="form-check-input" />
-            <label className="form-check-label">
-              Check me out
-            </label>
           </div>
           <button
             type="button"
@@ -58,4 +64,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

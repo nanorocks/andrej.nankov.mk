@@ -1,4 +1,4 @@
-export const mapper = {
+export const ApiMapper = {
     "accessToken" : {
         "post": "auth/login"
     },

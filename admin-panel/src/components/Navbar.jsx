@@ -5,9 +5,9 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/dashboard">
           Navbar
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,7 +22,7 @@ class Navbar extends Component {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/login">
                 Login
               </Link>
             </li>

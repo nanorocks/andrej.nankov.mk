@@ -1,7 +1,7 @@
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Navbar } from "./components/_index";
 import { Login, Logout, Dashboard, ErrorPage } from "./pages/_index"
+import { PrivateRoute, GuestRoute } from "./config/_index";
 
 function App() {
   return (
@@ -9,15 +9,15 @@ function App() {
       <div>
         <Navbar />
         <Switch>
-          <Route exact path="/">
+          <GuestRoute exact path="/login">
             <Login></Login>
-          </Route>
-          <Route exact path="/dashboard">
+          </GuestRoute>
+          <PrivateRoute exact path="/dashboard">
             <Dashboard></Dashboard>
-          </Route>
-          <Route exact path="/logout">
+          </PrivateRoute>
+          <PrivateRoute exact path="/logout">
             <Logout></Logout>
-          </Route>
+          </PrivateRoute>
           <Route exact path="">
             <ErrorPage></ErrorPage>
           </Route>
