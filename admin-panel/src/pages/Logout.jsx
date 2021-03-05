@@ -6,7 +6,7 @@ import Alert from "../components/Alert";
 
 class Logout extends Component {
   componentDidMount(){
-    Alert("info", "Bye Bye !!!");
+    Alert("dark", "Bye Bye !!!");
   }
   render() {
     Token.clear();

@@ -1,12 +1,11 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { FaInfo } from "react-icons/fa";
-import { AiFillStop, AiFillLike, AiFillFire } from "react-icons/ai";
+import { ImFrustrated, ImSad, ImGrin, ImBaffled } from "react-icons/im";
 
 function Alert(type, message) {
   toast.configure({
     position: "top-center",
-    autoClose: 1500,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -18,33 +17,41 @@ function Alert(type, message) {
     case "warning":
       return toast.warning(
         <div className="d-flex">
-          <AiFillStop />
-          {message}
+          <strong>
+            <ImFrustrated />
+          </strong>
+          <div className="pl-2">{message}</div>
         </div>
       );
     case "error":
       return toast.error(
         <div className="d-flex">
-          <AiFillFire />
-          {message}
+          <strong>
+            <ImSad />
+          </strong>
+          <div className="pl-2">{message}</div>
         </div>
       );
     case "success":
       return toast.success(
         <div className="d-flex">
-          <AiFillLike />
-          {message}
+          <strong>
+            <ImGrin />
+          </strong>
+          <div className="pl-2">{message}</div>
         </div>
       );
     case "info":
       return toast.info(
         <div className="d-flex">
-          <FaInfo />
-          {message}
+          <strong>
+            <ImBaffled />
+          </strong>
+          <div className="pl-2">{message}</div>
         </div>
       );
     case "dark":
-      return toast.dark(<div> {message}</div>);
+      return toast.dark(<div>{message}</div>);
     default:
       return toast(message);
   }

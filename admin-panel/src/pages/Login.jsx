@@ -19,46 +19,56 @@ class Login extends Component {
       .then((result) => {
         Token.set(result[1]);
         this.props.history.push(RouteMapper.dashboard);
-        Alert("success", "Welcome my friend !");
+        Alert("dark", "Welcome my friend !");
       })
       .catch((errors) => {
-        console.log(errors);
         if (errors[0] !== 500) {
-          alert(errors[1].message);
+          Alert("error", errors[1].message);
         }
       });
   };
 
   render() {
     return (
-      <div className="row pt-5 pr-4 pl-4">
-        <form className="col-12 col-sm-12 col-md-4 col-lg-4 offset-0 offset-sm-0 offset-md-4 offset-lg-4 shadow p-4 rounded">
-          <div className="form-group">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              onChange={(e) => this.setState({ email: e.target.value })}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control"
-              onChange={(e) => this.setState({ password: e.target.value })}
-              required
-            />
-          </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => this.loginUser()}
-          >
-            Login
-          </button>
-        </form>
+      <div className="container">
+        <div className="row pt-5 mt-5">
+          <form className="col-12 col-sm-12 col-md-4 col-lg-4 offset-0 offset-sm-0 offset-md-4 offset-lg-4 shadow-lg pl-4 pr-4 rounded-lg pt-5">
+            <hr />
+            <p className="text-center h2 font-weight-bolder pb-4 text-capitalize">
+              Admin
+              <span className="text-danger"> panel</span>
+              <hr />
+            </p>
+            <div className="form-group">
+              <label>Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                onChange={(e) => this.setState({ email: e.target.value })}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                className="form-control"
+                onChange={(e) => this.setState({ password: e.target.value })}
+                required
+              />
+            </div>
+            <button
+              type="button"
+              className="btn btn-danger  btn-lg btn-block rounded-pill mt-4 font-weight-bolder text-capitalize"
+              onClick={() => this.loginUser()}
+            >
+              Login
+            </button>
+            <p className="small text-muted font-italic text-right text-capitalize mt-5">
+              personal website
+            </p>
+          </form>
+        </div>
       </div>
     );
   }
