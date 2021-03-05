@@ -94,7 +94,7 @@ class Profile extends Component {
                     <textarea className="form-control" rows="3"></textarea>
                     <small className="text-muted font-italic">
                       <span className="text-danger">*</span> for icons we use{" "}
-                      <a href="https://fontawesome.com/" target="_blank">
+                      <a href="https://fontawesome.com/" target="_blank" className="text-danger">
                         https://fontawesome.com/
                       </a>
                     </small>

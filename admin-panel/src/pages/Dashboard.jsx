@@ -1,5 +1,5 @@
 import { Component, React } from "react";
-import Config from "../components/Config";
+import Config from "./Config/Config";
 import { Profile } from "../components/_index";
 
 class Dashboard extends Component {
@@ -7,7 +7,6 @@ class Dashboard extends Component {
     return (
       <div>
         <div className="container">
-          {/* <Config /> */}
           <Profile />
         </div>
       </div>

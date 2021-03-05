@@ -1,19 +1,29 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Navbar } from "./components/_index";
-import { Login, Logout, Dashboard, ErrorPage } from "./pages/_index"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Login, Logout, Dashboard, ErrorPage, Config, Post, Project } from "./pages/_index"
 import { PrivateRoute, GuestRoute } from "./config/_index";
 
 function App() {
   return (
     <Router>
       <div>
-        <Navbar />
         <Switch>
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
           <GuestRoute exact path="/login">
             <Login></Login>
           </GuestRoute>
           <PrivateRoute exact path="/dashboard">
             <Dashboard></Dashboard>
+          </PrivateRoute>
+          <PrivateRoute exact path="/configs">
+            <Config></Config>
+          </PrivateRoute>
+          <PrivateRoute exact path="/posts">
+            <Post></Post>
+          </PrivateRoute>
+          <PrivateRoute exact path="/projects">
+            <Project></Project>
           </PrivateRoute>
           <PrivateRoute exact path="/logout">
             <Logout></Logout>
