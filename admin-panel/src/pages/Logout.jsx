@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Token } from "../services/_index";
 import { RouteMapper } from "../config/_index";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import Alert from "../components/Alert";
 
 class Logout extends Component {
@@ -10,8 +10,7 @@ class Logout extends Component {
   }
   render() {
     Token.clear();
-    this.props.history.push(RouteMapper.login);
-    return null;
+    return <Redirect to={RouteMapper.login}></Redirect>;
   }
 }
 

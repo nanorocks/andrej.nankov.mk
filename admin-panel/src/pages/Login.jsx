@@ -1,5 +1,5 @@
 import { Component, React } from "react";
-import { accessToken, Token } from "./../services/_index";
+import { accessToken } from "./../services/_index";
 import { RouteMapper } from "./../config/_index";
 import { withRouter } from "react-router-dom";
 import Alert from "../components/Alert";
@@ -17,7 +17,6 @@ class Login extends Component {
     const { email, password } = this.state;
     accessToken(email, password)
       .then((result) => {
-        Token.set(result[1]);
         this.props.history.push(RouteMapper.dashboard);
         Alert("dark", "Welcome my friend !");
       })
@@ -34,11 +33,11 @@ class Login extends Component {
         <div className="row pt-5 mt-5">
           <form className="col-12 col-sm-12 col-md-4 col-lg-4 offset-0 offset-sm-0 offset-md-4 offset-lg-4 shadow-lg pl-4 pr-4 rounded-lg pt-5">
             <hr />
-            <p className="text-center h2 font-weight-bolder pb-4 text-capitalize">
+            <div className="text-center h2 font-weight-bolder pb-4 text-capitalize">
               Admin
               <span className="text-danger"> panel</span>
               <hr />
-            </p>
+            </div>
             <div className="form-group">
               <label>Email address</label>
               <input

@@ -1,7 +1,27 @@
 import { Component, React } from "react";
 import { MdModeEdit, MdDelete } from "react-icons/md";
+import { index } from "../../services/_index";
+import { ApiMapper } from "../../config/_index";
 
 class Config extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+
+    }
+  }
+
+  componentDidMount(){
+    this.allConfigs();
+  }
+
+  allConfigs(){
+    index(ApiMapper.config.index).then(result => {
+      console.log(result);
+    })
+  }
+
   render() {
     return (
       <div>
@@ -13,9 +33,8 @@ class Config extends Component {
                 <small className="font-weight-light text-muted font-italic">
                   Configure your page in your client site
                 </small>
-
                 <div className="table-responsive pt-4">
-                  <table class="table table-hover table-striped">
+                  <table className="table table-hover table-striped">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -47,27 +66,27 @@ class Config extends Component {
                 <div className="d-flex jus">
                   <div className="mr-auto">
                     <nav>
-                      <ul class="pagination pagination-sm">
-                        <li class="page-item disabled">
-                          <span class="page-link">Previous</span>
+                      <ul className="pagination pagination-sm">
+                        <li className="page-item disabled">
+                          <span className="page-link">Previous</span>
                         </li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">
+                        <li className="page-item">
+                          <a className="page-link" href="#">
                             1
                           </a>
                         </li>
-                        <li class="page-item active">
-                          <a class="page-link" href="#">
+                        <li className="page-item active">
+                          <a className="page-link" href="#">
                             2
                           </a>
                         </li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">
+                        <li className="page-item">
+                          <a className="page-link" href="#">
                             3
                           </a>
                         </li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">
+                        <li className="page-item">
+                          <a className="page-link" href="#">
                             Next
                           </a>
                         </li>
@@ -75,10 +94,10 @@ class Config extends Component {
                     </nav>
                   </div>
                   <div className="ml-auto">
-                    <div class="form-group">
+                    <div className="form-group">
                       <select
                         id="inputState"
-                        class="form-control form-control-sm"
+                        className="form-control form-control-sm"
                       >
                         <option value="10" selected>
                           10

@@ -29,6 +29,6 @@ class JwtMiddleware
             'error' => 'Unauthorized',
             'message' => 'Invalid token',
             'attributes' => ['error' => 'Invalid token']
-        ]);
+        ], 401);
     }
 }

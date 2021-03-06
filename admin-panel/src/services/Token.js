@@ -1,16 +1,17 @@
-export const TOKEN_NAME = 'token';
+export const TOKEN_NAME = "token";
 
 export const Token = {
-  set : (accessToken) => {
-  return localStorage.setItem(TOKEN_NAME, JSON.stringify(accessToken));
+  set: (accessToken) => {
+    localStorage.setItem(TOKEN_NAME, JSON.stringify(accessToken));
+    return JSON.parse(localStorage.getItem(TOKEN_NAME));
   },
-  get : () => {
-    return localStorage.getItem(TOKEN_NAME);
+  get: () => {
+    return JSON.parse(localStorage.getItem(TOKEN_NAME));
   },
   clear: () => {
     return localStorage.removeItem(TOKEN_NAME);
   },
   clearAll: () => {
-  return localStorage.clear();
-  }
-}
+    return localStorage.clear();
+  },
+};
