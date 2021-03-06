@@ -127,14 +127,15 @@ class AuthController
 
         // var_dump(date('h:i:sa',$time), date('h:i:sa', $token['exp']));
 
-        if ($time <= $token['exp']) {
-            return response()->json([
-                'access_token' => $request->getParams()->get('token'),
-                'token_type' => 'Bearer',
-                'expires_in' => $token['exp'],
-                'message' => 'Old token is active!'
-            ]);
-        }
+        // if ($time <= $token['exp']) {
+        //     return response()->json([
+        //         'access_token' => $request->getParams()->get('token'),
+        //         'token_type' => 'Bearer',
+        //         'expires_in' => $token['exp'],
+        //         'message' => 'Old token is active!',
+        //         'code' => 400
+        //     ]);
+        // }
 
         $newToken = Token::create(
             $token['user_id'],
@@ -147,7 +148,8 @@ class AuthController
             'access_token' => $newToken,
             'token_type' => 'Bearer',
             'expires_in' => $time,
-            'message' => 'New token is generated!'
+            'message' => 'New token is generated!',
+            'code' => 200
         ]);
     }
 }

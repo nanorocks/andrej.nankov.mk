@@ -19,15 +19,16 @@ axios.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const accessToken = Token.get().access_token;
-      return refreshToken(accessToken).then((result) => {
+      return refreshToken(Token.get().access_token).then((result) => {
         if (result[0] === 200) {
+          console.log("RESULT", result[1]);
           axios.defaults.headers.common["Authorization"] =
-            "Bearer " + Token.get();
+            "Bearer " + Token.set(result[1]).access_token;
           return axios(originalRequest);
         }
       });
     }
+
     return Promise.reject(error);
   }
 );
