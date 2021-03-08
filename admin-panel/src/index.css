@@ -1,12 +1,12 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
-.pagination>li>a {
+.pagination>li>button {
     background-color: white;
     color: #dc3545;
 }
 
-.pagination>li>a:focus,
-.pagination>li>a:hover,
+.pagination>li>button:focus,
+.pagination>li>button:hover,
 .pagination>li>span:focus,
 .pagination>li>span:hover {
     color: #dc3545;
@@ -14,18 +14,18 @@
     border-color: #ddd;
 }
 
-.pagination>.active>a {
+.pagination>.active>button {
     color: white;
     background-color: #dc3545;
     border: solid 1px #dc3545;
 }
 
-.pagination>.active>a:hover {
+.pagination>.active>button:hover {
     background-color: #dc3545;
     border: solid 1px #dc3545;
 }
 
-.pagination>.active>a {
+.pagination>.active>button {
     background-color: #dc3545 !important;
     border: solid 1px #dc3545 !important;
 }

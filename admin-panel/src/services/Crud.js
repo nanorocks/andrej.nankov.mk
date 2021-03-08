@@ -54,10 +54,10 @@ export function update(urlPathFromMapper, entity, id) {
   });
 }
 
-export function destroy(urlPathFromMapper, id) {
+export function destroy(urlPathFromMapper) {
   return new Promise((resolve, reject) => {
     axios
-      .delete(app.BLOG_API_URL + urlPathFromMapper + `${id}`, {})
+      .delete(app.BLOG_API_URL + urlPathFromMapper, {})
       .then((result) => {
         resolve([result.status, result.data]);
       })

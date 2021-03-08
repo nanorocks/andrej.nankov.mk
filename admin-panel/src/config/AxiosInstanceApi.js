@@ -21,9 +21,8 @@ axios.interceptors.response.use(
       originalRequest._retry = true;
       return refreshToken(Token.get().access_token).then((result) => {
         if (result[0] === 200) {
-          console.log("RESULT", result[1]);
           axios.defaults.headers.common["Authorization"] =
-            "Bearer " + Token.set(result[1]).access_token;
+            `${Token.set(result[1]).token_type} ` + Token.set(result[1]).access_token;
           return axios(originalRequest);
         }
       });
