@@ -21,12 +21,12 @@ class CreateUserTable extends Migration
             $table->text(User::INTRO);
             $table->text(User::SUMMARY);
             $table->string(User::CURRENT_WORK);
-            $table->mediumText(User::TOP_PROGRAMMING_LANGUAGES);
+            $table->mediumText(User::TOP_PROGRAMMING_LANGUAGES)->nullable();
             $table->mediumText(User::GOALS);
             $table->json(User::QUOTES);
             $table->json(User::SOC_MEDIA);
             $table->string(User::PASSWORD);
-            $table->json(User::HIGHLIGHTS)->nullable();
+            $table->longText(User::HIGHLIGHTS);
             $table->string(User::ADDRESS);
             $table->string(User::PHONE);
             $table->timestamps();

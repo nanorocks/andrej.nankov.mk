@@ -44,6 +44,7 @@ class Landing extends Component {
           goals,
           topProgrammingLanguages,
         } = result.data;
+
         this.setState({
           intro,
           email,
@@ -92,8 +93,7 @@ class Landing extends Component {
         />
         <hr className="m-0" />
         <Highlights
-          highlightsKeys={Object.keys(this.state.highlights)}
-          highlightsValues={Object.values(this.state.highlights)}
+          highlights={this.state.highlights}
         />
       </div>
     );

@@ -3,6 +3,7 @@ import { accessToken } from "./../services/_index";
 import { RouteMapper } from "./../config/_index";
 import { withRouter } from "react-router-dom";
 import Alert from "../components/Alert";
+import Spinner from "../components/Spinner";
 
 class Login extends Component {
   constructor(props) {
@@ -10,13 +11,16 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      spinner: false,
     };
   }
 
   loginUser = () => {
+    this.setState({ spinner: true });
     const { email, password } = this.state;
     accessToken(email, password)
       .then((result) => {
+        this.setState({ spinner: false });
         this.props.history.push(RouteMapper.dashboard);
         Alert("dark", "Welcome my friend !");
       })
@@ -61,7 +65,7 @@ class Login extends Component {
               className="btn btn-danger  btn-lg btn-block rounded-pill mt-4 font-weight-bolder text-capitalize"
               onClick={() => this.loginUser()}
             >
-              Login
+              {this.state.spinner && <Spinner size="sm" />} Login
             </button>
             <p className="small text-muted font-italic text-right text-capitalize mt-5">
               personal website

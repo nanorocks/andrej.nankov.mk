@@ -53,16 +53,16 @@ class UsersBootstrapSeeder extends Seeder
                 "linkedin-in" => "https://www.linkedin.com/in/nanorocks"
             ], true),
             User::PASSWORD => Hash::make('secret'),
-            User::HIGHLIGHTS => json_encode([
-                "2018" => [
-                    "By a new car",
-                    "Get a new computer"
-                ],
-                "2020" => [
-                    "Begin to work in interworks",
-                    "Bachelor Degree degree"
-                ]
-            ]),
+            User::HIGHLIGHTS => "
+                <h3>2018</h3><ul>
+                <li>By a new car</li>
+                <li>Get a new computer</li>
+                </ul>
+                <h3>2020</h3><ul>
+                <li>Begin to work in interworks</li>
+                <li>Bachelor Degree degree</li>
+                </ul>
+                ",
             User::ADDRESS => 'Skopje, Macedonia',
             User::PHONE => '(+389)712-16813',
         ]);

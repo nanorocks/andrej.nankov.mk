@@ -78,7 +78,7 @@ class Config extends Component {
   table() {
     return (
       <div className="table-responsive pt-4">
-        <table className="table table-hover table-striped">
+        <table className="table table-hover table-striped table-sm">
           <thead>
             <tr>
               <th scope="col">#</th>

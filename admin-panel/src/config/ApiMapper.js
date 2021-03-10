@@ -7,7 +7,7 @@ export const ApiMapper = {
   },
   profile: {
     show: "admin/profile",
-    update: "admin/profile",
+    store: "admin/profile",
   },
   config: {
     index: "admin/configs?limit=",

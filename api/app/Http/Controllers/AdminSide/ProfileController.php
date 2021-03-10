@@ -111,6 +111,6 @@ class ProfileController extends Controller
      */
     public function show()
     {
-        return new ShowResource(User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->get());
+        return new ShowResource(User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->first());
     }
 }

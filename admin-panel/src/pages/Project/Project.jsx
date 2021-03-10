@@ -1,7 +1,123 @@
 import { Component, React } from "react";
 import { MdModeEdit, MdDelete } from "react-icons/md";
+import { index, destroy } from "../../services/_index";
+import { ApiMapper } from "../../config/_index";
+import { Spinner } from "../../components/_index";
+import { Link } from "react-router-dom";
+import Alert from "../../components/Alert";
 
 class Project extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projects: [],
+      paginationLinks: [],
+      spinner: true,
+    };
+    this.pageSelected = 1;
+    this.itemListSelected = 10;
+    this.list = [10, 20, 50];
+    this.queryTable = `${this.itemListSelected}&page=${this.pageSelected}`;
+  }
+
+  componentDidMount() {
+    this.allProjects();
+  }
+
+  allProjects() {
+    this.setState({ spinner: true });
+    index(ApiMapper.project.index, this.queryTable).then((result) => {
+      this.setState({
+        projects: result[1].data.data,
+        paginationLinks: result[1].data.links,
+        spinner: false,
+      });
+    });
+  }
+
+  handleSelectedList(selected) {
+    this.itemListSelected = selected;
+    this.queryTable = `${this.itemListSelected}&page=1`;
+    this.allProjects();
+  }
+
+  loadNewPage = (linkUrl) => {
+    const url = new URL(linkUrl);
+    const page = url.searchParams.get("page");
+    this.pageSelected = page;
+    this.queryTable = `${this.itemListSelected}&page=${this.pageSelected}`;
+    this.allProjects();
+  };
+
+  deleteProject = (id) => {
+    // eslint-disable-next-line no-restricted-globals
+    if (!confirm("Are you sure you want to delete this item ?")) {
+      return;
+    }
+
+    this.setState({ spinner: true });
+
+    destroy(ApiMapper.project.destroy.replace(":id", id))
+      .then((result) => {
+        this.setState({
+          spinner: false,
+          projects: this.state.projects.filter((row) => row.id !== id),
+        });
+
+        Alert("success", result[1].message);
+      })
+      .catch((err) => {
+        if (err.response) {
+          Alert("error", err.response.data.error);
+        }
+      });
+  };
+
+  table() {
+    return (
+      <div className="table-responsive pt-4">
+        <table className="table table-hover table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Status</th>
+              <th scope="col">Date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.projects.map((project, index) => {
+              return (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{project.title}</td>
+                  <td>{project.status}</td>
+                  <td>{project.date}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link to={`Projects/${project.id}`}>
+                        <button className="btn btn-link btn-sm text-muted font-weight-bolder">
+                          <MdModeEdit fontSize="20" /> Edit
+                        </button>
+                      </Link>
+                      <button
+                        className="btn btn-link btn-sm text-danger font-weight-bolder"
+                        onClick={() => this.deleteProject(project.id)}
+                      >
+                        <MdDelete fontSize="20" />
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
   render() {
     return (
       <div>
@@ -11,80 +127,54 @@ class Project extends Component {
               <div className="rounded-lg shadow m-4 p-4">
                 <p className="font-weight-bold h5">Projects pages</p>
                 <small className="font-weight-light text-muted font-italic">
-                  Project sure your page in your client site
+                  Configure your page in your client site
                 </small>
-
-                <div className="table-responsive pt-4">
-                  <table class="table table-hover table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>
-                          <div className="d-flex">
-                            <button className="btn btn-link btn-sm text-muted font-weight-bolder">
-                              <MdModeEdit fontSize="20" /> Edit
-                            </button>
-                            <button className="btn btn-link btn-sm text-danger font-weight-bolder">
-                              <MdDelete fontSize="20" />
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="d-flex jus">
+                {this.state.spinner ? <Spinner /> : this.table()}
+                <div className="d-flex">
                   <div className="mr-auto">
                     <nav>
-                      <ul class="pagination pagination-sm">
-                        <li class="page-item disabled">
-                          <span class="page-link">Previous</span>
-                        </li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">
-                            1
-                          </a>
-                        </li>
-                        <li class="page-item active">
-                          <a class="page-link" href="#">
-                            2
-                          </a>
-                        </li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">
-                            3
-                          </a>
-                        </li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">
-                            Next
-                          </a>
-                        </li>
+                      <ul className="pagination pagination-sm">
+                        {this.state.paginationLinks.map((link, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={
+                                link.active
+                                  ? "page-item active"
+                                  : link.url == null
+                                  ? "page-item disabled"
+                                  : "page-item"
+                              }
+                            >
+                              <button
+                                className={`page-link`}
+                                onClick={() => this.loadNewPage(link.url)}
+                              >
+                                {link.label
+                                  .toString()
+                                  .replace("pagination.next", "Next")
+                                  .replace("pagination.previous", "Previous")}
+                              </button>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </nav>
                   </div>
                   <div className="ml-auto">
-                    <div class="form-group">
+                    <div className="form-group">
                       <select
                         id="inputState"
-                        class="form-control form-control-sm"
+                        className="form-control form-control-sm"
+                        onChange={(e) =>
+                          this.handleSelectedList(e.target.value)
+                        }
                       >
-                        <option value="10" selected>
-                          10
-                        </option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
+                        {this.list.map((listItem, index) => (
+                          <option value={listItem} key={index}>
+                            {listItem}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

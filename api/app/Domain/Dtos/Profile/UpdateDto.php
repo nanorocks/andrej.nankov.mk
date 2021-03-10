@@ -14,8 +14,8 @@ class UpdateDto extends DataTransferObject
     public string $currentWork;
     public string $topProgrammingLanguages;
     public string $goals;
-    public array $quotes;
-    public array $socMedia;
+    public string $quotes;
+    public string $socMedia;
     public string $highlights;
     public string $address;
     public string $phone;
@@ -26,14 +26,14 @@ class UpdateDto extends DataTransferObject
         return new self([
             'email' => $request->getParams()->email,
             'name' => $request->getParams()->name,
-            'intro' => $request->getParams()->intro,
-            'summary' => $request->getParams()->summary,
-            'currentWork' => $request->getParams()->currentWork,
+            'intro' => html_entity_decode($request->getParams()->intro),
+            'summary' => html_entity_decode($request->getParams()->summary),
+            'currentWork' => html_entity_decode($request->getParams()->currentWork),
             'topProgrammingLanguages' => $request->getParams()->topProgrammingLanguages,
             'goals' => $request->getParams()->goals,
             'quotes' => $request->getParams()->quotes,
             'socMedia' => $request->getParams()->socMedia,
-            'highlights' => json_encode($request->getParams()->highlights, true),
+            'highlights' => html_entity_decode($request->getParams()->highlights),
             'address' => $request->getParams()->address,
             'phone' => $request->getParams()->phone,
             'id' => $request->userId

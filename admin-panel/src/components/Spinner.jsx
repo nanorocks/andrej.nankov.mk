@@ -1,8 +1,9 @@
-function Spinner() {
+function Spinner(props) {
+  const size = props.size === "sm" ? "spinner-border-sm" : "";
   return (
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden"></span>
+    <div className={size !== "" ? "d-inline" : "d-flex justify-content-center"}>
+      <div className={`spinner-border ${size}`} role="status">
+        <span className="visually-hidden"></span>
       </div>
     </div>
   );

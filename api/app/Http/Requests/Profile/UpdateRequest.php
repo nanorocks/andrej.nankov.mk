@@ -20,7 +20,7 @@ class UpdateRequest extends Controller
                 User::INTRO => 'required',
                 User::SUMMARY => 'required',
                 User::CURRENT_WORK => 'required',
-                User::TOP_PROGRAMMING_LANGUAGES => 'required',
+                User::TOP_PROGRAMMING_LANGUAGES => 'nullable',
                 User::GOALS => 'required',
                 User::QUOTES => 'required',
                 User::SOC_MEDIA => 'required',
