@@ -5,7 +5,7 @@ import Spinner from "./Spinner";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Alert from "../components/Alert";
-
+import { KeyValue } from "./_index";
 
 class Profile extends Component {
   constructor(props) {
@@ -64,8 +64,8 @@ class Profile extends Component {
         currentWork: currentWork,
         topProgrammingLanguages: Sanitize.emptySpace(topProgrammingLanguages),
         goals: Sanitize.emptySpace(goals),
-        quotes: quotes,
-        socMedia: socMedia,
+        quotes: Sanitize.parseJson(quotes),
+        socMedia: Sanitize.parseJson(socMedia),
         highlights: highlights,
         address: address,
         phone: phone,
@@ -113,6 +113,14 @@ class Profile extends Component {
       Alert("success", result[1].message);
     });
   }
+
+  handleSocMedia = (SocMedia) => {
+    this.setState({ socMedia: SocMedia });
+  };
+
+  handleQuotes = (Quotes) => {
+    this.setState({ quotes: Quotes });
+  };
 
   render() {
     return (
@@ -201,7 +209,7 @@ class Profile extends Component {
                       </label>
                       <ReactQuill
                         theme="snow"
-                        defaultValue={this.state.currentWork}
+                        value={String(this.state.currentWork)}
                         onChange={(html) => {
                           this.setState({ currentWork: html });
                         }}
@@ -215,7 +223,7 @@ class Profile extends Component {
                     <div className="border rounded-sm p-2">
                       <ReactQuill
                         theme="snow"
-                        defaultValue={this.state.intro}
+                        value={String(this.state.intro)}
                         onChange={(html) => {
                           this.setState({ intro: html });
                         }}
@@ -227,7 +235,7 @@ class Profile extends Component {
                     <div className="border rounded-sm p-2">
                       <ReactQuill
                         theme="snow"
-                        defaultValue={this.state.summary}
+                        value={String(this.state.summary)}
                         onChange={(html) => {
                           this.setState({ summary: html });
                         }}
@@ -239,7 +247,7 @@ class Profile extends Component {
                     <div className="border rounded-sm p-2">
                       <ReactQuill
                         theme="snow"
-                        defaultValue={this.state.highlights}
+                        value={String(this.state.highlights)}
                         onChange={(html) => {
                           this.setState({ highlights: html });
                         }}
@@ -292,9 +300,27 @@ class Profile extends Component {
                       </small>
                     </div>
                   </div>
+                  <div className="col-md-12">
+                    <div className="form-group">
+                      <label className="small font-weight-bold">
+                        Social media{" "}
+                      </label>
+                      <KeyValue
+                        inputs={this.state.socMedia}
+                        onChangeState={this.handleSocMedia}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="form-group">
+                      <label className="small font-weight-bold">Quotes</label>
+                      <KeyValue
+                        inputs={this.state.quotes}
+                        onChangeState={this.handleQuotes}
+                      />
+                    </div>
+                  </div>
                 </div>
-                {JSON.stringify(this.state.socMedia)}
-                {JSON.stringify(this.state.quotes)}
                 <div className="text-right mt-4">
                   <button
                     className="btn btn-danger btn-lg rounded-pill pl-4 pr-4 font-weight-bolder text-capitalize"

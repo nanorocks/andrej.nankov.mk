@@ -8,7 +8,7 @@ class Welcome extends Component {
       quotes: () => {
         let quotesList = '';
         for (const [key, value] of Object.entries(this.props.quotes)) {
-          quotesList += `<strong>${key}: ${value}</strong>`
+          quotesList += `<strong>${key}: ${value}</strong><br/>`
         }
         return quotesList;
       }
@@ -36,9 +36,10 @@ class Welcome extends Component {
             dangerouslySetInnerHTML={{ __html: this.props.intro }}
           ></p>
           <p
-            className="lead mb-5 font-weight-strong"
+            className="lead mb-5 font-weight-strong small"
             dangerouslySetInnerHTML={{ __html: this.state.quotes() }}
-          ></p>
+          >
+          </p>
           <div className="social-icons">
             {this.props.socMediaKeys.map((soc, index) => {
               return (

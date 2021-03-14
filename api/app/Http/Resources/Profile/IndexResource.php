@@ -19,7 +19,7 @@ class IndexResource extends JsonResource
 
         return is_array($this->resource) ? $this->resource : [
             'code' => 200,
-            'data' => $this->serializeJson(parent::toArray($request)[0]),
+            'data' => $this->serializeJson(parent::toArray($request)),
             'message' => 'Resources found!'
         ];
     }
@@ -28,7 +28,6 @@ class IndexResource extends JsonResource
     {
         $data[User::SOC_MEDIA] = json_decode($data[User::SOC_MEDIA]);
         $data[User::QUOTES] = json_decode($data[User::QUOTES]);
-        $data[User::HIGHLIGHTS] = json_decode($data[User::HIGHLIGHTS]);
 
         return $data;
     }

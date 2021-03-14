@@ -14,8 +14,8 @@ class UpdateDto extends DataTransferObject
     public string $currentWork;
     public string $topProgrammingLanguages;
     public string $goals;
-    public string $quotes;
-    public string $socMedia;
+    public array $quotes;
+    public array $socMedia;
     public string $highlights;
     public string $address;
     public string $phone;

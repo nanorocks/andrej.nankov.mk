@@ -2,11 +2,11 @@ import Moment from "react-moment";
 
 export const Sanitize = {
   emptySpace: function (text) {
-    let sanitizeStr = '';
+    let sanitizeStr = "";
     const len = text.split(";").length - 1;
-    text.split(';').forEach((element, index) => {
-        const delimiter = (index === len) ? "" : ";"
-        sanitizeStr += element.trim() + delimiter; 
+    text.split(";").forEach((element, index) => {
+      const delimiter = index === len ? "" : ";";
+      sanitizeStr += element.trim() + delimiter;
     });
     return sanitizeStr;
   },
@@ -14,5 +14,9 @@ export const Sanitize = {
   momentFromNow: function (dataTime) {
     dataTime = dataTime === null ? new Date().toLocaleString() : dataTime;
     return <Moment fromNow>{dataTime}</Moment>;
-  }
+  },
+
+  parseJson: function (string) {
+    return JSON.parse(string);
+  },
 };
