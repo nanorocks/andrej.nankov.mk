@@ -1,5 +1,5 @@
 import { Component, React } from "react";
-import { MdModeEdit, MdDelete } from "react-icons/md";
+import { MdModeEdit, MdDelete, MdNoteAdd } from "react-icons/md";
 import { index, destroy } from "../../services/_index";
 import { ApiMapper } from "../../config/_index";
 import { Spinner } from "../../components/_index";
@@ -61,9 +61,7 @@ class Config extends Component {
       .then((result) => {
         this.setState({
           spinner: false,
-          configs: this.state.configs.filter(
-            (row) => row.id !== id
-          ),
+          configs: this.state.configs.filter((row) => row.id !== id),
         });
 
         Alert("success", result[1].message);
@@ -96,7 +94,7 @@ class Config extends Component {
                   <td>{config.pageDescription}</td>
                   <td>
                     <div className="d-flex">
-                      <Link to={`config/${config.id}`}>
+                      <Link to={`configs/${config.id}`}>
                         <button className="btn btn-link btn-sm text-muted font-weight-bolder">
                           <MdModeEdit fontSize="20" /> Edit
                         </button>
@@ -125,10 +123,22 @@ class Config extends Component {
           <div className="row">
             <div className="col-md-12">
               <div className="rounded-lg shadow m-4 p-4">
-                <p className="font-weight-bold h5">Config pages</p>
-                <small className="font-weight-light text-muted font-italic">
-                  Configure your page in your client site
-                </small>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <p className="font-weight-bold h5">Config pages</p>
+                    <small className="font-weight-light text-muted font-italic">
+                      Configure your page in your client site
+                    </small>
+                  </div>
+                  <div>
+                    <Link to={`configs/new`}>
+                      <button className="btn btn-outline-danger rounded-pill font-weight-bold">
+                        <MdNoteAdd />
+                        New Config
+                      </button>
+                    </Link>
+                  </div>
+                </div>
                 {this.state.spinner ? <Spinner /> : this.table()}
                 <div className="d-flex">
                   <div className="mr-auto">

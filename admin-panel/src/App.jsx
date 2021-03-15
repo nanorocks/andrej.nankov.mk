@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { Login, Logout, Dashboard, ErrorPage, Config, Post, Project } from "./pages/_index"
 import { PrivateRoute, GuestRoute } from "./config/_index";
+import { CreateConfig, UpdateConfig } from "./components/_index";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
           <PrivateRoute exact path="/configs">
             <Config></Config>
           </PrivateRoute>
+
+          <PrivateRoute exact path="/configs/new">
+            <CreateConfig />
+          </PrivateRoute>
+          <PrivateRoute exact path="/configs/:id">
+            <UpdateConfig />
+          </PrivateRoute>
+          
           <PrivateRoute exact path="/posts">
             <Post></Post>
           </PrivateRoute>
@@ -29,7 +38,7 @@ function App() {
             <Logout></Logout>
           </PrivateRoute>
           <Route exact path="">
-            <ErrorPage></ErrorPage>
+            <ErrorPage title="" description="Page not found!!!"></ErrorPage>
           </Route>
         </Switch>
       </div>

@@ -1,5 +1,5 @@
 import { Component, React } from "react";
-import { MdModeEdit, MdDelete } from "react-icons/md";
+import { MdModeEdit, MdDelete, MdNoteAdd } from "react-icons/md";
 import { index, destroy } from "../../services/_index";
 import { ApiMapper } from "../../config/_index";
 import { Spinner } from "../../components/_index";
@@ -123,10 +123,22 @@ class Post extends Component {
           <div className="row">
             <div className="col-md-12">
               <div className="rounded-lg shadow m-4 p-4">
-                <p className="font-weight-bold h5">Posts pages</p>
-                <small className="font-weight-light text-muted font-italic">
-                  Configure your page in your client site
-                </small>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <p className="font-weight-bold h5">Posts pages</p>
+                    <small className="font-weight-light text-muted font-italic">
+                      Configure your page in your client site
+                    </small>
+                  </div>
+                  <div>
+                    <Link to={`posts/new`}>
+                      <button className="btn btn-outline-danger rounded-pill font-weight-bold">
+                        <MdNoteAdd />
+                        New Post
+                      </button>
+                    </Link>
+                  </div>
+                </div>
                 {this.state.spinner ? <Spinner /> : this.table()}
                 <div className="d-flex">
                   <div className="mr-auto">
