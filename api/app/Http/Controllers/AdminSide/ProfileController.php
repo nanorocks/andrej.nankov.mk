@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\AdminSide;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateRequest;

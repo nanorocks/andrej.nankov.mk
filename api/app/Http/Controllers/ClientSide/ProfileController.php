@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers\ClientSide;
 
-use App\Models\User;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Profile\IndexResource;
 
 class ProfileController extends Controller
 {
+    public UserService $userService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $userService
+     * @return void
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * @OA\Get(
      *     path="/cv",
@@ -45,6 +58,6 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return new IndexResource(User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->first());
+        return new IndexResource($this->userService->first());
     }
 }

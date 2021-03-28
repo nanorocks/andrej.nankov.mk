@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers\ClientSide;
 
-use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Services\ProjectService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Project\IndexResource;
 use App\Http\Resources\Project\ShowResource;
+use App\Http\Resources\Project\IndexResource;
 
 class ProjectController extends Controller
 {
+    public ProjectService $projectService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $projectService
+     * @return void
+     */
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = $projectService;
+    }
+
     /**
      * @OA\Get(
      *     path="/projects",
@@ -66,8 +79,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->input('limit') ?? 4;
-        return new IndexResource(Project::orderBy(Project::DATE, 'desc')->paginate($limit));
+        return new IndexResource($this->projectService->paginateWithOrder($request->input('limit') ?? 4, Project::DATE, 'desc'));
     }
 
     /**
@@ -117,6 +129,6 @@ class ProjectController extends Controller
      */
     public function show(int $id)
     {
-        return new ShowResource(Project::find($id));
+        return new ShowResource($this->projectService->find($id));
     }
 }

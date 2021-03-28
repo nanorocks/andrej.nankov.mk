@@ -4,11 +4,25 @@ namespace App\Http\Controllers\ClientSide;
 
 use App\Models\Post;
 use App\Models\Config;
+use App\Services\ConfigService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Config\IndexResource;
 
 class ConfigController extends Controller
 {
+
+    public ConfigService $configService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $configService
+     * @return void
+     */
+    public function __construct(ConfigService $configService)
+    {
+        $this->configService = $configService;
+    }
 
     /**
      * @OA\Get(
@@ -47,6 +61,6 @@ class ConfigController extends Controller
      */
     public function index()
     {
-        return new IndexResource(Config::all(Config::PAGE_TITLE, Config::PAGE_DESCRIPTION));
+        return new IndexResource($this->configService->all([Config::PAGE_TITLE, Config::PAGE_DESCRIPTION]));
     }
 }

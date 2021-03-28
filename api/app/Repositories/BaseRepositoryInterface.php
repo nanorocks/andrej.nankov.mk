@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -63,4 +64,22 @@ interface BaseRepositoryInterface
      * @return Model
      */
     public function findWhere(string $attribute, string $value): ?Model;
+
+    /**
+     * paginateWithOrder
+     *
+     * @param  mixed $limit
+     * @param  mixed $param
+     * @param  mixed $order
+     * @return LengthAwarePaginator
+     */
+    public function paginateWithOrder(string $limit, string $param, string $order = 'desc'): LengthAwarePaginator;
+
+    /**
+     * all
+     *
+     * @param  mixed $params
+     * @return Collection
+     */
+    public function all(array $params = []): Collection;
 }

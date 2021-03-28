@@ -85,4 +85,28 @@ class PostService
     {
         return $this->postRepository->findWhere($attribute, $value);
     }
+
+    /**
+     * paginateWithOrder
+     *
+     * @param  mixed $limit
+     * @param  mixed $param
+     * @param  mixed $order
+     * @return LengthAwarePaginator
+     */
+    public function paginateWithOrder(string $limit, string $param, string $order = 'desc'): LengthAwarePaginator
+    {
+        return $this->postRepository->paginateWithOrder($limit, $param, $order);
+    }
+
+    /**
+     * showByUid
+     *
+     * @param  mixed $id
+     * @return Post
+     */
+    public function showByUid(string $id): Post
+    {
+        return $this->postRepository->showByUid($id);
+    }
 }

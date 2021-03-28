@@ -5,13 +5,26 @@ namespace App\Http\Controllers\ClientSide;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Services\PostService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Post\ShowResource;
 use App\Http\Resources\Post\IndexResource;
 
 class PostController extends Controller
 {
+    public PostService $postService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $postService
+     * @return void
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
+
     /**
      * @OA\Get(
      *     path="/posts",
@@ -67,8 +80,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->input('limit') ?? 4;
-        return new IndexResource(Post::orderBy(Post::DATE, 'desc')->paginate($limit));
+        return new IndexResource($this->postService->paginateWithOrder($request->input('limit') ?? 4, Post::DATE, 'desc'));
     }
 
     /**
@@ -118,7 +130,7 @@ class PostController extends Controller
      */
     public function show(int $id)
     {
-        return new ShowResource(Post::find($id));
+        return new ShowResource($this->postService->find($id));
     }
 
     /**
@@ -167,7 +179,6 @@ class PostController extends Controller
      */
     public function showByUuid(string $id)
     {
-        return new ShowResource(Post::where(Post::UNIQUE_ID, $id)
-        ->join(User::TABLE, Post::TABLE . '.' . Post::USER_ID, User::TABLE . '.' . User::ID)->select([User::TABLE . '.' . User::NAME, Post::TABLE . '.*'])->first());
+        return new ShowResource($this->postService->showByUid($id));
     }
 }

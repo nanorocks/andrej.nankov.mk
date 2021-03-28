@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Config;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Config\ConfigRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class ConfigService
 {
@@ -84,5 +85,11 @@ class ConfigService
     public function findWhere(string $attribute, string $value): ?Config
     {
         return $this->configRepository->findWhere($attribute, $value);
+    }
+
+
+    public function all(array $params=[]): Collection
+    {
+        return $this->configRepository->all($params);
     }
 }
