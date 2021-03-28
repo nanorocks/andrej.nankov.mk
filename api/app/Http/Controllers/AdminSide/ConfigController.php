@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers\AdminSide;
 
-use App\Models\Config;
 use Illuminate\Http\Request;
+use App\Services\ConfigService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Config\StoreRequest;
 use App\Http\Requests\Config\UpdateRequest;
 use App\Http\Resources\Config\ShowResource;
 use App\Http\Resources\Config\IndexResource;
-use App\Http\Resources\Config\DestroyResource;
 use App\Http\Resources\Config\StoreResource;
 use App\Http\Resources\Config\UpdateResource;
+use App\Http\Resources\Config\DestroyResource;
 
 class ConfigController extends Controller
 {
+
+    public ConfigService $configService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $configService
+     * @return void
+     */
+    public function __construct(ConfigService $configService)
+    {
+        $this->configService = $configService;
+    }
 
     /**
      * @OA\Post(
@@ -59,7 +72,7 @@ class ConfigController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return new StoreResource(Config::create($request->convertToDto()->toArray()));
+        return new StoreResource($this->configService->create($request->convertToDto()->toArray()));
     }
 
     /**
@@ -113,9 +126,7 @@ class ConfigController extends Controller
      */
     public function update(UpdateRequest $request, int $id)
     {
-        $config = Config::find($id);
-        $config->update($request->convertToDto()->toArray());
-        return new UpdateResource($config);
+        return new UpdateResource($this->configService->update($request->convertToDto()->toArray(), $id));
     }
 
     /**
@@ -150,9 +161,7 @@ class ConfigController extends Controller
      */
     public function destroy(int $id)
     {
-        $config = Config::findOrFail($id);
-        $config->delete();
-        return new DestroyResource($config);
+        return new DestroyResource($this->configService->delete($id));
     }
 
     /**
@@ -201,8 +210,7 @@ class ConfigController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->input('limit') ?? 4;
-        return new IndexResource(Config::paginate($limit));
+        return new IndexResource($this->configService->showWithPaginate($request->input('limit') ?? 4));
     }
 
     /**
@@ -244,6 +252,6 @@ class ConfigController extends Controller
      */
     public function show(int $id)
     {
-        return new ShowResource(Config::find($id));
+        return new ShowResource($this->configService->find($id));
     }
 }

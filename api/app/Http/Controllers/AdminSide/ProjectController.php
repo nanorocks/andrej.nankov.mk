@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminSide;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Services\ProjectService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
 use App\Http\Requests\Project\UpdateRequest;
@@ -15,6 +16,18 @@ use App\Http\Resources\Project\DestroyResource;
 
 class ProjectController extends Controller
 {
+    public ProjectService $projectService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $projectService
+     * @return void
+     */
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = $projectService;
+    }
 
     /**
      * @OA\Post(
@@ -72,7 +85,7 @@ class ProjectController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return new StoreResource(Project::create($request->convertToDto()->toArray()));
+        return new StoreResource($this->projectService->create($request->convertToDto()->toArray()));
     }
 
     /**
@@ -138,9 +151,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateRequest $request, int $id)
     {
-        $project = Project::find($id);
-        $project->update($request->convertToDto()->toArray());
-        return new UpdateResource($project);
+        return new UpdateResource($this->projectService->update($request->convertToDto()->toArray(), $id));
     }
 
     /**
@@ -175,7 +186,7 @@ class ProjectController extends Controller
      */
     public function destroy(int $id)
     {
-        return new DestroyResource(Project::destroy($id));
+        return new DestroyResource($this->projectService->delete($id));
     }
 
     /**
@@ -231,8 +242,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->input('limit') ?? 4;
-        return new IndexResource(Project::orderBy(Project::DATE, 'desc')->paginate($limit));
+        return new IndexResource($this->projectService->showWithPaginate($request->input('limit') ?? 4));
     }
 
     /**
@@ -280,6 +290,6 @@ class ProjectController extends Controller
      */
     public function show(int $id)
     {
-        return new ShowResource(Project::find($id));
+        return new ShowResource($this->projectService->find($id));
     }
 }

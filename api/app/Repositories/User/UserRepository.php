@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Repositories\Eloquent;
+namespace App\Repositories\User;
 
 use App\Models\User;
-use Illuminate\Support\Collection;
-use App\Http\Repositories\UserRepositoryInterface;
+use App\Repositories\BaseRepository;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -17,13 +17,5 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function __construct(User $model)
     {
         parent::__construct($model);
-    }
-
-    /**
-     * @return Collection
-     */
-    public function all(): Collection
-    {
-        return $this->model->all();
     }
 }

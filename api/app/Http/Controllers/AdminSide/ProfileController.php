@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminSide;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Resources\Profile\ShowResource;
@@ -11,6 +12,18 @@ use App\Http\Resources\Profile\UpdateResource;
 
 class ProfileController extends Controller
 {
+    public UserService $userService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $userService
+     * @return void
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
 
     /**
      * @OA\Post(
@@ -66,9 +79,7 @@ class ProfileController extends Controller
      */
     public function update(UpdateRequest $request)
     {
-        $id = $request->convertToDto()->toArray()['id'];
-        User::whereId($id)->update($request->convertToDto()->toArray());
-        return new UpdateResource(User::whereId($id)->first());
+        return new UpdateResource($this->userService->update($request->convertToDto()->toArray(), $request->convertToDto()->toArray()['id']));
     }
 
 
@@ -111,6 +122,6 @@ class ProfileController extends Controller
      */
     public function show()
     {
-        return new ShowResource(User::where(User::EMAIL, env('DEFAULT_USER_EMAIL'))->first());
+        return new ShowResource($this->userService->first());
     }
 }

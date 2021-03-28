@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers\AdminSide;
 
-use App\Models\User;
 use ReallySimpleJWT\Token;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RefreshTokenRequest;
+use App\Services\UserService;
 
 class AuthController
 {
+
+    public UserService $userService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $userService
+     * @return void
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
 
     /**
      * @OA\Post(path="/auth/login",
@@ -60,7 +73,7 @@ class AuthController
      */
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->convertToDto()->email)->first();
+        $user = $this->userService->findWhere('email', $request->convertToDto()->email);
 
         if (empty($user) || !Hash::check($request->convertToDto()->password, $user->password)) {
             return response()->json(['message' => 'Invalid email or password.'], 401);

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\AdminSide;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Services\PostService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\UpdateRequest;
@@ -15,6 +15,20 @@ use App\Http\Resources\Post\DestroyResource;
 
 class PostController extends Controller
 {
+    public PostService $postService;
+
+    /**
+     * __construct
+     *
+     * @param  mixed $postService
+     * @return void
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
+
+
     /**
      * @OA\Post(
      *     path="/admin/posts",
@@ -76,7 +90,7 @@ class PostController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return new StoreResource(Post::create($request->convertToDto()->toArray()));
+        return new StoreResource($this->postService->create($request->convertToDto()->toArray()));
     }
 
     /**
@@ -148,9 +162,7 @@ class PostController extends Controller
      */
     public function update(UpdateRequest $request, int $id)
     {
-        $post = Post::find($id);
-        $post->update($request->convertToDto()->toArray());
-        return new UpdateResource($post);
+        return new UpdateResource($this->postService->update($request->convertToDto()->toArray(), $id));
     }
 
     /**
@@ -185,7 +197,7 @@ class PostController extends Controller
      */
     public function destroy(int $id)
     {
-        return new DestroyResource(Post::destroy($id));
+        return new DestroyResource($this->postService->delete($id));
     }
 
     /**
@@ -245,8 +257,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->input('limit') ?? 4;
-        return new IndexResource(Post::orderBy(Post::DATE, 'desc')->paginate($limit));
+        return new IndexResource($this->postService->showWithPaginate($request->input('limit') ?? 4));
     }
 
     /**
@@ -298,6 +309,6 @@ class PostController extends Controller
      */
     public function show(int $id)
     {
-        return new ShowResource(Post::find($id));
+        return new ShowResource($this->postService->find($id));
     }
 }
