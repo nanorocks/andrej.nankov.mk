@@ -3,6 +3,7 @@
 namespace App\Domain\Dtos\Project;
 
 use App\Http\Requests\Project\StoreRequest;
+use App\Models\Project;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class CreateDto extends DataTransferObject
@@ -18,13 +19,13 @@ class CreateDto extends DataTransferObject
     public static function fromRequest(StoreRequest $request): self
     {
         return new self([
-            'title' => $request->getParams()->title,
-            'description' => $request->getParams()->description,
-            'date' => $request->getParams()->date,
-            'status' => $request->getParams()->status,
-            'link' => $request->getParams()->link,
-            'image' => $request->getParams()->image,
-            'userId' => $request->userId
+            Project::TITLE => $request->getParams()->title,
+            Project::DESCRIPTION => $request->getParams()->description,
+            Project::DATE => $request->getParams()->date,
+            Project::STATUS => $request->getParams()->status,
+            Project::LINK => $request->getParams()->link,
+            Project::IMAGE => $request->getParams()->image,
+            Project::USER_ID => $request->userId
         ]);
     }
 

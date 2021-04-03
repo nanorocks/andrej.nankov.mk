@@ -1,7 +1,21 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { Login, Logout, Dashboard, ErrorPage, Config, Post, Project } from "./pages/_index"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import {
+  Login,
+  Logout,
+  Dashboard,
+  ErrorPage,
+  Config,
+  EditConfig,
+  NewConfig,
+  Post,
+  Project,
+} from "./pages/_index";
 import { PrivateRoute, GuestRoute } from "./config/_index";
-import { CreateConfig, UpdateConfig } from "./components/_index";
 
 function App() {
   return (
@@ -17,17 +31,17 @@ function App() {
           <PrivateRoute exact path="/dashboard">
             <Dashboard></Dashboard>
           </PrivateRoute>
+          {/* Configs */}
           <PrivateRoute exact path="/configs">
             <Config></Config>
           </PrivateRoute>
-
           <PrivateRoute exact path="/configs/new">
-            <CreateConfig />
+            <NewConfig></NewConfig>
           </PrivateRoute>
           <PrivateRoute exact path="/configs/:id">
-            <UpdateConfig />
+            <EditConfig></EditConfig>
           </PrivateRoute>
-          
+
           <PrivateRoute exact path="/posts">
             <Post></Post>
           </PrivateRoute>

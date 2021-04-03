@@ -20,8 +20,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public const ID = 'id';
 
-
     public const EMAIL = 'email';
+
+    public const PHOTO = 'photo';
 
     public const NAME = 'name';
 
@@ -55,6 +56,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
+        self::PHOTO,
         self::EMAIL,
         self::NAME,
         self::INTRO,

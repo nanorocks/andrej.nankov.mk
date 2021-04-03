@@ -7,8 +7,6 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gravatar:
-        "https://secure.gravatar.com/avatar/78fcb9f09832d6d4053d415433f2ee43?s=150",
       configNav: [],
       spinner: false,
     };
@@ -51,8 +49,8 @@ class Navbar extends Component {
           </span>
           <span className="d-none d-lg-block">
             <img
-              className="img-fluid img-profile rounded-circle mx-auto mb-2 "
-              src={this.state.gravatar}
+              className="img-fluid img-profile rounded-circle mx-auto mb-2"
+              src={this.props.photo}
               alt={this.props.name}
               title={this.props.email}
             />

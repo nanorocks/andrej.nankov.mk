@@ -40,6 +40,7 @@ class ProfileController extends Controller
      *                  type="string"
      *                  ),
      *                  example={
+     *                           "photo": "photo link",
      *                           "email": "andrejnankov@gmail.com",
      *                           "name": "andrejnankov",
      *                           "intro": "andrejnankov intro",

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Dtos\Profile;
 
+use App\Models\User;
 use App\Http\Requests\Profile\UpdateRequest;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -9,6 +10,7 @@ class UpdateDto extends DataTransferObject
 {
     public string $email;
     public string $name;
+    public string $photo;
     public string $intro;
     public string $summary;
     public string $currentWork;
@@ -24,18 +26,19 @@ class UpdateDto extends DataTransferObject
     public static function fromRequest(UpdateRequest $request): self
     {
         return new self([
-            'email' => $request->getParams()->email,
-            'name' => $request->getParams()->name,
-            'intro' => html_entity_decode($request->getParams()->intro),
-            'summary' => html_entity_decode($request->getParams()->summary),
-            'currentWork' => html_entity_decode($request->getParams()->currentWork),
-            'topProgrammingLanguages' => $request->getParams()->topProgrammingLanguages,
-            'goals' => $request->getParams()->goals,
-            'quotes' => $request->getParams()->quotes,
-            'socMedia' => $request->getParams()->socMedia,
-            'highlights' => html_entity_decode($request->getParams()->highlights),
-            'address' => $request->getParams()->address,
-            'phone' => $request->getParams()->phone,
+            User::EMAIL => $request->getParams()->email,
+            User::NAME => $request->getParams()->name,
+            User::PHOTO => $request->getParams()->photo,
+            User::INTRO => html_entity_decode($request->getParams()->intro),
+            User::SUMMARY => html_entity_decode($request->getParams()->summary),
+            User::CURRENT_WORK => html_entity_decode($request->getParams()->currentWork),
+            User::TOP_PROGRAMMING_LANGUAGES => $request->getParams()->topProgrammingLanguages,
+            User::GOALS => $request->getParams()->goals,
+            User::QUOTES => $request->getParams()->quotes,
+            User::SOC_MEDIA => $request->getParams()->socMedia,
+            User::HIGHLIGHTS => html_entity_decode($request->getParams()->highlights),
+            User::ADDRESS => $request->getParams()->address,
+            User::PHONE => $request->getParams()->phone,
             'id' => $request->userId
         ]);
     }

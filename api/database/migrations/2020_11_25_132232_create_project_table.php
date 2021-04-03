@@ -22,7 +22,7 @@ class CreateProjectTable extends Migration
             $table->date(Project::DATE);
             $table->string(Project::STATUS);
             $table->string(Project::LINK)->nullable();
-            $table->string(Project::IMAGE)->nullable();
+            $table->string(Project::IMAGE, 255)->nullable();
             $table->unsignedBigInteger(Project::USER_ID);
             $table->foreign(Project::USER_ID)->references(User::ID)->on(User::TABLE);
             $table->timestamps();

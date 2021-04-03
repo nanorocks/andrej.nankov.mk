@@ -12,6 +12,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       id: "",
+      photo: "",
       email: "",
       name: "",
       intro: "",
@@ -39,6 +40,7 @@ class Profile extends Component {
     show(ApiMapper.profile.show, "").then((result) => {
       const {
         id,
+        photo,
         email,
         name,
         intro,
@@ -57,6 +59,7 @@ class Profile extends Component {
       this.setState({
         spinner: false,
         id: id,
+        photo: photo,
         email: email,
         name: name,
         intro: intro,
@@ -77,6 +80,7 @@ class Profile extends Component {
   saveProfile() {
     this.setState({ spinner: true });
     const {
+      photo,
       email,
       name,
       intro,
@@ -94,6 +98,7 @@ class Profile extends Component {
     store(
       ApiMapper.profile.store,
       {
+        photo,
         email,
         name,
         intro,
@@ -197,6 +202,21 @@ class Profile extends Component {
                         defaultValue={this.state.phone}
                         onChange={(e) =>
                           this.setState({ phone: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="form-group">
+                      <label className="small font-weight-bold">Photo Link</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="Enter photo link"
+                        defaultValue={this.state.photo}
+                        onChange={(e) =>
+                          this.setState({ photo: e.target.value })
                         }
                         required
                       />

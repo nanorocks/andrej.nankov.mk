@@ -5,8 +5,8 @@ class ErrorPage extends Component {
   render() {
     return (
       <div id="error" className="container shadow-lg p-5 mt-5 rounded-lg">
-        <div class="error mt-5">
-          <div class="error-code">
+        <div className="error mt-5">
+          <div className="error-code">
             <h1 className="display-1">
                Oops!
             </h1>

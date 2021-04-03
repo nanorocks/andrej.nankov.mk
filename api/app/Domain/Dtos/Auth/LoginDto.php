@@ -3,6 +3,7 @@
 namespace App\Domain\Dtos\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class LoginDto extends DataTransferObject
@@ -14,8 +15,8 @@ class LoginDto extends DataTransferObject
     public static function fromRequest(LoginRequest $request): self
     {
         return new self([
-            'email' => $request->getParams()->email,
-            'password' => $request->getParams()->password
+            User::EMAIL => $request->getParams()->email,
+            User::PASSWORD => $request->getParams()->password
         ]);
     }
 }

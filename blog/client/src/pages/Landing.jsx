@@ -14,6 +14,7 @@ import { withRouter } from "react-router-dom";
 class Landing extends Component {
   state = {
     intro: "",
+    photo: "",
     email: "",
     socMedia: "",
     name: "",
@@ -32,6 +33,7 @@ class Landing extends Component {
       .then((result) => {
         const {
           intro,
+          photo,
           email,
           socMedia,
           name,
@@ -47,6 +49,7 @@ class Landing extends Component {
 
         this.setState({
           intro,
+          photo,
           email,
           socMedia,
           name,
@@ -69,7 +72,7 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <Navbar email={this.state.email} name={this.state.name} />
+        <Navbar email={this.state.email} name={this.state.name} photo={this.state.photo} />
         <Welcome
           intro={this.state.intro}
           email={this.state.email}

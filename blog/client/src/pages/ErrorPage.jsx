@@ -11,8 +11,8 @@ class ErrorPage extends Component {
             {`${this.props.title} - ${this.props.description}`}
           </title>
         </Helmet>
-        <div class="error mt-5">
-          <div class="error-code">
+        <div className="error mt-5">
+          <div className="error-code">
             <h1>Oops!</h1>
             <h2>
             {this.props.title} - {this.props.description}

@@ -16,6 +16,7 @@ class UpdateRequest extends Controller
             $request,
             [
                 User::EMAIL => 'required',
+                User::PHOTO => 'required',
                 User::NAME => 'required',
                 User::INTRO => 'required',
                 User::SUMMARY => 'required',

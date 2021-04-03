@@ -19,6 +19,7 @@ class UsersBootstrapSeeder extends Seeder
         DB::table(User::TABLE)->insert([
             User::EMAIL => env('DEFAULT_USER_EMAIL'),
             User::NAME => 'Andrej Nankov',
+            User::PHOTO => 'https://secure.gravatar.com/avatar/78fcb9f09832d6d4053d415433f2ee43?s=150',
             User::INTRO => 'Hello, and welcome to my personal website. My name is <strong>Andrej Nankov</strong> but I introduce myself as nanorocks. I use this nick as better introduction to myself on the internet. This nick is tide connect to my social life and my field of work.
                             On this site you can find content most about my work as a software engineer, experience in various fields of IT, open-source, solved problems, how to grow as an engineer and blog posts related to contend that is interesting to read and know.
                             My goal is to be better self promoted to the IT world and to share my knowledge with others.',

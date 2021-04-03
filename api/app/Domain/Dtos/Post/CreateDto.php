@@ -4,6 +4,7 @@ namespace App\Domain\Dtos\Post;
 
 use App\Helpers\GenerateUniqueId;
 use App\Http\Requests\Post\StoreRequest;
+use App\Models\Post;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class CreateDto extends DataTransferObject
@@ -23,17 +24,17 @@ class CreateDto extends DataTransferObject
     public static function fromRequest(StoreRequest $request): self
     {
         return new self([
-            'title' => $request->getParams()->title,
-            'unique_id' => GenerateUniqueId::uuid(),
-            'subTitle' => $request->getParams()->subTitle,
-            'text' => $request->getParams()->text,
-            'date' => $request->getParams()->date,
-            'status' => $request->getParams()->status,
-            'references' => $request->getParams()->references,
-            'image' => $request->getParams()->image,
-            'metaBudges' => $request->getParams()->metaBudges,
-            'category' => $request->getParams()->category,
-            'userId' => $request->userId
+            Post::TITLE => $request->getParams()->title,
+            Post::UNIQUE_ID => GenerateUniqueId::uuid(),
+            Post::SUB_TITLE => $request->getParams()->subTitle,
+            Post::TEXT => $request->getParams()->text,
+            Post::DATE => $request->getParams()->date,
+            Post::STATUS => $request->getParams()->status,
+            Post::REFERENCES => $request->getParams()->references,
+            Post::IMAGE => $request->getParams()->image,
+            Post::META_BUDGES => $request->getParams()->metaBudges,
+            Post::CATEGORY => $request->getParams()->category,
+            Post::USER_ID => $request->userId
         ]);
     }
 }
