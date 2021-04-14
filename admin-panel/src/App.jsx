@@ -13,7 +13,11 @@ import {
   EditConfig,
   NewConfig,
   Post,
+  EditPost,
+  NewPost,
   Project,
+  EditProject,
+  NewProject,
 } from "./pages/_index";
 import { PrivateRoute, GuestRoute } from "./config/_index";
 
@@ -45,8 +49,21 @@ function App() {
           <PrivateRoute exact path="/posts">
             <Post></Post>
           </PrivateRoute>
+          <PrivateRoute exact path="/posts/new">
+            <NewPost></NewPost>
+          </PrivateRoute>
+          <PrivateRoute exact path="/posts/:id">
+            <EditPost></EditPost>
+          </PrivateRoute>
+
           <PrivateRoute exact path="/projects">
             <Project></Project>
+          </PrivateRoute>
+          <PrivateRoute exact path="/projects/new">
+            <NewProject></NewProject>
+          </PrivateRoute>
+          <PrivateRoute exact path="/projects/:id">
+            <EditProject></EditProject>
           </PrivateRoute>
           <PrivateRoute exact path="/logout">
             <Logout></Logout>

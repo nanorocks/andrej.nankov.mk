@@ -5,6 +5,7 @@ import { ApiMapper } from "../../config/_index";
 import { Spinner } from "../../components/_index";
 import { Link } from "react-router-dom";
 import Alert from "../../components/Alert";
+import config from "../../img/config.png";
 
 class Config extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Config extends Component {
       configs: [],
       paginationLinks: [],
       spinner: true,
+      toggleImage: false
     };
     this.pageSelected = 1;
     this.itemListSelected = 10;
@@ -121,7 +123,7 @@ class Config extends Component {
       <div>
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-sm-12 col-md-12 col-lg-12 col-12">
               <div className="rounded-lg shadow m-4 p-4">
                 <div className="d-flex justify-content-between">
                   <div>
@@ -189,6 +191,34 @@ class Config extends Component {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="col-md-12">
+              <div className="text-left pr-4">
+                <span className="pl-4 text-muted font-italic small d-block">
+                  Where you can find old and new configs in website ? Toggle{" "}
+                  <span
+                    className="text-danger"
+                    onClick={() => {
+                      this.setState({ toggleImage: !this.state.toggleImage });
+                      setTimeout(() => {
+                        Alert("danger", "Nothing fancy, only screenshot and arrow ;)");
+                      }, 500)
+                    }}
+                  >
+                    here
+                  </span>{" "}
+                  ...
+                </span>
+                <img
+                  src={config}
+                  alt="config_image"
+                  className={
+                    this.state.toggleImage
+                      ? "img-thumbnail ml-4 img-fluid"
+                      : "d-none"
+                  }
+                />
               </div>
             </div>
           </div>
