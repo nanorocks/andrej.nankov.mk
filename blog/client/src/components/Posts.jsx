@@ -4,6 +4,7 @@ import { mapper } from "./../config/mapper";
 import { Spinner } from "./_index";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 class Posts extends Component {
   constructor(props) {
@@ -94,14 +95,14 @@ class Posts extends Component {
                           : `page-item`
                       }
                     >
-                      <button
+                      <AnchorLink
                         className="page-link"
-                        href="#"
+                        href="#posts"
                         tabIndex={index}
                         onClick={() => this.loadNewPosts(link.url)}
                       >
                         {this.paginationLabelName(link.label)}
-                      </button>
+                      </AnchorLink>
                     </li>
                   );
                 })}

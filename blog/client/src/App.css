@@ -11,6 +11,18 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+#scrollToTopBtn {
+  background-color: #343a40;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 48px;
+  width: 48px;
+}
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

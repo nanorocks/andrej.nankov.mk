@@ -3,6 +3,8 @@ import { mapper } from "./../config/mapper";
 import { read } from "./../services/apiReader";
 import { Spinner } from "./_index";
 import { withRouter } from "react-router-dom";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+
 class Projects extends Component {
   constructor(props) {
     super(props);
@@ -124,14 +126,14 @@ class Projects extends Component {
                             : `page-item`
                         }
                       >
-                        <button
+                        <AnchorLink
                           className="page-link"
-                          href="#"
+                          href="#projects"
                           tabIndex={index}
                           onClick={() => this.loadNewProjects(link.url)}
                         >
                           {this.paginationLabelName(link.label)}
-                        </button>
+                        </AnchorLink>
                       </li>
                     );
                   })}

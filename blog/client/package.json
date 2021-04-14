@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
     "react": "^17.0.1",
+    "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-awesome-reveal": "^3.5.1",
     "react-dom": "^17.0.1",
     "react-ga": "^3.3.0",

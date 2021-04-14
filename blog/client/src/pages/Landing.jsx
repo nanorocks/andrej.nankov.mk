@@ -10,6 +10,7 @@ import {
 import { mapper } from "./../config/mapper";
 import { read } from "./../services/apiReader";
 import { withRouter } from "react-router-dom";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 class Landing extends Component {
   state = {
@@ -98,6 +99,9 @@ class Landing extends Component {
         <Highlights
           highlights={this.state.highlights}
         />
+        <footer className="text-right mb-4">
+          <AnchorLink href="#welcome" id="scrollToTopBtn" className="p-3 m-2 mb-4">☝️</AnchorLink>
+        </footer>
       </div>
     );
   }
