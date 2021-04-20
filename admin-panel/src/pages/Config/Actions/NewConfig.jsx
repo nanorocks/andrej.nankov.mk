@@ -59,11 +59,11 @@ class NewConfig extends Component {
                     </div>
                     <div className="d-flex justify-content-between">
                       <Link to="/configs">
-                        <button class="btn btn-dark rounded-pill font-weight-bold">
+                        <button class="btn btn-dark btn-lg rounded-pill font-weight-bold">
                           Back
                         </button>
                       </Link>
-                      <button class="btn btn-danger rounded-pill font-weight-bold">
+                      <button class="btn btn-danger btn-lg rounded-pill font-weight-bold">
                         Submit
                       </button>
                     </div>

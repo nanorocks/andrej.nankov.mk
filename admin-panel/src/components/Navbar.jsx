@@ -1,5 +1,6 @@
 import { Component, React } from "react";
 import { Link } from "react-router-dom";
+import { MdOpenInNew } from "react-icons/md";
 
 class Navbar extends Component {
   render() {
@@ -48,7 +49,7 @@ class Navbar extends Component {
               </li>
               <li className="nav-item">
                 <Link className="nav-link text-light btn btn-danger font-weight-bolder" to="/logout">
-                  Logout
+                  Logout <MdOpenInNew />
                 </Link>
               </li>
             </ul>

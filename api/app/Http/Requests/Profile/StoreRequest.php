@@ -13,7 +13,8 @@ class StoreRequest extends Controller
         $this->validate(
             $request,
             [
-                User::EMAIL => 'required',
+                User::EMAIL => 'required|email',
+                User::PHOTO => 'required',
                 User::NAME => 'required',
                 User::INTRO => 'required',
                 User::SUMMARY => 'required',
