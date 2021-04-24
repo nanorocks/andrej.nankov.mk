@@ -1,7 +1,7 @@
 import { Component, React } from "react";
 import { MdModeEdit, MdDelete, MdNoteAdd } from "react-icons/md";
 import { index, destroy } from "../../services/_index";
-import { ApiMapper } from "../../config/_index";
+import { ApiMapper, app } from "../../config/_index";
 import { Spinner } from "../../components/_index";
 import { Link } from "react-router-dom";
 import Alert from "../../components/Alert";
@@ -90,8 +90,17 @@ class Post extends Component {
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
-                  <td>{post.title}</td>
-                  <td>{post.status ? "Published" : "Unpublished"}</td>
+                  <td>
+                    <a
+                      href={`${app.ADMIN_PANEL_DOMAIN}posts/${post.unique_id}`}
+                      className="text-danger font-weight-bolder"
+                    >
+                      {post.title}
+                    </a>
+                  </td>
+                  <td className="small font-weight-bolder">
+                    {post.status ? "Published" : "Unpublished"}
+                  </td>
                   <td>
                     <div className="d-flex">
                       <Link to={`posts/${post.id}`}>

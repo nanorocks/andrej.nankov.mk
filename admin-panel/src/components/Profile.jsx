@@ -5,7 +5,7 @@ import Spinner from "./Spinner";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Alert from "../components/Alert";
-import { KeyValue } from "./_index";
+import { ErrorsHandler, KeyValue } from "./_index";
 
 class Profile extends Component {
   constructor(props) {
@@ -26,7 +26,8 @@ class Profile extends Component {
       address: "",
       phone: "",
       updatedAt: "",
-
+      
+      errors: [],
       spinner: false,
     };
   }
@@ -77,8 +78,8 @@ class Profile extends Component {
     });
   }
 
-  saveProfile() {
-    this.setState({ spinner: true });
+  storeProfile() {
+    this.setState({ spinner: true, errors: [] });
     const {
       photo,
       email,
@@ -114,6 +115,10 @@ class Profile extends Component {
       },
       ""
     ).then((result) => {
+      if (result[0] === 422){
+        this.setState({errors: result[1]});
+        return;
+      } 
       this.setState({ spinner: false });
       Alert("success", result[1].message);
     });
@@ -209,7 +214,9 @@ class Profile extends Component {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label className="small font-weight-bold">Photo Link</label>
+                      <label className="small font-weight-bold">
+                        Photo Link
+                      </label>
                       <input
                         className="form-control"
                         type="text"
@@ -341,10 +348,11 @@ class Profile extends Component {
                     </div>
                   </div>
                 </div>
+                <ErrorsHandler errors={this.state.errors} />
                 <div className="text-right mt-4">
                   <button
                     className="btn btn-danger btn-lg rounded-pill pl-4 pr-4 font-weight-bolder text-capitalize"
-                    onClick={() => this.saveProfile()}
+                    onClick={() => this.storeProfile()}
                     type="button"
                   >
                     Save Profile

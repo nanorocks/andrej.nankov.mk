@@ -10,7 +10,7 @@ export function index(urlPathFromMapper, limit = 20) {
         resolve([result.status, result.data]);
       })
       .catch((err) => {
-        reject([err.response.status, err.response.data]);
+        resolve([err.response.status, err.response.data]);
       });
   });
 }
@@ -23,33 +23,33 @@ export function store(urlPathFromMapper, entity) {
         resolve([result.status, result.data]);
       })
       .catch((err) => {
-        reject([err.response.status, err.response.data]);
+        resolve([err.response.status, err.response.data]);
       });
   });
 }
 
-export function show(urlPathFromMapper, id) {
+export function show(urlPathFromMapper) {
   return new Promise((resolve, reject) => {
     axios
-      .get(app.BLOG_API_URL + urlPathFromMapper + `${id}`, {})
+      .get(app.BLOG_API_URL + urlPathFromMapper, {})
       .then((result) => {
         resolve([result.status, result.data]);
       })
       .catch((err) => {
-        reject([err.response.status, err.response.data]);
+        resolve([err.response.status, err.response.data]);
       });
   });
 }
 
-export function update(urlPathFromMapper, entity, id) {
+export function update(urlPathFromMapper, entity) {
   return new Promise((resolve, reject) => {
     axios
-      .put(app.BLOG_API_URL + urlPathFromMapper + `${id}`, entity)
+      .put(app.BLOG_API_URL + urlPathFromMapper, entity)
       .then((result) => {
         resolve([result.status, result.data]);
       })
       .catch((err) => {
-        reject([err.response.status, err.response.data]);
+        resolve([err.response.status, err.response.data]);
       });
   });
 }
@@ -62,7 +62,7 @@ export function destroy(urlPathFromMapper) {
         resolve([result.status, result.data]);
       })
       .catch((err) => {
-        reject([err.response.status, err.response.data]);
+        resolve([err.response.status, err.response.data]);
       });
   });
 }

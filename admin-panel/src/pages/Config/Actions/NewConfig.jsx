@@ -3,20 +3,33 @@ import { store } from "../../../services/_index";
 import { ApiMapper } from "../../../config/_index";
 import { Link } from "react-router-dom";
 import newItem from "../../../img/newItem.png";
+import ErrorsHandler from "../../../components/ErrorsHandler";
+import Alert from "../../../components/Alert";
+import { withRouter } from "react-router-dom";
+
 class NewConfig extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      configTitle: "",
-      configDescription: "",
+      pageTitle: "",
+      pageDescription: "",
+      errors: [],
     };
   }
 
   storeConfig() {
-    store(ApiMapper.config.index, this.queryTable).then((result) => {
-      this.setState({
-        paginationLinks: result[1].data.links,
-      });
+    this.setState({errors: []});
+    const { pageTitle, pageDescription } = this.state;
+    store(ApiMapper.config.store, {
+      pageTitle,
+      pageDescription,
+    }).then((result) => {
+      if (result[0] === 422) {
+        this.setState({ errors: result[1] });
+        return;
+      } 
+      Alert("success", result[1].message);
+      this.props.history.push("/configs");
     });
   }
 
@@ -35,35 +48,47 @@ class NewConfig extends Component {
                 </div>
                 <div className="row pt-4">
                   <div className="col-md-8">
-                    <div class="mb-3">
-                      <label for="title" class="form-label">
+                    <div className="mb-3">
+                      <label className="form-label">
                         Title
                       </label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="title"
                         placeholder="Enter config title"
+                        onChange={(e) =>
+                          this.setState({ pageTitle: e.target.value })
+                        }
+                        required
                       />
                     </div>
-                    <div class="mb-3">
-                      <label for="description" class="form-label">
+                    <div className="mb-3">
+                      <label className="form-label">
                         Description
                       </label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="description"
                         placeholder="Enter config description"
+                        onChange={(e) =>
+                          this.setState({ pageDescription: e.target.value })
+                        }
+                        required
                       />
                     </div>
+                    <ErrorsHandler errors={this.state.errors} />
                     <div className="d-flex justify-content-between">
                       <Link to="/configs">
-                        <button class="btn btn-dark btn-lg rounded-pill font-weight-bold">
+                        <button className="btn btn-dark btn-lg rounded-pill font-weight-bold">
                           Back
                         </button>
                       </Link>
-                      <button class="btn btn-danger btn-lg rounded-pill font-weight-bold">
+                      <button
+                        className="btn btn-danger btn-lg rounded-pill font-weight-bold"
+                        onClick={() => this.storeConfig()}
+                      >
                         Submit
                       </button>
                     </div>
@@ -81,4 +106,4 @@ class NewConfig extends Component {
   }
 }
 
-export default NewConfig;
+export default withRouter(NewConfig);
