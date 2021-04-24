@@ -3,19 +3,57 @@ import { store } from "../../../services/_index";
 import { ApiMapper } from "../../../config/_index";
 import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
+import Alert from "../../../components/Alert";
+import ErrorsHandler from "../../../components/ErrorsHandler";
 
 class NewPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: "",
+      subTitle: "",
+      text: "",
+      date: "",
+      status: 0,
+      references: "",
+      image: "",
+      metaBudges: "",
+      category: "",
+      errors: [],
     };
   }
 
-  storeConfig() {
-    store(ApiMapper.config.index, this.queryTable).then((result) => {
-      this.setState({
-        paginationLinks: result[1].data.links,
-      });
+  storePost() {
+    this.setState({ errors: [] });
+    const {
+      title,
+      subTitle,
+      text,
+      date,
+      status,
+      references,
+      image,
+      metaBudges,
+      category,
+    } = this.state;
+
+    store(ApiMapper.post.store, {
+      title,
+      subTitle,
+      text,
+      date,
+      status,
+      references,
+      image,
+      metaBudges,
+      category,
+    }).then((result) => {
+      if (result[0] === 422) {
+        this.setState({ errors: result[1] });
+        return;
+      }
+      Alert("success", result[1].message);
+      this.props.history.push("/posts");
     });
   }
 
@@ -35,26 +73,32 @@ class NewPost extends Component {
                 <div className="row pt-4">
                   <div className="col-md-12">
                     <div className="form-row pb-3">
-                      <div class="col-md-6">
-                        <label for="title" class="small font-weight-bold">
-                          Title
-                        </label>
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">Title</label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="title"
-                          placeholder="Enter Title"
+                          placeholder="Enter post title"
+                          onChange={(e) =>
+                            this.setState({ title: e.target.value })
+                          }
+                          required
                         />
                       </div>
-                      <div class="col-md-6">
-                        <label for="sub-title" class="small font-weight-bold">
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">
                           Sub Title
                         </label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="sub-title"
-                          placeholder="Enter Sub-Title"
+                          placeholder="Enter post sub-title"
+                          onChange={(e) =>
+                            this.setState({ subTitle: e.target.value })
+                          }
+                          required
                         />
                       </div>
                     </div>
@@ -63,102 +107,134 @@ class NewPost extends Component {
                       <div className="border rounded-sm p-2">
                         <ReactQuill
                           theme="snow"
-                          // value={String(this.state.highlights)}
-                          // onChange={(html) => {
-                          //   this.setState({ highlights: html });
-                          // }}
+                          onChange={(html) => {
+                            this.setState({ text: html });
+                          }}
+                          placeholder="Enter post text"
                         />
                       </div>
                     </div>
                     <div className="form-row pb-3">
-                      <div class="col-md-6">
-                        <label for="date" class="small font-weight-bold">
-                          Date
-                        </label>
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">Date</label>
                         <input
                           type="date"
-                          class="form-control"
+                          className="form-control"
                           id="date"
-                          placeholder="Enter Date"
+                          placeholder="Enter post published date"
+                          onChange={(e) =>
+                            this.setState({ date: e.target.value })
+                          }
+                          required
                         />
                       </div>
-                      <div class="col-md-6">
-                        <label for="img-url" class="small font-weight-bold">
-                          Image URL
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">
+                          Image URL{" "}
+                          <span className="small text-muted">(optional)</span>
                         </label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="img-url"
-                          placeholder="Enter Image url"
+                          placeholder="Enter post image url"
+                          onChange={(e) =>
+                            this.setState({ image: e.target.value })
+                          }
+                          required
                         />
                       </div>
                     </div>
                     <div className="form-row pb-3">
-                      <div class="col-md-6">
-                        <label for="references" class="small font-weight-bold">
-                          References
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">
+                          References{" "}
+                          <span className="small text-muted">
+                            (use delimiter `;` for multiple)
+                          </span>
                         </label>
                         <textarea
                           type="date"
-                          class="form-control"
+                          className="form-control"
                           id="references"
-                          placeholder="Enter references"
+                          placeholder="Enter post references"
                           rows="4"
+                          onChange={(e) =>
+                            this.setState({ references: e.target.value })
+                          }
+                          required
                         ></textarea>
                       </div>
-                      <div class="col-md-6">
-                        <label for="meta-budges" class="small font-weight-bold">
-                          Meta Budges
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">
+                          Meta Budges{" "}
+                          <span className="small text-muted">
+                            (use delimiter `;` for multiple)
+                          </span>
                         </label>
                         <textarea
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="meta-budges"
-                          placeholder="Enter meta budges"
+                          placeholder="Enter post meta-budges"
                           rows="4"
+                          onChange={(e) =>
+                            this.setState({ metaBudges: e.target.value })
+                          }
+                          required
                         ></textarea>
                       </div>
                     </div>
                     <div className="form-row pb-3">
-                      <div class="col-md-6">
-                        <label for="references" class="small font-weight-bold">
-                          Category
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">
+                          Category Name
                         </label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="references"
-                          placeholder="Enter category name"
+                          placeholder="Enter post category name"
                           rows="4"
+                          onChange={(e) =>
+                            this.setState({ category: e.target.value })
+                          }
+                          required
                         />
                       </div>
-                      <div class="col-md-6 text-right pt-5">
+                      <div className="col-md-6 text-right pt-5">
                         <div className="form-check">
                           <input
                             type="checkbox"
-                            class="form-check-input"
-                            id="metaBudges"
-                            placeholder="Enter meta budges"
-                            rows="4"
+                            className="form-check-input"
+                            id="status"
+                            onClick={(e) =>
+                              this.setState({
+                                status: e.target.checked ? 1 : 0,
+                              })
+                            }
+                            required
                           />
                           <label
-                            for="metaBudges"
-                            class="font-weight-bold form-check-label"
+                            htmlFor="status"
+                            className="font-weight-bold form-check-label"
                           >
                             Published
                           </label>
                         </div>
                       </div>
                     </div>
-
+                    <ErrorsHandler errors={this.state.errors} />
                     <div className="d-flex justify-content-between">
                       <Link to="/posts">
-                        <button class="btn btn-dark btn-lg rounded-pill font-weight-bold">
+                        <button className="btn btn-dark btn-lg rounded-pill font-weight-bold">
                           Back
                         </button>
                       </Link>
-                      <button class="btn btn-danger btn-lg rounded-pill font-weight-bold">
+                      <button
+                        className="btn btn-danger btn-lg rounded-pill font-weight-bold"
+                        onClick={() => this.storePost()}
+                      >
                         Submit
                       </button>
                     </div>

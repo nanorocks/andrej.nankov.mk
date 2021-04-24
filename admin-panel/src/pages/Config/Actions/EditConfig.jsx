@@ -118,7 +118,7 @@ class EditConfig extends Component {
                         </div>
                       </div>
                       <div className="col-md-4 text-center">
-                        <img src={editItem} className="w-75" />
+                        <img src={editItem} alt="edit img" className="w-75" />
                       </div>
                     </div>
                   )}

@@ -19,8 +19,8 @@ class UpdateRequest extends Controller
                 Project::DESCRIPTION => 'required',
                 Project::DATE => 'required',
                 Project::STATUS => 'required',
-                Project::LINK => 'required',
-                Project::IMAGE => 'image',
+                Project::LINK => 'url',
+                Project::IMAGE => 'url|nullable',
             ]
         );
 

@@ -50,7 +50,7 @@ class PostController extends Controller
      *                           "subTitle": "Post sub title",
      *                           "text": "This is my post text",
      *                           "date": "2020-01-03",
-     *                           "status": "1",
+     *                           "status": 1,
      *                           "references": "link1;link2",
      *                           "image": "",
      *                           "metaBudges": "rpm;py",

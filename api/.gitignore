@@ -1,3 +1,4 @@
+.env.example
 /vendor
 /.idea
 Homestead.json

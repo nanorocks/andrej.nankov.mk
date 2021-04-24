@@ -26,7 +26,7 @@ function App() {
   return (
     <Router>
       <div>
-          <Navbar></Navbar>
+        <Navbar></Navbar>
         <Switch>
           <Route exact path="/">
             <Redirect to="/login" />

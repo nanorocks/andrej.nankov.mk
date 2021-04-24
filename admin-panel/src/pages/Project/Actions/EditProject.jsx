@@ -1,22 +1,73 @@
 import { Component, React } from "react";
-import { store } from "../../../services/_index";
+import { show, update } from "../../../services/_index";
 import { ApiMapper } from "../../../config/_index";
 import { Link } from "react-router-dom";
+import Alert from "../../../components/Alert";
+import ErrorsHandler from "../../../components/ErrorsHandler";
+import Spinner from "../../../components/Spinner";
 
 class EditProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      configTitle: "",
-      configDescription: "",
+      id: this.props.match.params.id,
+      title: "",
+      description: "",
+      date: "",
+      status: "",
+      link: "",
+      image: "",
+      errors: [],
     };
   }
 
-  storeConfig() {
-    store(ApiMapper.config.index, this.queryTable).then((result) => {
-      this.setState({
-        paginationLinks: result[1].data.links,
-      });
+  componentDidMount() {
+    this.showProject();
+  }
+
+  showProject() {
+    this.setState({ spinner: true });
+    show(ApiMapper.project.show.replace(":id", this.state.id)).then(
+      (result) => {
+        const {
+          title,
+          description,
+          date,
+          status,
+          link,
+          image,
+        } = result[1].data;
+
+        this.setState({
+          spinner: false,
+          title,
+          description,
+          date,
+          status,
+          link,
+          image,
+        });
+      }
+    );
+  }
+
+  updateProject() {
+    this.setState({ errors: [] });
+    const { title, description, date, status, link, image } = this.state;
+    update(ApiMapper.project.update.replace(":id", this.state.id), {
+      title,
+      description,
+      date,
+      status,
+      link,
+      image,
+    }).then((result) => {
+      if (result[0] === 422) {
+        this.setState({ errors: result[1] });
+        return;
+      }
+      Alert("success", result[1].message);
+      this.props.history.push("/projects");
     });
   }
 
@@ -34,95 +85,126 @@ class EditProject extends Component {
                       Edit config for client app.
                     </small>
                   </div>
-                  <div className="row pt-4">
-                    <div className="col-md-12">
-                      <div className="form-row pb-3">
-                        <div class="col-md-6">
-                          <label for="title" class="small font-weight-bold">
-                            Title
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="title"
-                            placeholder="Enter Title"
-                          />
+                  {this.state.spinner ? (
+                    <Spinner />
+                  ) : (
+                    <div className="row pt-4">
+                      <div className="col-md-12">
+                        <div className="form-row pb-3">
+                          <div className="col-md-6">
+                            <label className="small font-weight-bold">
+                              Title
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="title"
+                              placeholder="Enter Title"
+                              onChange={(e) =>
+                                this.setState({ title: e.target.value })
+                              }
+                              value={this.state.title}
+                            />
+                          </div>
+                          <div className="col-md-6">
+                            <label className="small font-weight-bold">
+                              Date
+                            </label>
+                            <input
+                              type="date"
+                              className="form-control"
+                              id="date"
+                              placeholder="Enter Date"
+                              onChange={(e) =>
+                                this.setState({ date: e.target.value })
+                              }
+                              value={this.state.date}
+                            />
+                          </div>
                         </div>
-                        <div class="col-md-6">
-                          <label for="date" class="small font-weight-bold">
-                            Date
+                        <div className="form-group">
+                          <label className="small font-weight-bold">
+                            Description
                           </label>
-                          <input
+                          <textarea
                             type="date"
-                            class="form-control"
-                            id="date"
-                            placeholder="Enter Date"
-                          />
+                            className="form-control"
+                            id="description"
+                            placeholder="Enter description"
+                            rows="3"
+                            onChange={(e) =>
+                              this.setState({ description: e.target.value })
+                            }
+                            value={this.state.description}
+                          ></textarea>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="references" class="small font-weight-bold">
-                          Description
-                        </label>
-                        <textarea
-                          type="date"
-                          class="form-control"
-                          id="references"
-                          placeholder="Enter description"
-                          rows="3"
-                        ></textarea>
-                      </div>
-                      <div className="form-row pb-3">
-                        <div class="col-md-4">
-                          <label for="img-url" class="small font-weight-bold">
-                            Link
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="img-url"
-                            placeholder="Enter Link"
-                          />
+                        <div className="form-row pb-3">
+                          <div className="col-md-4">
+                            <label className="small font-weight-bold">
+                              Link
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="link"
+                              placeholder="Enter Link"
+                              onChange={(e) =>
+                                this.setState({ link: e.target.value })
+                              }
+                              value={this.state.link}
+                            />
+                          </div>
+                          <div className="col-md-4">
+                            <label className="small font-weight-bold">
+                              Image URL
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="img-url"
+                              placeholder="Enter Image url"
+                              onChange={(e) =>
+                                this.setState({ image: e.target.value })
+                              }
+                              value={this.state.image}
+                            />
+                          </div>
+                          <div className="col-md-4">
+                            <label className="small font-weight-bold">
+                              Status{" "}
+                              <span className="small text-danger font-italic">
+                                (active | maintained | finished)
+                              </span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="status"
+                              placeholder="Enter status like text"
+                              onChange={(e) =>
+                                this.setState({ status: e.target.value })
+                              }
+                              value={this.state.status}
+                            />
+                          </div>
                         </div>
-                        <div class="col-md-4">
-                          <label for="img-url" class="small font-weight-bold">
-                            Image URL
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="img-url"
-                            placeholder="Enter Image url"
-                          />
-                        </div>
-                        <div class="col-md-4">
-                          <label for="img-url" class="small font-weight-bold">
-                            Status{" "}
-                            <span className="small text-danger font-italic">
-                              (active | maintained | finished)
-                            </span>
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="img-url"
-                            placeholder="Enter status like text"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="d-flex justify-content-between">
-                        <Link to="/projects">
-                          <button class="btn btn-dark btn-lg rounded-pill font-weight-bold">
-                            Back
+                        <ErrorsHandler errors={this.state.errors} />
+                        <div className="d-flex justify-content-between">
+                          <Link to="/projects">
+                            <button className="btn btn-dark btn-lg rounded-pill font-weight-bold">
+                              Back
+                            </button>
+                          </Link>
+                          <button
+                            className="btn btn-danger btn-lg rounded-pill font-weight-bold"
+                            onClick={() => this.updateProject()}
+                          >
+                            Submit
                           </button>
-                        </Link>
-                        <button class="btn btn-danger btn-lg rounded-pill font-weight-bold">
-                          Submit
-                        </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

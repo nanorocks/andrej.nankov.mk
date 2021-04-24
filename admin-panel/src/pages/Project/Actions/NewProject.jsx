@@ -2,18 +2,42 @@ import { Component, React } from "react";
 import { store } from "../../../services/_index";
 import { ApiMapper } from "../../../config/_index";
 import { Link } from "react-router-dom";
+import Alert from "../../../components/Alert";
+import ErrorsHandler from "../../../components/ErrorsHandler";
+
 
 class NewProject extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      title: "",
+      description: "",
+      date: "",
+      status: "",
+      link: "",
+      image: "",
+      errors: [],
+    };
   }
 
-  storeConfig() {
-    store(ApiMapper.config.index, this.queryTable).then((result) => {
-      this.setState({
-        paginationLinks: result[1].data.links,
-      });
+  storeProject() {
+    this.setState({ errors: [] });
+    const { title, description, date, status, link, image } = this.state;
+
+    store(ApiMapper.project.store, {
+      title,
+      description,
+      date,
+      status,
+      link,
+      image,
+    }).then((result) => {
+      if (result[0] === 422) {
+        this.setState({ errors: result[1] });
+        return;
+      }
+      Alert("success", result[1].message);
+      this.props.history.push("/projects");
     });
   }
 
@@ -33,66 +57,75 @@ class NewProject extends Component {
                 <div className="row pt-4">
                   <div className="col-md-12">
                     <div className="form-row pb-3">
-                      <div class="col-md-6">
-                        <label for="title" class="small font-weight-bold">
-                          Title
-                        </label>
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">Title</label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="title"
                           placeholder="Enter Title"
+                          onChange={(e) =>
+                            this.setState({ title: e.target.value })
+                          }
                         />
                       </div>
-                      <div class="col-md-6">
-                        <label for="date" class="small font-weight-bold">
-                          Date
-                        </label>
+                      <div className="col-md-6">
+                        <label className="small font-weight-bold">Date</label>
                         <input
                           type="date"
-                          class="form-control"
+                          className="form-control"
                           id="date"
                           placeholder="Enter Date"
+                          onChange={(e) =>
+                            this.setState({ date: e.target.value })
+                          }
                         />
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="references" class="small font-weight-bold">
+                    <div className="form-group">
+                      <label className="small font-weight-bold">
                         Description
                       </label>
                       <textarea
                         type="date"
-                        class="form-control"
+                        className="form-control"
                         id="references"
                         placeholder="Enter description"
                         rows="3"
+                        onChange={(e) =>
+                          this.setState({ description: e.target.value })
+                        }
                       ></textarea>
                     </div>
                     <div className="form-row pb-3">
-                      <div class="col-md-4">
-                        <label for="img-url" class="small font-weight-bold">
-                          Link
-                        </label>
+                      <div className="col-md-4">
+                        <label className="small font-weight-bold">Link</label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="img-url"
                           placeholder="Enter Link"
+                          onChange={(e) =>
+                            this.setState({ link: e.target.value })
+                          }
                         />
                       </div>
-                      <div class="col-md-4">
-                        <label for="img-url" class="small font-weight-bold">
+                      <div className="col-md-4">
+                        <label className="small font-weight-bold">
                           Image URL
                         </label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="img-url"
                           placeholder="Enter Image url"
+                          onChange={(e) =>
+                            this.setState({ image: e.target.value })
+                          }
                         />
                       </div>
-                      <div class="col-md-4">
-                        <label for="img-url" class="small font-weight-bold">
+                      <div className="col-md-4">
+                        <label className="small font-weight-bold">
                           Status{" "}
                           <span className="small text-danger font-italic">
                             (active | maintained | finished)
@@ -100,26 +133,31 @@ class NewProject extends Component {
                         </label>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="img-url"
                           placeholder="Enter status like text"
+                          onChange={(e) =>
+                            this.setState({ status: e.target.value })
+                          }
                         />
                       </div>
                     </div>
-
+                    <ErrorsHandler errors={this.state.errors} />
                     <div className="d-flex justify-content-between">
                       <Link to="/projects">
-                        <button class="btn btn-dark btn-lg rounded-pill font-weight-bold">
+                        <button className="btn btn-dark btn-lg rounded-pill font-weight-bold">
                           Back
                         </button>
                       </Link>
-                      <button class="btn btn-danger btn-lg rounded-pill font-weight-bold">
+                      <button
+                        className="btn btn-danger btn-lg rounded-pill font-weight-bold"
+                        onClick={() => this.storeProject()}
+                      >
                         Submit
                       </button>
                     </div>
                   </div>
                 </div>
-             
               </div>
             </div>
           </div>

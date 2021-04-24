@@ -13,7 +13,7 @@ class UpdateDto extends DataTransferObject
     public string $date;
     public string $status;
     public string $link;
-    public string $image;
+    public ?string $image;
     public int $userId;
 
     public static function fromRequest(UpdateRequest $request): self

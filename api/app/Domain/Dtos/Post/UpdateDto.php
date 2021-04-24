@@ -14,7 +14,7 @@ class UpdateDto extends DataTransferObject
     public string $subTitle;
     public string $text;
     public string $date;
-    public string $status;
+    public int $status;
     public string $references;
     public string $image;
     public string $metaBudges;

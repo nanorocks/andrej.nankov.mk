@@ -21,7 +21,7 @@ class UpdateRequest extends Controller
                 Post::DATE => 'required',
                 Post::STATUS => 'required',
                 Post::REFERENCES => 'required',
-                Post::IMAGE => 'image',
+                Post::IMAGE => 'url',
                 Post::META_BUDGES => 'required',
                 Post::CATEGORY => 'required',
             ]

@@ -82,6 +82,7 @@ class Post extends Component {
               <th scope="col">#</th>
               <th scope="col">Title</th>
               <th scope="col">Status</th>
+              <th scope="col">Date</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -101,6 +102,7 @@ class Post extends Component {
                   <td className="small font-weight-bolder">
                     {post.status ? "Published" : "Unpublished"}
                   </td>
+                  <th>{post.date}</th>
                   <td>
                     <div className="d-flex">
                       <Link to={`posts/${post.id}`}>

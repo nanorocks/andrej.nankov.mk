@@ -20,7 +20,7 @@ class StoreRequest extends Controller
                 Project::DATE => 'required',
                 Project::STATUS => 'required',
                 Project::LINK => 'url',
-                Project::IMAGE => 'image',
+                Project::IMAGE => 'url||nullable',
             ]
         );
 

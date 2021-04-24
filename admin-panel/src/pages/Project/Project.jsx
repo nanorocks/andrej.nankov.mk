@@ -91,15 +91,21 @@ class Project extends Component {
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
-                  <td>
-                    <a
-                      href={project.link ? project.link : "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-danger font-weight-bolder small"
-                    >
-                      {project.title}
-                    </a>
+                  <td className="small">
+                    {project.link ? (
+                      <a
+                        href={project.link ? project.link : "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-danger font-weight-bolder"
+                      >
+                        {project.title}
+                      </a>
+                    ) : (
+                      <span className="font-weight-bolder">
+                        {project.title}
+                      </span>
+                    )}
                   </td>
                   <td>{project.status}</td>
                   <td>{project.date}</td>
