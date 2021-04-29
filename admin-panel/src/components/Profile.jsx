@@ -136,7 +136,7 @@ class Profile extends Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <div className="rounded-lg shadow m-4 p-4">
+          <div className="rounded-lg shadow border m-4 p-4">
             <p className="font-weight-bold h5">Profile info </p>
             <strong className="text-muted text-capitalize small font-weight-bold">
               Last update {this.state.updatedAt}
@@ -351,7 +351,7 @@ class Profile extends Component {
                 <ErrorsHandler errors={this.state.errors} />
                 <div className="text-right mt-4">
                   <button
-                    className="btn btn-danger btn-lg rounded-pill pl-4 pr-4 font-weight-bolder text-capitalize"
+                    className="p-3 btn btn-danger btn-lg rounded-pill pl-4 pr-4 font-weight-bolder text-capitalize"
                     onClick={() => this.storeProfile()}
                     type="button"
                   >

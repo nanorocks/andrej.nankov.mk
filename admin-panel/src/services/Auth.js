@@ -2,19 +2,17 @@ import axios from "axios";
 import { app, ApiMapper } from "../config/_index";
 import { Token } from "../services/Token";
 
-export const accessToken = (email, password) => {
+export const accessToken = (credentials) => {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${app.BLOG_API_URL}${ApiMapper.accessToken.post}`, {
-        email,
-        password,
-      })
+      .post(`${app.BLOG_API_URL}${ApiMapper.accessToken.post}`, credentials)
       .then((result) => {
         Token.set(result.data);
         axios.interceptors.request.use(
           (config) => {
             if (Token.get()) {
-              config.headers["Authorization"] = "Bearer " + Token.get().access_token;
+              config.headers["Authorization"] =
+                "Bearer " + Token.get().access_token;
             }
             config.headers["Content-Type"] = "application/json";
             return config;

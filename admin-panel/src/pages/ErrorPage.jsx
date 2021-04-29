@@ -14,7 +14,7 @@ class ErrorPage extends Component {
               {this.props.title} | {this.props.description}
             </p>
           </div>
-          <Link to={"/"} className="btn btn-danger btn-lg rounded-pill mt-4">
+          <Link to={"/"} className="p-3 btn btn-danger btn-lg rounded-pill mt-4">
             Go Back
           </Link>
         </div>

@@ -139,7 +139,7 @@ class Project extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="rounded-lg shadow m-4 p-4">
+              <div className="rounded-lg shadow border m-4 p-4">
                 <div className="d-flex justify-content-between">
                   <div>
                     <p className="font-weight-bold h5">Projects pages</p>

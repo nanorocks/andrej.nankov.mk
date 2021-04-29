@@ -16,6 +16,7 @@ class LoginRequest extends Controller
             [
                 User::EMAIL => 'required|email',
                 User::PASSWORD => 'required',
+                'reCaptcha' => 'required'
             ]
         );
 

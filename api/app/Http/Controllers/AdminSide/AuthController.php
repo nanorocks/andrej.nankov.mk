@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\AdminSide;
 
 use ReallySimpleJWT\Token;
+use App\Services\UserService;
+use App\Services\ReCaptchaService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RefreshTokenRequest;
-use App\Services\UserService;
 
 class AuthController
 {
 
     public UserService $userService;
+
+    public ReCaptchaService $reCaptchaService;
 
     /**
      * __construct
@@ -19,9 +23,10 @@ class AuthController
      * @param  mixed $userService
      * @return void
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ReCaptchaService $reCaptchaService)
     {
         $this->userService = $userService;
+        $this->reCaptchaService = $reCaptchaService;
     }
 
     /**
@@ -73,6 +78,11 @@ class AuthController
      */
     public function login(LoginRequest $request)
     {
+        $reCaptcha = $this->reCaptchaService->validateReCaptcha($request->convertToDto());
+        if(!$reCaptcha['success']){
+            return response()->json(['message' => $reCaptcha['error-codes'][0]], 401);
+        }
+
         $user = $this->userService->findWhere('email', $request->convertToDto()->email);
 
         if (empty($user) || !Hash::check($request->convertToDto()->password, $user->password)) {

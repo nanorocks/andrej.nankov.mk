@@ -99,7 +99,7 @@ class EditPost extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="rounded-lg shadow m-4 p-4">
+              <div className="rounded-lg shadow border m-4 p-4">
                 <div>
                   <div className="text-center">
                     <p className="font-weight-bold h5">Edit Post</p>
@@ -284,12 +284,12 @@ class EditPost extends Component {
                         <ErrorsHandler errors={this.state.errors} />
                         <div className="d-flex justify-content-between">
                           <Link to="/posts">
-                            <button className="btn btn-dark btn-lg rounded-pill font-weight-bold">
+                            <button className="p-3 btn btn-dark btn-lg rounded-pill font-weight-bold">
                               Back
                             </button>
                           </Link>
                           <button
-                            className="btn btn-danger btn-lg rounded-pill font-weight-bold"
+                            className="p-3 btn btn-danger btn-lg rounded-pill font-weight-bold"
                             onClick={() => this.updatePost()}
                           >
                             Submit

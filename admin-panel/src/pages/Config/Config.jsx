@@ -124,7 +124,7 @@ class Config extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12 col-md-12 col-lg-12 col-12">
-              <div className="rounded-lg shadow m-4 p-4">
+              <div className="rounded-lg shadow border m-4 p-4">
                 <div className="d-flex justify-content-between">
                   <div>
                     <p className="font-weight-bold h5">Config pages</p>

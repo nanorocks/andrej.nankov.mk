@@ -12,11 +12,14 @@ class LoginDto extends DataTransferObject
 
     public string $password;
 
+    public ?string $reCaptcha;
+
     public static function fromRequest(LoginRequest $request): self
     {
         return new self([
             User::EMAIL => $request->getParams()->email,
-            User::PASSWORD => $request->getParams()->password
+            User::PASSWORD => $request->getParams()->password,
+            'reCaptcha' => $request->getParams()->reCaptcha
         ]);
     }
 }
