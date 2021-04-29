@@ -10,12 +10,11 @@ use Spatie\DataTransferObject\DataTransferObject;
 class UpdateDto extends DataTransferObject
 {
     public string $title;
-    public string $unique_id;
     public string $subTitle;
     public string $text;
     public string $date;
     public int $status;
-    public string $references;
+    public ?string $references;
     public string $image;
     public string $metaBudges;
     public string $category;
@@ -25,7 +24,6 @@ class UpdateDto extends DataTransferObject
     {
         return new self([
             Post::TITLE => $request->getParams()->title,
-            Post::UNIQUE_ID => GenerateUniqueId::uuid(),
             Post::SUB_TITLE => $request->getParams()->subTitle,
             Post::TEXT => $request->getParams()->text,
             Post::DATE => $request->getParams()->date,

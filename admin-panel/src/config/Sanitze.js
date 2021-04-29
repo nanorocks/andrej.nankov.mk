@@ -19,4 +19,8 @@ export const Sanitize = {
   parseJson: function (string) {
     return JSON.parse(string);
   },
+
+  nullToEmpty(value) {
+    return value === null ? "" : value;
+  },
 };

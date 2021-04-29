@@ -99,11 +99,14 @@ class NewProject extends Component {
                     </div>
                     <div className="form-row pb-3">
                       <div className="col-md-4">
-                        <label className="small font-weight-bold">Link</label>
+                        <label className="small font-weight-bold">
+                          Link{" "}
+                          <span className="small text-muted">(optional)</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="img-url"
+                          id="link"
                           placeholder="Enter Link"
                           onChange={(e) =>
                             this.setState({ link: e.target.value })
@@ -112,7 +115,8 @@ class NewProject extends Component {
                       </div>
                       <div className="col-md-4">
                         <label className="small font-weight-bold">
-                          Image URL
+                          Image URL{" "}
+                          <span className="small text-muted">(optional)</span>
                         </label>
                         <input
                           type="text"
@@ -134,7 +138,7 @@ class NewProject extends Component {
                         <input
                           type="text"
                           className="form-control"
-                          id="img-url"
+                          id="status"
                           placeholder="Enter status like text"
                           onChange={(e) =>
                             this.setState({ status: e.target.value })

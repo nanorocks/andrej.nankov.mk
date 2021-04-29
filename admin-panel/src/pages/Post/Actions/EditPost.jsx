@@ -1,6 +1,6 @@
 import { Component, React } from "react";
 import { show, update } from "../../../services/_index";
-import { ApiMapper } from "../../../config/_index";
+import { ApiMapper, Sanitize } from "../../../config/_index";
 import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import Alert from "../../../components/Alert";
@@ -52,8 +52,8 @@ class EditPost extends Component {
         text,
         date,
         status,
-        references,
-        image,
+        references: Sanitize.nullToEmpty(references),
+        image: Sanitize.nullToEmpty(image),
         metaBudges,
         category,
       });
@@ -201,7 +201,7 @@ class EditPost extends Component {
                             <label className="small font-weight-bold">
                               References{" "}
                               <span className="small text-muted">
-                                (use delimiter `;` for multiple)
+                                (use delimiter `;` for multiple) (optional)
                               </span>
                             </label>
                             <textarea
@@ -267,7 +267,9 @@ class EditPost extends Component {
                                     status: e.target.checked ? 1 : 0,
                                   })
                                 }
-                                checked={this.state.status ? "checked" : ""}
+                                defaultChecked={
+                                  this.state.status ? "checked" : ""
+                                }
                                 required
                               />
                               <label

@@ -4,21 +4,24 @@ import { RouteMapper } from "./../config/_index";
 import { Fragment } from "react";
 import Navbar from "../components/Navbar";
 
-export default function PrivateRoute({ children, ...rest }) {
+export default function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={({ location }) => (
+      render={(props) => (
         <Fragment>
-          <Navbar></Navbar>
-          {Token.get() !== null && children.type.name.toLowerCase() !==
-          RouteMapper.login ? ( children ) : (
-          <Redirect
-            to={{
-              pathname: RouteMapper.login,
-              state: { from: location },
-            }}
-          />
+          {Token.get() !== null ? (
+            <Fragment>
+              <Navbar></Navbar>
+              <Component {...props} key={props.location.key} />
+            </Fragment>
+          ) : (
+            <Redirect
+              to={{
+                pathname: RouteMapper.login,
+                state: { from: props },
+              }}
+            />
           )}
         </Fragment>
       )}

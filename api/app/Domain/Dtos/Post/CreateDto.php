@@ -15,7 +15,7 @@ class CreateDto extends DataTransferObject
     public string $text;
     public string $date;
     public int $status;
-    public string $references;
+    public ?string $references;
     public string $image;
     public string $metaBudges;
     public string $category;

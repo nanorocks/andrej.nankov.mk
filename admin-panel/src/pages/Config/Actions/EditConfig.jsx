@@ -70,13 +70,13 @@ class EditConfig extends Component {
                   ) : (
                     <div className="row pt-4">
                       <div className="col-md-8">
-                        <div class="mb-3">
-                          <label for="title" class="form-label">
+                        <div className="mb-3">
+                          <label className="form-label">
                             Title
                           </label>
                           <input
                             type="text"
-                            class="form-control"
+                            className="form-control"
                             id="title"
                             placeholder="Enter config title"
                             value={this.state.pageTitle}
@@ -86,13 +86,13 @@ class EditConfig extends Component {
                             required
                           />
                         </div>
-                        <div class="mb-3">
-                          <label for="description" class="form-label">
+                        <div className="mb-3">
+                          <label className="form-label">
                             Description
                           </label>
                           <input
                             type="text"
-                            class="form-control"
+                            className="form-control"
                             id="description"
                             placeholder="Enter config description"
                             value={this.state.pageDescription}
@@ -105,12 +105,12 @@ class EditConfig extends Component {
                         <ErrorsHandler errors={this.state.errors} />
                         <div className="d-flex justify-content-between">
                           <Link to="/configs">
-                            <button class="btn btn-dark btn-lg rounded-pill font-weight-bold">
+                            <button className="btn btn-dark btn-lg rounded-pill font-weight-bold">
                               Back
                             </button>
                           </Link>
                           <button
-                            class="btn btn-danger btn-lg rounded-pill font-weight-bold"
+                            className="btn btn-danger btn-lg rounded-pill font-weight-bold"
                             onClick={() => this.updateConfig()}
                           >
                             Submit

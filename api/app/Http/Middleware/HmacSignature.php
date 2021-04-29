@@ -26,7 +26,7 @@ class HmacSignature
         }
 
         return response()->json([
-            'statusCode' => 401,
+            'status' => 401,
             'error' => 'Unauthorized',
             'message' => 'Invalid Signature',
             'attributes' => ['error' => 'Invalid Signature']

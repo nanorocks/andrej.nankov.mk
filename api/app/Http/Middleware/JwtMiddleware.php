@@ -25,7 +25,7 @@ class JwtMiddleware
         }
 
         return response()->json([
-            'statusCode' => 401,
+            'status' => 401,
             'error' => 'Unauthorized',
             'message' => 'Invalid token',
             'attributes' => ['error' => 'Invalid token']

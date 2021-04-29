@@ -36,7 +36,7 @@ class SinglePost extends Component {
           date,
           text,
           category,
-          reference,
+          references,
           metaBudges,
           image,
         } = result.data;
@@ -47,7 +47,7 @@ class SinglePost extends Component {
           date,
           text,
           category,
-          reference,
+          references,
           metaBudges,
           image,
         });
@@ -86,11 +86,13 @@ class SinglePost extends Component {
               })}
             </div>
             <div className="subheading mb-3">
-              <img
-                src={this.state.image}
-                alt={this.state.title}
-                className="d-none d-sm-none d-md-block d-lg-block col-4 w-100 p-0"
-              />
+              {this.state.image !== "" && (
+                <img
+                  src={this.state.image}
+                  alt={this.state.title}
+                  className="d-none d-sm-none d-md-block d-lg-block col-4 w-100 p-0"
+                />
+              )}
             </div>
             <div className="subheading mb-3">{this.state.subTitle}</div>
             <div
@@ -99,7 +101,7 @@ class SinglePost extends Component {
             ></div>
             <p className="mb-3"></p>
             <div className="resume-section-content small">
-              {this.state.references !== "" && (
+              {this.state.references.length > 0 && (
                 <div className="mb-2">REFERENCES</div>
               )}
               <ul className="list-unstyled">

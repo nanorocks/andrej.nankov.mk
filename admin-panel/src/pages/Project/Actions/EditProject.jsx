@@ -1,6 +1,6 @@
 import { Component, React } from "react";
 import { show, update } from "../../../services/_index";
-import { ApiMapper } from "../../../config/_index";
+import { ApiMapper, Sanitize } from "../../../config/_index";
 import { Link } from "react-router-dom";
 import Alert from "../../../components/Alert";
 import ErrorsHandler from "../../../components/ErrorsHandler";
@@ -44,8 +44,8 @@ class EditProject extends Component {
           description,
           date,
           status,
-          link,
-          image,
+          link: Sanitize.nullToEmpty(link),
+          image: Sanitize.nullToEmpty(image),
         });
       }
     );
@@ -141,7 +141,10 @@ class EditProject extends Component {
                         <div className="form-row pb-3">
                           <div className="col-md-4">
                             <label className="small font-weight-bold">
-                              Link
+                              Link{" "}
+                              <span className="small text-muted">
+                                (optional)
+                              </span>
                             </label>
                             <input
                               type="text"
@@ -156,7 +159,10 @@ class EditProject extends Component {
                           </div>
                           <div className="col-md-4">
                             <label className="small font-weight-bold">
-                              Image URL
+                              Image URL{" "}
+                              <span className="small text-muted">
+                                (optional)
+                              </span>
                             </label>
                             <input
                               type="text"

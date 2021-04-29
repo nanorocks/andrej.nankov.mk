@@ -35,7 +35,7 @@ class Login extends Component {
     return (
       <div className="container">
         <div className="row pt-5 mt-5">
-          <form className="col-12 col-sm-12 col-md-4 col-lg-4 offset-0 offset-sm-0 offset-md-4 offset-lg-4 shadow-lg pl-4 pr-4 rounded-lg pt-5">
+          <form className="col-md-6 offset-md-3 shadow-lg pl-4 pr-4 rounded-lg pt-5">
             <hr />
             <div className="text-center h2 font-weight-bolder pb-4 text-capitalize">
               Admin

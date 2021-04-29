@@ -20,13 +20,11 @@ import {
   NewProject,
 } from "./pages/_index";
 import { PrivateRoute, GuestRoute } from "./config/_index";
-import Navbar from "./components/Navbar";
 
-function App() {
+function App(props) {
   return (
     <Router>
       <div>
-        <Navbar></Navbar>
         <Switch>
           <Route exact path="/">
             <Redirect to="/login" />
@@ -36,8 +34,7 @@ function App() {
             exact
             path="/dashboard"
             component={Dashboard}
-          >
-          </PrivateRoute>
+          ></PrivateRoute>
 
           <PrivateRoute exact path="/configs" component={Config}></PrivateRoute>
           <PrivateRoute

@@ -22,7 +22,7 @@ class ApiKeyMiddleware
         }
 
         return response()->json([
-            'statusCode' => 401,
+            'status' => 401,
             'error' => 'Unauthorized',
             'message' => 'Invalid api key',
             'attributes' => ['error' => 'Invalid api key']

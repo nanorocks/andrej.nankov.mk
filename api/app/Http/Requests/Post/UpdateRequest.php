@@ -20,7 +20,7 @@ class UpdateRequest extends Controller
                 Post::TEXT => 'required',
                 Post::DATE => 'required',
                 Post::STATUS => 'required',
-                Post::REFERENCES => 'required',
+                Post::REFERENCES => 'nullable',
                 Post::IMAGE => 'url',
                 Post::META_BUDGES => 'required',
                 Post::CATEGORY => 'required',

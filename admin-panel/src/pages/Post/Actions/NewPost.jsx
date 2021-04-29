@@ -150,7 +150,7 @@ class NewPost extends Component {
                         <label className="small font-weight-bold">
                           References{" "}
                           <span className="small text-muted">
-                            (use delimiter `;` for multiple)
+                            (use delimiter `;` for multiple) (optional)
                           </span>
                         </label>
                         <textarea
