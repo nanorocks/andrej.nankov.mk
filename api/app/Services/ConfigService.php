@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use App\Models\Config;
+use App\Helpers\Client;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Config\ConfigRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 
 class ConfigService
 {
@@ -88,8 +89,17 @@ class ConfigService
     }
 
 
-    public function all(array $params=[]): Collection
+    /**
+     * all
+     *
+     * @param  mixed $params
+     * @return Collection
+     */
+    public function all(array $params = []): Collection
     {
-        return $this->configRepository->all($params);
+        return Client::cache(
+            'configs',
+            $this->configRepository->all($params)
+        );
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Helpers\Client;
 use App\Models\Project;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Project\ProjectRepositoryInterface;
 
@@ -94,8 +96,14 @@ class ProjectService
      * @param  mixed $order
      * @return LengthAwarePaginator
      */
-    public function paginateWithOrder(string $limit, string $param, string $order = 'desc'): LengthAwarePaginator
+    public function paginateWithOrder(Request $request, string $param, string $order = 'desc'): LengthAwarePaginator
     {
-        return $this->projectRepository->paginateWithOrder($limit, $param, $order);
+        $limit = $request->input('limit') ?? 4;
+        $page = $request->input('page') ?? 1;
+
+        return Client::cache(
+            sprintf("projects.%s", $page),
+            $this->projectRepository->paginateWithOrder($limit, $param, $order)
+        );
     }
 }

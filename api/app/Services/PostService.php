@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Post;
+use App\Helpers\Client;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Post\PostRepositoryInterface;
 
@@ -94,9 +96,15 @@ class PostService
      * @param  mixed $order
      * @return LengthAwarePaginator
      */
-    public function paginateWithOrder(string $limit, string $param, string $order = 'desc'): LengthAwarePaginator
+    public function paginateWithOrder(Request $request, string $param, string $order = 'desc'): LengthAwarePaginator
     {
-        return $this->postRepository->paginateWithOrder($limit, $param, $order);
+        $limit = $request->input('limit') ?? 4;
+        $page = $request->input('page') ?? 1;
+
+        return Client::cache(
+            sprintf("posts.%s", $page),
+            $this->postRepository->paginateWithOrder($limit, $param, $order)
+        );
     }
 
     /**

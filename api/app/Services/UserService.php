@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Helpers\Client;
 use App\Repositories\User\UserRepositoryInterface;
 
 class UserService
@@ -49,6 +50,6 @@ class UserService
      */
     public function first(): User
     {
-        return $this->userRepository->first();
+        return Client::cache('user', $this->userRepository->first());
     }
 }

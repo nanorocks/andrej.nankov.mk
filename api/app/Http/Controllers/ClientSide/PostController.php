@@ -80,7 +80,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        return new IndexResource($this->postService->paginateWithOrder($request->input('limit') ?? 4, Post::DATE, 'desc'));
+        return new IndexResource($this->postService->paginateWithOrder($request, Post::DATE, 'desc'));
     }
 
     /**

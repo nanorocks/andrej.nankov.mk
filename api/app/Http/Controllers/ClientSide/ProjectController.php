@@ -79,7 +79,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        return new IndexResource($this->projectService->paginateWithOrder($request->input('limit') ?? 4, Project::DATE, 'desc'));
+        return new IndexResource($this->projectService->paginateWithOrder($request, Project::DATE, 'desc'));
     }
 
     /**
