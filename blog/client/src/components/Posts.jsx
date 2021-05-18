@@ -72,7 +72,7 @@ class Posts extends Component {
                   <h5 className="fa-li">
                     <i className="fas fa-file text-warning"></i>
                   </h5>
-                  <Link to={`/post/` + post.unique_id}>
+                  <Link to={`/post/` + post.unique_id} target="_blank">
                     <h5>{post.title}</h5>
                   </Link>
                 </li>

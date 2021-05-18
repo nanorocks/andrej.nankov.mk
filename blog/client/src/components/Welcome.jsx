@@ -32,7 +32,7 @@ class Welcome extends Component {
             <a href={`mailto:` + this.props.email}>{this.props.email}</a>
           </div>
           <p
-            className="lead mb-3"
+            className="lead mb-3 text-justify"
             dangerouslySetInnerHTML={{ __html: this.props.intro }}
           ></p>
           <p

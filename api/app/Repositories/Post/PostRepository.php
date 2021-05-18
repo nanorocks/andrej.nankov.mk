@@ -30,7 +30,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     {
         return Post::where(Post::UNIQUE_ID, $id)
             ->join(User::TABLE, Post::TABLE . '.' . Post::USER_ID, User::TABLE . '.' . User::ID)
-            ->select([User::TABLE . '.' . User::NAME, Post::TABLE . '.*'])
+            ->select([User::TABLE . '.' . User::NAME, User::TABLE . '.' . User::EMAIL, User::TABLE . '.' . User::PHOTO, Post::TABLE . '.*'])
             ->first();
     }
 }

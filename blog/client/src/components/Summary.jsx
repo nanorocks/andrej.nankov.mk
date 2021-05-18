@@ -7,10 +7,10 @@ class Summary extends Component {
         <div className="resume-section-content">
           <h2 className="mb-5">Summary</h2>
           <div className="subheading mb-3">Education and Experience</div>
-          <p dangerouslySetInnerHTML={{ __html: this.props.summary }}></p>
+          <p className="text-justify" dangerouslySetInnerHTML={{ __html: this.props.summary }}></p>
           <div className="subheading mb-3">Current area of work</div>
           <p
-            className="mb-3"
+            className="mb-3 text-justify"
             dangerouslySetInnerHTML={{ __html: this.props.currentWork }}
           ></p>
           <div>

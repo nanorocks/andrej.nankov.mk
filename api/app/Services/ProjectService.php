@@ -101,9 +101,6 @@ class ProjectService
         $limit = $request->input('limit') ?? 4;
         $page = $request->input('page') ?? 1;
 
-        return Client::cache(
-            sprintf("projects.%s", $page),
-            $this->projectRepository->paginateWithOrder($limit, $param, $order)
-        );
+        return $this->projectRepository->paginateWithOrder($limit, $param, $order);
     }
 }

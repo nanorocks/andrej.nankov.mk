@@ -101,10 +101,7 @@ class PostService
         $limit = $request->input('limit') ?? 4;
         $page = $request->input('page') ?? 1;
 
-        return Client::cache(
-            sprintf("posts.%s", $page),
-            $this->postRepository->paginateWithOrder($limit, $param, $order)
-        );
+        return $this->postRepository->paginateWithOrder($limit, $param, $order);
     }
 
     /**

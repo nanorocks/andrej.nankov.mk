@@ -18,6 +18,8 @@ class SinglePost extends Component {
       date: "",
       category: null,
       name: "",
+      email: "",
+      photo: "",
     };
   }
 
@@ -39,6 +41,8 @@ class SinglePost extends Component {
           references,
           metaBudges,
           image,
+          email,
+          photo
         } = result.data;
         this.setState({
           title,
@@ -49,7 +53,9 @@ class SinglePost extends Component {
           category,
           references,
           metaBudges,
-          image,
+          image: image.trim().length > 0 ? image : "",
+          email,
+          photo,
         });
       })
       .catch((error) => {
@@ -61,7 +67,11 @@ class SinglePost extends Component {
   render() {
     return (
       <div>
-        <Navbar name={this.state.name} />
+        <Navbar
+          email={this.state.email}
+          name={this.state.name}
+          photo={this.state.photo}
+        />
         <section className="resume-section" id="summary">
           <div className="resume-section-content">
             <div className="mb-1 font-italic small text-capitalize">
