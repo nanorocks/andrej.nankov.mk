@@ -38,7 +38,6 @@ class Summary extends Component {
                           </li>
                         );
                       })}
-                    ...
                   </ul>
                 </div>
               )}

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import { Component, React } from "react";
 import { MdModeEdit, MdDelete, MdNoteAdd } from "react-icons/md";
 import { index, destroy } from "../../services/_index";
