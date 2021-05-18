@@ -95,6 +95,7 @@ class Post extends Component {
                     <a
                       href={`${app.ADMIN_PANEL_DOMAIN}posts/${post.unique_id}`}
                       className="text-danger font-weight-bolder"
+                      target="_blank"
                     >
                       {post.title}
                     </a>

@@ -99,7 +99,6 @@ class ProjectService
     public function paginateWithOrder(Request $request, string $param, string $order = 'desc'): LengthAwarePaginator
     {
         $limit = $request->input('limit') ?? 4;
-        $page = $request->input('page') ?? 1;
 
         return $this->projectRepository->paginateWithOrder($limit, $param, $order);
     }
