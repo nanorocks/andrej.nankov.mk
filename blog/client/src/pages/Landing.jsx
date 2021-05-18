@@ -14,6 +14,7 @@ import AnchorLink from "react-anchor-link-smooth-scroll";
 
 class Landing extends Component {
   state = {
+    spinner: false,
     intro: "",
     photo: "",
     email: "",
@@ -30,6 +31,7 @@ class Landing extends Component {
   };
 
   componentDidMount() {
+    this.setState({ spinner: true });
     read(mapper.getCv)
       .then((result) => {
         const {
@@ -63,6 +65,11 @@ class Landing extends Component {
           goals,
           topProgrammingLanguages,
         });
+
+        setTimeout(() => {
+          this.setState({ spinner: false });
+        }, 200);
+
       })
       .catch((error) => {
         console.log(error);
@@ -73,7 +80,11 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <Navbar email={this.state.email} name={this.state.name} photo={this.state.photo} />
+        <Navbar
+          email={this.state.email}
+          name={this.state.name}
+          photo={this.state.photo}
+        />
         <Welcome
           intro={this.state.intro}
           email={this.state.email}
@@ -83,6 +94,7 @@ class Landing extends Component {
           phone={this.state.phone}
           address={this.state.address}
           quotes={this.state.quotes}
+          spinner={this.state.spinner}
         />
         <hr className="m-0" />
         <Projects />
@@ -94,13 +106,18 @@ class Landing extends Component {
           currentWork={this.state.currentWork}
           goals={this.state.goals}
           topProgrammingLanguages={this.state.topProgrammingLanguages}
+          spinner={this.state.spinner}
         />
         <hr className="m-0" />
-        <Highlights
-          highlights={this.state.highlights}
-        />
+        <Highlights highlights={this.state.highlights} />
         <footer className="text-right mb-4">
-          <AnchorLink href="#welcome" id="scrollToTopBtn" className="p-3 m-2 mb-4">☝️</AnchorLink>
+          <AnchorLink
+            href="#welcome"
+            id="scrollToTopBtn"
+            className="p-3 m-2 mb-4"
+          >
+            ☝️
+          </AnchorLink>
         </footer>
       </div>
     );
