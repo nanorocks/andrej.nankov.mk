@@ -78,7 +78,7 @@ class ProfileController extends Controller
      */
     public function update(UpdateRequest $request)
     {
-        return new UpdateResource($this->userService->update($request->convertToDto()->toArray(), $request->convertToDto()->toArray()['id']));
+        return new UpdateResource($this->userService->update($request->convertToDto()));
     }
 
 

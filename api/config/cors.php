@@ -33,8 +33,8 @@ return [
      */
     'allowed_origins' => [
         '*', // local
-        'andrej.nankov.mk', // prod
-        'admin.nankov.mk', // prod
+        // 'andrej.nankov.mk', // prod
+        // 'admin.nankov.mk', // prod
     ],
 
     /*

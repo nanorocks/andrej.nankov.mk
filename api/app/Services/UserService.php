@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Dtos\Profile\UpdateDto;
 use App\Models\User;
 use App\Helpers\Client;
 use App\Repositories\User\UserRepositoryInterface;
@@ -26,9 +27,9 @@ class UserService
      *
      * @return User
      */
-    public function update(array $attributes, int $id): ?User
+    public function update(UpdateDto $dto): ?User
     {
-        return $this->userRepository->update($attributes, $id);
+        return $this->userRepository->update($dto->toArray(), $dto->id);
     }
 
     /**
@@ -50,6 +51,6 @@ class UserService
      */
     public function first(): User
     {
-        return Client::cache('user', $this->userRepository->first());
+        return $this->userRepository->first();
     }
 }

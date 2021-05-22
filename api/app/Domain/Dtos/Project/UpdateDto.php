@@ -24,7 +24,7 @@ class UpdateDto extends DataTransferObject
             Project::DATE => $request->getParams()->date,
             Project::STATUS => $request->getParams()->status,
             Project::LINK => $request->getParams()->link,
-            Project::IMAGE => $request->getParams()->image,
+            Project::IMAGE => empty($request->getParams()->image) ? null : $request->getParams()->image,,
             Project::USER_ID => $request->userId
         ]);
     }

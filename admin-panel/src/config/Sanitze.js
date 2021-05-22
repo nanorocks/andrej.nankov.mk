@@ -23,4 +23,8 @@ export const Sanitize = {
   nullToEmpty(value) {
     return value === null ? "" : value;
   },
+
+  stringToInt(value) {
+    return parseInt(value);
+  },
 };

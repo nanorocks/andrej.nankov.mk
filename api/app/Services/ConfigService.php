@@ -97,9 +97,6 @@ class ConfigService
      */
     public function all(array $params = []): Collection
     {
-        return Client::cache(
-            'configs',
-            $this->configRepository->all($params)
-        );
+        return $this->configRepository->all($params);
     }
 }

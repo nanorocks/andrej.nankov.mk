@@ -13,7 +13,7 @@ class UpdateDto extends DataTransferObject
     public string $subTitle;
     public string $text;
     public string $date;
-    public int $status;
+    public ?int $status;
     public ?string $references;
     public string $image;
     public string $metaBudges;
@@ -27,7 +27,7 @@ class UpdateDto extends DataTransferObject
             Post::SUB_TITLE => $request->getParams()->subTitle,
             Post::TEXT => $request->getParams()->text,
             Post::DATE => $request->getParams()->date,
-            Post::STATUS => $request->getParams()->status,
+            Post::STATUS => intval($request->getParams()->status),
             Post::REFERENCES => $request->getParams()->references,
             Post::IMAGE => $request->getParams()->image,
             Post::META_BUDGES => $request->getParams()->metaBudges,

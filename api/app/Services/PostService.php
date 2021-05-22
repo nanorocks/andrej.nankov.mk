@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Post;
-use App\Helpers\Client;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Post\PostRepositoryInterface;

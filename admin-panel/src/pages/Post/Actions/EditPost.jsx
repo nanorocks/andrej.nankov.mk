@@ -51,7 +51,7 @@ class EditPost extends Component {
         subTitle,
         text,
         date,
-        status,
+        status: Sanitize.stringToInt(status),
         references: Sanitize.nullToEmpty(references),
         image: Sanitize.nullToEmpty(image),
         metaBudges,

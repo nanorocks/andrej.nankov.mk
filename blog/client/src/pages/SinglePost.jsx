@@ -20,7 +20,7 @@ class SinglePost extends Component {
       name: "",
       email: "",
       photo: "",
-      spinner: false,
+       spinner: false,
     };
   }
 

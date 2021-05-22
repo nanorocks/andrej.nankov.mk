@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Helpers\Client;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
