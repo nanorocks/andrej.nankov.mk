@@ -102,7 +102,7 @@ class Post extends Component {
                     </a>
                   </td>
                   <td className="small font-weight-bolder">
-                    {post.status ? "Published" : "Unpublished"}
+                    {parseInt(post.status) ? "Published" : "Unpublished"}
                   </td>
                   <th>{post.date}</th>
                   <td>

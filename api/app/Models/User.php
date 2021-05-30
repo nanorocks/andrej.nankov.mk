@@ -66,6 +66,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         self::GOALS,
         self::QUOTES,
         self::SOC_MEDIA,
+        self::HIGHLIGHTS,
     ];
 
     /**
