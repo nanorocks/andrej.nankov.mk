@@ -2155,6 +2155,12 @@ pre code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.goog-te-combo{
+  font-size: 0.8rem;
+  padding: 2px;
+  border-radius: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

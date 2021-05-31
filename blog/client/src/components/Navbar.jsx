@@ -84,6 +84,7 @@ class Navbar extends Component {
                 </li>
               );
             })}
+            <li id="google_translate_element"></li>
           </ul>
         </div>
       </nav>
