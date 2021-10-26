@@ -4,13 +4,13 @@ import {
   Welcome,
   Summary,
   Highlights,
-  Posts,
-  Projects,
 } from "./../components/_index";
 import { mapper } from "./../config/mapper";
 import { read } from "./../services/apiReader";
 import { withRouter } from "react-router-dom";
 import AnchorLink from "react-anchor-link-smooth-scroll";
+import Posts from "../components/functions/Posts";
+import Projects from "../components/functions/Projects";
 
 class Landing extends Component {
   state = {
