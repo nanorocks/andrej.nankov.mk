@@ -14,7 +14,7 @@ function CardPicasso({ title, subtitle, content, className }) {
             <CardSubtitle className="mb-2 text-muted" tag="h6">
               {subtitle}
             </CardSubtitle>
-            <CardText>{content}</CardText>
+            <CardText tag="div">{content}</CardText>
           </CardBody>
         </Card>
       </ColPicasso>

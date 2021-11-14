@@ -10,3 +10,4 @@ export { default as TablePicasso } from "./TablePicasso";
 export { default as InputPicasso } from "./InputPicasso";
 export { default as ListGroupItemPicasso } from "./ListGroupItemPicasso";
 export { default as ListGroupPicasso } from "./ListGroupPicasso";
+export { default as ModalPicasso } from "./ModalPicasso";

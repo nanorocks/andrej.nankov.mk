@@ -1,10 +1,10 @@
 import React from "react";
 import { ListGroupItem } from "reactstrap";
 
-function ListGroupItemPicasso({ text, url }) {
+function ListGroupItemPicasso({ content }) {
   return (
-    <ListGroupItem href={url} tag="a">
-      {text}
+    <ListGroupItem>
+      {content}
     </ListGroupItem>
   );
 }
