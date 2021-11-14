@@ -2,7 +2,7 @@ import React from "react";
 import OffcanvasMenu from "react-offcanvas-menu-component";
 import { Link } from "react-router-dom";
 
-function Navbar({ location }) {
+function Navbar({ location, menu, header }) {
   return (
     <OffcanvasMenu
       Link={Link}
@@ -10,22 +10,10 @@ function Navbar({ location }) {
       config={{
         width: 300,
         push: true,
-        skin: 'dark'
+        skin: "dark",
       }}
-      menu={[
-        { text: "Home", link: "/" },
-        { text: "Posts", link: "/posts" },
-        { text: "Projects", link: "/projects" },
-      ]}
-      header={
-        <img
-          src="https://via.placeholder.com/150"
-          className="menu-logo"
-          alt="logo"
-          width="250"
-          height="100"
-        />
-      }
+      menu={menu}
+      header={header}
       footer={<Footer />}
     />
   );

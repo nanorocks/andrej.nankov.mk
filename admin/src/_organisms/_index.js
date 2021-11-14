@@ -1,0 +1,13 @@
+export { default as Base } from "./Base";
+export { default as ContainerPicasso } from "./ContainerPicasso";
+export { default as Goals } from "./Goals";
+export { default as Highlights } from "./Highlights";
+export { default as Intro } from "./Intro";
+export { default as Navbar } from "./Navbar";
+export { default as PostForm } from "./PostForm";
+export { default as ProgrammingLanguages } from "./ProgrammingLanguages";
+export { default as ProjectForm } from "./ProjectForm";
+export { default as Quotes } from "./Quotes";
+export { default as SocMedia } from "./SocMedia";
+export { default as Summary } from "./Summary";
+export { default as Work } from "./Work";
