@@ -8,3 +8,5 @@ export { default as RowPicasso } from "./RowPicasso";
 export { default as SpinnerPicasso } from "./SpinnerPicasso";
 export { default as TablePicasso } from "./TablePicasso";
 export { default as InputPicasso } from "./InputPicasso";
+export { default as ListGroupItemPicasso } from "./ListGroupItemPicasso";
+export { default as ListGroupPicasso } from "./ListGroupPicasso";

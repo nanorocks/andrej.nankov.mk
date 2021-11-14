@@ -30,6 +30,18 @@ function App() {
         <Route path="posts" element={<Posts />} />
         <Route path="projects" element={<Projects />} />
       </Routes>
+      <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
     </div>
   );
 }

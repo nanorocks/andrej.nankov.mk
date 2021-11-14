@@ -4,7 +4,7 @@ import { CardPicasso } from "./../_molecules/_index";
 function Intro() {
     return (
       <>
-        <CardPicasso title="Intro" />
+        <CardPicasso title="Intro" subtitle="Last Update 2 Months Ago" />
       </>
     );
 }

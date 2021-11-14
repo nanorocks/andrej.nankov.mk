@@ -4,7 +4,7 @@ import { CardPicasso } from "./../_molecules/_index";
 function PostForm() {
     return (
       <>
-        <CardPicasso title="PostForm" />
+        <CardPicasso title="PostForm" subtitle="Last Update 2 Months Ago" />
       </>
     );
 }

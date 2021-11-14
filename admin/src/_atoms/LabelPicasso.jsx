@@ -3,7 +3,7 @@ import { Label } from "reactstrap";
 
 function LabelPicasso({ forInput, text }) {
   return (
-    <Label for={forInput} hidden>
+    <Label for={forInput}>
       {text}
     </Label>
   );

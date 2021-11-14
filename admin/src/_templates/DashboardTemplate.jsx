@@ -16,6 +16,7 @@ export default function DashboardTemplate() {
   return (
     <ContainerPicasso className="pt-5">
       <Base></Base>
+      <Goals></Goals>
       <Quotes></Quotes>
       <Intro></Intro>
       <Highlights></Highlights>
@@ -23,7 +24,6 @@ export default function DashboardTemplate() {
       <ProgrammingLanguages></ProgrammingLanguages>
       <Work></Work>
       <Summary></Summary>
-      <Goals></Goals>
     </ContainerPicasso>
   );
 }
