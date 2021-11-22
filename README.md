@@ -1,4 +1,6 @@
-# blog-api
+# nankov.mk
+
+Applications for personal website !!!
 
 - API Powered by PHP Lumen for the Blog with Swagger Doc and JWT.
     - For production ready config only .env and config/
