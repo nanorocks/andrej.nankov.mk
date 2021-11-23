@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://homestead.test",
+            "url": "http://blog-api.repo",
             "description": "Blog API Server"
         }
     ],

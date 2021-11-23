@@ -78,9 +78,11 @@ class AuthController
      */
     public function login(LoginRequest $request)
     {
-        $reCaptcha = $this->reCaptchaService->validateReCaptcha($request->convertToDto());
-        if(!$reCaptcha['success']){
-            return response()->json(['message' => $reCaptcha['error-codes'][0]], 401);
+        if (env('RECAPTCHA')) {
+            $reCaptcha = $this->reCaptchaService->validateReCaptcha($request->convertToDto());
+            if (!$reCaptcha['success']) {
+                return response()->json(['message' => $reCaptcha['error-codes'][0]], 401);
+            }
         }
 
         $user = $this->userService->findWhere('email', $request->convertToDto()->email);

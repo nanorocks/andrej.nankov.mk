@@ -25,7 +25,7 @@ class Controller extends BaseController implements RequestInterface
      * )
      * @OA\Server(
      * description="Blog API Server",
-     * url="http://homestead.test"
+     * url="http://blog-api.repo"
      * )
      *
      * @OA\SecurityScheme(
