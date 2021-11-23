@@ -1,4 +1,4 @@
-import { CONN } from "./../config/app";
+import { CONN } from "../config/app";
 import axios from "axios";
 
 const urlBuilder = (path, query = "&") => {
