@@ -1,5 +1,4 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 .App {
   background: rgb(34, 193, 195);

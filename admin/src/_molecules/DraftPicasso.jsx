@@ -1,29 +1,32 @@
-import React, { useState } from "react";
-import { EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
+import React, { useMemo, useState } from 'react'
+import { createEditor } from 'slate'
+import { Slate, Editable, withReact } from 'slate-react'
+import { ButtonPicasso } from '../_atoms/_index'
 
 function DraftPicasso() {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  const onEditorStateChange = (editorState) => {
-    setEditorState({
-      editorState,
-    });
-  }
-
-  const handleKeyCommand = () => {
-
-  }
-
+  const editor = useMemo(() => withReact(createEditor()), [])
+  const [value, setValue] = useState([
+    {
+      type: 'html',
+      children: [{ text: '' }],
+    },
+  ])
+  // Render the Slate context.
   return (
-    <div>
-      <Editor
-        editorState={editorState}
-        handleKeyCommand={handleKeyCommand}
-        onEditorStateChange={onEditorStateChange}
-      />
-    </div>
-  );
+    <>
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={newValue => setValue(newValue)}
+      >
+        <div className="shadow-sm border-bottom p-2">
+          <Editable placeholder="White something ..." />
+        </div>
+      </Slate>
+      <ButtonPicasso name="Save" className="mt-2" color="success"/>
+    </>
+  )
 }
 
 export default DraftPicasso;

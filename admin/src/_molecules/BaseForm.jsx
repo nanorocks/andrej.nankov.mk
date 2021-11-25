@@ -50,7 +50,7 @@ function BaseForm() {
             </FormGroupPicasso>
           </ColPicasso>
         </RowPicasso>
-        <ButtonPicasso name="Save" />
+        <ButtonPicasso name="Save" color="danger"/>
       </FormPicasso>
     </>
   );

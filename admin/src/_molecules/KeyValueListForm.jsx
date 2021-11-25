@@ -10,27 +10,36 @@ import {
   FormPicasso,
   ButtonPicasso,
   ModalPicasso,
-} from "./../_atoms/_index";
+} from "../_atoms/_index";
 
 import { GoPencil, GoTrashcan } from "react-icons/go";
 
-function GoalsForm() {
+function KeyValueListForm({ header, btnName, label, addNew }) {
   return (
     <>
       <RowPicasso>
         <ColPicasso xs={12} sm={12} md={12} lg={12}>
           <ModalPicasso
-            header="New Goal"
-            btnName="New Goal"
+            header={header}
+            btnName={btnName}
+            btnColor="dark"
             body={
               <>
                 <FormPicasso>
                   <FormGroupPicasso>
-                    <LabelPicasso text="Goal" />
+                    <LabelPicasso text="Date" />
+                    <InputPicasso type="date" />
+                  </FormGroupPicasso>
+                  <FormGroupPicasso>
+                    <LabelPicasso text="Key" />
+                    <InputPicasso />
+                  </FormGroupPicasso>
+                  <FormGroupPicasso>
+                    <LabelPicasso text="Value" />
                     <InputPicasso />
                   </FormGroupPicasso>
                 </FormPicasso>
-                <ButtonPicasso name="Add new" />
+                <ButtonPicasso name={addNew} />
               </>
             }
           />
@@ -40,10 +49,10 @@ function GoalsForm() {
             <ListGroupItemPicasso
               content={
                 <div className="d-flex justify-content-between">
-                  <div>aaaa</div>
+                  <div className="">2020 | aaaa | aaaaa</div>
                   <div>
                     <ModalPicasso
-                      header="Edit Goal"
+                      header={`Edit ${header}`}
                       btnName={<GoPencil />}
                       btnClassName="border-0 bg-secondary-custom border-0"
                     />
@@ -62,4 +71,4 @@ function GoalsForm() {
   );
 }
 
-export default GoalsForm;
+export default KeyValueListForm;
