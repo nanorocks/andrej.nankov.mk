@@ -8,6 +8,7 @@ For api doc use the postman file and integrate to postman client and play with r
 
 - The whole API is moved to Wordpress and the admin-panel is integrated for making CRUD operations.
 - Visit: https://wpadmin.nankov.mk/
+- Ref: https://developer.wordpress.org/rest-api/
 
 
 ### SPA (client)
