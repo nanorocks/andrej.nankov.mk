@@ -13,7 +13,7 @@ For api doc use the postman file and integrate to postman client and play with r
 
 ### SPA (client)
 
-- ReactJS with HTML Template for display and render data.
+- Laravel with HTML Template for display and render data. We have SEO and GA implementation.
 - Visit: https://nankov.mk/
 
 
