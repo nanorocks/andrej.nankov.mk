@@ -1,7 +1,7 @@
 <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/">
-            <span class="lnr lnr-moon"></span>
+            nankov.mk
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header" aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
             <span class="lnr lnr-menu"></span>
@@ -12,19 +12,19 @@
                     <a class="nav-link" href="#home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#who-we-are">Profile</a>
+                    <a class="nav-link" href="#posts">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#blog">Blog</a>
+                    <a class="nav-link" href="#projects">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#portfolio">Portfolio</a>
+                    <a class="nav-link" href="#highlights">Highlights</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#pricing">Pricing</a>
+                    <a class="nav-link font-weight-bold" href="#tpl">Tpl</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
+                    <a class="nav-link" href="#soc">Soc.</a>
                 </li>
             </ul>
         </div>
@@ -32,9 +32,9 @@
 </nav>
 <div class="jumbotron d-flex align-items-center" style="background-image: url(img/hero-2.jpg)">
     <div class="container text-center">
-        <h1 class="display-2 mb-4">Hello, world!</h1>
+        <h1 class="display-2 mb-4"> {{ $profile['title']['rendered'] }}</h1>
         <p>
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.<br />Duis mollis, est non commodo luctus.
+            {{ $profile['acf']['area_of_work'] }}
         </p>
     </div>
 </div>

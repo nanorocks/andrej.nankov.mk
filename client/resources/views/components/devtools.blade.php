@@ -1,44 +1,22 @@
 <section id="gtco-client" class="bg-white">
     <div class="container">
+        <a id="tpl"></a>
         <div class="section-content">
             <div class="title-wrap">
-                <h2 class="section-title">
-                    Who love to <b> work</b> with us
+                <h2 class="section-title section-title-devtools">
+{{--                    {{ $devTools[0]->acf->category }}--}}
+                    <b>T</b>ools and <b>p</b>rogramming <b>l</b>anguages
+                    <p class="section-sub-title">{!! $metas['Tools and programming languages'] !!}</p>
                 </h2>
             </div>
-            <div class="row ">
-                <div class="col-md-2">
-                    <div class="client-item">
-                        <img class="img-responsive" src="img/client-1.png" alt=" " />
+            <div class="row">
+                @foreach($devTools as $dt)
+                    <div class="col-12 col-sm-6 col-md-2 p-4 card border-0 rounded-circle text-center">
+                        <div class="client-item m-1">
+                            <img class="img-responsive shadow" src="{{ $dt->acf->photo->url ?? '#' }}" alt="{{ $dt->title->rendered }}" style="border-radius: 15%" data-toggle="tooltip" data-placement="top" title="{{ $dt->title->rendered }}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="client-item">
-                        <img class="img-responsive" src="img/client-2.png" alt=" " />
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="client-item">
-                        <img class="img-responsive" src="img/client-3.png" alt=" " />
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="client-item">
-                        <img class="img-responsive" src="img/client-4.png" alt=" " />
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="client-item">
-                        <img class="img-responsive" src="img/client-5.png" alt=" " />
-                    </div>
-                </div>
-                <div class="col-md-2">
-
-                    <div class="client-item">
-                        <img class="img-responsive" src="img/client-6.png" alt=" " />
-                    </div>
-
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
