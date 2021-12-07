@@ -19,7 +19,7 @@
                         <div class="grid-sizer"></div>
                         <div class="gutter-sizer"></div>
                         @foreach($projects as $index => $project)
-                            <a title="{{ $project->acf->created_at }} | {{ $project->title->rendered }}" href="{{ $project->acf->link }}" target="_blank" class="text-dark grid-item {{ $project->acf->status }} {{ ($index === 2 || $index === 5 || $index === 8 || $index === 10 || $index === 13 || $index === 15 || $index === 18) ? 'grid-item-height' : '' }}">
+                            <a title="{{ $project->acf->created_at }} | {{ $project->title->rendered }}" href="{{ route('projects.slug', $project->slug) }}" class="text-dark grid-item {{ $project->acf->status }} {{ ($index === 2 || $index === 5 || $index === 8 || $index === 10 || $index === 13 || $index === 15 || $index === 18) ? 'grid-item-height' : '' }}">
                                 <div class="grid-item-wrapper text-center">
                                     <img src="{{ 'https://eu.ui-avatars.com/api/?size=20&background=random&name='. $project->title->rendered ?? 'img/blog-1.jpg' }}" alt="portfolio-img"
                                          class="portfolio-item"/>

@@ -30,13 +30,24 @@ class HomeController extends Controller
         $counter = $this->wpApi->counter();
         $socMedias = $this->wpApi->socMedias();
         $metas = $this->wpApi->metas();
-
-//        dd($projects);
+//        dd($posts);
         return view('home', compact('profile', 'devTools', 'goals', 'highlights', 'posts', 'projects', 'counter', 'socMedias', 'metas', 'projectsStatus'));
     }
 
     public function project(string $slug)
     {
+        $project = $this->wpApi->singleProject($slug);
+        $metas = $this->wpApi->metas();
+        $socMedias = $this->wpApi->socMedias();
 
+        return view('project', compact('project', 'metas', 'socMedias'));
+    }
+
+    public function post(string $slug)
+    {
+        $post = $this->wpApi->singlePost($slug);
+        $metas = $this->wpApi->metas();
+        $socMedias = $this->wpApi->socMedias();
+        return view('post', compact('post', 'metas', 'socMedias'));
     }
 }

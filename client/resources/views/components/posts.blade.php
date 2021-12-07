@@ -1,118 +1,55 @@
 <section id="gtco-blog" class="bg-grey">
+    <a id="posts"></a>
     <div class="container">
         <div class="section-content">
             <div class="title-wrap mb-5">
-                <h2 class="section-title">Latest <b>news</b></h2>
-                <p class="section-sub-title">Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+                <h2 class="section-title">Posts Area</h2>
+                <p class="section-sub-title">{!! $metas['Posts Area'] !!}</p>
             </div>
             <div class="row">
                 <div class="col-md-12 blog-holder">
-                    <div class="row">
-                        <div class="col-md-4 blog-item-wrapper">
-                            <div class="blog-item">
-                                <div class="blog-img">
-                                    <a href="single.html">
-                                        <img src="img/blog-1.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="blog-text">
-                                    <div class="blog-tag">
-                                        <a href="#"><h6><small>CODE</small></h6></a>
-                                    </div>
-                                    <div class="blog-title">
-                                        <a href="single.html"><h4>Amazing Blog Title</h4></a>
-                                    </div>
-                                    <div class="blog-meta">
-                                        <p class="blog-date">30 May 2016</p> /
-                                        <p class="blog-comment"><a href="">23 Comments</a></p>
-                                    </div>
-                                    <div class="blog-desc">
-                                        <p>Lorem ipsum dolor sit amet con sectetur adipiscing elit sed do eiu smod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    </div>
-                                    <div class="blog-author">
-                                        <p>by John Doe</p>
-                                    </div>
-                                    <div class="blog-share-wrapper">
-                                        <a class="blog-share" href="google.com">
-                                            <i class="fab fa-facebook-square"></i>
-                                        </a>
-                                        <a class="blog-share" href="google.com">
-                                            <i class="fab fa-twitter-square"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 blog-item-wrapper">
-                            <div class="blog-item">
-                                <div class="blog-img">
-                                    <a href="#">
-                                        <img src="img/blog-2.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="blog-text">
-                                    <div class="blog-tag">
-                                        <a href="#"><h6><small>SPORTS</small></h6></a>
-                                    </div>
-                                    <div class="blog-title">
-                                        <a href="#"><h4>Amazing Blog Title</h4></a>
-                                    </div>
-                                    <div class="blog-meta">
-                                        <p class="blog-date">30 May 2016</p> /
-                                        <p class="blog-comment"><a href="">23 Comments</a></p>
-                                    </div>
-                                    <div class="blog-desc">
-                                        <p>Lorem ipsum dolor sit amet con sectetur adipiscing elit sed do eiu smod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    </div>
-                                    <div class="blog-author">
-                                        <p>by John Doe</p>
-                                    </div>
-                                    <div class="blog-share-wrapper">
-                                        <a class="blog-share" href="google.com">
-                                            <i class="fab fa-facebook-square"></i>
-                                        </a>
-                                        <a class="blog-share" href="google.com">
-                                            <i class="fab fa-twitter-square"></i>
-                                        </a>
+                    <div class="posts">
+                        @foreach($posts as $post)
+                            <div class="m-2">
+                                <div class="blog-item-wrapper">
+                                    <div class="blog-item">
+                                        <div class="blog-img">
+                                            <a href="{{ route('posts.slug', $post->slug) }}">
+                                                <img src="{{ $post->acf->photo->url ?? 'img/blog-1.jpg' }}" alt="{{ $post->title->rendered }}" title="{{ $post->title->rendered }}"/>
+                                            </a>
+                                        </div>
+                                        <div class="blog-text" style="min-height: 460px">
+                                            <div class="blog-tag">
+                                                <a href="{{ route('posts.slug', $post->slug) }}"><h6>
+                                                        <small>{{ implode(",", $post->categories_names) }}</small></h6>
+                                                </a>
+                                            </div>
+                                            <div class="blog-title">
+                                                <a href="{{ route('posts.slug', $post->slug) }}">
+                                                    <h4>{{ $post->title->rendered }}</h4></a>
+                                            </div>
+                                            <div class="blog-meta">
+                                                <p class="blog-date">{{ $post->acf->crated_at }} / <p class="blog-comment ml-1"><a href="{{ route('posts.slug', $post->slug) }}#disqus_thread">Post a comment</a></p></p>
+                                            </div>
+                                            <div class="blog-desc">
+                                                <p>{!! $post->excerpt->rendered !!}</p>
+                                            </div>
+                                            <div class="blog-author">
+                                                <p>by {{ $post->acf->creator }}</p>
+                                            </div>
+                                            <div class="blog-share-wrapper">
+                                                <a class="blog-share" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.slug', $post->slug) }}">
+                                                    <i class="bi bi-facebook"></i>
+                                                </a>
+                                                <a class="blog-share" href="https://www.linkedin.com/sharing/share-offsite/?url={{ route('posts.slug', $post->slug) }}">
+                                                    <i class="bi bi-linkedin"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 blog-item-wrapper">
-                            <div class="blog-item">
-                                <div class="blog-img">
-                                    <a href="#">
-                                        <img src="img/blog-3.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="blog-text">
-                                    <div class="blog-tag">
-                                        <a href="#"><h6><small>ECONOMY</small></h6></a>
-                                    </div>
-                                    <div class="blog-title">
-                                        <a href="#"><h4>Amazing Blog Title</h4></a>
-                                    </div>
-                                    <div class="blog-meta">
-                                        <p class="blog-date">30 May 2016</p> /
-                                        <p class="blog-comment"><a href="">23 Comments</a></p>
-                                    </div>
-                                    <div class="blog-desc">
-                                        <p>Lorem ipsum dolor sit amet con sectetur adipiscing elit sed do eiu smod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    </div>
-                                    <div class="blog-author">
-                                        <p>by John Doe</p>
-                                    </div>
-                                    <div class="blog-share-wrapper">
-                                        <a class="blog-share" href="google.com">
-                                            <i class="fab fa-facebook-square"></i>
-                                        </a>
-                                        <a class="blog-share" href="google.com">
-                                            <i class="fab fa-twitter-square"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

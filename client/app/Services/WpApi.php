@@ -36,7 +36,16 @@ class WpApi
 
     public function posts()
     {
-        return Http::get($this->domain . WpApiMapper::POSTS['All Projects & Limit'])->body();
+        return json_decode(Http::get($this->domain . WpApiMapper::POSTS['All Projects & Limit'])->body());
+    }
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function singlePost(string $slug)
+    {
+        return json_decode(Http::get($this->domain . WpApiMapper::POSTS['Filter by attribute Post'] . $slug)->body())[0];
     }
 
     /**
@@ -45,6 +54,15 @@ class WpApi
     public function projects()
     {
         return json_decode(Http::get($this->domain . WpApiMapper::PROJECTS['All Projects'])->body());
+    }
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function singleProject(string $slug)
+    {
+        return json_decode(Http::get($this->domain . WpApiMapper::PROJECTS['Filter by attribute'] . $slug)->body())[0];
     }
 
     /**

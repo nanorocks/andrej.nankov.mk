@@ -5,15 +5,13 @@ namespace App\Helpers;
 class WpApiMapper
 {
     const PROJECTS = [
-        'Single Project' => 'wp-json/wp/v2/projects/82',
-        'Filter by attribute' => 'wp-json/wp/v2/projects?slug=valuta-php-mk',
+        'Filter by attribute' => 'wp-json/wp/v2/projects?slug=',
         'All Projects' => 'wp-json/wp/v2/projects?_fields=id,title.rendered,status,slug,acf,content.rendered&per_page=50',
     ];
 
     const POSTS = [
-        'Single Post' => 'wp-json/wp/v2/posts/50',
-        'Filter by attribute Post' => 'wp-json/wp/v2/posts?slug=laravel-compass-integration',
-        'All Projects & Limit' => 'wp-json/wp/v2/posts?per_page=1',
+        'Filter by attribute Post' => 'wp-json/wp/v2/posts?slug=',
+        'All Projects & Limit' => 'wp-json/wp/v2/posts?_fields=id,title.rendered,status,slug,acf,excerpt.rendered,categories_names,tags_names&per_page=50',
     ];
 
     const HIGHLIGHTS = [
