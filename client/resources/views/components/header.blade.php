@@ -24,17 +24,20 @@
                     <a class="nav-link font-weight-bold" href="#tpl">Tpl</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#fun">Fun</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#soc">Soc.</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="jumbotron d-flex align-items-center" style="background-image: url(img/hero-2.jpg)">
+<div class="jumbotron d-flex align-items-center" style="background-image: url('{{ asset('img/header/header-' . rand(1, 6) . '.png') }}')">
     <div class="container text-center">
-        <h1 class="display-2 mb-4"> {{ $profile['title']['rendered'] }}</h1>
+        <h1 class="display-2 mb-4"> {{ $profile->title->rendered }}</h1>
         <p>
-            {{ $profile['acf']['area_of_work'] }}
+            {{ $profile->acf->address }} | <a href="mailto:{{ $profile->acf->email }}" class="font-weight-bold text-danger">{{ $profile->acf->email }}</a> | {{ $profile->acf->phone }}
         </p>
     </div>
 </div>

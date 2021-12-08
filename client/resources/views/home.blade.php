@@ -1,19 +1,20 @@
 @extends('layouts.app')
 @section('title')
-nankov.mk | {{ $profile['title']['rendered'] }}
+nankov.mk | {{ $profile->title->rendered }}
 @endsection
 @section('description')
-{{ $profile['acf']['full_name'] }} | {{ $profile['acf']['address'] }}
+{{ $profile->acf->full_name }} | {{ $profile->acf->address }}
 @endsection
 @section('body')
         @include('components.header')
+        @include('components.profile')
         @include('components.counter')
         @include('components.goals')
-        @include('components.profile')
         @include('components.posts')
         @include('components.projects')
         @include('components.highlights')
         @include('components.devtools')
+        @include('components.fun')
         @include('components.footer')
 @endsection
 @section('js')

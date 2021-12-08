@@ -4,7 +4,7 @@
 
             <div class="title-wrap">
                 <h2 class="section-title">
-                    All the  <span>need </span>that you <span>want</span>
+                    Goals
                 </h2>
                 <p class="section-sub-title">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. <br /> pharetra augue.Donec id elit non mi.</p>
             </div>

@@ -31,7 +31,7 @@ class WpApi
 
     public function profile()
     {
-        return json_decode(Http::get($this->domain . WpApiMapper::PROFILE['Single Profile'])->body(), true);
+        return json_decode(Http::get($this->domain . WpApiMapper::PROFILE['Single Profile'])->body());
     }
 
     public function posts()
