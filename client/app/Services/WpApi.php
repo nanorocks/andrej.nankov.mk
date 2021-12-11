@@ -19,14 +19,17 @@ class WpApi
     }
 
 
-    public function counter()
+    public function quotes()
     {
-
+        return json_decode(Http::get($this->domain . WpApiMapper::QUOTES['All Quotes'])->body());
     }
 
+    /**
+     * @return mixed
+     */
     public function goals()
     {
-        return Http::get($this->domain . WpApiMapper::GOALS['All Goals'])->body();
+        return json_decode(Http::get($this->domain . WpApiMapper::GOALS['All Goals'])->body());
     }
 
     public function profile()

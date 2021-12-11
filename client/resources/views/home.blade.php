@@ -1,14 +1,8 @@
 @extends('layouts.app')
-@section('title')
-nankov.mk | {{ $profile->title->rendered }}
-@endsection
-@section('description')
-{{ $profile->acf->full_name }} | {{ $profile->acf->address }}
-@endsection
 @section('body')
         @include('components.header')
         @include('components.profile')
-        @include('components.counter')
+        @include('components.quotes')
         @include('components.goals')
         @include('components.posts')
         @include('components.projects')

@@ -1,10 +1,4 @@
 @extends('layouts.app')
-@section('title')
-    nankov.mk | Project Area - {{ $project->title->rendered }}
-@endsection
-@section('description')
-    Content related to {{ $project->acf->link }}
-@endsection
 @section('body')
     <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
         <div class="container">

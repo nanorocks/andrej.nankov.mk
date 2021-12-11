@@ -1,75 +1,33 @@
 <section id="gtco-features" class="bg-white">
+    <a id="goals"></a>
     <div class="container">
         <div class="section-content">
-
             <div class="title-wrap">
-                <h2 class="section-title">
+                <h2 class="section-title" style="margin-bottom: 0 !important;">
                     Goals
                 </h2>
-                <p class="section-sub-title">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. <br /> pharetra augue.Donec id elit non mi.</p>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <p class="section-sub-title mb-3">{!! $metas['Goals'] !!}</p>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
 
                 <div class="col-md-12 features-holder">
                     <div class="row">
-
+                        @foreach($goals as $goal)
                         <div class="col-md-4 col-sm-6 feature-item item mb-3 mb-3 text-center">
                             <div class="my-4">
-                                <i class="lnr lnr-cog fs-40"></i>
+                                <i class="{{ $goal->acf->icon }} fs-40" style="color: purple"></i>
                             </div>
-                            <h4>Easy to Customize</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+                            <h4>{{ $goal->acf->heading }}</h4>
+                            <p class="text-justify">{{ $goal->acf->subheading }}</p>
                         </div>
-
-
-                        <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                            <div class="my-4">
-                                <i class="lnr lnr-frame-contract fs-40"></i>
-                            </div>
-                            <h4>Pixel Perfect</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                        </div>
-
-
-                        <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                            <div class="my-4">
-                                <i class="lnr lnr-bubble fs-40"></i>
-                            </div>
-                            <h4>Full Support</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                        </div>
-
-
-                        <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                            <div class="my-4">
-                                <i class="lnr lnr-magic-wand fs-40"></i>
-                            </div>
-                            <h4>Clean Design</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                        </div>
-
-
-                        <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                            <div class="my-4">
-                                <i class="lnr lnr-clock fs-40"></i>
-                            </div>
-                            <h4>Ontime Project</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                        </div>
-
-
-                        <div class="col-md-4 col-sm-6 feature-item item mb-3 text-center">
-                            <div class="my-4">
-                                <i class="lnr lnr-thumbs-up fs-40"></i>
-                            </div>
-                            <h4>Built with SASS</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

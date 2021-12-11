@@ -19,7 +19,7 @@ class WpApiMapper
     ];
 
     const GOALS = [
-        'All Goals' => 'wp-json/wp/v2/goals',
+        'All Goals' => 'wp-json/wp/v2/goals?_fields=title,acf',
     ];
 
     const PROFILE = [
@@ -27,7 +27,7 @@ class WpApiMapper
     ];
 
     const QUOTES = [
-        'All Quotes' => 'wp-json/wp/v2/quotes',
+        'All Quotes' => 'wp-json/wp/v2/quotes?_fields=title,acf',
     ];
 
     const DEV_TOOLS = [
