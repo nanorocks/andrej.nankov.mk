@@ -59,7 +59,7 @@
 <div class="boxed-page">
     @yield('body')
 </div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 <script src="{{ asset('vendor/bootstrap/popper.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/select2/select2.min.js') }}"></script>

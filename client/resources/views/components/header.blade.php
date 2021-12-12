@@ -41,7 +41,7 @@
 </nav>
 <div class="jumbotron d-flex align-items-center" style="background-image: url('{{ asset('img/header/header-' . rand(1, 6) . '.png') }}')">
     <div class="container text-center">
-        <h1 class="display-2 mb-4"> {{ $profile->title->rendered }}</h1>
+        <h1 class="display-2 mb-4 pt-5"> {{ $profile->title->rendered }}</h1>
         <p>
             {{ $profile->acf->address }} | <a href="mailto:{{ $profile->acf->email }}" class="font-weight-bold text-danger">{{ $profile->acf->email }}</a> | {{ $profile->acf->phone }}
         </p>
