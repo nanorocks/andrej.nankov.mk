@@ -8,6 +8,7 @@ use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use \Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\URL;
 
 class HomeController extends Controller
 {
@@ -38,18 +39,6 @@ class HomeController extends Controller
 
 
         SEOMeta::setTitle('Personal website of Andrej Nankov');
-        SEOMeta::setDescription('');
-        SEOMeta::setCanonical('https://nankov.mk');
-
-        OpenGraph::setDescription('This is my page description');
-        OpenGraph::setTitle('');
-        OpenGraph::setUrl('https://nankov.mk');
-        OpenGraph::addProperty('type', 'articles');
-        OpenGraph::addProperty('locale', 'en-us');
-
-        JsonLd::setTitle('Personal website of Andrej Nankov');
-        JsonLd::setDescription('');
-        JsonLd::addImage('https://nankov.mk');
 
         return view('home', compact('profile', 'devTools', 'goals', 'highlights', 'posts', 'projects', 'quotes', 'socMedias', 'metas', 'projectsStatus'));
     }
@@ -60,6 +49,17 @@ class HomeController extends Controller
         $socMedias = $this->cacheSetup('socMedias', $this->wpApi);
         $metas = $this->cacheSetup('metas', $this->wpApi);
 
+        SEOMeta::setTitle($project->title->rendered);
+        SEOMeta::setCanonical(URL::current());
+
+        OpenGraph::setTitle($project->title->rendered);
+        OpenGraph::setUrl(URL::current());
+        OpenGraph::addProperty('type', 'articles');
+        OpenGraph::addProperty('locale', 'en-us');
+
+        JsonLd::setTitle($project->title->rendered);
+        JsonLd::addImage($project->acf->photo->url);
+
         return view('project', compact('project', 'metas', 'socMedias'));
     }
 
@@ -68,6 +68,18 @@ class HomeController extends Controller
         $post = $this->wpApi->singlePost($slug);
         $socMedias = $this->cacheSetup('socMedias', $this->wpApi);
         $metas = $this->cacheSetup('metas', $this->wpApi);
+
+        SEOMeta::setTitle($post->title->rendered);
+        SEOMeta::setDescription('');
+        SEOMeta::setCanonical(URL::current());
+
+        OpenGraph::setTitle($post->title->rendered);
+        OpenGraph::setUrl(URL::current());
+        OpenGraph::addProperty('type', 'articles');
+        OpenGraph::addProperty('locale', 'en-us');
+
+        JsonLd::setTitle($post->title->rendered);
+        JsonLd::addImage($post->acf->photo->url);
 
         return view('post', compact('post', 'metas', 'socMedias'));
     }

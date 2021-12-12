@@ -35,16 +35,16 @@
     </style>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <!-- Hotjar Tracking Code for My site -->
+    <!-- Hotjar Tracking Code for https://nankov.mk -->
     <script>
-        // (function(h,o,t,j,a,r){
-        //     h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        //     h._hjSettings={hjid:2738086,hjsv:6};
-        //     a=o.getElementsByTagName('head')[0];
-        //     r=o.createElement('script');r.async=1;
-        //     r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        //     a.appendChild(r);
-        // })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:2738086,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     </script>
 </head>
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
