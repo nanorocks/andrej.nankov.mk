@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
 Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
+
+Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');

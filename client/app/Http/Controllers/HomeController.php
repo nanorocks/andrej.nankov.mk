@@ -6,6 +6,7 @@ use App\Services\WpApi;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Illuminate\Support\Facades\Artisan;
 use \Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
@@ -82,6 +83,12 @@ class HomeController extends Controller
         JsonLd::addImage($post->acf->photo->url);
 
         return view('post', compact('post', 'metas', 'socMedias'));
+    }
+
+    public function cacheClear()
+    {
+        Artisan::call('cache:clear');
+        die('It works. cache cleared!!!');
     }
 
     /**

@@ -10,6 +10,7 @@ For api doc use the postman file and integrate to postman client and play with r
 - Visit: https://wpadmin.nankov.mk/
 - Ref: https://developer.wordpress.org/rest-api/
 
+- Cache clear try `domain_name/cache/clear`
 
 ### SPA (client)
 
