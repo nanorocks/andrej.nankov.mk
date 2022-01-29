@@ -11,8 +11,7 @@ echo "Deploying application ..."
     # Update codebase
     git pull origin master
     # Composer update and install again for new packages
-    composer install
-    composer update
+    composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 # Exit maintenance mode
 php artisan up
 
