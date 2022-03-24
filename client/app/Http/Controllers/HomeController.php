@@ -104,7 +104,9 @@ class HomeController extends Controller
 
         $wpCall = $call->{$key}();
 
-        Cache::put($key, $wpCall);
+        if(env('APP_DEBUG')) {
+            Cache::put($key, $wpCall);
+        }
 
         return $wpCall;
     }

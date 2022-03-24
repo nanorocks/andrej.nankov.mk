@@ -3,7 +3,8 @@
         <a class="navbar-brand d-flex align-items-center" href="/">
             nankov.mk
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header" aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header"
+            aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
             <span class="lnr lnr-menu"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar-nav-header">
@@ -39,11 +40,13 @@
         </div>
     </div>
 </nav>
-<div class="jumbotron d-flex align-items-center" style="background-image: url('{{ asset('img/header/header-' . rand(1, 6) . '.png') }}')">
+<div class="jumbotron d-flex align-items-center"
+    style="background-image: url('{{ asset('img/header/header-' . rand(1, 6) . '.png') }}')">
     <div class="container text-center">
         <h1 class="display-2 mb-4 pt-5"> {{ $profile->title->rendered }}</h1>
         <p>
-            {{ $profile->acf->address }} | <a href="mailto:{{ $profile->acf->email }}" class="font-weight-bold text-danger">{{ $profile->acf->email }}</a> | {{ $profile->acf->phone }}
+            {{ $profile->acf->address }} | <a href="mailto:{{ $profile->acf->email }}"
+                class="font-weight-bold text-danger">{{ $profile->acf->email }}</a> | {{ $profile->acf->phone }}
         </p>
     </div>
 </div>

@@ -1,30 +1,45 @@
 @extends('layouts.app')
+@section('seo')
+    <title>nankov.mk | {{ $profile->title->rendered }}</title>
+    <meta name="description" content="Personal website of Andrej Nankov about life, blogging, hobbies, IT-carrier">
+    <meta name="keywords"
+        content="software, profile, developer, engineer, posts, articles, blogging, projects, work, experience">
+    <link rel="canonical" href="https://nankov.mk" />
+    <meta name="robots" content="all">
+    <meta property="og:title" content="nankov.mk" />
+    <meta property="og:description" content="Personal website of Andrej Nankov" />
+    <meta property="og:url" content="https://nankov.mk" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="nankov.mk" />
+    <meta property="og:image"
+        content="https://wpadmin.nankov.mk/wp-content/uploads/2021/11/250978249_2952591805054393_1722592307182354630_n-e1639231192454.jpeg" />
+@endsection
 @section('body')
-        @include('components.header')
-        @include('components.profile')
-        @include('components.quotes')
-        @include('components.goals')
-        @include('components.posts')
-        @include('components.projects')
-        @include('components.highlights')
-        @include('components.devtools')
-        @include('components.fun')
-        @include('components.footer')
+    @include('components.header')
+    @include('components.profile')
+    @include('components.quotes')
+    @include('components.goals')
+    @include('components.posts')
+    @include('components.projects')
+    @include('components.highlights')
+    @include('components.devtools')
+    @include('components.fun')
+    @include('components.footer')
 @endsection
 @section('js')
     <script id="dsq-count-scr" src="//nankov-mk.disqus.com/count.js" async></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('.posts').slick({
                 dots: true,
                 arrows: false,
                 infinite: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
-                responsive: [
-                    {
+                responsive: [{
                         breakpoint: 1024,
                         settings: {
                             slidesToShow: 3,

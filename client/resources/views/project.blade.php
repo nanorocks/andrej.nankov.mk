@@ -1,4 +1,18 @@
 @extends('layouts.app')
+@section('seo')
+    <title>nankov.mk | {{ $project->title->rendered }}</title>
+    <meta name="description" content="project: {{ $project->title->rendered }}">
+    <meta name="keywords"
+        content="{{ $project->acf->related_to }}, {{ $project->acf->status }}, {{ $project->acf->created_at }}">
+    <link rel="canonical" href="https://nankov.mk" />
+    <meta name="robots" content="all">
+    <meta property="og:title" content="nankov.mk" />
+    <meta property="og:description" content="{{ $project->title->rendered }}" />
+    <meta property="og:url" content="https://nankov.mk" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="nankov.mk" />
+    <meta property="og:image" content="{{ asset($project->acf->photo->url) }}" />
+@endsection
 @section('body')
     <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
         <div class="container">
@@ -6,7 +20,7 @@
                 nankov.mk
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header"
-                    aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="lnr lnr-menu"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar-nav-header">
@@ -18,7 +32,7 @@
             </div>
         </div>
     </nav>
-    <div class="jumbotron d-flex align-items-center" style="background-image: url({{ asset('img/blog-5.jpg')  }})">
+    <div class="jumbotron d-flex align-items-center" style="background-image: url({{ asset('img/blog-5.jpg') }})">
         <div class="container text-center">
             <h1 class="display-1 mb-4 single-blog-title text-light font-weight-light">{{ $project->title->rendered }}</h1>
         </div>
@@ -28,17 +42,21 @@
             <div class="section-content blog-content">
                 <div class="row">
                     <div class="col-md-3 offset-md-2 pt-5">
-                        <img class="mx-auto d-block shadow-lg border" width="320px" src="{{ asset($project->acf->photo->url) }}" alt="{{ $project->title->rendered }}" style="border-radius: 15px;">
+                        <img class="mx-auto d-block shadow-lg border" width="320px"
+                            src="{{ asset($project->acf->photo->url) }}" alt="{{ $project->title->rendered }}"
+                            style="border-radius: 15px;">
                     </div>
                     <div class="col-md-5 mt-4">
                         <h4><span>{{ $project->title->rendered }}</span></h4>
                         <p>{!! $project->content->rendered !!}</p>
 
-                        <p><strong>Link:</strong><br /><a href="{{ $project->acf->link }}" target="_blank" title="{{ $project->title->rendered }}">{{ $project->acf->link }}</a></p>
+                        <p><strong>Link:</strong><br /><a href="{{ $project->acf->link }}" target="_blank"
+                                title="{{ $project->title->rendered }}">{{ $project->acf->link }}</a></p>
                         <p><strong>Created:</strong><br /> {{ $project->acf->created_at }}</p>
                         <p><strong>Related to:</strong><br /> {{ $project->acf->related_to }}</p>
                         <p><strong>Other Contributors:</strong><br /> {!! $project->acf->contributors !!}</p>
-                        <p><strong>Status:</strong><br /> <span class="text-capitalize">{{ $project->acf->status }}</span></p>
+                        <p><strong>Status:</strong><br /> <span
+                                class="text-capitalize">{{ $project->acf->status }}</span></p>
                     </div>
                 </div>
             </div>
