@@ -1,6 +1,18 @@
 @extends('layouts.app')
 @section('seo')
     <title>nankov.mk | {{ $profile->title->rendered }}</title>
+    <meta name="description" content="Personal website of Andrej Nankov about life, blogging, hobbies, IT-carrier">
+    <meta name="keywords"
+        content="software, profile, developer, engineer, posts, articles, blogging, projects, work, experience">
+    <link rel="canonical" href="https://nankov.mk" />
+    <meta name="robots" content="all">
+    <meta property="og:title" content="nankov.mk" />
+    <meta property="og:description" content="Personal website of Andrej Nankov" />
+    <meta property="og:url" content="https://nankov.mk" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="nankov.mk" />
+    <meta property="og:image"
+        content="https://wpadmin.nankov.mk/wp-content/uploads/2021/11/250978249_2952591805054393_1722592307182354630_n-e1639231192454.jpeg" />
 @endsection
 @section('body')
     @include('components.header')
