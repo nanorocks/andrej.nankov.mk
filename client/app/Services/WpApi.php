@@ -75,8 +75,7 @@ class WpApi
     public function projectsStatus($projects): array
     {
         $statuses = [];
-        foreach ($projects as $project)
-        {
+        foreach ($projects as $project) {
             $statuses[] = $project->acf->status;
         }
 
@@ -114,12 +113,10 @@ class WpApi
     {
         $data =  json_decode(Http::get($this->domain . WpApiMapper::METAS['All Meta for the page'])->body());
         $mapper = [];
-        foreach ($data as $section)
-        {
+        foreach ($data as $section) {
             $mapper[$section->title->rendered] = $section->content->rendered;
         }
 
         return $mapper;
     }
-
 }
