@@ -42,6 +42,7 @@
                 <div class="row">
                     <div class="col-12 mt-4">
                         <h1 class="text-center">{{ $post->title->rendered }}</h1>
+                        <h5 class="text-center">{{ $post->views_counter }}</h5>
                         <p class="m-0 p-0 text-center"><span
                                 class="badge badge-dark rounded-0 p-2 mr-1">{{ implode(',', $post->tags_names) }}</span>|<small
                                 class="ml-1 text-muted" style="font-size: 1.4rem">Created
