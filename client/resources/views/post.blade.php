@@ -41,15 +41,14 @@
             <div class="section-content blog-content pt-3">
                 <div class="row">
                     <div class="col-12">
-                        <h5 class="text-center text-muted">Visited: 1231 times</h5>
                         <h1 class="text-center pt-5 mt-3">{{ $post->title->rendered }}</h1>
 
                         <p class="m-0 p-0 text-center"><span
                                 class="badge badge-dark rounded-0 p-2 mr-1">{{ implode(',', $post->tags_names) }}</span>|<small
                                 class="ml-1 text-muted" style="font-size: 1.4rem">Created
-                                on: {{ $post->acf->crated_at }}</small> 
+                                on: {{ $post->acf->crated_at }}</small>
                                 |<small class="ml-1 text-muted" style="font-size: 1.4rem">{{ $post->views_counter }} views </small>
-                                </p> 
+                                </p>
                         <p class="text-justify pt-4 mt-4">
                             {!! $post->content->rendered !!}
                         </p>
