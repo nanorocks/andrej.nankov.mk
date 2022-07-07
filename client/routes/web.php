@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
 Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
 Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
 

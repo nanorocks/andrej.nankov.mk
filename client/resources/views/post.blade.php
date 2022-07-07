@@ -38,10 +38,12 @@
     </div>
     <section id="gtco-single-content" class="bg-white">
         <div class="container">
-            <div class="section-content blog-content">
+            <div class="section-content blog-content pt-3">
                 <div class="row">
-                    <div class="col-12 mt-4">
-                        <h1 class="text-center">{{ $post->title->rendered }}</h1>
+                    <div class="col-12">
+                        <h5 class="text-center text-muted">Visited: 1231 times</h5>
+                        <h1 class="text-center pt-5 mt-3">{{ $post->title->rendered }}</h1>
+
                         <p class="m-0 p-0 text-center"><span
                                 class="badge badge-dark rounded-0 p-2 mr-1">{{ implode(',', $post->tags_names) }}</span>|<small
                                 class="ml-1 text-muted" style="font-size: 1.4rem">Created
