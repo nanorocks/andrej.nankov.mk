@@ -19,6 +19,15 @@ class HomeController extends Controller
         $this->wpApi = $wpApi;
     }
 
+    public function posts()
+    {
+        $posts = $this->cacheSetup('posts', $this->wpApi);
+        $metas = $this->cacheSetup('metas', $this->wpApi);
+        $socMedias = $this->cacheSetup('socMedias', $this->wpApi);
+
+        return view('posts', compact('posts', 'metas', 'socMedias'));
+    }
+
     public function home()
     {
         $profile = $this->cacheSetup('profile', $this->wpApi);

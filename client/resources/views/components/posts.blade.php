@@ -3,7 +3,8 @@
     <div class="container">
         <div class="section-content">
             <div class="title-wrap mb-5">
-                <h2 class="section-title">Posts Area</h2>
+                <h2 class="section-title mb-0">Posts Area</h2>
+                <a href="{{ route('posts') }}" style="font-size: 20px">view all</a>
                 <p class="section-sub-title">{!! $metas['Posts Area'] !!}</p>
             </div>
             <div class="row">
