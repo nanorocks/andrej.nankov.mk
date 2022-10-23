@@ -12,7 +12,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="nankov.mk" />
     <meta property="og:image"
-        content="https://wpadmin.nankov.mk/wp-content/uploads/2021/11/250978249_2952591805054393_1722592307182354630_n-e1639231192454.jpeg" />
+        content="https://avatars.githubusercontent.com/u/18250654?v=4" />
 @endsection
 @section('body')
     @include('components.header')
@@ -27,7 +27,6 @@
     @include('components.footer')
 @endsection
 @section('js')
-    <script id="dsq-count-scr" src="//nankov-mk.disqus.com/count.js" async></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
