@@ -62,11 +62,7 @@
                                                 </a>
                                             </div>
                                             <div class="blog-meta">
-                                                <p class="blog-date">{{ $post->acf->crated_at }} /
-                                                <p class="blog-comment ml-1"><a
-                                                        href="{{ route('posts.slug', $post->slug) }}#disqus_thread">Post
-                                                        a comment</a></p>
-                                                </p>
+                                                <p class="blog-date">{{ $post->acf->crated_at }}</p>
                                             </div>
                                             <div class="blog-desc">
                                                 <p>{!! $post->excerpt->rendered !!}</p>
