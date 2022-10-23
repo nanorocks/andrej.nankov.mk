@@ -14,7 +14,7 @@ For api doc use the postman file and integrate to postman client and play with r
 
 ### SPA (client)
 
-- Laravel with HTML Template for display and render data. We have SEO, HotJar, Disqus and GA implementation.
+- Laravel with HTML Template for display and render data. We have SEO, HotJar and GA implementation.
 - Visit: https://nankov.mk/
 
 
