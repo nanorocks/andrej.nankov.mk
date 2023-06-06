@@ -1,12 +1,15 @@
 @extends('layouts.app')
 @section('seo')
     <title>nankov.mk | {{ $post->title->rendered }}</title>
-    <meta name="description" content="post: {{ $post->title->rendered }}">
+    <meta name="description" content="{{ $post->acf->meta_description }}">
     <meta name="keywords" content="{{ implode(',', $post->tags_names) }},{{ $post->acf->crated_at }}">
     <link rel="canonical" href="https://nankov.mk" />
+    <meta name="author" content="Andrej Nankov | nanorocks">
+    <meta property="published_date" content="{{ $post->acf->crated_at }}" />
+     
     <meta name="robots" content="all">
     <meta property="og:title" content="nankov.mk | {{ $post->title->rendered }}" />
-    <meta property="og:description" content="{{ $post->title->rendered }}" />
+    <meta property="og:description" content="{{ $post->acf->meta_description }}" />
     <meta property="og:authon" content="Andrej Nankov | nanorocks" />
     <meta property="og:url" content="https://nankov.mk" />
     <meta property="og:type" content="article" />
