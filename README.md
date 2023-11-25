@@ -1,23 +1,74 @@
-# nankov.mk
+# Andrej Nankov's Portfolio
 
-Applications for personal website !!!
+Welcome to my professional portfolio, showcasing my work, projects, and interests. Explore the live site at [https://andrej.nankov.mk/](https://andrej.nankov.mk/).
 
+## Table of Contents
+- [About Me](#about-me)
+- [Projects](#projects)
+- [Contact](#contact)
+- [License](#license)
+- [nankov.mk Applications](#nankovmk-applications)
 
-### API (wordpress + postman)
-For api doc use the postman file and integrate to postman client and play with routes.
+## About Me
 
-- The whole API is moved to Wordpress and the admin-panel is integrated for making CRUD operations.
-- Visit: https://wpadmin.nankov.mk/
-- Ref: https://developer.wordpress.org/rest-api/
+I am Andrej Nankov, a seasoned professional with a diverse skill set and a passion for innovation. Learn more about my background, skills, and experiences that shape my professional journey.
 
-- Cache clear try `domain_name/cache/clear`
+## Projects
 
-### Client App (client)
+Discover a curated selection of projects that highlight my expertise and creativity.
 
-- Laravel with HTML Template for display and render data. We have SEO, HotJar and GA implementation.
-- Visit: https://nankov.mk/
+### Project Showcase
 
+1. **Example Project 1**
+   - *Description*: Brief overview of the project.
+   - *Link*: [Project 1](#)
 
-### Authentication for SSO (external apps)
-- Laravel Passport -> `OAuth 2 - Password Grant Tokens`
-- Laravel Breeze -> `<domain>/login`
+2. **Example Project 2**
+   - *Description*: Brief overview of the project.
+   - *Link*: [Project 2](#)
+
+Your feedback is valuable. Feel free to explore and reach out!
+
+## Contact
+
+Connect with me to discuss opportunities, collaborations, or just to say hello.
+
+- *Email*: [your.email@example.com](mailto:your.email@example.com)
+- *LinkedIn*: [Andrej Nankov](https://www.linkedin.com/in/andrejnankov/)
+- *Twitter*: [@yourtwitterhandle](https://twitter.com/yourtwitterhandle)
+
+## License
+
+This portfolio is licensed under the [MIT License](LICENSE.md) - see the [LICENSE.md](LICENSE.md) file for details.
+
+## nankov.mk Applications
+
+### API (WordPress + Postman)
+
+Explore the API documentation using the provided Postman file for seamless integration and testing.
+
+- The entire API is now powered by WordPress, with an integrated admin panel for streamlined CRUD operations.
+- Access the admin panel: [https://wpadmin.nankov.mk/](https://wpadmin.nankov.mk/)
+- Reference: [WordPress REST API Documentation](https://developer.wordpress.org/rest-api/)
+
+Clear the cache by navigating to `domain_name/cache/clear`.
+
+### Client App (Client)
+
+Experience a sophisticated client application built with Laravel, incorporating HTML templates for dynamic content rendering. Advanced features include SEO optimization, HotJar, and Google Analytics integration.
+
+Explore the client app: [https://nankov.mk/](https://nankov.mk/)
+
+### Authentication for Single Sign-On (SSO) - External Apps
+
+Secure authentication is implemented using Laravel Passport with OAuth 2 - Password Grant Tokens. Access the login page via `<domain>/login` with the added convenience of Laravel Breeze.
+
+### Important Commands
+
+Execute these commands for optimal functionality:
+
+- `npm install` - Install dependencies (run at root).
+- `npm run build` - Build the project (run at root).
+- `php artisan migrate` - Run migrations (once during setup).
+- `php artisan passport:install` - Create "personal access" and "password grant" clients for generating access tokens.
+- `php artisan db:seed` - Seed the database to create the initial user.
