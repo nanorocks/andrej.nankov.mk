@@ -33,9 +33,8 @@ Your feedback is valuable. Feel free to explore and reach out!
 
 Connect with me to discuss opportunities, collaborations, or just to say hello.
 
-- *Email*: [your.email@example.com](mailto:your.email@example.com)
-- *LinkedIn*: [Andrej Nankov](https://www.linkedin.com/in/andrejnankov/)
-- *Twitter*: [@yourtwitterhandle](https://twitter.com/yourtwitterhandle)
+- *Email*: [andrejnankov@gmail.com](mailto:andrejnankov@gmail.com)
+- *LinkedIn*: [nanorocks](https://www.linkedin.com/in/nanorocks/)
 
 ## License
 
