@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 @section('seo')
     <title>nankov.mk | {{ $profile->title->rendered }}</title>
     <meta name="description" content="Personal website of Andrej Nankov about life, blogging, hobbies, IT-carrier">
@@ -11,8 +11,7 @@
     <meta property="og:url" content="https://nankov.mk" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="nankov.mk" />
-    <meta property="og:image"
-        content="https://avatars.githubusercontent.com/u/18250654?v=4" />
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/18250654?v=4" />
 @endsection
 @section('body')
     @include('components.header')

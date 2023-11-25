@@ -14,9 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
-Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
-Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
+Route::middleware('guest')->group(function () {
+    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
+    Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
+    Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
 
-Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
+    Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
+    Route::get('/welcome', function () {
+        return redirect('/');
+    });
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__ . '/auth.php';

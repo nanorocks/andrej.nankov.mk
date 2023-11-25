@@ -10,27 +10,37 @@
             <div class="row">
                 <div class="col-md-12 blog-holder">
                     <div class="posts">
-                        @foreach($posts as $post)
+                        @foreach ($posts as $post)
+                            {{-- {{ dd($post) }} --}}
                             <div class="m-2">
                                 <div class="blog-item-wrapper">
                                     <div class="blog-item">
                                         <div class="blog-img">
                                             <a href="{{ route('posts.slug', $post->slug) }}">
-                                                <img src="{{ $post->acf->photo->url ?? 'img/blog-1.jpg' }}" alt="{{ $post->title->rendered }}" title="{{ $post->title->rendered }}"/>
+                                                <img src="{{ $post->acf->photo->url ?? 'img/blog-1.jpg' }}"
+                                                    alt="{{ $post->title->rendered }}"
+                                                    title="{{ $post->title->rendered }}" />
                                             </a>
                                         </div>
                                         <div class="blog-text" style="min-height: 460px">
                                             <div class="blog-tag">
-                                                <a href="{{ route('posts.slug', $post->slug) }}"><h6>
-                                                        <small>{{ implode(",", $post->categories_names) }}</small></h6>
+                                                <a href="{{ route('posts.slug', $post->slug) }}">
+                                                    <h6>
+                                                        {{-- <small>{{ explode(',', $post->acf->categories_names) }}</small> --}}
+                                                    </h6>
                                                 </a>
                                             </div>
                                             <div class="blog-title">
                                                 <a href="{{ route('posts.slug', $post->slug) }}">
-                                                    <h4>{{ $post->title->rendered }}</h4></a>
+                                                    <h4>{{ $post->title->rendered }}</h4>
+                                                </a>
                                             </div>
                                             <div class="blog-meta">
-                                                <p class="blog-date">{{ $post->acf->crated_at }} / <p class="blog-comment ml-1"><a href="{{ route('posts.slug', $post->slug) }}">Post a comment</a></p></p>
+                                                <p class="blog-date">{{ $post->acf->crated_at }} /
+                                                <p class="blog-comment ml-1"><a
+                                                        href="{{ route('posts.slug', $post->slug) }}">Post a
+                                                        comment</a></p>
+                                                </p>
                                             </div>
                                             <div class="blog-desc">
                                                 <p>{!! $post->excerpt->rendered !!}</p>
@@ -39,10 +49,12 @@
                                                 <p>by {{ $post->acf->creator }}</p>
                                             </div>
                                             <div class="blog-share-wrapper">
-                                                <a class="blog-share" href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.slug', $post->slug) }}">
+                                                <a class="blog-share"
+                                                    href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.slug', $post->slug) }}">
                                                     <i class="bi bi-facebook"></i>
                                                 </a>
-                                                <a class="blog-share" href="https://www.linkedin.com/sharing/share-offsite/?url={{ route('posts.slug', $post->slug) }}">
+                                                <a class="blog-share"
+                                                    href="https://www.linkedin.com/sharing/share-offsite/?url={{ route('posts.slug', $post->slug) }}">
                                                     <i class="bi bi-linkedin"></i>
                                                 </a>
                                             </div>
