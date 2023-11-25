@@ -12,9 +12,12 @@ For api doc use the postman file and integrate to postman client and play with r
 
 - Cache clear try `domain_name/cache/clear`
 
-### SPA (client)
+### Client App (client)
 
 - Laravel with HTML Template for display and render data. We have SEO, HotJar and GA implementation.
 - Visit: https://nankov.mk/
 
 
+### Authentication for SSO (external apps)
+- Laravel Passport -> `OAuth 2 - Password Grant Tokens`
+- Laravel Breeze -> `<domain>/login`
