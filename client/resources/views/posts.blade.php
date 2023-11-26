@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 @section('seo')
     <title>nankov.mk | Blog area</title>
     <link rel="canonical" href="https://nankov.mk" />
@@ -27,9 +27,11 @@
             </div>
         </div>
     </nav>
-    <div class="jumbotron d-flex align-items-center" style="background: url(https://wpadmin.nankov.mk/wp-content/uploads/2022/07/blogger.png)">
+    <div class="jumbotron d-flex align-items-center"
+        style="background: url(https://wpadmin.nankov.mk/wp-content/uploads/2022/07/blogger.png)">
         <div class="container text-center">
-            <h1 class="display-1 mb-4 single-blog-title text-dark bg-white rounded d-inline-block font-weight-light">Posts area</h1>
+            <h1 class="display-1 mb-4 single-blog-title text-dark bg-white rounded d-inline-block font-weight-light">Posts
+                area</h1>
         </div>
     </div>
     <section id="gtco-single-content" class="bg-white pt-5">

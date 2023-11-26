@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 @section('seo')
     <title>nankov.mk | {{ $project->title->rendered }}</title>
     <meta name="description" content="project: {{ $project->title->rendered }}">
@@ -55,8 +55,8 @@
                         <p><strong>Created:</strong><br /> {{ $project->acf->created_at }}</p>
                         <p><strong>Related to:</strong><br /> {{ $project->acf->related_to }}</p>
                         <p><strong>Other Contributors:</strong><br /> {!! $project->acf->contributors !!}</p>
-                        <p><strong>Status:</strong><br /> <span
-                                class="text-capitalize">{{ $project->acf->status }}</span></p>
+                        <p><strong>Status:</strong><br /> <span class="text-capitalize">{{ $project->acf->status }}</span>
+                        </p>
                     </div>
                 </div>
             </div>

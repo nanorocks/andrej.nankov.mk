@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 @section('seo')
     <title>nankov.mk | {{ $post->title->rendered }}</title>
     <meta name="description" content="{{ $post->acf->meta_description }}">
@@ -6,7 +6,7 @@
     <link rel="canonical" href="https://nankov.mk" />
     <meta name="author" content="Andrej Nankov | nanorocks">
     <meta property="published_date" content="{{ $post->acf->crated_at }}" />
-     
+
     <meta name="robots" content="all">
     <meta property="og:title" content="nankov.mk | {{ $post->title->rendered }}" />
     <meta property="og:description" content="{{ $post->acf->meta_description }}" />
@@ -15,7 +15,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="nankov.mk" />
     <meta property="og:image" content="{{ asset($post->acf->photo->url) }}" />
-    
+
     <meta property="article:published_time" content="{{ $post->acf->crated_at }}" />
     <meta property="article:tags" content="{{ implode(',', $post->tags_names) }}" />
 @endsection
@@ -54,8 +54,9 @@
                                 class="badge badge-dark rounded-0 p-2 mr-1">{{ implode(',', $post->tags_names) }}</span>|<small
                                 class="ml-1 text-muted" style="font-size: 1.4rem">Created
                                 on: {{ $post->acf->crated_at }}</small>
-                                |<small class="ml-1 text-muted" style="font-size: 1.4rem">{{ $post->views_counter }} views </small>
-                                </p>
+                            |<small class="ml-1 text-muted" style="font-size: 1.4rem">{{ $post->views_counter }} views
+                            </small>
+                        </p>
                         <p class="text-justify pt-4 mt-4">
                             {!! $post->content->rendered !!}
                         </p>
