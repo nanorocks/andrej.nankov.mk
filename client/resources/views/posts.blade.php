@@ -54,7 +54,7 @@
                                             <div class="blog-tag">
                                                 <a href="{{ route('posts.slug', $post->slug) }}">
                                                     <h6>
-                                                        <small>{{ implode(',', $post->categories_names) }}</small>
+                                                        {{-- <small>{{ json_encode($post->acf->categories_names) }}></small> --}}
                                                     </h6>
                                                 </a>
                                             </div>
