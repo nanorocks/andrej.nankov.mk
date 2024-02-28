@@ -35,6 +35,10 @@
         .blog-desc .more-link {
             display: none !important;
         }
+
+        #version div:hover>ul {
+            visibility: visible;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
@@ -69,9 +73,15 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+
     <div class="boxed-page">
         @yield('body')
     </div>
+    <ul id="version"
+        style="display:inline-flex; position: relative; bottom: 30px; left: 14rem; font-size: x-small; list-style-type: none; z-index: 1000; margin: 0; padding: 5px; background-color: #c94ca5; color: white; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0,0,0,0.2);">
+        <li style="display: inline; margin-right: 10px;">PHP: {{ phpversion() }}</li>
+        <li style="display: inline;">Laravel: {{ app()->version() }}</li>
+    </ul>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="{{ asset('vendor/bootstrap/popper.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/bootstrap.min.js') }}"></script>
