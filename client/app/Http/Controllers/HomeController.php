@@ -66,7 +66,13 @@ class HomeController extends Controller
     public function cacheClear()
     {
         Artisan::call('cache:clear');
-        die('It works. cache cleared!!!');
+        die('It works. Cache Cleared!');
+    }
+
+    public function optimize()
+    {
+        Artisan::call('optimize');
+        die('It works. Optimize complited!');
     }
 
     /**

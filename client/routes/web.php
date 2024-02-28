@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
+    Route::get('/optimize', [HomeController::class, 'optimize'])->name('optimize');
 });
 
 require __DIR__ . '/auth.php';
