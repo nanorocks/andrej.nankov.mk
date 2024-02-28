@@ -74,3 +74,7 @@ Execute these commands for optimal functionality:
 - `php artisan monitoring:record` - for monitoring, its added in kernel.php for running on every 10 minutes
 - `php artisan command:init` - for running migrate:fresh with passport:install & db:seed
 - `* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1` - for running a schedule on cron server
+
+### Monitoring 
+
+- `<domina>/pulse` - Laravel pulse for monitoring
