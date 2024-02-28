@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
 
     Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
+
+    Route::get('monitoring/record', function () {
+
+        Artisan::call('monitoring:record');
+
+        return 'Monitoring record completed!';
+    });
+
     Route::get('/welcome', function () {
         return redirect('/');
     });
