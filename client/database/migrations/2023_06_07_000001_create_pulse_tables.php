@@ -11,11 +11,12 @@ return new class extends PulseMigration
      */
     public function up(): void
     {
-        if (! $this->shouldRun()) {
+        if (!$this->shouldRun()) {
             return;
         }
 
         Schema::create('pulse_values', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedInteger('timestamp');
             $table->string('type');
