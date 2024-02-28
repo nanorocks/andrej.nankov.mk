@@ -71,3 +71,6 @@ Execute these commands for optimal functionality:
 - `php artisan migrate` - Run migrations (once during setup).
 - `php artisan passport:install` - Create "personal access" and "password grant" clients for generating access tokens.
 - `php artisan db:seed` - Seed the database to create the initial user.
+- `php artisan monitoring:record` - for monitoring, its added in kernel.php for running on every 10 minutes
+- `php artisan command:init` - for running migrate:fresh with passport:install & db:seed
+- `* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1` - for running a schedule on cron server

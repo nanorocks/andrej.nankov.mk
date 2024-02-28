@@ -12,7 +12,8 @@
         "laravel/framework": "^8.65",
         "laravel/passport": "*",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "saeedvaziry/laravel-monitoring": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
