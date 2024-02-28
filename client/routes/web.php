@@ -15,28 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest'])->group(function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
     Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
     Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
-
-    Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
-
-    Route::get('monitoring/record', function () {
-
-        Artisan::call('monitoring:record');
-
-        return 'Monitoring record completed!';
-    });
 
     Route::get('/welcome', function () {
         return redirect('/');
     });
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
+});
 
 require __DIR__ . '/auth.php';
