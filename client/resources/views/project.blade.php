@@ -54,7 +54,7 @@
                                 title="{{ $project->title->rendered }}">{{ $project->acf->link }}</a></p>
                         <p><strong>Created:</strong><br /> {{ $project->acf->created_at }}</p>
                         <p><strong>Related to:</strong><br /> {{ $project->acf->related_to }}</p>
-                        <p><strong>Other Contributors:</strong><br /> {!! $project->acf->contributors !!}</p>
+                        <p><strong>Contributors:</strong><br /> {!! $project->acf->contributors !!}</p>
                         <p><strong>Status:</strong><br /> <span class="text-capitalize">{{ $project->acf->status }}</span>
                         </p>
                     </div>
