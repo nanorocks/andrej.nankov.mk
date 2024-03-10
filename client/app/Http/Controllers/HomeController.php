@@ -71,8 +71,8 @@ class HomeController extends Controller
 
     public function optimize()
     {
-        Artisan::call('optimize');
-        die('It works. Optimize complited!');
+        Artisan::call('optimize --clear');
+        die('It works. Optimize clear complied!');
     }
 
     /**

@@ -231,4 +231,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
     ],
 
+    'wordpress' => env('WP_DOMAIN', 'https://wpadmin.nankov.mk/')
+
 ];

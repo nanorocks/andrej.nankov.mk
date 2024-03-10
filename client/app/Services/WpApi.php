@@ -11,11 +11,11 @@ class WpApi
     /**
      * @var mixed
      */
-    private $domain;
+    private string $domain;
 
     public function __construct()
     {
-        $this->domain = env('WP_DOMAIN');
+        $this->domain = config('app.wordpress');
     }
 
 
@@ -34,6 +34,7 @@ class WpApi
 
     public function profile()
     {
+        dd($this->domain);
         return json_decode(Http::get($this->domain . WpApiMapper::PROFILE['Single Profile'])->body());
     }
 
