@@ -15,15 +15,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['guest'])->group(function () {
-    Route::get('/', [HomeController::class, 'home'])->name('home');
-    Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
-    Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
-    Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
+// Route::middleware('guest')->group(function () {
+//     Route::get('/', [HomeController::class, 'home'])->name('home');
+//     Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
+//     Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
+//     Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
 
-    Route::get('/welcome', function () {
-        return redirect('/');
-    });
+//     Route::get('/welcome', function () {
+//         return redirect('/');
+//     });
+// });
+
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
+Route::get('/projects/{slug}', [HomeController::class, 'project'])->name('projects.slug');
+Route::get('/posts/{slug}', [HomeController::class, 'post'])->name('posts.slug');
+
+Route::get('/welcome', function () {
+    return redirect('/');
 });
 
 Route::middleware('auth')->group(function () {
