@@ -68,7 +68,7 @@ class HomeController extends Controller
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
 
-        return redirect()->back()->with('msg', 'It works. Cache Cleared!');
+        return redirect('/dashboard')->with('msg', 'It works. Cache Cleared!');
     }
 
     public function optimize()
