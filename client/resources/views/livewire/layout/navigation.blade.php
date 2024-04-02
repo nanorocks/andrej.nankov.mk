@@ -62,10 +62,6 @@ new class extends Component {
                     </a>
                 </div>
 
-
-
-
-
             </div>
 
             <!-- Settings Dropdown -->
@@ -92,6 +88,24 @@ new class extends Component {
                         <x-dropdown-link :href="route('profile')" wire:navigate>
                             {{ __('Profile') }}
                         </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('pulse')" wire:navigate>
+                            {{ __('Pulse Monitoring') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('cache.clear')" wire:navigate>
+                            {{ __('Cache Clear') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('optimize')" wire:navigate>
+                            {{ __('Optimize') }}
+                        </x-dropdown-link>
+
+                        <a href="`https://analytics.google.com/`" wire:navigate
+                            class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
+                            {{ __('Google Analytics') }}
+                        </a>
+
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
@@ -139,6 +153,24 @@ new class extends Component {
                 <x-responsive-nav-link :href="route('profile')" wire:navigate>
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('pulse')" wire:navigate>
+                    {{ __('Pulse Monitoring') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('cache.clear')" wire:navigate>
+                    {{ __('Cache Clear') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('optimize')" wire:navigate>
+                    {{ __('Optimize') }}
+                </x-responsive-nav-link>
+
+                <a href='https://analytics.google.com/' wire:navigate
+                    class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
+                    {{ __('Google Analytics') }}
+                </a>
+
 
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
