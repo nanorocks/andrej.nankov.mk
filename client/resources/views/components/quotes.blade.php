@@ -2,9 +2,8 @@
     <div class="container">
         <div class="section-content">
             <div class="row text-center py-5">
-                <h2 style="font-weight: 500">{!! $quotes[rand(0, 9)]->title->rendered !!}</h2>
+                <h2 style="font-weight: 500" style="color:white">{!! $quotes[rand(0, 9)]->title->rendered !!}</h2>
             </div>
         </div>
     </div>
 </section>
-
