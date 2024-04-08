@@ -15,7 +15,7 @@
                     <div class="featurettes-wrap text-left mb-4">
                         <div class="row featurettes-item">
                             <div class="col-md-3 offset-md-2 col-sm-6 text-center">
-                                <img class="my-5" src="{{ $profile->acf->photo->url }}"
+                                <img class="my-5" style="border-radius: 50%" src="{{ $profile->acf->photo->url }}"
                                     alt="{{ $profile->acf->full_name }}" />
                             </div>
                             <div class="col-md-5 offset-md-right-2 col-sm-6 text-justify pt-5">
