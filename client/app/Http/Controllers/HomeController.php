@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Services\WpApi;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 
 class HomeController extends Controller
 {
@@ -28,7 +30,7 @@ class HomeController extends Controller
         return view('posts', compact('posts', 'metas', 'socMedias'));
     }
 
-    public function home()
+    public function home(Request $request)
     {
         $profile = $this->cacheSetup('profile', $this->wpApi);
         $devTools = $this->cacheSetup('devTools', $this->wpApi);
@@ -42,7 +44,20 @@ class HomeController extends Controller
 
         $projectsStatus = $this->wpApi->projectsStatus($projects);
 
-        return view('home', compact('profile', 'devTools', 'goals', 'highlights', 'posts', 'projects', 'quotes', 'socMedias', 'metas', 'projectsStatus'));
+        $darkMode = config('app.dark_mode_ui');
+
+        try {
+            $darkMode = is_null($request->get('dm')) ?  $darkMode : $request->get('dm');
+
+            if (is_bool($darkMode)) {
+                throw new \Exception('Invalid value');
+            }
+        } catch (Exception $e) {
+            // abort('403', $e->getMessage());
+            $darkMode = config('app.dark_mode_ui');
+        }
+
+        return view('home', compact('profile', 'devTools', 'goals', 'highlights', 'posts', 'projects', 'quotes', 'socMedias', 'metas', 'projectsStatus', 'darkMode'));
     }
 
     public function project(string $slug)

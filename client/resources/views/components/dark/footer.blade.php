@@ -1,9 +1,9 @@
-<footer class="mastfoot mb-3 bg-white py-4 border-top">
+<footer class="mastfoot mb-3 bg-dark-custom py-4 border-top text-white border-0">
     <div class="inner container">
         <div class="row">
             <a id="soc"></a>
             <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
-                <a href="{{ route('home', ['dm' => 1]) }}" id="modeToggle" class="nav-link pr-3">
+                <a href="{{ route('home', ['dm' => 0]) }}" id="modeToggle" class="nav-link pr-3">
                     <!-- SVG -->
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20.000000pt" height="20.000000pt"
                         viewBox="0 0 50.000000 50.000000" preserveAspectRatio="xMidYMid meet">
@@ -36,8 +36,10 @@
                         </g>
                     </svg>
                 </a>
-                <p class="mb-0">{!! $metas['Footer'] !!}
-                </p>
+                <div class="pt-3">
+                    <p class="mb-0">{!! $metas['Footer'] !!}
+                    </p>
+                </div>
             </div>
             <div class="col-md-6">
                 <nav class="nav nav-mastfoot justify-content-md-end justify-content-center">

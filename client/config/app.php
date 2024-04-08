@@ -232,6 +232,19 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
     ],
 
-    'wordpress' => env('WP_DOMAIN', 'https://wpadmin.nankov.mk/')
+    'wordpress' => env('WP_DOMAIN', 'https://wpadmin.nankov.mk/'),
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DARK MODE UI SUPPORT
+    |--------------------------------------------------------------------------
+    |
+    | The prop will automatically load DARK or LIGHT mode on UI.
+    |
+    */
+
+    'dark_mode_ui' => env('DARK_MODE_UI', true)
 
 ];

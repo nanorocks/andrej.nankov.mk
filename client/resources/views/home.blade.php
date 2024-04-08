@@ -12,18 +12,52 @@
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="nankov.mk" />
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/18250654?v=4" />
+    <style>
+        .bg-dark-custom {
+            background: rgb(31 41 55) !important;
+        }
+
+        .bg-dark-custom-sec {
+            background: rgb(17 24 39) !important;
+        }
+
+        .grid-item-wrapper-dark:hover {
+            color: white !important;
+        }
+
+        .text-grey {
+            color: rgb(143 148 156) !important;
+        }
+
+        .jumbotron-dark::before {
+            background-color: #343a40cf !important;
+        }
+    </style>
 @endsection
 @section('body')
-    @include('components.header')
-    @include('components.profile')
-    @include('components.quotes')
-    @include('components.goals')
-    @include('components.posts')
-    @include('components.projects')
-    @include('components.highlights')
-    @include('components.devtools')
-    @include('components.fun')
-    @include('components.footer')
+    @if ($darkMode)
+        @include('components.dark.header')
+        @include('components.dark.profile')
+        @include('components.dark.quotes')
+        @include('components.dark.goals')
+        @include('components.dark.posts')
+        @include('components.dark.projects')
+        @include('components.dark.highlights')
+        @include('components.dark.devtools')
+        @include('components.dark.fun')
+        @include('components.dark.footer')
+    @else
+        @include('components.header')
+        @include('components.profile')
+        @include('components.quotes')
+        @include('components.goals')
+        @include('components.posts')
+        @include('components.projects')
+        @include('components.highlights')
+        @include('components.devtools')
+        @include('components.fun')
+        @include('components.footer')
+    @endif
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
