@@ -15,7 +15,12 @@
                             <p>{{ session()->pull('msg') }}</p>
                         </div>
                     @endif
-                    {{ __("You're logged in! Nothing here this is only SSO") }}
+                    {{ __("You're logged in! Nothing here this is only SSO Table.") }}
+                    <a class="underline" href="https://oauth2.thephpleague.com/authorization-server/which-grant/"
+                        target="_blank">Supported OAuth2 clients?</a>
+                    <div>
+                        @livewire('o-auth-clients-data-table')
+                    </div>
                 </div>
             </div>
         </div>
