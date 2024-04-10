@@ -10,9 +10,9 @@ services:
     image: 'personal-website'
     restart: always
     ports:
-      - 80:80
+      - 8080:80
     volumes:
-       - ./client:/var/www/html
+      - ./client:/var/www/html
 
   database:
     container_name: mysql
@@ -40,4 +40,4 @@ services:
     restart: always
     ports:
       - 1025:1025
-      - 8025:8025    
+      - 8025:8025
