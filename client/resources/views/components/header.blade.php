@@ -36,6 +36,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#soc">Soc.</a>
                 </li>
+                @if (Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ route('dashboard') }}">Dashboard</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

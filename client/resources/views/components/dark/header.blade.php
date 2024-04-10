@@ -7,6 +7,7 @@
             aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
             <span class="lnr lnr-menu"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbar-nav-header">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -36,6 +37,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#soc">Soc.</a>
                 </li>
+                @if (Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ route('dashboard') }}">Dashboard</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
