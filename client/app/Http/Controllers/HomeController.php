@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Services\WpApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -109,5 +111,13 @@ class HomeController extends Controller
         Cache::put($key, $wpCall);
 
         return $wpCall;
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        Session::invalidate();
+        Session::regenerateToken();
     }
 }
