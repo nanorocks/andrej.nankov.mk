@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/profile', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware('auth:api');

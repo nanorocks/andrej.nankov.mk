@@ -20,8 +20,6 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
     Route::get('/optimize', [HomeController::class, 'optimize'])->name('optimize');
-
-    Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 });
 
 Route::view('profile', 'profile')
