@@ -32,6 +32,10 @@
         .jumbotron-dark::before {
             background-color: #343a40cf !important;
         }
+
+        ._hj_feedback_container ._hj-ETLL8__MinimizedWidgetMiddle__label {
+            background-color: #ca7bca !important;
+        }
     </style>
 @endsection
 @section('body')
