@@ -115,11 +115,10 @@ class HomeController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        $request->user()->token()->revoke();
 
-        Session::invalidate();
-        Session::regenerateToken();
-
-        Artisan::call('passport:purge');
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
     }
 }
