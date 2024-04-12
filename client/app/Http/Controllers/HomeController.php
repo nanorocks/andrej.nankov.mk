@@ -117,9 +117,9 @@ class HomeController extends Controller
     {
         Auth::guard('web')->logout();
 
-        Auth::guard('api')->logout();
-
         Session::invalidate();
         Session::regenerateToken();
+
+        Artisan::call('passport:purge');
     }
 }
