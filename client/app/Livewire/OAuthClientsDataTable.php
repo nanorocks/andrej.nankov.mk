@@ -13,6 +13,7 @@ class OAuthClientsDataTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+         $this->setSearchVisibilityDisabled();
     }
 
     public function columns(): array
