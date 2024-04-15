@@ -18,7 +18,7 @@
                     {{ __("You're logged in! Nothing here this is only SSO Table.") }}
                     <a class="underline" href="https://oauth2.thephpleague.com/authorization-server/which-grant/"
                         target="_blank">Supported OAuth2 clients?</a>
-                    <div>
+                    <div style="padding-bottom: 9rem;">
                         @livewire('o-auth-clients-data-table')
                     </div>
                 </div>
