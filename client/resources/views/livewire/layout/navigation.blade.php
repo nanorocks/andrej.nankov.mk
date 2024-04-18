@@ -27,59 +27,124 @@ new class extends Component {
                     </a>
                 </div>
 
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+            </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('pulse')" :active="request()->routeIs('pulse')">
-                        {{ __('Pulse Monitoring') }}
-                    </x-nav-link>
-                </div>
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            Actions & Insides<div x-data="Insides" x-text="name"
+                                x-on:profile-updated.window="name = Insides">
+                            </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('cache.clear')" :active="request()->routeIs('cache.clear')">
-                        {{ __('Cache Clear') }}
-                    </x-nav-link>
-                </div>
+                            <div class="ms-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('optimize')" :active="request()->routeIs('optimize')">
-                        {{ __('Optimize') }}
-                    </x-nav-link>
-                </div>
+                    <x-slot name="content">
+                        <x-dropdown-link href="http://rpi.nankov.mk/">
+                            {{ __('Raspberry PI Monitoring') }}
+                        </x-dropdown-link>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <a href="https://analytics.google.com/"
-                        class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out">
+                        <x-dropdown-link :href="route('pulse')">
+                            {{ __('Pulse Monitoring') }}
+                        </x-dropdown-link>
 
-                        {{ __('Google Analytics') }}
-                    </a>
-                </div>
+                        <x-dropdown-link href="https://analytics.google.com/">
+                            {{ __('Google Analytics') }}
+                        </x-dropdown-link>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <a href="{{ route('home') }}" target="_blank"
-                        class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out">
+                        <x-dropdown-link :href="route('home')">
+                            {{ __('Landing page') }}
+                        </x-dropdown-link>
+                    </x-slot>
+                </x-dropdown>
+            </div>
 
-                        {{ __('Landing page') }}
-                    </a>
-                </div>
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            Artisan commands<div x-data="Artisan" x-text="name"
+                                x-on:profile-updated.window="name = Artisan">
+                            </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <a href="https://wpadmin.nankov.mk/wp-admin" target="_blank"
-                        class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out">
+                            <div class="ms-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
 
-                        {{ __('WP Admin') }}
-                    </a>
-                </div>
+                    <x-slot name="content">
+                        <x-responsive-nav-link :href="route('cache.clear')">
+                            {{ __('Cache Clear') }}
+                        </x-responsive-nav-link>
 
+                        <x-responsive-nav-link :href="route('optimize')">
+                            {{ __('Optimize') }}
+                        </x-responsive-nav-link>
 
+                    </x-slot>
+                </x-dropdown>
+            </div>
 
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            SSO Apps<div x-data="Apps" x-text="name"
+                                x-on:profile-updated.window="name = Apps">
+                            </div>
+
+                            <div class="ms-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link href="https://wpadmin.nankov.mk/wp-admin/">
+                            {{ __('Wordpress Admin') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link href="https://mycar.nankov.mk/">
+                            {{ __('My Car') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link href="https://shorturl.nankov.mk/">
+                            {{ __('Short URL') }}
+                        </x-dropdown-link>
+                    </x-slot>
+                </x-dropdown>
             </div>
 
             <!-- Settings Dropdown -->
@@ -103,35 +168,9 @@ new class extends Component {
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile')" wire:navigate>
+                        <x-dropdown-link :href="route('profile')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
-                        <x-dropdown-link :href="route('pulse')" wire:navigate>
-                            {{ __('Pulse Monitoring') }}
-                        </x-dropdown-link>
-
-                        <x-dropdown-link :href="route('cache.clear')" wire:navigate>
-                            {{ __('Cache Clear') }}
-                        </x-dropdown-link>
-
-                        <x-dropdown-link :href="route('optimize')" wire:navigate>
-                            {{ __('Optimize') }}
-                        </x-dropdown-link>
-
-                        <a href="`https://analytics.google.com/`" wire:navigate
-                            class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
-                            {{ __('Google Analytics') }}
-                        </a>
-
-                        <x-dropdown-link :href="route('home')" wire:navigate>
-                            {{ __('Landing page') }}
-                        </x-dropdown-link>
-
-                        <a href="https://wpadmin.nankov.mk/wp-admin/"
-                            class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
-                            {{ __('WP Admin') }}
-                        </a>
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
@@ -176,35 +215,46 @@ new class extends Component {
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile')" wire:navigate>
-                    {{ __('Profile') }}
+
+                <x-responsive-nav-link href="http://rpi.nankov.mk/">
+                    {{ __('Raspberry PI Monitoring') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('pulse')" wire:navigate>
+                <x-responsive-nav-link :href="route('pulse')">
                     {{ __('Pulse Monitoring') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('cache.clear')" wire:navigate>
-                    {{ __('Cache Clear') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('optimize')" wire:navigate>
-                    {{ __('Optimize') }}
-                </x-responsive-nav-link>
-
-                <a href='https://analytics.google.com/' wire:navigate
-                    class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
+                <x-responsive-nav-link href="https://analytics.google.com/">
                     {{ __('Google Analytics') }}
-                </a>
+                </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('home')" wire:navigate>
+                <x-responsive-nav-link :href="route('home')">
                     {{ __('Landing page') }}
                 </x-responsive-nav-link>
 
-                <a href='https://wpadmin.nankov.mk/wp-admin/'
-                    class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out">
-                    {{ __('WP Admin') }}
-                </a>
+                <x-responsive-nav-link :href="route('cache.clear')">
+                    {{ __('Cache Clear') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('optimize')">
+                    {{ __('Optimize') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="https://wpadmin.nankov.mk/wp-admin/">
+                    {{ __('Wordpress Admin') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="https://mycar.nankov.mk/">
+                    {{ __('My Car') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="https://shorturl.nankov.mk/">
+                    {{ __('Short URL') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('profile')" wire:navigate>
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
 
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
