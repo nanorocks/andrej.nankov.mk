@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*', 'https://wpadmin.nankov.mk/*'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 

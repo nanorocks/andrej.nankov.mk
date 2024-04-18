@@ -26,6 +26,8 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware(['auth']);
+
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware(['auth', 'verified'])->excludedMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+
 
 require __DIR__ . '/auth.php';
