@@ -24,4 +24,4 @@ Route::get('/profile', function (Request $request) {
 })->middleware('auth:api');
 
 
-Route::post('/logout', [HomeController::class, 'logout'])->name('logout')->middleware('auth:api');
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware('auth:api');
