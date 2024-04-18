@@ -26,4 +26,6 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware(['auth']);
+
 require __DIR__ . '/auth.php';

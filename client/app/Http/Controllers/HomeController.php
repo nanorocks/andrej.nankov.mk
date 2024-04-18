@@ -115,7 +115,8 @@ class HomeController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        Auth::guard('api')->logout();
+        Auth::guard('web')->logout();
 
         return response()->json([
             'message' => 'Successfully logged out'
