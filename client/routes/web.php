@@ -20,12 +20,12 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
     Route::get('/optimize', [HomeController::class, 'optimize'])->name('optimize');
+    Route::get('/pulse/purge', [HomeController::class, 'pulsePurge'])->name('pulse.purge');
 });
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
 
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout')->middleware(['auth', 'verified'])->excludedMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 

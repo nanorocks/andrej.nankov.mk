@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Services\WpApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
@@ -94,6 +95,15 @@ class HomeController extends Controller
 
         return redirect('/dashboard')->with('msg', 'It works. Optimize complied!');
     }
+
+    public function pulsePurge()
+    {
+        DB::table('pulse_entries')->truncate();
+        DB::table('pulse_aggregates')->truncate();
+
+        return redirect('/dashboard')->with('msg', 'It works. Pulse Puget!');
+    }
+
 
     /**
      * @param string $key
