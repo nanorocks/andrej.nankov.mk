@@ -37,11 +37,11 @@
     </style>
 </head>
 
-<body class="bg-white dark:bg-gray-900 passport-authorize">
+<body class="bg-custom-dark text-white passport-authorize">
     <div class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="card card-default bg-white dark:bg-gray-800">
-                <div class="card-header text-lg font-semibold border-b-2 border-gray-200 dark:border-gray-700">
+            <div class="card card-default bg-custom-dark text-white">
+                <div class="card-header text-lg font-semibold border-b-2 border-0">
                     Authorization Request
                 </div>
                 <div class="card-body">
@@ -68,7 +68,7 @@
                             <input type="hidden" name="state" value="{{ $request->state }}">
                             <input type="hidden" name="client_id" value="{{ $client->getKey() }}">
                             <input type="hidden" name="auth_token" value="{{ $authToken }}">
-                            <button type="submit" class="btn btn-success btn-approve">Authorize</button>
+                            <button type="submit" class="btn btn-primary">Authorize</button>
                         </form>
 
                         <!-- Cancel Button -->
@@ -78,7 +78,7 @@
                             <input type="hidden" name="state" value="{{ $request->state }}">
                             <input type="hidden" name="client_id" value="{{ $client->getKey() }}">
                             <input type="hidden" name="auth_token" value="{{ $authToken }}">
-                            <button class="btn btn-danger">Cancel</button>
+                            <button class="btn btn-secondary">Cancel</button>
                         </form>
                     </div>
                 </div>

@@ -15,9 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('monitoring:record')->everyMinute();
-        // $schedule->command('monitoring:purge')->daily();
-        $schedule->command('passport:purge')->daily();
+        $schedule->command('app:purge-action-command')->hourly();
     }
 
     /**

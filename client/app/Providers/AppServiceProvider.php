@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
         // Passport::hashClientSecrets();
         Passport::useClientModel(Client::class);
 
-        // Passport::tokensExpireIn(now()->addDays(15));
-        // Passport::refreshTokensExpireIn(now()->addDays(30));
-        // Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+        Passport::tokensExpireIn(now()->addDays(6));
+        Passport::refreshTokensExpireIn(now()->addDays(15));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }
