@@ -106,6 +106,10 @@ new class extends Component {
                             {{ __('Optimize') }}
                         </x-responsive-nav-link>
 
+                        <x-responsive-nav-link :href="route('pulse.purge')">
+                            {{ __('Pulse purge') }}
+                        </x-responsive-nav-link>
+
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -222,6 +226,10 @@ new class extends Component {
 
                 <x-responsive-nav-link :href="route('pulse')">
                     {{ __('Pulse Monitoring') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('pulse.purge')">
+                    {{ __('Pulse Purge') }}
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link href="https://analytics.google.com/">
