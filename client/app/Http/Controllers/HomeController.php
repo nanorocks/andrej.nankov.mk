@@ -123,8 +123,9 @@ class HomeController extends Controller
         return $wpCall;
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
+        // Auth::guard('api')->logout();
         Auth::guard('web')->logout();
 
         return redirect()->back()->with([

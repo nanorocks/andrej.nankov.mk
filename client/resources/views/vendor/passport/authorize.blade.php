@@ -37,11 +37,11 @@
     </style>
 </head>
 
-<body class="bg-custom-dark text-white passport-authorize">
+<body class="bg-custom-dark text-white passport-authorize" style="background: #1f2937; font-weight:400">
     <div class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="card card-default bg-custom-dark text-white">
-                <div class="card-header text-lg font-semibold border-b-2 border-0">
+                <div class="card-header text-lg font-semibold border-0">
                     Authorization Request
                 </div>
                 <div class="card-body">
