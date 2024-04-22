@@ -15,23 +15,12 @@ return [
     |
     */
 
-    // add a path to the resource here if you want it accessible to external origins
-    // for example no need to explicitly tell allowed origins
-    // what origins should gain access to api/* routes
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
-
+    'paths' => ['api/*'],
     'allowed_methods' => ['*'],
-
-    // explicitly tell which origins needs access to the resource
-    'allowed_origins' => ['*', 'http://wpadmin.nankov.mk/'],
-
-    // or use regex pattern, helpful if you want to grant
-    // access to origins with certain pattern (i.e. an origin under a subdomain etc.)
-    'allowed_origins_patterns' => ['/https?:\/\/nankov\.mk\/?\z/'],
-
-    // no changes made below
+    'allowed_origins' => ['*.nankov.mk'],
+    'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 ];
