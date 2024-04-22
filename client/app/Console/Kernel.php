@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('app:purge-action-command')->hourly();
+        // $schedule->command('app:purge-action-command')->hourly();
     }
 
     /**
