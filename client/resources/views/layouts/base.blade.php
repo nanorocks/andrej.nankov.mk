@@ -39,6 +39,14 @@
         #version div:hover>ul {
             visibility: visible;
         }
+
+        .bg-dark-custom {
+            background: rgb(31 41 55) !important;
+        }
+
+        .bg-dark-custom-sec {
+            background: rgb(17 24 39) !important;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />

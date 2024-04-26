@@ -36,7 +36,7 @@
                         </g>
                     </svg>
                 </a>
-                <div class="pt-3">
+                <div class="pt-1">
                     <p class="mb-0">{!! $metas['Footer'] !!}
                     </p>
                 </div>

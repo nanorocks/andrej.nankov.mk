@@ -14,30 +14,15 @@
     <meta property="og:image" content="{{ asset($project->acf->photo->url) }}" />
 @endsection
 @section('body')
-    <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/">
-                nankov.mk
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header"
-                aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="lnr lnr-menu"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar-nav-header">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Back to Home</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @include('components.dark.nav')
+
+
     <div class="jumbotron d-flex align-items-center" style="background-image: url({{ asset('img/blog-5.jpg') }})">
         <div class="container text-center">
             <h1 class="display-1 mb-4 single-blog-title text-light font-weight-light">{{ $project->title->rendered }}</h1>
         </div>
     </div>
-    <section id="gtco-single-content" class="bg-white">
+    <section id="gtco-single-content" style="background: #101827" class="text-white">
         <div class="container">
             <div class="section-content blog-content">
                 <div class="row">
@@ -62,5 +47,5 @@
             </div>
         </div>
     </section>
-    @include('components.footer')
+    @include('components.dark.footer')
 @endsection
