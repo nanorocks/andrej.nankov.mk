@@ -9,24 +9,7 @@
     <meta property="og:site_name" content="nankov.mk" />
 @endsection
 @section('body')
-    <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center bg-white rounded" href="{{ route('home') }}">
-                nankov.mk
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header"
-                aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="lnr lnr-menu"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar-nav-header">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item bg-white rounded">
-                        <a class="nav-link" href="{{ route('home') }}">Back to Home</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @include('components.dark.nav')
     <div class="jumbotron d-flex align-items-center"
         style="background: url(https://wpadmin.nankov.mk/wp-content/uploads/2022/07/blogger.png)">
         <div class="container text-center">
@@ -34,55 +17,53 @@
                 area</h1>
         </div>
     </div>
-    <section id="gtco-single-content" class="bg-white pt-5">
+    <section id="gtco-single-content" class="bg-dark-custom-sec pt-5">
         <div class="container pt-5 mt-5">
             <div class="row">
                 @foreach ($posts as $post)
                     <div class="col-md-6 blog-holder">
-                        <div class="posts">
-                            <div class="m-2">
-                                <div class="blog-item-wrapper">
-                                    <div class="blog-item">
-                                        <div class="blog-img">
-                                            <a href="{{ route('posts.slug', $post->slug) }}">
-                                                <img src="{{ $post->acf->photo->url ?? 'img/blog-1.jpg' }}"
-                                                    alt="{{ $post->title->rendered }}"
-                                                    title="{{ $post->title->rendered }}" />
-                                            </a>
-                                        </div>
-                                        <div class="blog-text" style="min-height: 460px">
-                                            <div class="blog-tag">
-                                                <a href="{{ route('posts.slug', $post->slug) }}">
-                                                    <h6>
-                                                        {{-- <small>{{ json_encode($post->acf->categories_names) }}></small> --}}
-                                                    </h6>
-                                                </a>
-                                            </div>
-                                            <div class="blog-title">
-                                                <a href="{{ route('posts.slug', $post->slug) }}">
-                                                    <h4>{{ $post->title->rendered }}</h4>
-                                                </a>
-                                            </div>
-                                            <div class="blog-meta">
-                                                <p class="blog-date">{{ $post->acf->crated_at }}</p>
-                                            </div>
-                                            <div class="blog-desc">
-                                                <p>{!! $post->excerpt->rendered !!}</p>
-                                            </div>
-                                            <div class="blog-author">
-                                                <p>by {{ $post->acf->creator }}</p>
-                                            </div>
-                                            <div class="blog-share-wrapper">
-                                                <a class="blog-share"
-                                                    href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.slug', $post->slug) }}">
-                                                    <i class="bi bi-facebook"></i>
-                                                </a>
-                                                <a class="blog-share"
-                                                    href="https://www.linkedin.com/sharing/share-offsite/?url={{ route('posts.slug', $post->slug) }}">
-                                                    <i class="bi bi-linkedin"></i>
-                                                </a>
-                                            </div>
-                                        </div>
+                        <div class="blog-item-wrapper">
+                            <div class="blog-item bg-dark-custom">
+                                <div class="blog-img">
+                                    <a href="{{ route('posts.slug', $post->slug) }}">
+                                        <img src="{{ $post->acf->photo->url ?? 'img/blog-1.jpg' }}"
+                                            alt="{{ $post->title->rendered }}" title="{{ $post->title->rendered }}" />
+                                    </a>
+                                </div>
+                                <div class="blog-text" style="min-height: 460px">
+                                    <div class="blog-tag">
+                                        <a href="{{ route('posts.slug', $post->slug) }}">
+                                            <h6>
+                                                {{-- <small>{{ explode(',', $post->acf->categories_names) }}</small> --}}
+                                            </h6>
+                                        </a>
+                                    </div>
+                                    <div class="blog-title ">
+                                        <a href="{{ route('posts.slug', $post->slug) }}">
+                                            <h4 class="text-white">{{ $post->title->rendered }}</h4>
+                                        </a>
+                                    </div>
+                                    <div class="blog-meta">
+                                        <p class="blog-date">{{ $post->acf->crated_at }} /
+                                        <p class="blog-comment ml-1"><a href="{{ route('posts.slug', $post->slug) }}">Post a
+                                                comment</a></p>
+                                        </p>
+                                    </div>
+                                    <div class="blog-desc text-white">
+                                        <p>{!! $post->excerpt->rendered !!}</p>
+                                    </div>
+                                    <div class="blog-author">
+                                        <p>by {{ $post->acf->creator }}</p>
+                                    </div>
+                                    <div class="blog-share-wrapper">
+                                        <a class="blog-share"
+                                            href="https://www.facebook.com/sharer/sharer.php?u={{ route('posts.slug', $post->slug) }}">
+                                            <i class="bi bi-facebook"></i>
+                                        </a>
+                                        <a class="blog-share"
+                                            href="https://www.linkedin.com/sharing/share-offsite/?url={{ route('posts.slug', $post->slug) }}">
+                                            <i class="bi bi-linkedin"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +73,7 @@
             </div>
         </div>
     </section>
-    @include('components.footer')
+    @include('components.dark.footer')
 @endsection
 @section('js')
 @endsection
