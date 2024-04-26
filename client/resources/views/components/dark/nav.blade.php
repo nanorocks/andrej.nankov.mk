@@ -8,7 +8,7 @@
             <span class="lnr lnr-menu"></span>
         </button>
 
-        <div class="navbar-collapse text-white" id="navbar-nav-header">
+        <div class="collapse navbar-collapse" id="navbar-nav-header">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Back to Home</a>
@@ -17,4 +17,3 @@
         </div>
     </div>
 </nav>
-
