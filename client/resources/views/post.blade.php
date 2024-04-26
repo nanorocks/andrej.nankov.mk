@@ -20,30 +20,13 @@
     {{-- <meta property="article:tags" content="{{ implode(',', $post->tags_names) }}" /> --}}
 @endsection
 @section('body')
-    <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/">
-                nankov.mk
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header"
-                aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="lnr lnr-menu"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar-nav-header">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Back to Home</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @include('components.dark.nav')
     <div class="jumbotron d-flex align-items-center" style="background-image: url({{ asset($post->acf->photo->url) }})">
         <div class="container text-center">
             <h1 class="display-1 mb-4 single-blog-title text-light font-weight-light"></h1>
         </div>
     </div>
-    <section id="gtco-single-content" class="bg-white">
+    <section id="gtco-single-content" class="bg-dark-custom-sec text-white">
         <div class="container">
             <div class="section-content blog-content pt-3">
                 <div class="row">
@@ -62,7 +45,7 @@
             </div>
         </div>
     </section>
-    @include('components.footer')
+    @include('components.dark.footer')
 @endsection
 @section('js')
 @endsection
