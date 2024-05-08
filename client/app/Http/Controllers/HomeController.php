@@ -7,9 +7,11 @@ use App\Services\WpApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\TokenRepository;
 use \Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
+use Laravel\Passport\RefreshTokenRepository;
 
 class HomeController extends Controller
 {
@@ -125,6 +127,21 @@ class HomeController extends Controller
 
     public function logout(Request $request)
     {
+
+        $tokenRepository = app(TokenRepository::class);
+        $refreshTokenRepository = app(RefreshTokenRepository::class);
+
+
+        $user = Auth::user();
+
+        dd($user->tokens);
+
+        // Revoke an access token...
+        // $tokenRepository->revokeAccessToken($tokenId);
+
+        // Revoke all of the token's refresh tokens...
+        // $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($tokenId);
+
         // Auth::guard('api')->logout();
         Auth::guard('web')->logout();
 
@@ -133,7 +150,7 @@ class HomeController extends Controller
                 'message' => 'Successfully logged out'
             ]);
         }
-        
+
         return redirect()->back()->with([
             'message' => 'Successfully logged out'
         ]);
