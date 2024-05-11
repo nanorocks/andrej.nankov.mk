@@ -64,6 +64,7 @@
                                 <th>Name</th>
                                 <th>Id</th>
                                 <th>Secret</th>
+                                <th>Redirect</th>
                                 <th>Created At</th>
                                 <th>Action</th>
                             </tr>
@@ -75,6 +76,7 @@
                                     <td>{{ $client->name }}</td>
                                     <td>{{ $client->id }}</td>
                                     <td>{{ $client->secret }}</td>
+                                    <td>{{ empty($client->redirect) ? 'N/A' : $client->redirect }}</td>
                                     <td>{!! htmlspecialchars_decode(date('j<\s\up>S</\s\up> F Y', strtotime($client->created_at))) !!}</td>
                                     <td>
                                         <button type="button" class="btn btn-error btn-sm"
