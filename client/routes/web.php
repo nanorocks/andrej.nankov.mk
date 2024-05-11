@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -21,6 +22,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/cache/clear', [HomeController::class, 'cacheClear'])->name('cache.clear');
     Route::get('/optimize', [HomeController::class, 'optimize'])->name('optimize');
     Route::get('/pulse/purge', [HomeController::class, 'pulsePurge'])->name('pulse.purge');
+    Route::get('/health', HealthCheckResultsController::class)->name('health.check');
 });
 
 Route::view('profile', 'profile')

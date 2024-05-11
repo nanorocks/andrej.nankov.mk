@@ -14,7 +14,10 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^3.4",
-        "livewire/volt": "^1.0"
+        "livewire/volt": "^1.0",
+        "spatie/cpu-load-health-check": "^1.0",
+        "spatie/laravel-health": "^1.29",
+        "spatie/security-advisories-health-check": "^1.2"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",

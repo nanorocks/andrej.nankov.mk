@@ -61,6 +61,10 @@ new class extends Component {
                             {{ __('Raspberry PI Monitoring') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('health.check')">
+                            {{ __('Health check') }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('pulse')">
                             {{ __('Pulse Monitoring') }}
                         </x-dropdown-link>
@@ -222,6 +226,10 @@ new class extends Component {
 
                 <x-responsive-nav-link href="http://rpi.nankov.mk/">
                     {{ __('Raspberry PI Monitoring') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('health.check')">
+                    {{ __('Health check') }}
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('pulse')">
