@@ -246,6 +246,16 @@ return [
     |
     */
 
-    'dark_mode_ui' => env('DARK_MODE_UI', true)
+    'dark_mode_ui' => env('DARK_MODE_UI', true),
 
+
+     /*
+    |--------------------------------------------------------------------------
+    | Http call for push notifications
+    |--------------------------------------------------------------------------
+    |
+    | This call is used for push notification over central monitor tool.
+    |
+    */
+    'http_monitor_push_endpoint' => env('HTTP_MONITOR_PUSH_ENDPOINT', ''),
 ];

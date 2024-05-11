@@ -31,7 +31,7 @@ class PurgeActionCommand extends Command
         shell_exec('php artisan passport:purge --revoked');
         shell_exec('php artisan passport:purge --expired');
 
-        $res = Http::get("http://rpi.nankov.mk/api/push/4N7lBOp1u2?status=up&msg=OK&ping=");
+        $res = Http::get(config('app.http_monitor_push_endpoint'));
 
         $body = $res->json();
 
