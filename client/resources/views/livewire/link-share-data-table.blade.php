@@ -30,7 +30,7 @@
                             class="input input-bordered w-56 input-sm">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
-                        <button type="button" class="btn btn-primary text-xs">Filter</button>
+                        <button type="button" class="btn btn-primary btn-sm">Filter</button>
                     </div>
                 </div>
                 <div class="overflow-x-auto pt-4">
@@ -38,10 +38,8 @@
                         <!-- head -->
                         <thead>
                             <tr class="text-center">
-                                <th></th>
+                                <th>#</th>
                                 <th>Title</th>
-                                <th>Url</th>
-                                <th>Description</th>
                                 <th>Category</th>
                                 <th>Created At</th>
                                 <th>Action</th>
@@ -51,21 +49,26 @@
                             @foreach ($articles as $key => $article)
                                 <tr class="text-center">
                                     <th>{{ $key + 1 }}</th>
-                                    <td>{{ $article->title }}</td>
-                                    <td>{{ $article->url }}</td>
-                                    <td>{{ $article->description }}</td>
-                                    <td>{{ $article->category }}</td>
+                                    <td><a href="{{ $article->url }}" target="_blank">{{ $article->title }}</a></td>
+
+                                    <td>
+                                        @forelse ($article->categories as $category)
+                                            {{ $category->name }} {{ count($article->categories) > 1 ? '|' : '' }}
+                                        @empty
+                                            N/A
+                                        @endforelse
+                                    </td>
                                     <td>{{ $article->created_at }}</td>
 
                                     <td class="flex gap-2">
-                                        <button type="button" class="btn btn-error btn-sm">
+                                        <button type="button" class="btn btn-success btn-sm">
                                             Edit
                                         </button>
                                         <button type="button" class="btn btn-error btn-sm">
                                             Delete
                                         </button>
                                     </td>
-                                </tr>§
+                                </tr>
                             @endforeach
                             @if ($articles === null)
                                 <tr class="text-center ">

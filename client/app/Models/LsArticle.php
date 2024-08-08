@@ -13,6 +13,6 @@ class LsArticle extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(LsCategory::class);
+        return $this->belongsToMany(LsCategory::class, 'ls_articles_categories', 'article_id', 'category_id');
     }
 }

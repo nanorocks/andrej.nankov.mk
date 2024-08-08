@@ -9,9 +9,7 @@ class LinkShareDataTable extends Component
 {
     public function render()
     {
-        $articles = LsArticle::with(['categories'])->get()->toArray();
-
-        dd($articles);
+        $articles = LsArticle::with(['categories'])->get();
 
         return view('livewire.link-share-data-table', compact('articles'));
     }
