@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LinkShareController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 
@@ -23,6 +24,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/optimize', [HomeController::class, 'optimize'])->name('optimize');
     Route::get('/pulse/purge', [HomeController::class, 'pulsePurge'])->name('pulse.purge');
     Route::get('/health', HealthCheckResultsController::class)->name('health.check');
+
+    Route::get('/link/share', LinkShareController::class)->name('link.share');
 });
 
 Route::view('profile', 'profile')

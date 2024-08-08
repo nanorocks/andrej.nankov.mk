@@ -9,6 +9,9 @@ services:
       dockerfile: .docker/Dockerfile
     image: 'personal-website'
     restart: always
+    environment:
+      UID: 1000
+      GID: 1000
     ports:
       - 8080:80
     volumes:
@@ -34,9 +37,10 @@ services:
       ADMINER_PLUGINS: tables-filter tinymce
     ports:
       - 54320:8080
-  mailhog:
-    container_name: mailhog
-    image: mailhog/mailhog:latest
+  mailpit:
+    platform: linux/arm64/v8
+    container_name: mailpit
+    image: axllent/mailpit:latest
     restart: always
     ports:
       - 1025:1025
