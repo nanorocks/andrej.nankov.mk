@@ -5,9 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-12xl mx-auto sm:px-6 lg:px-12">
-            <div class="p-4 sm:p-8">
                 <div class="w-full">
                     <div class="breadcrumbs text-sm pb-4">
                         <ul>
@@ -77,7 +76,6 @@
 
                     </div>
                 </div>
-            </div>
 
 
 

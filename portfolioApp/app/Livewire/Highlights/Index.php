@@ -15,7 +15,7 @@ class Index extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
-        $highlights = Highlight::paginate();
+        $highlights = Highlight::orderBy('year', 'desc')->paginate(8);
 
         return view('livewire.highlight.index', compact('highlights'))
             ->with('i', $this->getPage() * $highlights->perPage());

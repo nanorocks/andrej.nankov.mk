@@ -39,9 +39,6 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'  # Password for regular user
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
-        volumes:
-            - ./.docker/mysql_data:/var/lib/mysql
-            - ./.docker/my.cnf:/etc/mysql/conf.d/my.cnf
         networks:
             - sail
         healthcheck:
