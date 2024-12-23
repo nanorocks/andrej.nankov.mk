@@ -6,15 +6,26 @@
 
 <div class="py-12">
     <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
-        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+        <div class="p-4 sm:p-8 bg-base-100 shadow sm:rounded-lg">
             <div class="w-full">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
-                        <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Users') }}</h1>
-                        <p class="mt-2 text-sm text-gray-700">A list of all the {{ __('Users') }}.</p>
+                        <h1 class="text-ba font-semibold leading-6 text-base-900 text-2xl flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-users mr-2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            {{ __('Users') }}
+                        </h1>
+                        <p class="mt-2 text-sm text-base-700">A list of all the {{ __('Users') }}.</p>
                     </div>
                     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                        <a type="button" wire:navigate href="{{ route('users.create') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add new</a>
+                        <a type="button" wire:navigate href="{{ route('users.create') }}"
+                           class="btn btn-primary text-base">Add new</a>
                     </div>
                 </div>
 
@@ -24,48 +35,82 @@
                             <table class="w-full divide-y divide-gray-300">
                                 <thead>
                                 <tr>
-                                    <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">No</th>
-                                    
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Name</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Avatar</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Email</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Phone Number</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Address</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Website Url</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Medium Url</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Social Media</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Role</th>
-									<th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Bio</th>
-
-                                    <th scope="col" class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"></th>
+                                    <th scope="col"
+                                        class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-base">
+                                        Avatar
+                                    </th>
+                                    <th scope="col"
+                                        class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-base">
+                                        Name
+                                    </th>
+                                    <th scope="col"
+                                        class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-base">
+                                        Email
+                                    </th>
+                                    <th scope="col"
+                                        class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-base">
+                                        Role
+                                    </th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide text-base">
+                                        Actions
+                                    </th>
                                 </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 bg-white">
-                                @foreach ($users as $user)
+                                <tbody class="divide-y divide-gray-200 bg-base-300">
+                                @foreach ($users as $key => $user)
                                     <tr class="even:bg-gray-50" wire:key="{{ $user->id }}">
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900">{{ ++$i }}</td>
-                                        
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->name }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->avatar }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->email }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->phone_number }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->address }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->website_url }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->medium_url }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->social_media }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->role }}</td>
-										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->bio }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-base">
+                                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                                                <div class="w-10 rounded-full">
+                                                    <img alt="Tailwind CSS Navbar component"
+                                                         src="{{ $user->avatar ?? 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp' }}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-base">{{ $user->name }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-base">{{ $user->email }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-base uppercase">{{ $user->role }}</td>
 
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
-                                            <a wire:navigate href="{{ route('users.show', $user->id) }}" class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Show') }}</a>
-                                            <a wire:navigate href="{{ route('users.edit', $user->id) }}" class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Edit') }}</a>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-base flex mt-3">
+                                            <a wire:navigate href="{{ route('users.show', $user->id) }}"
+                                               class="text-secondary mr-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="feather feather-eye">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                            </a>
+                                            <a wire:navigate href="{{ route('users.edit', $user->id) }}"
+                                               class="text-success font-bold mr-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="feather feather-edit">
+                                                    <path
+                                                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                    <path
+                                                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                </svg>
+                                            </a>
                                             <button
-                                                class="text-red-600 font-bold hover:text-red-900"
+                                                class="text-error font-bold"
                                                 type="button"
                                                 wire:click="delete({{ $user->id }})"
                                                 wire:confirm="Are you sure you want to delete?"
                                             >
-                                                {{ __('Delete') }}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="feather feather-trash-2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path
+                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                </svg>
                                             </button>
                                         </td>
                                     </tr>
