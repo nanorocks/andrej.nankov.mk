@@ -1,5 +1,5 @@
-<div class="space-y-6">
-    
+<div class="space-y-6 pl-1">
+
     <div>
         <x-input-label for="slug" :value="__('Slug')"/>
         <x-text-input wire:model="form.slug" id="slug" name="slug" type="text" class="mt-1 block w-full" autocomplete="slug" placeholder="Slug"/>

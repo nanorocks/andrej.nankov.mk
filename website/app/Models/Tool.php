@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tool extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -31,7 +31,5 @@ class Tool extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['title', 'slug', 'description', 'photo_url', 'caption', 'website_url'];
-
-
+    protected $fillable = ['uuid', 'title', 'slug', 'description', 'photo_url', 'caption', 'website_url'];
 }
