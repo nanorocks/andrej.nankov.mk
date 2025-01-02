@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Project extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -35,7 +35,7 @@ class Project extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['slug', 'title', 'description', 'start_date', 'end_date', 'project_url', 'image_url', 'status', 'user_id'];
+    protected $fillable = ['uuid', 'slug', 'title', 'description', 'start_date', 'end_date', 'project_url', 'image_url', 'status', 'user_id'];
 
 
     /**
@@ -45,5 +45,5 @@ class Project extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
-    
+
 }

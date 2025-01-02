@@ -6,15 +6,24 @@
 
 <div class="py-12">
     <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
-        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+        <div class="p-4 sm:p-8 bg-base-100 shadow sm:rounded-lg">
             <div class="w-full">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
-                        <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Create') }} Project</h1>
-                        <p class="mt-2 text-sm text-gray-700">Add a new {{ __('Project') }}.</p>
+                        <h1 class="text-ba font-semibold leading-6 text-base-900 text-2xl flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-layers mr-2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                            {{ __('Create Project') }}
+                        </h1>
+                        <p class="mt-2 text-sm text-base-700">Add a new {{ __('Project') }}.</p>
                     </div>
                     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                        <a type="button" wire:navigate href="{{ route('projects.index') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Back</a>
+                        <a type="button" wire:navigate href="{{ route('projects.index') }}" class="btn btn-secondary text-base">Back</a>
                     </div>
                 </div>
 

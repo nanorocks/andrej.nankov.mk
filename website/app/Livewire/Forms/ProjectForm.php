@@ -4,11 +4,13 @@ namespace App\Livewire\Forms;
 
 use App\Models\Project;
 use Livewire\Form;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class ProjectForm extends Form
 {
     public ?Project $projectModel;
-    
+
     public $slug = '';
     public $title = '';
     public $description = '';
@@ -22,21 +24,22 @@ class ProjectForm extends Form
     public function rules(): array
     {
         return [
-			'slug' => 'required|string',
-			'title' => 'required|string',
-			'description' => 'required|string',
-			'start_date' => 'required',
-			'project_url' => 'string',
-			'image_url' => 'string',
-			'status' => 'required',
-			'user_id' => 'required',
+            'slug' => 'required|string',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'start_date' => 'required',
+            'end_date' => 'nullable|string',
+            'project_url' => 'string',
+            'image_url' => 'string',
+            'status' => 'required',
+            'user_id' => 'required',
         ];
     }
 
     public function setProjectModel(Project $projectModel): void
     {
         $this->projectModel = $projectModel;
-        
+
         $this->slug = $this->projectModel->slug;
         $this->title = $this->projectModel->title;
         $this->description = $this->projectModel->description;
@@ -50,14 +53,27 @@ class ProjectForm extends Form
 
     public function store(): void
     {
-        $this->projectModel->create($this->validate());
+        $validatedData = $this->validate();
+        $validatedData['start_date'] = Carbon::createFromFormat('d-M-Y', $validatedData['start_date'])->format('Y-m-d');
+        if (!empty($validatedData['end_date'])) {
+            $validatedData['end_date'] = Carbon::createFromFormat('d-M-Y', $validatedData['end_date'])->format('Y-m-d');
+        }
+        $validatedData['uuid'] = Str::uuid();
+
+        $this->projectModel->create($validatedData);
 
         $this->reset();
     }
 
     public function update(): void
     {
-        $this->projectModel->update($this->validate());
+        $validatedData = $this->validate();
+        $validatedData['start_date'] = Carbon::createFromFormat('d-M-Y', $validatedData['start_date'])->format('Y-m-d');
+        if (!empty($validatedData['end_date'])) {
+            $validatedData['end_date'] = Carbon::createFromFormat('d-M-Y', $validatedData['end_date'])->format('Y-m-d');
+        }
+
+        $this->projectModel->update($validatedData);
 
         $this->reset();
     }
