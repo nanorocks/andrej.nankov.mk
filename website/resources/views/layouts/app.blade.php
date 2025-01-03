@@ -74,7 +74,7 @@
 
                         <li class="dropdown dropdown-end">
                             <label tabindex="0" class="btn btn-sm m-1">Theme</label>
-                            <ul class="dropdown-content menu menu-sm p-2 shadow bg-base-100 rounded-box w-52 z-50">
+                            <ul class="dropdown-content menu menu-sm p-2 shadow bg-base-100 rounded-box w-32 z-50">
                                 <li><a href="#" onclick="setTheme('light')">Light</a></li>
                                 <li><a href="#" onclick="setTheme('dark')">Dark</a></li>
                                 <li><a href="#" onclick="setTheme('cupcake')">Cupcake</a></li>
@@ -112,11 +112,11 @@
                             </x-slot>
 
                             <ul tabindex="0"
-                                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-32 p-2 shadow">
                                 <li>
                                     <a href="{{ route('profile') }}" class="justify-between">
                                         Profile
-                                        <span class="badge">New</span>
+
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>

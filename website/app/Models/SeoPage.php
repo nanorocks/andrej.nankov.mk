@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SeoPage extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -41,7 +41,7 @@ class SeoPage extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['slug', 'keywords', 'title', 'description', 'meta_robots', 'canonical_url', 'og_title', 'og_description', 'og_image', 'structured_data', 'locale', 'sitemap_priority', 'sitemap_frequency', 'last_seo_audit', 'custom_scripts'];
+    protected $fillable = ['uuid', 'slug', 'keywords', 'title', 'description', 'meta_robots', 'canonical_url', 'og_title', 'og_description', 'og_image', 'structured_data', 'locale', 'sitemap_priority', 'sitemap_frequency', 'last_seo_audit', 'custom_scripts'];
 
 
     /**
@@ -51,5 +51,4 @@ class SeoPage extends Model
     {
         return $this->hasMany(\App\Models\Story::class, 'id', 'seo_page_id');
     }
-    
 }

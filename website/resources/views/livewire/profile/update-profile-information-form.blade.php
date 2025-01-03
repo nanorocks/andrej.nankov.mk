@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 
-new class extends Component
-{
+new class extends Component {
     public string $name = '';
     public string $email = '';
 
@@ -72,13 +71,14 @@ new class extends Component
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
+    <form wire:submit="updateProfileInformation" class="space-y-0">
         <div>
             <label class="form-control w-full max-w-xs">
                 <div class="label">
                     <span class="label-text">{{ __('Name') }}</span>
                 </div>
-                <input type="text" wire:model="name" id="name" name="name" placeholder="Type your name" class="input input-bordered w-full max-w-xs" required autofocus autocomplete="name" />
+                <input type="text" wire:model="name" id="name" name="name" placeholder="Type your name"
+                    class="input input-bordered w-full max-w-xs" required autofocus autocomplete="name" />
                 <div class="label">
                     <span class="label-text-alt text-error">{{ $errors->first('name') }}</span>
                     <span class="label-text-alt"></span>
@@ -91,19 +91,21 @@ new class extends Component
                 <div class="label">
                     <span class="label-text">{{ __('Email') }}</span>
                 </div>
-                <input type="email" wire:model="email" id="email" name="email" placeholder="Type your email" class="input input-bordered w-full max-w-xs" required autocomplete="username" />
+                <input type="email" wire:model="email" id="email" name="email" placeholder="Type your email"
+                    class="input input-bordered w-full max-w-xs" required autocomplete="username" />
                 <div class="label">
                     <span class="label-text-alt text-error">{{ $errors->first('email') }}</span>
                     <span class="label-text-alt"></span>
                 </div>
             </label>
 
-            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
+            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-base-700">
                         {{ __('Your email address is unverified.') }}
 
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-primary hover:text-primary-dark rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        <button wire:click.prevent="sendVerification"
+                            class="underline text-sm text-primary hover:text-primary-dark rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -126,4 +128,3 @@ new class extends Component
         </div>
     </form>
 </section>
-

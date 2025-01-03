@@ -6,8 +6,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Volt\Component;
 
-new class extends Component
-{
+new class extends Component {
     public string $current_password = '';
     public string $password = '';
     public string $password_confirmation = '';
@@ -48,13 +47,15 @@ new class extends Component
         </p>
     </header>
 
-    <form wire:submit="updatePassword" class="mt-6 space-y-6">
+    <form wire:submit="updatePassword" class="mt-6 space-y-0">
         <div>
             <label class="form-control w-full max-w-xs">
                 <div class="label">
                     <span class="label-text">{{ __('Current Password') }}</span>
                 </div>
-                <input type="password" wire:model="current_password" id="update_password_current_password" name="current_password" placeholder="Enter current password" class="input input-bordered w-full max-w-xs" autocomplete="current-password" />
+                <input type="password" wire:model="current_password" id="update_password_current_password"
+                    name="current_password" placeholder="Enter current password"
+                    class="input input-bordered w-full max-w-xs" autocomplete="current-password" />
                 <div class="label">
                     <span class="label-text-alt text-error">{{ $errors->first('current_password') }}</span>
                 </div>
@@ -66,7 +67,9 @@ new class extends Component
                 <div class="label">
                     <span class="label-text">{{ __('New Password') }}</span>
                 </div>
-                <input type="password" wire:model="password" id="update_password_password" name="password" placeholder="Enter new password" class="input input-bordered w-full max-w-xs" autocomplete="new-password" />
+                <input type="password" wire:model="password" id="update_password_password" name="password"
+                    placeholder="Enter new password" class="input input-bordered w-full max-w-xs"
+                    autocomplete="new-password" />
                 <div class="label">
                     <span class="label-text-alt text-error">{{ $errors->first('password') }}</span>
                 </div>
@@ -78,7 +81,9 @@ new class extends Component
                 <div class="label">
                     <span class="label-text">{{ __('Confirm Password') }}</span>
                 </div>
-                <input type="password" wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" placeholder="Confirm new password" class="input input-bordered w-full max-w-xs" autocomplete="new-password" />
+                <input type="password" wire:model="password_confirmation" id="update_password_password_confirmation"
+                    name="password_confirmation" placeholder="Confirm new password"
+                    class="input input-bordered w-full max-w-xs" autocomplete="new-password" />
                 <div class="label">
                     <span class="label-text-alt text-error">{{ $errors->first('password_confirmation') }}</span>
                 </div>

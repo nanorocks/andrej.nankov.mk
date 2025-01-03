@@ -25,7 +25,7 @@
                     </div>
                     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                         <a type="button" wire:navigate href="{{ route('services.index') }}"
-                            class="btn btn-primary text-base">Back</a>
+                            class="btn btn-secondary text-base">Back</a>
                     </div>
                 </div>
 
