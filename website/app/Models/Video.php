@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Video extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -38,7 +38,7 @@ class Video extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['title', 'slug', 'description', 'video_url', 'thumbnail_url', 'author_id', 'tags', 'views_count', 'likes_count', 'comments_count', 'is_published', 'published_at'];
+    protected $fillable = ['uuid', 'title', 'slug', 'description', 'video_url', 'thumbnail_url', 'author_id', 'tags', 'views_count', 'likes_count', 'comments_count', 'is_published', 'published_at'];
 
 
     /**
@@ -48,5 +48,4 @@ class Video extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'author_id', 'id');
     }
-    
 }

@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Video;
 use Livewire\Form;
+use App\Models\Video;
+use Illuminate\Support\Str;
 
 class VideoForm extends Form
 {
     public ?Video $videoModel;
-    
+
     public $title = '';
     public $slug = '';
     public $description = '';
@@ -25,23 +26,23 @@ class VideoForm extends Form
     public function rules(): array
     {
         return [
-			'title' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'string',
-			'video_url' => 'required|string',
-			'thumbnail_url' => 'string',
-			'author_id' => 'required',
-			'views_count' => 'required',
-			'likes_count' => 'required',
-			'comments_count' => 'required',
-			'is_published' => 'required',
+            'title' => 'required|string',
+            'slug' => 'required|string',
+            'description' => 'string',
+            'video_url' => 'required|string',
+            'thumbnail_url' => 'string',
+            'author_id' => 'required',
+            'views_count' => 'required',
+            'likes_count' => 'required',
+            'comments_count' => 'required',
+            'is_published' => 'required',
         ];
     }
 
     public function setVideoModel(Video $videoModel): void
     {
         $this->videoModel = $videoModel;
-        
+
         $this->title = $this->videoModel->title;
         $this->slug = $this->videoModel->slug;
         $this->description = $this->videoModel->description;
@@ -58,7 +59,10 @@ class VideoForm extends Form
 
     public function store(): void
     {
-        $this->videoModel->create($this->validate());
+        $validatedData = $this->validate();
+        $validatedData['uuid'] = Str::uuid();
+
+        $this->videoModel->create($validatedData);
 
         $this->reset();
     }
