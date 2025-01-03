@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Service extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -31,7 +31,5 @@ class Service extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['title', 'description', 'price', 'photo_url', 'icon', 'slug'];
-
-
+    protected $fillable = ['uuid', 'title', 'description', 'price', 'photo_url', 'icon', 'slug'];
 }

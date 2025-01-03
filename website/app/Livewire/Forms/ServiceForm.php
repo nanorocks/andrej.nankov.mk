@@ -4,11 +4,12 @@ namespace App\Livewire\Forms;
 
 use App\Models\Service;
 use Livewire\Form;
+use Illuminate\Support\Str;
 
 class ServiceForm extends Form
 {
     public ?Service $serviceModel;
-    
+
     public $title = '';
     public $description = '';
     public $price = '';
@@ -19,19 +20,19 @@ class ServiceForm extends Form
     public function rules(): array
     {
         return [
-			'title' => 'required|string',
-			'description' => 'required|string',
-			'price' => 'required',
-			'photo_url' => 'string',
-			'icon' => 'string',
-			'slug' => 'required|string',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required',
+            'photo_url' => 'string',
+            'icon' => 'string',
+            'slug' => 'required|string',
         ];
     }
 
     public function setServiceModel(Service $serviceModel): void
     {
         $this->serviceModel = $serviceModel;
-        
+
         $this->title = $this->serviceModel->title;
         $this->description = $this->serviceModel->description;
         $this->price = $this->serviceModel->price;
@@ -42,14 +43,19 @@ class ServiceForm extends Form
 
     public function store(): void
     {
-        $this->serviceModel->create($this->validate());
+        $validatedData = $this->validate();
+        $validatedData['uuid'] = Str::uuid();
+
+        $this->serviceModel->create($validatedData);
 
         $this->reset();
     }
 
     public function update(): void
     {
-        $this->serviceModel->update($this->validate());
+        $validatedData = $this->validate();
+
+        $this->serviceModel->update($validatedData);
 
         $this->reset();
     }
