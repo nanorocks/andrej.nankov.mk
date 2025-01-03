@@ -81,7 +81,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-base-200 bg-base-100">
+                                <tbody class="divide-y divide-base-200 bg-base-300">
                                     @foreach ($videos as $video)
                                         <tr class="even:bg-base-50" wire:key="{{ $video->id }}">
                                             <td

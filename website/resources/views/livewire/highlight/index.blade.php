@@ -51,7 +51,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-base-200 bg-base-100">
+                                <tbody class="divide-y divide-base-200 bg-base-300">
                                     @foreach ($highlights as $highlight)
                                         <tr class="even:bg-base-50" wire:key="{{ $highlight->id }}">
                                             <td
