@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Story;
 use Livewire\Form;
+use App\Models\Story;
+use Illuminate\Support\Str;
 
 class StoryForm extends Form
 {
     public ?Story $storyModel;
-    
+
     public $slug = '';
     public $title = '';
     public $content = '';
@@ -29,24 +30,24 @@ class StoryForm extends Form
     public function rules(): array
     {
         return [
-			'slug' => 'required|string',
-			'title' => 'required|string',
-			'content' => 'required|string',
-			'excerpt' => 'string',
-			'author_id' => 'required',
-			'is_published' => 'required',
-			'is_draft' => 'required',
-			'views_count' => 'required',
-			'likes_count' => 'required',
-			'comments_count' => 'required',
-			'featured_image' => 'string',
+            'slug' => 'required|string',
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'excerpt' => 'string',
+            'author_id' => 'required',
+            'is_published' => 'required',
+            'is_draft' => 'required',
+            'views_count' => 'required',
+            'likes_count' => 'required',
+            'comments_count' => 'required',
+            'featured_image' => 'string',
         ];
     }
 
     public function setStoryModel(Story $storyModel): void
     {
         $this->storyModel = $storyModel;
-        
+
         $this->slug = $this->storyModel->slug;
         $this->title = $this->storyModel->title;
         $this->content = $this->storyModel->content;
@@ -67,7 +68,11 @@ class StoryForm extends Form
 
     public function store(): void
     {
-        $this->storyModel->create($this->validate());
+        $validatedData = $this->validate();
+
+        $validatedData['uuid'] = Str::uuid();
+
+        $this->storyModel->create($validatedData);
 
         $this->reset();
     }

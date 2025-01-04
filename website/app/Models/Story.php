@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Story extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -44,7 +44,7 @@ class Story extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['slug', 'title', 'content', 'excerpt', 'author_id', 'tags', 'category_id', 'published_at', 'is_published', 'is_draft', 'views_count', 'likes_count', 'comments_count', 'featured_image', 'media', 'seo_page_id'];
+    protected $fillable = ['uuid', 'slug', 'title', 'content', 'excerpt', 'author_id', 'tags', 'category_id', 'published_at', 'is_published', 'is_draft', 'views_count', 'likes_count', 'comments_count', 'featured_image', 'media', 'seo_page_id'];
 
 
     /**
@@ -54,7 +54,7 @@ class Story extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'author_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -62,7 +62,7 @@ class Story extends Model
     {
         return $this->belongsTo(\App\Models\Category::class, 'category_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -70,5 +70,4 @@ class Story extends Model
     {
         return $this->belongsTo(\App\Models\SeoPage::class, 'seo_page_id', 'id');
     }
-    
 }
