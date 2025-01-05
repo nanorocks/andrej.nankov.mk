@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('avatar')->nullable(); // URL to the user's avatar image
             $table->string('email')->unique(); // User's email address
             $table->timestamp('email_verified_at')->nullable(); // Verification date for the email
-            $table->string('password'); // Hashed password
+            $table->string('password')->default(Hash::make('secret')); // Hashed password
             $table->rememberToken(); // Token for "remember me" functionality
             $table->string('phone_number')->nullable(); // User's phone number
             $table->string('address')->nullable(); // User's physical address

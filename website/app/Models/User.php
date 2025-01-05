@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Project;
-use App\Models\Story;
-use App\Models\Video;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +21,10 @@ class User extends Authenticatable
      */
     protected $fillable = ['name', 'avatar', 'email', 'phone_number', 'address', 'website_url', 'medium_url', 'social_media', 'role', 'bio'];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -48,5 +49,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Video::class, 'id', 'author_id');
     }
-
 }
