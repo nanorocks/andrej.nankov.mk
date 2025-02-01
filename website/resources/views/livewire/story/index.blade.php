@@ -30,7 +30,7 @@
                 <div class="flow-root">
                     <div class="mt-8 overflow-x-auto">
                         <div class="inline-block min-w-full py-2 align-middle">
-                            <table class="w-full divide-y divide-gray-300">
+                            <table class="w-full divide-y divide-base-300">
                                 <thead>
                                     <tr>
                                         <th scope="col"
@@ -72,9 +72,9 @@
                                             Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 bg-base-300">
+                                <tbody class="divide-y divide-base-200 bg-base-300">
                                     @foreach ($stories as $story)
-                                        <tr class="even:bg-gray-50" wire:key="{{ $story->id }}">
+                                        <tr class="even:bg-base-50" ire:key="{{ $story->id }}">
                                             <td
                                                 class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-base">
                                                 {{ ++$i }}</td>

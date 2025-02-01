@@ -34,7 +34,7 @@
     </div>
     <div>
         <x-input-label for="order" :value="__('Order')" />
-        <x-text-input wire:model="form.order" id="order" name="order" type="text" class="mt-1 block w-full"
+        <x-text-input wire:model="form.order" id="order" name="order" type="number" class="mt-1 block w-full"
             autocomplete="order" placeholder="Order" />
         @error('form.order')
             <x-input-error class="mt-2" :messages="$message" />

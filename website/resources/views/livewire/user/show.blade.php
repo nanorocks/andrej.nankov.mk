@@ -32,7 +32,7 @@
                 <div class="flow-root">
                     <div class="mt-8 overflow-x-auto">
                         <div class="inline-block min-w-full py-2 align-middle">
-                            <div class="mt-6 border-t border-base-100">
+                            <div class="mt-6">
                                 <dl class="divide-y divide-base-100">
                                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                         <dt class="text-sm font-medium leading-6 text-base-900">Name</dt>

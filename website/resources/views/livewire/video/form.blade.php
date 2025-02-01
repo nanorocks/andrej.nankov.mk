@@ -42,7 +42,7 @@
     </div>
     <div>
         <x-input-label for="author_id" :value="__('Author Id')" />
-        <x-text-input wire:model="form.author_id" id="author_id" name="author_id" type="text"
+        <x-text-input wire:model="form.author_id" id="author_id" name="author_id" type="number"
             class="mt-1 block w-full" autocomplete="author_id" placeholder="Author Id" />
         @error('form.author_id')
             <x-input-error class="mt-2" :messages="$message" />
@@ -58,7 +58,7 @@
     </div>
     <div>
         <x-input-label for="views_count" :value="__('Views Count')" />
-        <x-text-input wire:model="form.views_count" id="views_count" name="views_count" type="text"
+        <x-text-input wire:model="form.views_count" id="views_count" name="views_count" type="number"
             class="mt-1 block w-full" autocomplete="views_count" placeholder="Views Count" />
         @error('form.views_count')
             <x-input-error class="mt-2" :messages="$message" />
@@ -66,7 +66,7 @@
     </div>
     <div>
         <x-input-label for="likes_count" :value="__('Likes Count')" />
-        <x-text-input wire:model="form.likes_count" id="likes_count" name="likes_count" type="text"
+        <x-text-input wire:model="form.likes_count" id="likes_count" name="likes_count" type="number"
             class="mt-1 block w-full" autocomplete="likes_count" placeholder="Likes Count" />
         @error('form.likes_count')
             <x-input-error class="mt-2" :messages="$message" />
@@ -74,7 +74,7 @@
     </div>
     <div>
         <x-input-label for="comments_count" :value="__('Comments Count')" />
-        <x-text-input wire:model="form.comments_count" id="comments_count" name="comments_count" type="text"
+        <x-text-input wire:model="form.comments_count" id="comments_count" name="comments_count" type="number"
             class="mt-1 block w-full" autocomplete="comments_count" placeholder="Comments Count" />
         @error('form.comments_count')
             <x-input-error class="mt-2" :messages="$message" />
@@ -82,7 +82,7 @@
     </div>
     <div>
         <x-input-label for="is_published" :value="__('Is Published')" />
-        <x-text-input wire:model="form.is_published" id="is_published" name="is_published" type="text"
+        <x-text-input wire:model="form.is_published" id="is_published" name="is_published" type="number"
             class="mt-1 block w-full" autocomplete="is_published" placeholder="Is Published" />
         @error('form.is_published')
             <x-input-error class="mt-2" :messages="$message" />
@@ -90,7 +90,7 @@
     </div>
     <div>
         <x-input-label for="published_at" :value="__('Published At')" />
-        <x-text-input wire:model="form.published_at" id="published_at" name="published_at" type="text"
+        <x-text-input wire:model="form.published_at" id="published_at" name="published_at" type="date"
             class="mt-1 block w-full" autocomplete="published_at" placeholder="Published At" />
         @error('form.published_at')
             <x-input-error class="mt-2" :messages="$message" />

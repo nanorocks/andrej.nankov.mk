@@ -32,7 +32,7 @@
                 <div class="flow-root">
                     <div class="mt-8 overflow-x-auto">
                         <div class="inline-block min-w-full py-2 align-middle">
-                            <table class="w-full divide-y divide-gray-300">
+                            <table class="w-full divide-y divide-base-300">
                                 <thead>
                                     <tr>
                                         <th scope="col"
@@ -57,9 +57,9 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-base-400 bg-base-300">
+                                <tbody class="divide-y divide-base-200 bg-base-300">
                                     @foreach ($users as $key => $user)
-                                        <tr wire:key="{{ $user->id }}">
+                                        <tr class="even:bg-base-50" wire:key="{{ $user->id }}">
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-base">
                                                 <div tabindex="0" role="button"
                                                     class="btn btn-ghost btn-circle avatar">

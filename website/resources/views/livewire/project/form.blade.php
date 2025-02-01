@@ -51,14 +51,14 @@
     </div>
     <div>
         <x-input-label for="status" :value="__('Status')"/>
-        <x-text-input wire:model="form.status" id="status" name="status" type="text" class="mt-1 block w-full" autocomplete="status" placeholder="Status"/>
+        <x-text-input wire:model="form.status" id="status" name="status" type="number" class="mt-1 block w-full" autocomplete="status" placeholder="Status"/>
         @error('form.status')
             <x-input-error class="mt-2" :messages="$message"/>
         @enderror
     </div>
     <div>
         <x-input-label for="user_id" :value="__('User Id')"/>
-        <x-text-input wire:model="form.user_id" id="user_id" name="user_id" type="text" class="mt-1 block w-full" autocomplete="user_id" placeholder="User Id"/>
+        <x-text-input wire:model="form.user_id" id="user_id" name="user_id" type="number" class="mt-1 block w-full" autocomplete="user_id" placeholder="User Id"/>
         @error('form.user_id')
             <x-input-error class="mt-2" :messages="$message"/>
         @enderror
