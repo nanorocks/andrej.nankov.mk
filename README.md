@@ -6,3 +6,9 @@
 - https://developers.home-assistant.io/
 - https://livewire.laravel.com/docs/quickstart
 - https://php.science/
+
+- composer require laravel/pint --dev
+```
+./vendor/bin/pint
+
+```

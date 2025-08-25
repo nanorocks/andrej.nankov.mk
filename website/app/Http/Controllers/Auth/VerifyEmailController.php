@@ -26,7 +26,6 @@ class VerifyEmailController extends Controller
         return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
     }
 
-
     public function logout(): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|RedirectResponse
     {
         Auth::logout();

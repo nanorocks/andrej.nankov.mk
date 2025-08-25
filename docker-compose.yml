@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    container_name: app
+    container_name: andrej-app
     build:
       context: .
       dockerfile: .docker/Dockerfile
@@ -11,19 +11,24 @@ services:
     environment:
       UID: 1000
       GID: 1000
-      DATABASE_HOST: mysql
+      DATABASE_HOST: andrej-mysql
       DATABASE_PORT: 3306
       DATABASE_USER: root
       DATABASE_PASSWORD: secret
-      REDIS_HOST: redis
+      REDIS_HOST: andrej-redis
       REDIS_PORT: 6379
+      APP_ENV: local
+      APP_DEBUG: true  
     ports:
-      - 8080:80
+      - 80:80
     volumes:
-      - .:/var/www/html
+      - ./website:/var/www/html
+      - ./website/storage:/var/www/html/storage
+      - ./website/bootstrap/cache:/var/www/html/bootstrap/cache
+
 
   database:
-    container_name: mysql
+    container_name: andrej-mysql
     platform: linux/x86_64
     image: mysql:5.7
     command: --default-authentication-plugin=mysql_native_password
@@ -34,8 +39,18 @@ services:
       MYSQL_ROOT_PASSWORD: secret
 
   redis:
-    container_name: redis
+    container_name: andrej-redis
     image: redis:alpine
     restart: always
     ports:
       - 6379:6379
+
+  database-client:
+    container_name: andrej-adminer
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: andrej-mysql
+      ADMINER_DEFAULT_DB_HOST: database
+    ports:
+      - 54320:8080
