@@ -23,6 +23,7 @@
             opacity: 0.2;
             pointer-events: none;
         }
+        
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -163,7 +164,7 @@
 
                             <!-- Name + Role -->
                             <h2 class="card-title mt-4 text-2xl font-bold">Andrej Nankov</h2>
-                            <p class="text-sm opacity-70 mb-2">
+                            <p class="text-sm opacity-70">
                                 More than just an engineer.
                             </p>
 
@@ -196,29 +197,25 @@
                                 </a>
                             </div>
 
+
                             <!-- Headline -->
                             <p class="mt-6 text-lg font-semibold">
                                 Helping founders and companies get started with their software ideas 🚀
                             </p>
 
-                            <!-- CTA Button -->
-                            <div class="card-actions mt-4">
-                                <a href="{{ route('get.started') }}" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none">
-                                    Get Started Now
-                                </a>
-                            </div>
 
                             <!-- Description -->
-                            <div class="mt-6 text-sm leading-relaxed opacity-80 text-left max-w-2xl mx-auto space-y-4">
-                                <ul class="list pl-6 space-y-2 text-justify">
-                                    <li>
-                                        I partner with startups and companies to turn complex ideas into reliable, scalable software solutions.
-                                    </li>
-                                    <li>
-                                        Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>, project consultant, or a senior engineer to help you build and scale your next big idea.
-                                    </li>
-                                </ul>
-                            </div>
+                            <p class="mt-6 text-sm leading-relaxed opacity-80">
+                                I help businesses navigate through the treacherous process of building the right
+                                software the right way. I also love sharing my thoughts on technology as I
+                                encounter and try to solve various problems daily. Entrepreneurship is another
+                                passion of mine as I am working on several products of my own in the space of
+                                ecommerce.
+                            </p>
+                            <iframe width="540" height="305"
+                                src="https://531a77a9.sibforms.com/serve/MUIFANpGqGPSU-kgmkupM1A0Y-WlF1f51sQhKHec29m4XvsqB6bjdZt3K_wuQoJIYyD336pw_XNv5c9jlxZpDrtu3uJGykLoRBCFABaCJbssUtg3OVpMkm2ZW4aF-298NAHgN_Ky_TVOUjb0oZWxvjt0C_jmJm3WDujG1wrXA5Tdy_AIK-iFfg-pCFGNYFMx7bYF2AcMeDMGDi5s"
+                                frameborder="0" scrolling="auto" allowfullscreen
+                                style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"></iframe>
                         </div>
                     </div>
                 </div>
@@ -226,6 +223,38 @@
                 <footer class="py-16 text-center text-sm text-grey dark:text-white/70">
                     Release v{{ Illuminate\Foundation\Application::VERSION }} -
                     Environment v{{ PHP_VERSION }}
+
+                    <br />
+
+                    <!-- Social Icons -->
+                    <div class="flex gap-4 mt-4 justify-center">
+                        <a target="_blank" href="https://www.linkedin.com/in/nanorocks/"
+                            class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
+                            title="LinkedIn">
+                            <i data-feather="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a target="_blank" href="https://medium.com/nanorocks"
+                            class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
+                            title="Medium" rel="noopener">
+                            <i data-feather="book-open" class="w-5 h-5"></i>
+                        </a>
+                        <a target="_blank" href="https://www.youtube.com/@nanorocks"
+                            class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
+                            title="YouTube">
+                            <i data-feather="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a target="_blank" href="https://github.com/nanorocks"
+                            class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
+                            title="GitHub">
+                            <i data-feather="github" class="w-5 h-5"></i>
+                        </a>
+                        <a target="_blank" href="https://www.facebook.com/nanorocks"
+                            class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
+                            title="Facebook">
+                            <i data-feather="facebook" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+
                 </footer>
             </div>
         </div>

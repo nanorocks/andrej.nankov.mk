@@ -154,74 +154,52 @@
                     <div class="card">
                         <div class="card-body items-center text-center">
 
-                            <!-- Profile Image -->
-                            <div class="avatar">
-                                <div class="w-28 rounded-full ring ring-red-500 ring-offset-0">
-                                    <img src="https://avatars.githubusercontent.com/u/18250654?v=4" alt="Profile Photo">
-                                </div>
-                            </div>
-
-                            <!-- Name + Role -->
-                            <h2 class="card-title mt-4 text-2xl font-bold">Andrej Nankov</h2>
-                            <p class="text-sm opacity-70 mb-2">
-                                More than just an engineer.
-                            </p>
-
-                            <!-- Social Icons -->
-                            <div class="flex gap-4 mt-4 justify-center">
-                                <a target="_blank" href="https://www.linkedin.com/in/nanorocks/"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="LinkedIn">
-                                    <i data-feather="linkedin" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://medium.com/nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="Medium" rel="noopener">
-                                    <i data-feather="book-open" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://www.youtube.com/@nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="YouTube">
-                                    <i data-feather="youtube" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://github.com/nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="GitHub">
-                                    <i data-feather="github" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://www.facebook.com/nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="Facebook">
-                                    <i data-feather="facebook" class="w-5 h-5"></i>
-                                </a>
-                            </div>
+                            <!-- Banner Title -->
+                            <h2 class="card-title text-2xl font-bold text-red-500">
+                                Get Started With Your Startup Idea!
+                            </h2>
 
                             <!-- Headline -->
-                            <p class="mt-6 text-lg font-semibold">
-                                Helping founders and companies get started with their software ideas 🚀
+                            <p class="mt-4 text-lg font-semibold">
+                                Have an idea but don’t know how to begin? 🚀
                             </p>
 
-                            <!-- CTA Button -->
-                            <div class="card-actions mt-4">
-                                <a href="{{ route('get.started') }}" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none">
-                                    Get Started Now
-                                </a>
+                            <!-- Motivational Points -->
+                            <div class="mt-6 text-left space-y-3 text-gray-300 leading-relaxed">
+                                <p>✔️ Not sure if your idea will work or how to validate it before you commit?</p>
+                                <p>✔️ You’re not a software engineer and need someone technical to guide you.</p>
+                                <p>✔️ You want a clear, actionable plan you can follow to move forward.</p>
+                                <p>✔️ You’re looking for feedback and someone to bounce ideas with.</p>
                             </div>
 
-                            <!-- Description -->
-                            <div class="mt-6 text-sm leading-relaxed opacity-80 text-left max-w-2xl mx-auto space-y-4">
-                                <ul class="list pl-6 space-y-2 text-justify">
-                                    <li>
-                                        I partner with startups and companies to turn complex ideas into reliable, scalable software solutions.
-                                    </li>
-                                    <li>
-                                        Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>, project consultant, or a senior engineer to help you build and scale your next big idea.
-                                    </li>
-                                </ul>
+                            <!-- Imagine -->
+                            <div class="mt-6 text-gray-200 italic">
+                                Imagine having a clear, actionable plan on how to move forward with your idea.
+                            </div>
+
+                            <!-- How it Works -->
+                            <div class="mt-8 text-left bg-base rounded-xl p-6 shadow-md">
+                                <h3 class="text-lg font-semibold text-red-400 mb-3">Here’s How It Works</h3>
+                                <p class="text-gray-300">
+                                    Book a <span class="font-bold">FREE call</span> with me to talk about your idea.
+                                    I’ll help you get started on your journey with practical, actionable advice
+                                    tailored to your situation.
+                                </p>
+
+
+                            </div>
+
+                            <!-- CTA Button -->
+                            <div class="card-actions mt-8">
+                                <a href="https://calendly.com/nanorocks/30min"
+                                    class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none text-lg font-semibold px-6">
+                                    Book A Free Call To Get Started
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <footer class="py-16 text-center text-sm text-grey dark:text-white/70">
                     Release v{{ Illuminate\Foundation\Application::VERSION }} -

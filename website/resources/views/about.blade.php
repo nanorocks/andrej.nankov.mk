@@ -155,19 +155,80 @@
                         <div class="card-body items-center text-center">
 
                             <!-- Profile Image -->
-                            <div class="avatar">
+                            <div class="avatar mb-6">
                                 <div class="w-28 rounded-full ring ring-red-500 ring-offset-0">
                                     <img src="https://avatars.githubusercontent.com/u/18250654?v=4" alt="Profile Photo">
                                 </div>
                             </div>
 
-                            <!-- Name + Role -->
-                            <h2 class="card-title mt-4 text-2xl font-bold">Andrej Nankov</h2>
-                            <p class="text-sm opacity-70 mb-2">
-                                More than just an engineer.
-                            </p>
+                            <h2 class="text-2xl font-semibold mb-2">Andrej Nankov</h2>
+                            <p class="text-lg text-gray-400 mb-4">Software Engineer | M.Sc. | YOE +7</p>
 
-                            <!-- Social Icons -->
+                            <div class="space-y-6 text-base leading-relaxed text-left max-w-2xl mx-auto text-justify">
+                                <ul class="list list-inside mb-4">
+                                    <li>
+                                        My work is guided by <span class="font-semibold text-red-400">Discipline</span>,
+                                        <span class="font-semibold text-red-400">Passion</span>, and
+                                        <span class="font-semibold text-red-400">Focus</span>.
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    I partner with startups and companies to turn complex ideas into reliable, scalable
+                                    software solutions.
+                                    With over 7 years of hands-on experience in <span class="font-semibold">FinTech,
+                                        E-commerce, Telecommunications,
+                                        and Digital Transformation</span>, I bring a mix of technical expertise and
+                                    strategic guidance to every project.
+                                </p>
+
+                                <p>
+                                    I specialize in <span class="font-semibold">technical consulting, system
+                                        architecture, and hands-on development</span>.
+                                    From planning and design to deployment and optimization, I help teams make the right
+                                    decisions early,
+                                    avoid costly mistakes, and deliver software that truly works for their business.
+                                </p>
+
+                                <p>
+                                    My expertise spans both frontend and backend development, with experience across the
+                                    JavaScript, PHP, and Java ecosystems. I enjoy creating clean, efficient code,
+                                    implementing best practices like SOLID principles and design patterns, and mentoring
+                                    teams to grow.
+                                </p>
+
+                                <p>
+                                    Beyond client work, I share knowledge through writing, blogging, and content
+                                    creation
+                                    about software engineering, finance, and technology trends. I’m also passionate
+                                    about
+                                    exploring new places and documenting my travels through video content.
+                                </p>
+
+                                <div class="mt-8 text-lg font-medium text-red-400 flex items-center gap-2">
+                                    🚀 If you’re looking for a fractional CTO,
+                                    project consultant, or a senior engineer,
+                                    I’d love to collaborate on turning your vision into reality.
+                                </div>
+
+                                <!-- CV Button -->
+                                <div class="mt-10 flex justify-center">
+                                    <a href="https://bit.ly/4lJ7bJG" target="_blank"
+                                        class="inline-flex items-center px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 transition-colors duration-200">
+                                        <i data-feather="download" class="mr-2"></i>
+                                        Grab My CV
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <footer class="py-16 text-center text-sm text-grey dark:text-white/70">
+                            Release v{{ Illuminate\Foundation\Application::VERSION }} -
+                            Environment v{{ PHP_VERSION }}
+                            <br />
+
+                               <!-- Social Icons -->
                             <div class="flex gap-4 mt-4 justify-center">
                                 <a target="_blank" href="https://www.linkedin.com/in/nanorocks/"
                                     class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
@@ -196,40 +257,10 @@
                                 </a>
                             </div>
 
-                            <!-- Headline -->
-                            <p class="mt-6 text-lg font-semibold">
-                                Helping founders and companies get started with their software ideas 🚀
-                            </p>
-
-                            <!-- CTA Button -->
-                            <div class="card-actions mt-4">
-                                <a href="{{ route('get.started') }}" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none">
-                                    Get Started Now
-                                </a>
-                            </div>
-
-                            <!-- Description -->
-                            <div class="mt-6 text-sm leading-relaxed opacity-80 text-left max-w-2xl mx-auto space-y-4">
-                                <ul class="list pl-6 space-y-2 text-justify">
-                                    <li>
-                                        I partner with startups and companies to turn complex ideas into reliable, scalable software solutions.
-                                    </li>
-                                    <li>
-                                        Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>, project consultant, or a senior engineer to help you build and scale your next big idea.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        </footer>
                     </div>
                 </div>
-
-                <footer class="py-16 text-center text-sm text-grey dark:text-white/70">
-                    Release v{{ Illuminate\Foundation\Application::VERSION }} -
-                    Environment v{{ PHP_VERSION }}
-                </footer>
             </div>
-        </div>
-    </div>
 </body>
 
 </html>

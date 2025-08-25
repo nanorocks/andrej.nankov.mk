@@ -6,7 +6,16 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::view('/', 'welcome');
+Route::view('/', 'welcome')->name('home');
+
+Route::view('/get-started', 'get-started')
+    ->name('get.started');
+
+Route::view('/about', 'about')
+    ->name('about');
+
+Route::view('/newsletter', 'newsletter')
+    ->name('newsletter');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
