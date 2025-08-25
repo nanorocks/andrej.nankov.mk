@@ -17,34 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'avatar', 'email', 'phone_number', 'address', 'website_url', 'medium_url', 'social_media', 'role', 'bio'];
+    protected $fillable = ['name', 'avatar', 'email'];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function projects()
-    {
-        return $this->hasMany(\App\Models\Project::class, 'id', 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function stories()
-    {
-        return $this->hasMany(\App\Models\Story::class, 'id', 'author_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function videos()
-    {
-        return $this->hasMany(\App\Models\Video::class, 'id', 'author_id');
-    }
 }
