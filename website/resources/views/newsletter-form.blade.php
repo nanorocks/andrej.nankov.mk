@@ -1,9 +1,7 @@
-<form method="POST" action="{{ route('newsletter.subscribe') }}"
-      class="mt-8 mb-8 w-full max-w-xl mx-auto">
+<form method="POST" action="{{ route('newsletter.subscribe') }}" class="mt-8 mb-8 w-full max-w-xl mx-auto">
     @csrf
 
-    <!-- Wrapper for input + button -->
-    <div class="flex flex-col sm:flex-row gap-4 w-80 mx-auto">
+    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md mx-auto">
         <!-- Email Input -->
         <input type="email" name="email" required placeholder="Enter your email"
             class="flex-1 input input-bordered bg-gray-800 text-white border-gray-700 placeholder-gray-400 w-full" />
@@ -16,8 +14,10 @@
     </div>
 
     <!-- Captcha -->
-    <div class="mt-4">
-        <x-turnstile data-theme="dark"/>
+    <div class="mt-4 w-full flex justify-center">
+        <div class="w-full max-w-sm">
+            <x-turnstile data-theme="dark" class="w-full" />
+        </div>
     </div>
 
     <!-- Success Message -->
