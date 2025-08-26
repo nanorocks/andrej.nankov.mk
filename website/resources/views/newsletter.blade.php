@@ -142,7 +142,7 @@
 <body class="antialiased font-sans">
     <canvas id="canvas"></canvas>
     <!-- The rest of your content overlays the canvas -->
-    <div class="bg-gray-50 text-black/50 bg-black text-white/50">
+    <div class="bg-dark-50 text-black/50 bg-black text-white/50">
         <img id="background" class="absolute left-0 top-0 w-auto h-auto max-w-full max-h-full pointer-events-none z-0"
             src="https://laravel.com/assets/img/welcome/background.svg" style="object-fit: contain;" />
         <div
