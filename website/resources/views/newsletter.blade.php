@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
+    @turnstileScripts()
+
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -23,7 +25,11 @@
             opacity: 0.2;
             pointer-events: none;
         }
-        
+
+        .cf-turnstile {
+            background: transparent !important;
+        }
+
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -168,54 +174,35 @@
                                 More than just an engineer.
                             </p>
 
-                            <!-- Social Icons -->
-                            <div class="flex gap-4 mt-4 justify-center">
-                                <a target="_blank" href="https://www.linkedin.com/in/nanorocks/"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="LinkedIn">
-                                    <i data-feather="linkedin" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://medium.com/nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="Medium" rel="noopener">
-                                    <i data-feather="book-open" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://www.youtube.com/@nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="YouTube">
-                                    <i data-feather="youtube" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://github.com/nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="GitHub">
-                                    <i data-feather="github" class="w-5 h-5"></i>
-                                </a>
-                                <a target="_blank" href="https://www.facebook.com/nanorocks"
-                                    class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                                    title="Facebook">
-                                    <i data-feather="facebook" class="w-5 h-5"></i>
-                                </a>
+
+
+                            <!-- Newsletter Headline -->
+                            <h2 class="mt-8 text-xl font-bold text-red-500">Subscribe to my Newsletter</h2>
+                            <p class="mt-2 text-sm opacity-80">
+                                Get the latest updates, articles, and insights directly to your inbox. No spam, ever.
+                            </p>
+                            <div class="mt-4 text-left max-w-xl mx-auto text-base opacity-90 text-justify">
+                                <p>
+                                    Join a growing community of founders, engineers, and tech enthusiasts who receive my curated newsletter every month.
+                                    I share actionable advice, deep dives into software engineering, entrepreneurship stories, and exclusive resources you won't find anywhere else.
+                                </p>
+                                <ul class="list-disc ml-6 mt-2">
+                                    <li>Fresh articles on building and scaling software products</li>
+                                    <li>Behind-the-scenes lessons from my own startup journey</li>
+                                    <li>Tips for navigating the tech industry and career growth</li>
+                                    <li>Early access to new tools, guides, and events</li>
+                                    <li>Occasional personal stories and reflections</li>
+                                </ul>
+                                <p class="mt-2">
+                                    Whether you're a founder, developer, or just passionate about technology, this newsletter is designed to inspire and inform.
+                                    I respect your inbox - no spam, just quality content.
+                                </p>
+                                <p class="mt-2 font-semibold text-red-400">
+                                    Enter your email below to join!
+                                </p>
                             </div>
-
-
-                            <!-- Headline -->
-                            <p class="mt-6 text-lg font-semibold">
-                                Helping founders and companies get started with their software ideas 🚀
-                            </p>
-
-
-                            <!-- Description -->
-                            <p class="mt-6 text-sm leading-relaxed opacity-80">
-                                I help businesses navigate through the treacherous process of building the right
-                                software the right way. I also love sharing my thoughts on technology as I
-                                encounter and try to solve various problems daily. Entrepreneurship is another
-                                passion of mine as I am working on several products of my own in the space of
-                                ecommerce.
-                            </p>
-                            <iframe width="540" height="305"
-                                src="https://531a77a9.sibforms.com/serve/MUIFANpGqGPSU-kgmkupM1A0Y-WlF1f51sQhKHec29m4XvsqB6bjdZt3K_wuQoJIYyD336pw_XNv5c9jlxZpDrtu3uJGykLoRBCFABaCJbssUtg3OVpMkm2ZW4aF-298NAHgN_Ky_TVOUjb0oZWxvjt0C_jmJm3WDujG1wrXA5Tdy_AIK-iFfg-pCFGNYFMx7bYF2AcMeDMGDi5s"
-                                frameborder="0" scrolling="auto" allowfullscreen
-                                style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"></iframe>
+                            <!-- Newsletter Form -->
+                            @include('newsletter-form')
                         </div>
                     </div>
                 </div>

@@ -47,4 +47,9 @@ return [
         'redirect' => 'http://example.com/callback-url',
     ],
 
+    'turnstile' => [
+        'key' => env('TURNSTILE_SITE_KEY'),
+        'secret' => env('TURNSTILE_SECRET_KEY'),
+    ],
+
 ];
