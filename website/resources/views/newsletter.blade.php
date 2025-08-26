@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -29,7 +29,6 @@
         .cf-turnstile {
             background: transparent !important;
         }
-
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -183,8 +182,10 @@
                             </p>
                             <div class="mt-4 text-left max-w-xl mx-auto text-base opacity-90 text-justify">
                                 <p>
-                                    Join a growing community of founders, engineers, and tech enthusiasts who receive my curated newsletter every month.
-                                    I share actionable advice, deep dives into software engineering, entrepreneurship stories, and exclusive resources you won't find anywhere else.
+                                    Join a growing community of founders, engineers, and tech enthusiasts who receive my
+                                    curated newsletter every month.
+                                    I share actionable advice, deep dives into software engineering, entrepreneurship
+                                    stories, and exclusive resources you won't find anywhere else.
                                 </p>
                                 <ul class="list-disc ml-6 mt-2">
                                     <li>Fresh articles on building and scaling software products</li>
@@ -194,7 +195,8 @@
                                     <li>Occasional personal stories and reflections</li>
                                 </ul>
                                 <p class="mt-2">
-                                    Whether you're a founder, developer, or just passionate about technology, this newsletter is designed to inspire and inform.
+                                    Whether you're a founder, developer, or just passionate about technology, this
+                                    newsletter is designed to inspire and inform.
                                     I respect your inbox - no spam, just quality content.
                                 </p>
                                 <p class="mt-2 font-semibold text-red-400">

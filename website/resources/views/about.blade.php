@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -228,7 +228,7 @@
                             Environment v{{ PHP_VERSION }}
                             <br />
 
-                               <!-- Social Icons -->
+                            <!-- Social Icons -->
                             <div class="flex gap-4 mt-4 justify-center">
                                 <a target="_blank" href="https://www.linkedin.com/in/nanorocks/"
                                     class="btn btn-circle btn-outline btn-sm transition-all duration-200 hover:text-white text-gray-400 border-gray-400 hover:border-white"

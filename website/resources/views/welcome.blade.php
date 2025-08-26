@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -203,7 +203,8 @@
 
                             <!-- CTA Button -->
                             <div class="card-actions mt-4">
-                                <a href="{{ route('get.started') }}" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none">
+                                <a href="{{ route('get.started') }}"
+                                    class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none">
                                     Get Started Now
                                 </a>
                             </div>
@@ -212,10 +213,13 @@
                             <div class="mt-6 text-sm leading-relaxed opacity-80 text-left max-w-2xl mx-auto space-y-4">
                                 <ul class="list pl-6 space-y-2 text-justify">
                                     <li>
-                                        I partner with startups and companies to turn complex ideas into reliable, scalable software solutions.
+                                        I partner with startups and companies to turn complex ideas into reliable,
+                                        scalable software solutions.
                                     </li>
                                     <li>
-                                        Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>, project consultant, or a senior engineer to help you build and scale your next big idea.
+                                        Let’s connect if you’re looking for a <span class="font-semibold">fractional
+                                            CTO</span>, project consultant, or a senior engineer to help you build and
+                                        scale your next big idea.
                                     </li>
                                 </ul>
                             </div>
