@@ -32,54 +32,54 @@
         <meta name="twitter:creator" content="@nanorocks">
     @endsection
 
-    <div class="w-full p-6">
-        <div class="card">
-            <div class="card-body items-center text-center">
 
-                {{-- Banner Title --}}
-                <h2 class="card-title text-2xl font-bold text-red-500">
-                    Get Started With Your Startup Idea!
-                </h2>
+    <div class="card">
+        <div class="card-body items-center text-center">
 
-                {{-- Headline --}}
-                <p class="mt-4 text-lg font-semibold">
-                    Have an idea but don’t know how to begin? 🚀
-                </p>
+            {{-- Banner Title --}}
+            <h2 class="card-title text-2xl font-bold text-red-500">
+                Get Started With Your Startup Idea!
+            </h2>
 
-                {{-- Motivational Points --}}
-                <div class="mt-6 text-left space-y-3 text-gray-300 leading-relaxed">
-                    <p>✔️ Not sure if your idea will work or how to validate it before you commit?</p>
-                    <p>✔️ You’re not a software engineer and need someone technical to guide you.</p>
-                    <p>✔️ You want a clear, actionable plan you can follow to move forward.</p>
-                    <p>✔️ You’re looking for feedback and someone to bounce ideas with.</p>
-                </div>
+            {{-- Headline --}}
+            <p class="mt-4 text-lg font-semibold">
+                Have an idea but don’t know how to begin? 🚀
+            </p>
 
-                {{-- Imagine --}}
-                <div class="mt-6 text-gray-200 italic">
-                    Imagine having a clear, actionable plan on how to move forward with your idea.
-                </div>
-
-                {{-- How it Works --}}
-                <div class="mt-8 text-left bg-base rounded-xl p-6 shadow-md">
-                    <h3 class="text-lg font-semibold text-red-400 mb-3">Here’s How It Works</h3>
-                    <p class="text-gray-300">
-                        Book a <span class="font-bold">FREE call</span> with me to talk about your idea.
-                        I’ll help you get started on your journey with practical, actionable advice
-                        tailored to your situation.
-                    </p>
-                </div>
-
-                {{-- CTA Button --}}
-                <div class="card-actions mt-8 flex justify-center">
-                    <a href="https://calendly.com/nanorocks/30min"
-                        class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none text-lg font-semibold px-6">
-                        Book A Free Call To Get Started
-                    </a>
-                </div>
-
+            {{-- Motivational Points --}}
+            <div class="mt-6 text-left space-y-3 text-gray-300 leading-relaxed">
+                <p>✔️ Not sure if your idea will work or how to validate it before you commit?</p>
+                <p>✔️ You’re not a software engineer and need someone technical to guide you.</p>
+                <p>✔️ You want a clear, actionable plan you can follow to move forward.</p>
+                <p>✔️ You’re looking for feedback and someone to bounce ideas with.</p>
             </div>
+
+            {{-- Imagine --}}
+            <div class="mt-6 text-gray-200 italic">
+                Imagine having a clear, actionable plan on how to move forward with your idea.
+            </div>
+
+            {{-- How it Works --}}
+            <div class="mt-8 text-center bg-base rounded-xl p-6 shadow-md">
+                <h3 class="text-lg font-semibold text-red-400 mb-3">Here’s How It Works</h3>
+                <p class="text-gray-300">
+                    Book a <span class="font-bold">FREE call</span> with me to talk about your idea.
+                    I’ll help you get started on your journey with practical, actionable advice
+                    tailored to your situation.
+                </p>
+            </div>
+
+            {{-- CTA Button --}}
+            <div class="card-actions mt-8 flex justify-center">
+                <a href="https://calendly.com/nanorocks/30min"
+                    class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none text-lg font-semibold px-6">
+                    Book A Free Call To Get Started
+                </a>
+            </div>
+
         </div>
     </div>
+
 
     <footer class="py-16 text-center text-sm text-grey dark:text-white/70">
         Release v{{ Illuminate\Foundation\Application::VERSION }} -

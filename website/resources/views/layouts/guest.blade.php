@@ -158,7 +158,7 @@
                         @endif
                     </div>
                 </header>
-                <div class="w-full p-6">
+                <div class="w-full max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
                     {{ $slot }}
                 </div>
             </div>
