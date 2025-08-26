@@ -94,20 +94,22 @@
                     </a>
                 </div>
 
-                <!-- Description -->
-                <div class="mt-6 text-sm leading-relaxed opacity-80 text-left max-w-2xl mx-auto space-y-4">
-                    <div class="space-y-2 text-justify">
-                        <p>
-                            I partner with startups and companies to turn complex ideas into reliable,
-                            scalable software solutions.
-                        </p>
-                        <p>
-                            Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>,
-                            project consultant, or a senior engineer to help you build and
-                            scale your next big idea.
-                        </p>
-                    </div>
-                </div>
+
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mt-6 text-sm leading-relaxed opacity-80 text-left max-w-2xl mx-auto space-y-4">
+            <div class="space-y-2 text-center">
+                <p>
+                    I partner with startups and companies to turn complex ideas into reliable,
+                    scalable software solutions.
+                </p>
+                <p>
+                    Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>,
+                    project consultant, or a senior engineer to help you build and
+                    scale your next big idea.
+                </p>
             </div>
         </div>
     </div>
