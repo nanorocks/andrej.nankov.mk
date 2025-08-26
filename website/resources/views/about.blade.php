@@ -2,7 +2,7 @@
 <x-guest-layout>
 
     {{-- SEO --}}
-    @section('title', 'About Andrej Nankov')
+    @section('title', 'About')
     @section('meta')
         {{-- Standard Meta --}}
         <meta name="description"
