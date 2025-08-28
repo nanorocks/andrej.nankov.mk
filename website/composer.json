@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
+        "nanorocks/laravel-database-newsletter": "^1.0",
         "ryangjchandler/laravel-cloudflare-turnstile": "^2.0"
     },
     "require-dev": {

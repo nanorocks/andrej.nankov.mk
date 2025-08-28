@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subscriber;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Nanorocks\DatabaseNewsletter\Facades\Newsletter;
 
 class NewsletterController extends Controller
 {
@@ -18,8 +19,13 @@ class NewsletterController extends Controller
         $request->validate([
             'cf-turnstile-response' => ['required', Rule::turnstile()],
         ]);
-        $request->validate(['email' => 'required|email|unique:subscribers']);
-        Subscriber::create(['email' => $request->email]);
+
+        $request->validate(['email' => 'required|email|unique:newsletter_subscribers,email']);
+
+        $name = explode('@', $request->input('email'))[0] ?? 'Guest';
+
+        Newsletter::subscribe($request->input('email'), ['name' => $name]);
+        
         return back()->with('success', 'Subscribed successfully!');
     }
 }
