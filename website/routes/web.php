@@ -2,10 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsletterController;
-use Nanorocks\DatabaseNewsletter\Facades\Newsletter;
 
 Route::middleware('auth')->group(function () {});
-
 
 Route::get('/newsletter', [NewsletterController::class, 'showForm']);
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
@@ -37,26 +35,3 @@ require __DIR__ . '/auth.php';
 
 
 
-Route::get('/test-newsletter', function () {
-    $email = 'test123@example.com';
-
-    // Subscribe
-    Newsletter::subscribe($email, ['name' => 'Test User']);
-
-    // Check subscription
-    $isSubscribed = Newsletter::isSubscribed($email);
-
-    // Retrieve member
-    $member = Newsletter::getMember($email);
-
-    dd(Newsletter::getAllMembers());
-
-    // Unsubscribe
-    Newsletter::unsubscribe($email);
-
-    return [
-        'is_subscribed_after_subscribe' => $isSubscribed,
-        'member' => $member,
-        'is_subscribed_after_unsubscribe' => Newsletter::isSubscribed($email)
-    ];
-});
