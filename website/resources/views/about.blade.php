@@ -106,23 +106,7 @@
             <br />
 
             {{-- Social Icons --}}
-            <div class="flex gap-4 mt-4 justify-center">
-                <a target="_blank" href="https://www.linkedin.com/in/nanorocks/"
-                    class="btn btn-circle btn-outline btn-sm hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                    title="LinkedIn"><i data-feather="linkedin" class="w-5 h-5"></i></a>
-                <a target="_blank" href="https://medium.com/nanorocks"
-                    class="btn btn-circle btn-outline btn-sm hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                    title="Medium" rel="noopener"><i data-feather="book-open" class="w-5 h-5"></i></a>
-                <a target="_blank" href="https://www.youtube.com/@nanorocks"
-                    class="btn btn-circle btn-outline btn-sm hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                    title="YouTube"><i data-feather="youtube" class="w-5 h-5"></i></a>
-                <a target="_blank" href="https://github.com/nanorocks"
-                    class="btn btn-circle btn-outline btn-sm hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                    title="GitHub"><i data-feather="github" class="w-5 h-5"></i></a>
-                <a target="_blank" href="https://www.facebook.com/nanorocks"
-                    class="btn btn-circle btn-outline btn-sm hover:text-white text-gray-400 border-gray-400 hover:border-white"
-                    title="Facebook"><i data-feather="facebook" class="w-5 h-5"></i></a>
-            </div>
+            <x-social-icons />
         </footer>
 
     </div>

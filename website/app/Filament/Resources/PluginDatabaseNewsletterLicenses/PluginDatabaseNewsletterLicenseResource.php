@@ -22,7 +22,8 @@ class PluginDatabaseNewsletterLicenseResource extends Resource
 {
     protected static ?string $model = License::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Icon for software licenses section in navigation
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedKey;
 
     protected static ?string $recordTitleAttribute = 'license_key';
 
