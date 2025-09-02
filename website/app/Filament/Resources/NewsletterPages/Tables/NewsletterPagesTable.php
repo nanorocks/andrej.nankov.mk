@@ -12,26 +12,28 @@ class NewsletterPagesTable
     public static function configure(Table $table): Table
     {
         return $table
-                ->columns([
-                    \Filament\Tables\Columns\ImageColumn::make('profile_image')
-                        ->label('Profile Image')
-                        ->circular(),
-                    \Filament\Tables\Columns\TextColumn::make('name')
-                        ->label('Name')
-                        ->searchable(),
-                    \Filament\Tables\Columns\TextColumn::make('role')
-                        ->label('Role')
-                        ->limit(30),
-                    \Filament\Tables\Columns\TextColumn::make('headline')
-                        ->label('Headline')
-                        ->limit(40),
-                    \Filament\Tables\Columns\TextColumn::make('intro')
-                        ->label('Intro')
-                        ->limit(50),
-                    \Filament\Tables\Columns\TextColumn::make('main_content')
-                        ->label('Main Content')
-                        ->limit(80),
-                ])
+            ->columns([
+                \Filament\Tables\Columns\ImageColumn::make('profile_image')
+                    ->label('Profile Image')
+                    ->circular()
+                    ->disk('public')
+                    ->directory('newsletter/profile_images'),
+                \Filament\Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable(),
+                \Filament\Tables\Columns\TextColumn::make('role')
+                    ->label('Role')
+                    ->limit(30),
+                \Filament\Tables\Columns\TextColumn::make('headline')
+                    ->label('Headline')
+                    ->limit(40),
+                \Filament\Tables\Columns\TextColumn::make('intro')
+                    ->label('Intro')
+                    ->limit(50),
+                \Filament\Tables\Columns\TextColumn::make('main_content')
+                    ->label('Main Content')
+                    ->limit(80),
+            ])
             ->filters([
                 //
             ])

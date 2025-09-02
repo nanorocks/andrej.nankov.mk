@@ -15,7 +15,9 @@ class AboutPagesTable
                 ->columns([
                     \Filament\Tables\Columns\ImageColumn::make('profile_image')
                         ->label('Profile Image')
-                        ->circular(),
+                        ->circular()
+                        ->disk('public')
+                        ->directory('about/profile_images'),
                     \Filament\Tables\Columns\TextColumn::make('name')
                         ->label('Name')
                         ->searchable(),
