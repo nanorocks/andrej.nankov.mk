@@ -5,6 +5,7 @@ namespace App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
+use App\View\Components\LicenseKeyInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
 
@@ -14,11 +15,10 @@ class PluginDatabaseNewsletterLicenseForm
     {
         return $schema
             ->components([
-                TextInput::make('license_key')
+
+                LicenseKeyInput::make('license_key')
                     ->label('License Key')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(255),
+                    ->required()->unique(ignoreRecord: true),
 
                 TextInput::make('assigned_to')
                     ->label('Assigned To')

@@ -9,7 +9,6 @@ use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Pages\ViewPluginData
 use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas\PluginDatabaseNewsletterLicenseForm;
 use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas\PluginDatabaseNewsletterLicenseInfolist;
 use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Tables\PluginDatabaseNewsletterLicensesTable;
-use App\Models\PluginDatabaseNewsletterLicense;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,10 +16,11 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Nanorocks\LicenseManager\Models\License;
 
 class PluginDatabaseNewsletterLicenseResource extends Resource
 {
-    protected static ?string $model = PluginDatabaseNewsletterLicense::class;
+    protected static ?string $model = License::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

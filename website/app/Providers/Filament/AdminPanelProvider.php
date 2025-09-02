@@ -54,6 +54,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])->plugins([
+            //    FilamentApexChartsPlugin::make()
             ]);
     }
 }
