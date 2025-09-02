@@ -12,25 +12,24 @@ class AboutPagesTable
     public static function configure(Table $table): Table
     {
         return $table
-                ->columns([
-                    \Filament\Tables\Columns\ImageColumn::make('profile_image')
-                        ->label('Profile Image')
-                        ->circular()
-                        ->disk('public')
-                        ->directory('about/profile_images'),
-                    \Filament\Tables\Columns\TextColumn::make('name')
-                        ->label('Name')
-                        ->searchable(),
-                    \Filament\Tables\Columns\TextColumn::make('title')
-                        ->label('Title')
-                        ->limit(40),
-                    \Filament\Tables\Columns\TextColumn::make('about_content')
-                        ->label('About Content')
-                        ->limit(80),
-                    \Filament\Tables\Columns\TextColumn::make('cv_url')
-                        ->label('CV URL')
-                        ->limit(60),
-                ])
+            ->columns([
+                \Filament\Tables\Columns\ImageColumn::make('profile_image')
+                    ->label('Profile Image')
+                    ->circular()
+                    ->disk('public'),
+                \Filament\Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable(),
+                \Filament\Tables\Columns\TextColumn::make('title')
+                    ->label('Title')
+                    ->limit(40),
+                \Filament\Tables\Columns\TextColumn::make('about_content')
+                    ->label('About Content')
+                    ->limit(80),
+                \Filament\Tables\Columns\TextColumn::make('cv_url')
+                    ->label('CV URL')
+                    ->limit(60),
+            ])
             ->filters([
                 //
             ])

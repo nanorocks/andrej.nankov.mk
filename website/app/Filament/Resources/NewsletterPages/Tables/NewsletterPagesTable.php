@@ -16,8 +16,7 @@ class NewsletterPagesTable
                 \Filament\Tables\Columns\ImageColumn::make('profile_image')
                     ->label('Profile Image')
                     ->circular()
-                    ->disk('public')
-                    ->directory('newsletter/profile_images'),
+                    ->disk('public'),
                 \Filament\Tables\Columns\TextColumn::make('name')
                     ->label('Name')
                     ->searchable(),
