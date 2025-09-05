@@ -17,3 +17,16 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        
+    - name: 🚀 Run post-deploy commands
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd /home/nankovmk/public_html/cicd_projects/nankovmk-personal-website/website
+          composer update --no-interaction --prefer-dist --optimize-autoloader
+          php artisan migrate --force
+          php artisan optimize
