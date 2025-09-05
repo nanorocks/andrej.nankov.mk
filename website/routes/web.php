@@ -6,7 +6,7 @@ use App\Http\Controllers\PostDeployController;
 
 Route::middleware('auth')->group(function () {});
 
-Route::get('/post-deploy', PostDeployController::class);
+Route::post('/post-deploy', PostDeployController::class);
 
 Route::get('/newsletter', [NewsletterController::class, 'showForm']);
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
