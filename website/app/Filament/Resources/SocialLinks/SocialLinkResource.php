@@ -48,4 +48,9 @@ class SocialLinkResource extends Resource
             'edit' => EditSocialLink::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';
+    }
 }

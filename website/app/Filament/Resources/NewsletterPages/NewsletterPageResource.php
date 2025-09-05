@@ -47,4 +47,9 @@ class NewsletterPageResource extends Resource
             'edit' => EditNewsletterPage::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';
+    }
 }

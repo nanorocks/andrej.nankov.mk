@@ -47,4 +47,9 @@ class AboutPageResource extends Resource
             'edit' => EditAboutPage::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Content Management';
+    }
 }
