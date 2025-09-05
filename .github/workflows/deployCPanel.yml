@@ -19,5 +19,5 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
 
     - name: 🔗 Trigger post-deploy script
-      run: curl https://andrej.nankov.mk/post_deploy -d "token=${{ secrets.POST_DEPLOY_TOKEN }}"
+      run: curl https://andrej.nankov.mk/post-deploy -d "token=${{ secrets.POST_DEPLOY_TOKEN }}"
 
