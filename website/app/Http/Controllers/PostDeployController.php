@@ -9,18 +9,37 @@ class PostDeployController extends Controller
 {
     public function __invoke(Request $request)
     {
-        // Optional: Add a secret token check for security
-        if ($request->input('token') !== env('POST_DEPLOY_TOKEN')) {
-            abort(403, 'Unauthorized');
+        // Validate token from query parameter
+        if ($request->query('token') !== config('app.post_deploy_token')) {
+            return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        // Run composer install (not recommended via PHP, best via SSH)
-        exec('composer install');
+        // Run composer install
+        $composerOutput = [];
+        $composerReturn = 0;
+        exec('composer install 2>&1', $composerOutput, $composerReturn);
 
-        // Run migrations and optimize
+        // Run migrations
         Artisan::call('migrate', ['--force' => true]);
-        Artisan::call('optimize');
+        $migrateOutput = Artisan::output();
 
-        return response()->json(['status' => 'Post-deploy commands executed.']);
+        // Run optimize
+        Artisan::call('optimize');
+        $optimizeOutput = Artisan::output();
+
+        // Prepare report
+        $report = [
+            'composer' => [
+                'return_code' => $composerReturn,
+                'output' => implode("\n", $composerOutput),
+            ],
+            'migrate' => $migrateOutput,
+            'optimize' => $optimizeOutput,
+        ];
+
+        return response()->json([
+            'status' => 'Post-deploy commands executed.',
+            'report' => $report,
+        ]);
     }
 }

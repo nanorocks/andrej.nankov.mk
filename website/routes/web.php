@@ -6,8 +6,6 @@ use App\Http\Controllers\PostDeployController;
 
 Route::middleware('auth')->group(function () {});
 
-Route::post('/post-deploy', PostDeployController::class);
-
 Route::get('/newsletter', [NewsletterController::class, 'showForm']);
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
@@ -34,7 +32,7 @@ Route::get('logout', [\App\Http\Controllers\Auth\VerifyEmailController::class, '
     ->middleware(['auth'])
     ->name('logout');
 
-
+Route::get('/post-deploy', PostDeployController::class);
 
 require __DIR__ . '/auth.php';
 
