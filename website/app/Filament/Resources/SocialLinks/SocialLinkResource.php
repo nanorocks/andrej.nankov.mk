@@ -18,7 +18,6 @@ class SocialLinkResource extends Resource
 {
     protected static ?string $model = SocialLink::class;
 
-    // Set the navigation icon to a social icon (e.g., Heroicon::OutlinedGlobeAlt for a globe/social)
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGlobeAlt;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -51,6 +50,6 @@ class SocialLinkResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Content Management';
+        return 'Portfolio Website';
     }
 }
