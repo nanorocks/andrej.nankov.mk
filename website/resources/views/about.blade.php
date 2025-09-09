@@ -49,7 +49,7 @@
             <div class="space-y-6 text-base leading-relaxed text-left max-w-2xl mx-auto text-justify">
                 {!! $about?->about_content !!}
                 <div class="mt-10 flex justify-center">
-                    <a href="{{ $about?->cv_url }}" target="_blank"
+                    <a href="{{ $about?->cv_url }}" target="_blank" data-pan="Grab-CV"
                         class="inline-flex items-center px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 transition-colors duration-200">
                         <i data-feather="download" class="mr-2"></i>
                         Grab My CV

@@ -4,11 +4,15 @@ namespace App\Providers\Filament;
 
 use Filament\Panel;
 use Filament\PanelProvider;
+use App\Models\PanAnalytics;
 use App\Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
+use App\Filament\Widgets\StatsOverview;
 use Filament\Widgets\FilamentInfoWidget;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Widgets\PanAnalyticsWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Session\Middleware\StartSession;
 use Tapp\FilamentMailLog\FilamentMailLogPlugin;
 use AchyutN\FilamentLogViewer\FilamentLogViewer;
@@ -36,9 +40,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-
+                StatsOverview::make(),
+                PanAnalyticsWidget::make(),
             ])
             ->middleware([
                 EncryptCookies::class,

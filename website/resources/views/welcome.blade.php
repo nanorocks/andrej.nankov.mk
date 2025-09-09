@@ -62,7 +62,7 @@
 
                 <!-- CTA Button -->
                 <div class="card-actions mt-4">
-                    <a href="{{ route('get.started') }}"
+                    <a href="{{ route('get.started') }}" data-pan="Get-Started-Now"
                         class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none">
                         Get Started Now
                     </a>
