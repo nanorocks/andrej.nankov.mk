@@ -9,7 +9,7 @@ class Dashboard extends BaseDashboard
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-home';
     protected static ?string $title = 'Dashboard';
-    protected static string|\UnitEnum|null $navigationGroup = 'Main';
+    protected static string|\UnitEnum|null $navigationGroup = 'Other';
 
     public function mount(): void
     {
