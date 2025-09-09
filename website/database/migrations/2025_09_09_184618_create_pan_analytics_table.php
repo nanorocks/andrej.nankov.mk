@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('impressions')->default(0);
             $table->unsignedBigInteger('hovers')->default(0);
             $table->unsignedBigInteger('clicks')->default(0);
+
+            $table->timestamps();
         });
     }
 

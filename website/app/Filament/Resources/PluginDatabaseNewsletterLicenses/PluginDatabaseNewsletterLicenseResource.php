@@ -61,7 +61,6 @@ class PluginDatabaseNewsletterLicenseResource extends Resource
         return [
             'index' => ListPluginDatabaseNewsletterLicenses::route('/'),
             'create' => CreatePluginDatabaseNewsletterLicense::route('/create'),
-            // 'view' => ViewPluginDatabaseNewsletterLicense::route('/{record}'),
             'edit' => EditPluginDatabaseNewsletterLicense::route('/{record}/edit'),
         ];
     }
@@ -72,5 +71,10 @@ class PluginDatabaseNewsletterLicenseResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Portfolio Website';
     }
 }

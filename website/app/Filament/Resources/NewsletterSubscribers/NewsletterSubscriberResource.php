@@ -48,4 +48,9 @@ class NewsletterSubscriberResource extends Resource
             'edit' => EditNewsletterSubscriber::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Portfolio Website';
+    }
 }
