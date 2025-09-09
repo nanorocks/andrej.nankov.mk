@@ -21,7 +21,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use \App\Models\User;
 use Filament\Jetstream\JetstreamPlugin;
-use Illuminate\Validation\Rules\Password;
 
 class AdminPanelProvider extends PanelProvider
 {
