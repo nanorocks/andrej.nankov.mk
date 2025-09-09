@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsletterController;
-use App\Http\Controllers\PostDeployController;
 
 Route::middleware('auth')->group(function () {});
 
@@ -32,7 +31,6 @@ Route::get('logout', [\App\Http\Controllers\Auth\VerifyEmailController::class, '
     ->middleware(['auth'])
     ->name('logout');
 
-Route::get('/post-deploy', PostDeployController::class);
 
 require __DIR__ . '/auth.php';
 
