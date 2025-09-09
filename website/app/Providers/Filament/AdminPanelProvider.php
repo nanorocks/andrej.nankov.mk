@@ -3,9 +3,11 @@
 namespace App\Providers\Filament;
 
 use Filament\Panel;
+use \App\Models\User;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Filament\Widgets\StatsOverview;
+use Filament\Jetstream\JetstreamPlugin;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Widgets\PanAnalyticsWidget;
 use Illuminate\Session\Middleware\StartSession;
@@ -13,14 +15,13 @@ use Tapp\FilamentMailLog\FilamentMailLogPlugin;
 use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
+use App\Filament\Widgets\MostVisitedSocMediaChart;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use \App\Models\User;
-use Filament\Jetstream\JetstreamPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,6 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->pages([])
             ->widgets([
                 StatsOverview::make(),
+                MostVisitedSocMediaChart::make(),
                 PanAnalyticsWidget::make(),
             ])
             ->middleware([
