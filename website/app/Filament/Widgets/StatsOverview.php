@@ -8,7 +8,7 @@ use Nanorocks\LicenseManager\Models\License;
 
 class StatsOverview extends StatsOverviewWidget
 {
-    protected ?string $pollingInterval = '10s';
+    // protected ?string $pollingInterval = '10s';
 
     // protected function getHeading(): ?string
     // {
