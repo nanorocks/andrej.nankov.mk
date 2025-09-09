@@ -2,24 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
+use Filament\Jetstream\InteractsWIthProfile;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
+use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 
-class User extends Authenticatable implements FilamentUser
+// use Filament\Models\Contracts\HasTenants;
+// use Filament\Jetstream\InteractsWithTeams;
+// use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasPasskeys, MustVerifyEmail
 {
-    use HasFactory, Notifiable;
-
-    protected $perPage = 20;
+    use HasFactory;
+    use InteractsWIthProfile;
+    use Notifiable;
+    // use InteractsWithTeams;
+    // use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'avatar', 'email'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -29,14 +42,38 @@ class User extends Authenticatable implements FilamentUser
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
-     * Determine if the user can access the Filament admin panel.
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
-    public function canAccessPanel(Panel $panel): bool
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'profile_photo_url',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        // You can add more logic here based on roles or permissions
-        return str_starts_with($this->email, 'andrejnankov') && $this->hasVerifiedEmail();
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

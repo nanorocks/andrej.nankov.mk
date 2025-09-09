@@ -20,6 +20,7 @@
         "nanorocks/laravel-license-manager": "^1.0",
         "panphp/pan": "^0.1.8",
         "ryangjchandler/laravel-cloudflare-turnstile": "^2.0",
+        "stephenjude/filament-jetstream": "^1.2",
         "tapp/filament-maillog": "^2.0"
     },
     "require-dev": {

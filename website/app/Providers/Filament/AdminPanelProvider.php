@@ -4,15 +4,10 @@ namespace App\Providers\Filament;
 
 use Filament\Panel;
 use Filament\PanelProvider;
-use App\Models\PanAnalytics;
-use App\Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
 use App\Filament\Widgets\StatsOverview;
-use Filament\Widgets\FilamentInfoWidget;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Widgets\PanAnalyticsWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Session\Middleware\StartSession;
 use Tapp\FilamentMailLog\FilamentMailLogPlugin;
 use AchyutN\FilamentLogViewer\FilamentLogViewer;
@@ -24,6 +19,9 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use \App\Models\User;
+use Filament\Jetstream\JetstreamPlugin;
+use Illuminate\Validation\Rules\Password;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -60,6 +58,12 @@ class AdminPanelProvider extends PanelProvider
             ])->plugins([
                 FilamentLogViewer::make(),
                 FilamentMailLogPlugin::make(),
+                JetstreamPlugin::make()
+                    ->configureUserModel(userModel: User::class)
+                    ->profilePhoto(condition: fn() => true, disk: 'public')
+                    ->deleteAccount(condition: fn() => true)
+                    ->profileInformation(condition: fn() => true)
+                    ->logoutBrowserSessions(condition: fn() => true),
             ]);
     }
 }
