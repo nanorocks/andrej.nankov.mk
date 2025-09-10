@@ -11,6 +11,8 @@ class Dashboard extends BaseDashboard
     protected static ?string $title = 'Dashboard';
     protected static string|\UnitEnum|null $navigationGroup = 'Other';
 
+    protected static string $routePath = 'dashboard';
+
     public function mount(): void
     {
         // Any initialization logic
