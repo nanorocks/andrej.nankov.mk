@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('role')->nullable();
             $table->string('headline')->nullable();
             $table->text('intro')->nullable();
-            $table->text('main_content')->nullable();
             $table->text('content')->nullable();
             $table->string('cv_url')->nullable();
             $table->boolean('is_published')->default(false);
