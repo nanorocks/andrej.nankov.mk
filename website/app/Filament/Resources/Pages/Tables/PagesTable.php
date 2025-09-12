@@ -23,8 +23,6 @@ class PagesTable
                 TextColumn::make('flag')
                     ->searchable()
                     ->formatStateUsing(fn($state) => strtoupper($state)),
-                TextColumn::make('title')
-                    ->searchable(),
                 IconColumn::make('is_published')
                     ->boolean(),
                 IconColumn::make('include_seo_in_header')
