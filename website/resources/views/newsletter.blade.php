@@ -2,65 +2,51 @@
 <x-guest-layout>
 
     {{-- SEO --}}
-    @section('title', 'Subscribe to Newsletter')
+
+    @php
+        $newsletter = \App\Models\Page::getNewsletterPage();
+    @endphp
+
+    @section('title', $newsletter?->seo_title ?? 'Subscribe to Newsletter')
     @section('meta')
-        {{-- Standard Meta --}}
-        <meta name="description"
-            content="Join Andrej Nankov's newsletter for founders, engineers, and tech enthusiasts. Get updates, articles, insights, and exclusive resources on software engineering and entrepreneurship. No spam.">
-        <meta name="keywords"
-            content="Andrej Nankov, Newsletter, Software Engineering, Entrepreneurship, Tech Updates, Startups">
-        <meta name="author" content="Andrej Nankov">
-        <meta name="robots" content="index, follow">
+        <meta name="description" content="{{ $newsletter?->seo_description }}">
+        <meta name="keywords" content="{{ $newsletter?->seo_keywords }}">
+        <meta name="author" content="{{ $newsletter?->seo_author }}">
+        <meta name="robots" content="{{ $newsletter?->seo_robots }}">
 
-        {{-- Open Graph / Facebook --}}
-        <meta property="og:title" content="Subscribe to Newsletter">
-        <meta property="og:description"
-            content="Join Andrej Nankov's newsletter for founders, engineers, and tech enthusiasts. Get updates, articles, insights, and exclusive resources on software engineering and entrepreneurship. No spam.">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:image" content="https://avatars.githubusercontent.com/u/18250654?v=4">
-        <meta property="og:image:alt" content="Andrej Nankov Profile Picture">
-        <meta property="og:site_name" content="Andrej Nankov">
+        <meta property="og:title" content="{{ $newsletter?->og_title }}">
+        <meta property="og:description" content="{{ $newsletter?->og_description }}">
+        <meta property="og:type" content="{{ $newsletter?->og_type }}">
+        <meta property="og:url" content="{{ $newsletter?->og_url ?? url()->current() }}">
+        <meta property="og:image" content="{{ $newsletter?->og_image }}">
+        <meta property="og:image:alt" content="{{ $newsletter?->og_image_alt }}">
+        <meta property="og:site_name" content="{{ $newsletter?->og_site_name }}">
 
-        {{-- Twitter --}}
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Subscribe to Newsletter">
-        <meta name="twitter:description"
-            content="Join Andrej Nankov's newsletter for founders, engineers, and tech enthusiasts. Get updates, articles, insights, and exclusive resources on software engineering and entrepreneurship. No spam.">
-        <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/18250654?v=4">
-        <meta name="twitter:image:alt" content="Andrej Nankov Profile Picture">
-        <meta name="twitter:creator" content="@nanorocks">
+        <meta name="twitter:card" content="{{ $newsletter?->twitter_card }}">
+        <meta name="twitter:title" content="{{ $newsletter?->twitter_title }}">
+        <meta name="twitter:description" content="{{ $newsletter?->twitter_description }}">
+        <meta name="twitter:image" content="{{ $newsletter?->twitter_image }}">
+        <meta name="twitter:image:alt" content="{{ $newsletter?->twitter_image_alt }}">
+        <meta name="twitter:creator" content="{{ $newsletter?->twitter_creator }}">
     @endsection
-
 
     <div class="card">
         <div class="card-body items-center text-center">
-
-            @php
-                $newsletter = \App\Models\NewsletterPage::first();
-            @endphp
-
-            {{-- Profile Image --}}
             <div class="avatar">
                 <div class="w-28 rounded-full ring ring-red-500 ring-offset-0">
-                    <img src="{{ asset('storage/' . $newsletter?->profile_image) ?? 'https://avatars.githubusercontent.com/u/18250654?v=4' }}" alt="Profile Photo">
+                    <img src="{{ asset('storage/' . $newsletter?->profile_image) ?? 'https://avatars.githubusercontent.com/u/18250654?v=4' }}"
+                        alt="Profile Photo">
                 </div>
             </div>
-
-            {{-- Name + Role --}}
             <h2 class="card-title mt-4 text-2xl font-bold">{{ $newsletter?->name }}</h2>
             <p class="text-sm opacity-70">{{ $newsletter?->role }}</p>
-
-            {{-- Newsletter Headline --}}
             <h2 class="mt-8 text-xl font-bold text-red-500">{{ $newsletter?->headline }}</h2>
             <p class="mt-2 text-sm opacity-80">
                 {{ $newsletter?->intro }}
             </p>
             <div class="mt-4 text-left max-w-xl mx-auto text-base opacity-90 text-justify">
-                {!! $newsletter?->main_content !!}
+                {!! $newsletter?->content !!}
             </div>
-
-            {{-- Newsletter Form --}}
             @include('newsletter-form')
         </div>
     </div>

@@ -18,11 +18,11 @@ class PagesTable
             ->columns([
                 ImageColumn::make('profile_image')
                     ->label('Profile Image')
-                    ->circular()
-                    ->disk('public'),
+                    ->disk('public')
+                    ->circular(),
                 TextColumn::make('flag')
                     ->searchable()
-                    ->formatStateUsing(fn ($state) => strtoupper($state)),
+                    ->formatStateUsing(fn($state) => strtoupper($state)),
                 TextColumn::make('title')
                     ->searchable(),
                 IconColumn::make('is_published')

@@ -16,7 +16,6 @@ class Page extends Model
         'role',
         'headline',
         'intro',
-        'main_content',
         'content',
         'cv_url',
         'is_published',
