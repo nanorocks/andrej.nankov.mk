@@ -20,7 +20,6 @@ class HomePageSeeder extends Seeder
                 'role' => 'More than just an engineer.',
                 'headline' => 'Helping founders and companies get started with their software ideas 🚀',
                 'intro' => null,
-                'main_content' => null,
                 'content' => '<div class="space-y-2 text-center">
 <p>I partner with startups and companies to turn complex ideas into reliable, scalable software solutions.</p>
 <p>Let’s connect if you’re looking for a <span class="font-semibold">fractional CTO</span>, project consultant, or a senior engineer to help you build and scale your next big idea.</p>
