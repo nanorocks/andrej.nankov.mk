@@ -7,11 +7,11 @@ use Filament\Actions\Action;
 
 class Dashboard extends BaseDashboard
 {
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-home';
-    protected static ?string $title = 'Dashboard';
-    protected static string|\UnitEnum|null $navigationGroup = 'Other';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-truck';
+    protected static ?string $title = 'Car Dashboard';
+    protected static string|\UnitEnum|null $navigationGroup = 'Car Management';
 
-    protected static string $routePath = 'dashboard';
+    protected static string $routePath = 'car-dashboard';
 
     public function mount(): void
     {

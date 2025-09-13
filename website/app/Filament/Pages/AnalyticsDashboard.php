@@ -7,7 +7,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 class AnalyticsDashboard extends BaseDashboard
 {
     // ...
-    protected static string $routePath = 'analytics';
+    protected static string $routePath = 'dashboard';
 
     protected static ?string $title = 'Analytics';
 
