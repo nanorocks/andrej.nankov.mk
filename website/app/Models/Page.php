@@ -48,7 +48,9 @@ class Page extends Model
 
     public static function getHomepage()
     {
-        return self::where('flag', 'homepage')->where('is_published', true)->first();
+        return cache()->remember('homepage_page', 120, function () {
+            return self::where('flag', 'homepage')->where('is_published', true)->first();
+        });
     }
 
     public static function getNewsletterPage()

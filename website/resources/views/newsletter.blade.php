@@ -5,6 +5,9 @@
 
     @php
         $newsletter = \App\Models\Page::getNewsletterPage();
+        if (!$newsletter) {
+            abort(404, 'Page not found');
+        }
     @endphp
 
     @section('title', $newsletter?->seo_title ?? 'Subscribe to Newsletter')

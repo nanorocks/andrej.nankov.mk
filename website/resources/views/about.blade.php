@@ -2,6 +2,9 @@
 <x-guest-layout>
     @php
         $about = \App\Models\Page::getAboutPage();
+        if (!$about) {
+            abort(404, 'Page not found');
+        }
     @endphp
     {{-- SEO --}}
     @section('title', 'About')

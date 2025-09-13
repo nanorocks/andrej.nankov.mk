@@ -10,13 +10,7 @@ class SocialIcons extends Component
 
     public function __construct()
     {
-        $this->links = \Illuminate\Support\Facades\Cache::remember(
-            'active_social_links',
-            now()->addMinutes(10),
-            function () {
-                return \App\Models\SocialLink::where('active', true)->get();
-            }
-        );
+        $this->links = \App\Models\SocialLink::getActiveSocialLinks();
     }
 
     public function render()
