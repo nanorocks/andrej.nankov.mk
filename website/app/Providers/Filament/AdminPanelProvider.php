@@ -22,6 +22,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -65,6 +66,7 @@ class AdminPanelProvider extends PanelProvider
                     ->deleteAccount(condition: fn() => true)
                     ->profileInformation(condition: fn() => true)
                     ->logoutBrowserSessions(condition: fn() => true),
+                FilamentDatabaseSchedulePlugin::make()
             ]);
     }
 }
