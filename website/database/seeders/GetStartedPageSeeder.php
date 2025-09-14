@@ -35,7 +35,6 @@ I’ll help you get started on your journey with practical, actionable advice
 tailored to your situation.
 </p>
 </div>',
-                'main_content' => null,
                 'cv_url' => null,
                 'is_published' => 1,
                 'include_seo_in_header' => 1,
