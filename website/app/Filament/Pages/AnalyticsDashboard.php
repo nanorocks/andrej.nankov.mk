@@ -9,7 +9,7 @@ class AnalyticsDashboard extends BaseDashboard
     // ...
     protected static string $routePath = 'dashboard';
 
-    protected static ?string $title = 'Analytics';
+    protected static ?string $title = 'Dashboard Analytics';
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
