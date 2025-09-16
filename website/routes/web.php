@@ -31,8 +31,4 @@ Route::get('logout', [\App\Http\Controllers\Auth\VerifyEmailController::class, '
     ->middleware(['auth'])
     ->name('logout');
 
-
 require __DIR__ . '/auth.php';
-
-
-
