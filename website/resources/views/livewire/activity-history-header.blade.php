@@ -1,25 +1,78 @@
-  <header class="fi-header1">
-      <div>
-          <div
-              style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem;">
-              <div style="flex: 1; text-align: left;">
-                  <h1 class="fi-header-heading" style="margin: 0;">
-                      Activity History
-                  </h1>
-              </div>
-              <div style="flex-shrink: 0; text-align: right;">
-                  <button type="submit" wire:click="flush"
-                      class="fi-color fi-color-danger fi-bg-color-600 hover:fi-bg-color-500 dark:fi-bg-color-600 dark:hover:fi-bg-color-500 fi-text-color-0 hover:fi-text-color-0 dark:fi-text-color-0 dark:hover:fi-text-color-0 fi-btn fi-size-md fi-ac-btn-action">
-                      <svg wire:loading.remove.delay.default="1" class="fi-icon fi-size-md"
-                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                          stroke="currentColor" aria-hidden="true" data-slot="icon">
-                          <path stroke-linecap="round" stroke-linejoin="round"
-                              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0">
-                          </path>
-                      </svg>
-                      Flush Activities
-                  </button>
-              </div>
-          </div>
-      </div>
-  </header>
+<div class="flex flex-wrap items-center gap-3 md:justify-end">
+
+    <div
+        style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem;">
+        <div style="flex: 1; text-align: left;">
+            <h1 class="fi-header-heading" style="margin: 0;">
+                Activity History
+            </h1>
+        </div>
+        <div style="flex-shrink: 0; text-align: right;">
+            <button type="submit" wire:click="flush"
+                class="fi-color fi-color-danger fi-bg-color-600 hover:fi-bg-color-500 dark:fi-bg-color-600 dark:hover:fi-bg-color-500 fi-text-color-0 hover:fi-text-color-0 dark:fi-text-color-0 dark:hover:fi-text-color-0 fi-btn fi-size-md fi-ac-btn-action">
+                <svg wire:loading.remove.delay.default="1" class="fi-icon fi-size-md" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"
+                    data-slot="icon">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0">
+                    </path>
+                </svg>
+                Flush Activities
+            </button>
+        </div>
+    </div>
+
+    <div
+        style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 0.75rem; width: 100%; align-items: center; @media (min-width: 768px) { grid-template-columns: repeat(6, 1fr); }">
+        {{-- Search --}}
+        <div style="width: 100%;">
+            <input type="text" wire:model.debounce.500ms="search" placeholder="Search..."
+                style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;" />
+        </div>
+
+        {{-- Log filter --}}
+        <div style="width: 100%;">
+            <select wire:model="logName"
+                style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;">
+                <option value="">All Logs</option>
+                @foreach ($logNames as $log)
+                    <option value="{{ $log }}">{{ $log }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- Event filter --}}
+        <div style="width: 100%;">
+            <select wire:model="event"
+                style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;">
+                <option value="">All Events</option>
+                @foreach ($events as $evt)
+                    <option value="{{ $evt }}">{{ $evt }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- Date From --}}
+        <div style="width: 100%;">
+            <input type="datetime-local" wire:model="dateFrom"
+                style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;" step="1" />
+        </div>
+
+        {{-- Date To --}}
+        <div style="width: 100%;">
+            <input type="datetime-local" wire:model="dateTo"
+                style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;" step="1" />
+        </div>
+    </div>
+
+    <br />
+
+    {{-- Apply Filters --}}
+    {{-- Reset --}}
+    <button wire:click="updateFilters" class="fi-btn fi-size-md fi-color-gray">
+        Filter Activities
+    </button>
+    <button wire:click="resetFilters" class="fi-btn fi-size-md fi-color-danger ml-2">
+        Reset Filters
+    </button>
+</div>
