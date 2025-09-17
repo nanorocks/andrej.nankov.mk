@@ -32,5 +32,3 @@ Route::get('logout', [\App\Http\Controllers\Auth\VerifyEmailController::class, '
     ->name('logout');
 
 require __DIR__ . '/auth.php';
-
-Route::passkeys();
