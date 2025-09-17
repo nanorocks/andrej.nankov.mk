@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "463341a5c0432d479ef38cda37c4a071",
+    "content-hash": "fa8f86e46b756d6a3e834c563caaa6ec",
     "packages": [
         {
             "name": "achyutn/filament-log-viewer",
@@ -3967,6 +3967,78 @@
                 "source": "https://github.com/livewire/volt"
             },
             "time": "2025-08-06T15:40:50+00:00"
+        },
+        {
+            "name": "marcelweidum/filament-passkeys",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MarcelWeidum/filament-passkeys.git",
+                "reference": "7bf4b8acf953bd21e8dc1f4d0e7b2b8688d74537"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MarcelWeidum/filament-passkeys/zipball/7bf4b8acf953bd21e8dc1f4d0e7b2b8688d74537",
+                "reference": "7bf4b8acf953bd21e8dc1f4d0e7b2b8688d74537",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^4.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0",
+                "spatie/laravel-passkeys": "*"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Passkeys": "MarcelWeidum\\Passkeys\\Facades\\Passkeys"
+                    },
+                    "providers": [
+                        "MarcelWeidum\\Passkeys\\PasskeysServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarcelWeidum\\Passkeys\\": "src/",
+                    "MarcelWeidum\\Passkeys\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MarcelWeidum",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Use passkeys in your filamentphp app",
+            "homepage": "https://github.com/marcelweidum/filament-passkeys",
+            "keywords": [
+                "MarcelWeidum",
+                "filament",
+                "filament-passkeys",
+                "filamentphp",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/marcelweidum/filament-passkeys/issues",
+                "source": "https://github.com/marcelweidum/filament-passkeys"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/MarcelWeidum",
+                    "type": "buy_me_a_coffee"
+                }
+            ],
+            "time": "2025-09-06T07:13:04+00:00"
         },
         {
             "name": "masterminds/html5",
