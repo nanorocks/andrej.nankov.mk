@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources\NewsletterSubscribers\Tables;
 
+use Filament\Tables\Table;
+use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Columns\Column;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use pxlrbt\FilamentExcel\Actions\ExportBulkAction;
 
 class NewsletterSubscribersTable
 {
@@ -37,6 +40,16 @@ class NewsletterSubscribersTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                     ExportBulkAction::make()->exports([
+                        ExcelExport::make()->withColumns([
+                            Column::make('email')->heading('Email'),
+                            Column::make('subscribed')->heading('Subscribed'),
+                            Column::make('attributes')->heading('Attributes'),
+                            Column::make('created_at')->heading('Created At'),
+                            Column::make('updated_at')->heading('Updated At'),
+                        ])->ignoreFormatting()
+                          ->withFilename(date('Y-m-d') . ' - export-newsletter-subscribers'),
+                    ]),
                     DeleteBulkAction::make(),
                 ]),
             ]);
