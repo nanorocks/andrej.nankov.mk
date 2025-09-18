@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Filament\Jetstream\InteractsWIthProfile;
-use Filament\Models\Contracts\FilamentUser;
+use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Jetstream\InteractsWIthProfile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 
 // use Filament\Models\Contracts\HasTenants;
@@ -21,6 +22,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     use InteractsWIthProfile;
     use InteractsWithPasskeys;
     use Notifiable;
+    use HasRoles;
     // use InteractsWithTeams;
     // use HasApiTokens;
 

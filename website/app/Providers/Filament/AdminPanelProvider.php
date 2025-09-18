@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Filament\Panel;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use \App\Models\User;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -58,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])->plugins([
+                FilamentShieldPlugin::make(),
                 FilamentLogViewer::make(),
                 FilamentMailLogPlugin::make(),
                 JetstreamPlugin::make()
