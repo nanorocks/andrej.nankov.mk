@@ -61,41 +61,20 @@
                             </div>
 
 
-                            <details class="mt-3">
-                                <summary class="cursor-pointer font-semibold text-gray-800 dark:text-gray-200">
-                                    Trace</summary>
-                                <div x-load=""
-                                    x-load-src="http://localhost/js/filament/forms/components/code-editor.js?v=4.0.5.0"
-                                    x-data="codeEditorFormComponent({
-                                        isDisabled: true,
-                                        language: 'json',
-                                        state: @js(json_encode($activity->properties, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)),
-                                    })" wire:ignore
-                                    wire:key="activity-properties-{{ $activity->id }}">
-                                    <div x-ref="editor">
-                                        <div class="cm-editor">
-                                            <div class="cm-announced" aria-live="polite"></div>
-                                            <div tabindex="-1" class="cm-scroller">
-
-                                                <div style="tab-size: 4;" spellcheck="false" autocorrect="off"
-                                                    autocapitalize="off" writingsuggestions="false" translate="no"
-                                                    contenteditable="false" class="cm-content" role="textbox"
-                                                    aria-multiline="true" data-language="json">
-
-                                                </div>
-                                                <div class="cm-layer cm-layer-above cm-cursorLayer" aria-hidden="true"
-                                                    style="z-index: 150; animation-duration: 1200ms;">
-                                                    <div class="cm-cursor cm-cursor-primary"
-                                                        style="left: 41.4154px; top: 4.98462px; height: 15.7538px;">
-                                                    </div>
-                                                </div>
-                                                <div class="cm-layer cm-selectionLayer" aria-hidden="true"
-                                                    style="z-index: -2;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div x-data="{ open: false }" class="mt-3" style="margin-top: 1rem;">
+                                <button @click="open = !open"
+                                    class="cursor-pointer font-semibold text-gray-800 dark:text-gray-200 focus:outline-none"
+                                    style="background: none; border: none; padding: 0; font-size: 1rem; text-decoration: underline; cursor: pointer;">
+                                    Trace
+                                </button>
+                                <div x-show="open" x-transition>
+                                    <pre
+                                        class="mt-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-lg overflow-x-auto text-xs text-gray-900 dark:text-gray-100 w-full"
+                                        style="margin-top: 0.5rem; background-color: transparent; padding: 0.5rem; border-radius: 0.5rem; font-size: 0.75rem; width: 100%; resize: vertical; overflow-x: auto; white-space: pre-wrap;">
+{{ json_encode($activity->properties->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}
+                                    </pre>
                                 </div>
-                            </details>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -22,15 +22,15 @@
         </div>
     </div>
 
-    <div
+    {{-- <div
         style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 0.75rem; width: 100%; align-items: center; @media (min-width: 768px) { grid-template-columns: repeat(6, 1fr); }">
-        {{-- Search --}}
+
         <div style="width: 100%;">
             <input type="text" wire:model.debounce.500ms="search" placeholder="Search..."
                 style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;" />
         </div>
 
-        {{-- Log filter --}}
+
         <div style="width: 100%;">
             <select wire:model="logName"
                 style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;">
@@ -41,7 +41,6 @@
             </select>
         </div>
 
-        {{-- Event filter --}}
         <div style="width: 100%;">
             <select wire:model="event"
                 style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;">
@@ -52,13 +51,11 @@
             </select>
         </div>
 
-        {{-- Date From --}}
         <div style="width: 100%;">
             <input type="datetime-local" wire:model="dateFrom"
                 style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;" step="1" />
         </div>
 
-        {{-- Date To --}}
         <div style="width: 100%;">
             <input type="datetime-local" wire:model="dateTo"
                 style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.375rem;" step="1" />
@@ -67,12 +64,10 @@
 
     <br />
 
-    {{-- Apply Filters --}}
-    {{-- Reset --}}
     <button wire:click="updateFilters" class="fi-btn fi-size-md fi-color-gray">
         Filter Activities
     </button>
     <button wire:click="resetFilters" class="fi-btn fi-size-md fi-color-danger ml-2">
         Reset Filters
-    </button>
+    </button> --}}
 </div>
