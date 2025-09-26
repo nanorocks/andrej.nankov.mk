@@ -148,7 +148,7 @@
 <body class="antialiased font-sans">
     <canvas id="canvas"></canvas>
     <!-- The rest of your content overlays the canvas -->
-    <div class="bg-dark-50 text-black/50 bg-black text-white/50">
+    <div class="bg-dark-50 text-black/50 bg-black text-white/50 m-0 p-">
         <img id="background" class="absolute left-0 top-0 w-auto h-auto max-w-full max-h-full pointer-events-none z-0"
             src="https://laravel.com/assets/img/welcome/background.svg" style="object-fit: contain;" />
         <div
@@ -163,6 +163,11 @@
                 </header>
                 <div class="w-full max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
                     {{ $slot }}
+
+                    <footer class="py-16 text-center text-sm">
+                        Release v{{ Illuminate\Foundation\Application::VERSION }} - Environment v{{ PHP_VERSION }}
+                        @yield('footer')
+                    </footer>
                 </div>
             </div>
         </div>
