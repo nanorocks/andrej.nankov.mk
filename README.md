@@ -122,7 +122,9 @@ This is the personal website and portfolio of **Andrej Nankov** - a Fractional C
    - **Admin Panel**: [http://localhost/admin](http://localhost/admin)
    - **Database Admin**: [http://localhost:54320](http://localhost:54320)
    - **Horizon Dashboard**: [http://localhost/horizon](http://localhost/horizon)
-
+5. Shiled install
+   - https://filamentphp.com/plugins/bezhansalleh-shield
+   
 ### Local Development (Without Docker)
 
 1. **Clone and navigate:**
