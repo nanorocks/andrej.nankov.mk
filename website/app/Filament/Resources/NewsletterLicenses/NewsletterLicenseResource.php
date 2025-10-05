@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\PluginDatabaseNewsletterLicenses;
+namespace App\Filament\Resources\NewsletterLicenses;
 
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Pages\CreatePluginDatabaseNewsletterLicense;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Pages\EditPluginDatabaseNewsletterLicense;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Pages\ListPluginDatabaseNewsletterLicenses;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Pages\ViewPluginDatabaseNewsletterLicense;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas\PluginDatabaseNewsletterLicenseForm;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas\PluginDatabaseNewsletterLicenseInfolist;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\Tables\PluginDatabaseNewsletterLicensesTable;
+use App\Filament\Resources\NewsletterLicenses\Pages\CreateNewsletterLicense;
+use App\Filament\Resources\NewsletterLicenses\Pages\EditNewsletterLicense;
+use App\Filament\Resources\NewsletterLicenses\Pages\ListNewsletterLicenses;
+use App\Filament\Resources\NewsletterLicenses\Schemas\NewsletterLicenseForm;
+use App\Filament\Resources\NewsletterLicenses\Schemas\NewsletterLicenseInfolist;
+use App\Filament\Resources\NewsletterLicenses\Tables\NewsletterLicensesTable;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,7 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Nanorocks\LicenseManager\Models\License;
 
-class PluginDatabaseNewsletterLicenseResource extends Resource
+class NewsletterLicenseResource extends Resource
 {
     protected static ?string $model = License::class;
 
@@ -29,23 +28,23 @@ class PluginDatabaseNewsletterLicenseResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return PluginDatabaseNewsletterLicenseForm::configure($schema);
+        return NewsletterLicenseForm::configure($schema);
     }
 
     public static function infolist(Schema $schema): Schema
     {
-        return PluginDatabaseNewsletterLicenseInfolist::configure($schema);
+        return NewsletterLicenseInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return PluginDatabaseNewsletterLicensesTable::configure($table);
+        return NewsletterLicensesTable::configure($table);
     }
 
     public static function viewSchema(Schema $schema): Schema
     {
 
-        return PluginDatabaseNewsletterLicenseInfolist::configure($schema)
+        return NewsletterLicenseInfolist::configure($schema)
             ->disableEditing();
     }
 
@@ -59,9 +58,9 @@ class PluginDatabaseNewsletterLicenseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPluginDatabaseNewsletterLicenses::route('/'),
-            'create' => CreatePluginDatabaseNewsletterLicense::route('/create'),
-            'edit' => EditPluginDatabaseNewsletterLicense::route('/{record}/edit'),
+            'index' => ListNewsletterLicenses::route('/'),
+            'create' => CreateNewsletterLicense::route('/create'),
+            'edit' => EditNewsletterLicense::route('/{record}/edit'),
         ];
     }
 

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas;
+namespace App\Filament\Resources\NewsletterLicenses\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Textarea;
 use App\View\Components\LicenseKeyInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\CodeEditor\Enums\Language;
 
-class PluginDatabaseNewsletterLicenseForm
+class NewsletterLicenseForm
 {
     public static function configure(Schema $schema): Schema
     {

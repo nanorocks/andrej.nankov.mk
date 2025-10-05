@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\PluginDatabaseNewsletterLicenses\Pages;
+namespace App\Filament\Resources\NewsletterLicenses\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use App\Filament\Resources\PluginDatabaseNewsletterLicenses\PluginDatabaseNewsletterLicenseResource;
+use App\Filament\Resources\NewsletterLicenses\NewsletterLicenseResource;
 
-class ViewPluginDatabaseNewsletterLicense extends ViewRecord
+class ViewNewsletterLicense extends ViewRecord
 {
-    protected static string $resource = PluginDatabaseNewsletterLicenseResource::class;
+    protected static string $resource = NewsletterLicenseResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\PluginDatabaseNewsletterLicenses\Tables;
+namespace App\Filament\Resources\NewsletterLicenses\Tables;
 
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
@@ -17,7 +17,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use pxlrbt\FilamentExcel\Actions\ExportBulkAction;
 
-class PluginDatabaseNewsletterLicensesTable
+class NewsletterLicensesTable
 {
     public static function configure(Table $table): Table
     {

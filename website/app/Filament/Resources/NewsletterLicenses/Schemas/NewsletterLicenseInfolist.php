@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\PluginDatabaseNewsletterLicenses\Schemas;
+namespace App\Filament\Resources\NewsletterLicenses\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 
-class PluginDatabaseNewsletterLicenseInfolist
+class NewsletterLicenseInfolist
 {
     public static function configure(Schema $schema): Schema
     {
