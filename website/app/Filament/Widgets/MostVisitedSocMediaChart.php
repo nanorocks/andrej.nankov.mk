@@ -3,9 +3,12 @@
 namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class MostVisitedSocMediaChart extends ChartWidget
 {
+    use HasWidgetShield;
+
     protected ?string $heading = 'Most Clicked Social Media Links';
 
     protected function getData(): array

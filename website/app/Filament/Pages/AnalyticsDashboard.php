@@ -3,9 +3,11 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Dashboard as BaseDashboard;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class AnalyticsDashboard extends BaseDashboard
 {
+    use HasPageShield;
     // ...
     protected static string $routePath = 'dashboard';
 

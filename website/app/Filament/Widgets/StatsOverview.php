@@ -3,11 +3,14 @@
 namespace App\Filament\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Nanorocks\LicenseManager\Models\License;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class StatsOverview extends StatsOverviewWidget
 {
+    use HasWidgetShield;
+
     protected ?string $pollingInterval = '10s';
 
     // protected function getHeading(): ?string

@@ -2,12 +2,15 @@
 
 namespace App\Filament\Pages;
 
-use CodeWithDennis\FilamentLucideIcons\Enums\LucideIcon;
-use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Actions\Action;
+use Filament\Pages\Dashboard as BaseDashboard;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use CodeWithDennis\FilamentLucideIcons\Enums\LucideIcon;
 
 class Dashboard extends BaseDashboard
 {
+    use HasPageShield;
+
     protected static string|\BackedEnum|null $navigationIcon = LucideIcon::Car;
     protected static ?string $title = 'Car Dashboard';
     protected static string|\UnitEnum|null $navigationGroup = 'Car Management';
