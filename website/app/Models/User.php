@@ -12,10 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 
-// use Filament\Models\Contracts\HasTenants;
-// use Filament\Jetstream\InteractsWithTeams;
-// use Laravel\Sanctum\HasApiTokens;
-
 class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
 {
     use HasFactory;

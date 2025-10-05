@@ -2,20 +2,21 @@
 
 namespace App\Filament\Resources\NewsletterLicenses;
 
-use App\Filament\Resources\NewsletterLicenses\Pages\CreateNewsletterLicense;
-use App\Filament\Resources\NewsletterLicenses\Pages\EditNewsletterLicense;
-use App\Filament\Resources\NewsletterLicenses\Pages\ListNewsletterLicenses;
-use App\Filament\Resources\NewsletterLicenses\Schemas\NewsletterLicenseForm;
-use App\Filament\Resources\NewsletterLicenses\Schemas\NewsletterLicenseInfolist;
-use App\Filament\Resources\NewsletterLicenses\Tables\NewsletterLicensesTable;
 use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
+use App\Models\License;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Nanorocks\LicenseManager\Models\License;
+use App\Filament\Resources\NewsletterLicenses\Pages\EditNewsletterLicense;
+use App\Filament\Resources\NewsletterLicenses\Pages\ListNewsletterLicenses;
+use App\Filament\Resources\NewsletterLicenses\Pages\CreateNewsletterLicense;
+use App\Filament\Resources\NewsletterLicenses\Schemas\NewsletterLicenseForm;
+use App\Filament\Resources\NewsletterLicenses\Tables\NewsletterLicensesTable;
+use App\Filament\Resources\NewsletterLicenses\Schemas\NewsletterLicenseInfolist;
+
 
 class NewsletterLicenseResource extends Resource
 {
@@ -39,13 +40,6 @@ class NewsletterLicenseResource extends Resource
     public static function table(Table $table): Table
     {
         return NewsletterLicensesTable::configure($table);
-    }
-
-    public static function viewSchema(Schema $schema): Schema
-    {
-
-        return NewsletterLicenseInfolist::configure($schema)
-            ->disableEditing();
     }
 
     public static function getRelations(): array
@@ -74,6 +68,6 @@ class NewsletterLicenseResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Portfolio Website';
+        return 'Settings';
     }
 }
