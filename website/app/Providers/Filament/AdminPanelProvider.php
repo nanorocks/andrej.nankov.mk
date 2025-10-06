@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use Filament\Panel;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use \App\Models\User;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -17,7 +16,7 @@ use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
 use App\Filament\Widgets\MostVisitedSocMediaChart;
-use BezhanSalleh\FilamentShield\Resources\Roles\RoleResource;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -61,15 +60,15 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])->plugins([
                 FilamentShieldPlugin::make(),
-                // FilamentLogViewer::make(),
-                // FilamentMailLogPlugin::make(),
                 JetstreamPlugin::make()
                     ->configureUserModel(userModel: User::class)
                     ->profilePhoto(condition: fn() => true, disk: 'public')
                     ->deleteAccount(condition: fn() => true)
                     ->profileInformation(condition: fn() => true)
                     ->logoutBrowserSessions(condition: fn() => true),
-                // FilamentDatabaseSchedulePlugin::make()
+                // FilamentDatabaseSchedulePlugin::make(),
+                // FilamentLogViewer::make(),
+                // FilamentMailLogPlugin::make(),
             ]);
     }
 }

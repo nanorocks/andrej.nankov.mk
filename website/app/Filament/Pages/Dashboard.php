@@ -11,7 +11,7 @@ class Dashboard extends BaseDashboard
 {
     use HasPageShield;
 
-    protected static string|\BackedEnum|null $navigationIcon = LucideIcon::Car;
+    protected static string|\BackedEnum|null $navigationIcon = LucideIcon::ChartColumn;
     protected static ?string $title = 'Car Dashboard';
     protected static string|\UnitEnum|null $navigationGroup = 'Car Management';
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use Illuminate\Foundation\Auth\User as AuthUser;
-use Nanorocks\LicenseManager\Models\License;
+use App\Models\License;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LicensePolicy
