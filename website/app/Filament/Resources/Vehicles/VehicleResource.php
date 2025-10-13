@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Vehicles;
 
+use Dom\Attr;
+use Attribute;
 use BackedEnum;
 use App\Models\Vehicle;
 use Filament\Tables\Table;
@@ -14,6 +16,7 @@ use App\Filament\Resources\Vehicles\Pages\CreateVehicle;
 use App\Filament\Resources\Vehicles\Schemas\VehicleForm;
 use CodeWithDennis\FilamentLucideIcons\Enums\LucideIcon;
 use App\Filament\Resources\Vehicles\Tables\VehiclesTable;
+use App\Filament\Resources\Vehicles\RelationManagers\AttributesRelationManager;
 
 class VehicleResource extends Resource
 {
@@ -36,7 +39,7 @@ class VehicleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AttributesRelationManager::class,
         ];
     }
 

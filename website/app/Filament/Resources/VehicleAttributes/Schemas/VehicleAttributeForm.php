@@ -4,6 +4,7 @@ namespace App\Filament\Resources\VehicleAttributes\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class VehicleAttributeForm
@@ -12,9 +13,9 @@ class VehicleAttributeForm
     {
         return $schema
             ->components([
-                TextInput::make('vehicle_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('vehicle_id')
+                    ->relationship('vehicle', 'notes')
+                    ->required(),
                 TextInput::make('attribute')
                     ->required(),
                 Textarea::make('value')
