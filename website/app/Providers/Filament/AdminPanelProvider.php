@@ -67,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
                     ->profileInformation(condition: fn() => true)
                     ->logoutBrowserSessions(condition: fn() => true),
                 // FilamentDatabaseSchedulePlugin::make(),
-                // FilamentLogViewer::make(),
+                FilamentLogViewer::make(),
                 // FilamentMailLogPlugin::make(),
             ]);
     }
