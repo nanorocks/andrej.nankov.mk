@@ -27,6 +27,7 @@ class Driver extends Model
         'license_expires_at' => 'date',
         'date_of_birth' => 'date',
         'attributes' => 'array',
+        'license_category' => 'array',
     ];
 
     public function user()

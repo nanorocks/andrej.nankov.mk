@@ -19,7 +19,7 @@ class DriverForm
                 TextInput::make('license_number')
                     ->required(),
                 Select::make('license_category')
-                    ->multiple()
+                    ->label('License Category')
                     ->options([
                         'A' => 'Motorcycles',
                         'B' => 'Cars',
@@ -27,8 +27,8 @@ class DriverForm
                         'D' => 'Buses',
                         'E' => 'Trailers',
                         'F' => 'Agricultural Vehicles',
-                        // Add other categories as needed
                     ])
+                    ->multiple()
                     ->required(),
                 DatePicker::make('license_issued_at'),
                 DatePicker::make('license_expires_at')
