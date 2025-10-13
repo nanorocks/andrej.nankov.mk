@@ -30,7 +30,7 @@ class Dashboard extends BaseDashboard
                 ->color('danger')
                 ->icon('heroicon-o-trash')
                 ->requiresConfirmation()
-                ->action(fn () => \App\Models\PanAnalytics::truncate()),
+                ->action(fn() => \App\Models\PanAnalytics::truncate()),
 
         ];
     }

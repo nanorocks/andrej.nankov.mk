@@ -40,7 +40,8 @@
                 <!-- Profile Image -->
                 <div class="avatar">
                     <div class="w-28 rounded-full ring ring-red-500 ring-offset-0">
-                        <img src="{{ asset('storage/' . $homepage?->profile_image) }}" alt="Profile Photo">
+                         <img src="{{ asset('storage/' . $homepage?->profile_image) ?? 'https://avatars.githubusercontent.com/u/18250654?v=4' }}"
+                        alt="Profile Photo">
                     </div>
                 </div>
 
