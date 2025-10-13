@@ -14,27 +14,33 @@ class DriversTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
+                TextColumn::make('status')
+                    ->icon(fn ($record) => match ($record->status) {
+                        'active' => 'heroicon-o-check-circle',
+                        'inactive' => 'heroicon-o-x-circle',
+                        'suspended' => 'heroicon-o-clock',
+                        default => null,
+                    })
+                    ->color(fn ($record) => match ($record->status) {
+                        'active' => 'success',
+                        'inactive' => 'danger',
+                        'suspended' => 'warning',
+                        default => 'gray',
+                    }),
+                TextColumn::make('user.name')
+                    ->label('User Name')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('license_number')
-                    ->searchable(),
                 TextColumn::make('license_category')
                     ->searchable(),
-                TextColumn::make('license_issued_at')
-                    ->date()
-                    ->sortable(),
                 TextColumn::make('license_expires_at')
                     ->date()
                     ->sortable(),
                 TextColumn::make('phone')
                     ->searchable(),
-                TextColumn::make('address')
-                    ->searchable(),
                 TextColumn::make('date_of_birth')
                     ->date()
                     ->sortable(),
-                TextColumn::make('status'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

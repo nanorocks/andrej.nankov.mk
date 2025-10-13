@@ -13,18 +13,31 @@ class DriverForm
     {
         return $schema
             ->components([
-                TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
                 TextInput::make('license_number')
                     ->required(),
-                TextInput::make('license_category'),
+                Select::make('license_category')
+                    ->multiple()
+                    ->options([
+                        'A' => 'Motorcycles',
+                        'B' => 'Cars',
+                        'C' => 'Trucks',
+                        'D' => 'Buses',
+                        'E' => 'Trailers',
+                        'F' => 'Agricultural Vehicles',
+                        // Add other categories as needed
+                    ])
+                    ->required(),
                 DatePicker::make('license_issued_at'),
-                DatePicker::make('license_expires_at'),
+                DatePicker::make('license_expires_at')
+                    ->required(),
                 TextInput::make('phone')
-                    ->tel(),
+                    ->tel()
+                    ->required(),
                 TextInput::make('address'),
-                DatePicker::make('date_of_birth'),
+                DatePicker::make('date_of_birth')->required(),
                 Select::make('status')
                     ->options(['active' => 'Active', 'inactive' => 'Inactive', 'suspended' => 'Suspended'])
                     ->default('active')
