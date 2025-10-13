@@ -14,12 +14,13 @@ class VehicleAttributesTable
     {
         return $table
             ->columns([
-                TextColumn::make('vehicle_id')
-                    ->numeric()
+                TextColumn::make('vehicle.vin')
+                    ->label('VIN')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('attribute')
                     ->searchable(),
-                TextColumn::make('value_type')
+                TextColumn::make('value')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
