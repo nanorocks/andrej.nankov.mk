@@ -28,7 +28,7 @@ class AttributesRelationManager extends RelationManager
                 TextInput::make('attribute')
                     ->required(),
                 Textarea::make('value')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()->required(),
                 TextInput::make('value_type')
                     ->required()
                     ->default('string'),
@@ -43,7 +43,7 @@ class AttributesRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('attribute')
                     ->searchable(),
-                TextColumn::make('value_type')
+                TextColumn::make('value')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

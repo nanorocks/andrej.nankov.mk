@@ -36,7 +36,7 @@ class VehicleForm
                     ->required(),
                 DatePicker::make('purchased_at'),
                 Textarea::make('notes')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()->required(),
             ]);
     }
 }
