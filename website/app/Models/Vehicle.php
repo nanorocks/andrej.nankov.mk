@@ -11,6 +11,8 @@ class Vehicle extends Model
 
     protected $fillable = [
         // core identifiers if present
+        'owner',
+        'photo',
         'driver_id',
         'vin',
         'registration_number',

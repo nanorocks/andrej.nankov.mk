@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 
 class VehiclesTable
@@ -14,13 +15,16 @@ class VehiclesTable
     {
         return $table
             ->columns([
+                ImageColumn::make('photo')
+                    ->label('Photo')
+                    ->disk('public')
+                    ->circular()
+                    ->defaultImageUrl("https://ui-avatars.com/api/?name=No+Image&color=7F9CF5&background=EBF4FF"),
                 TextColumn::make('owner')
                     ->searchable(),
                 TextColumn::make('vin')
                     ->searchable(),
                 TextColumn::make('registration_number')
-                    ->searchable(),
-                TextColumn::make('photo')
                     ->searchable(),
                 TextColumn::make('status'),
                 TextColumn::make('purchased_at')

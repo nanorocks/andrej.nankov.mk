@@ -17,15 +17,21 @@ class VehicleForm
                 TextInput::make('owner'),
                 TextInput::make('vin'),
                 TextInput::make('registration_number'),
-                TextInput::make('photo'),
+                \Filament\Forms\Components\FileUpload::make('photo')
+                    ->image()
+                    ->disk('public')
+                    ->directory('vehicle-photos')
+                    ->label('Photo')
+                    ->maxSize(2048)
+                    ->required(false),
                 Select::make('status')
                     ->options([
-            'available' => 'Available',
-            'rented' => 'Rented',
-            'maintenance' => 'Maintenance',
-            'sold' => 'Sold',
-            'inactive' => 'Inactive',
-        ])
+                        'available' => 'Available',
+                        'rented' => 'Rented',
+                        'maintenance' => 'Maintenance',
+                        'sold' => 'Sold',
+                        'inactive' => 'Inactive',
+                    ])
                     ->default('available')
                     ->required(),
                 DatePicker::make('purchased_at'),
