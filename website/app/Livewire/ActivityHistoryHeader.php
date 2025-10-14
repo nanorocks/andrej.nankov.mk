@@ -14,7 +14,7 @@ class ActivityHistoryHeader extends Component
 
     public function flush()
     {
-        \App\Models\Activity::truncate();
+        \App\Models\Activity::where('causer_id', auth()->id())->delete();
 
         $this->dispatch('activities-flushed', message: 'Activities cleared successfully!', type: 'success');
     }
@@ -45,8 +45,12 @@ class ActivityHistoryHeader extends Component
     public function render()
     {
         return view('livewire.activity-history-header', [
-            'logNames' => \App\Models\Activity::query()->select('log_name')->distinct()->pluck('log_name'),
-            'events'   => \App\Models\Activity::query()->select('event')->distinct()->pluck('event'),
+            'logNames' => \App\Models\Activity::query()
+            ->where('causer_id', auth()->user()->id)
+            ->select('log_name')->distinct()->pluck('log_name'),
+            'events'   => \App\Models\Activity::query()
+            ->where('causer_id', auth()->user()->id)
+            ->select('event')->distinct()->pluck('event'),
         ]);
     }
 }

@@ -27,9 +27,13 @@ use HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
+
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->sidebarFullyCollapsibleOnDesktop()
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->default()
             ->id('admin')
             ->path('admin')

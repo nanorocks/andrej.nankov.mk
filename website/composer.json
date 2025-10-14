@@ -22,6 +22,7 @@
         "nanorocks/laravel-database-newsletter": "^1.0",
         "nanorocks/laravel-license-manager": "^1.0",
         "panphp/pan": "^0.1.8",
+        "pusher/pusher-php-server": "^7.2",
         "pxlrbt/filament-excel": "^3.1",
         "ryangjchandler/laravel-cloudflare-turnstile": "^2.0",
         "spatie/laravel-activitylog": "^4.10",

@@ -14,14 +14,16 @@ class ActivityHistoryList extends Component
     #[On('filters-updated')]
     public function getActivitiesProperty($props)
     {
-        dd($props);
-        return Activity::query()->latest()->paginate(10);
+        return Activity::query()->where('causer_id', auth()->id())->latest()->paginate(10);
     }
 
     public function render()
     {
         return view('livewire.activity-history-list', [
-            'activities' => Activity::query()->latest()->paginate(10),
+            'activities' => Activity::query()
+            ->where('causer_id', auth()->id())
+            ->latest()
+            ->paginate(10),
         ]);
     }
 }
