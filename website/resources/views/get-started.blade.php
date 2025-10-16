@@ -54,7 +54,7 @@
             <div class="mt-6 text-gray-200">
                 <a href="https://calendly.com/nanorocks/30min" data-pan="Book-Free-Call"
                     class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl border-none text-lg font-semibold px-6">
-                    Book A Free Call To Get Started
+                    Book A Free Call
                 </a>
             </div>
 
