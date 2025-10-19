@@ -28,23 +28,6 @@ class VehicleServicesTable
                     ->label('Vehicle Notes')
                     ->searchable()
                     ->wrap(),
-                TextColumn::make('service_type')
-                    ->label('Service Type')
-                    ->formatStateUsing(function ($state) {
-                        $map = [
-                            'maintenance'   => 'Maintenance',
-                            'repair'        => 'Repair',
-                            'inspection'    => 'Inspection',
-                            'oil_change'    => 'Oil Change',
-                            'tire_service'  => 'Tire Service',
-                            'battery'       => 'Battery',
-                            'brakes'        => 'Brakes',
-                            'transmission'  => 'Transmission',
-                            'other'         => 'Other',
-                        ];
-                        return $map[$state] ?? $state;
-                    })
-                    ->wrap()->formatStateUsing(fn($state) => $state !== null ? mb_convert_case($state, MB_CASE_TITLE, 'UTF-8') : null),
                 TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('status')
