@@ -7,11 +7,11 @@ use \App\Models\User;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Filament\Widgets\StatsOverview;
+use App\Filament\Widgets\TopTreeClicks;
 use Filament\Jetstream\JetstreamPlugin;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Widgets\PanAnalyticsWidget;
 use Illuminate\Session\Middleware\StartSession;
-use Tapp\FilamentMailLog\FilamentMailLogPlugin;
 use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -46,6 +46,8 @@ class AdminPanelProvider extends PanelProvider
             ->pages([])
             ->widgets([
                 StatsOverview::class,
+                TopTreeClicks::class,
+
                 MostVisitedSocMediaChart::class,
                 PanAnalyticsWidget::class,
             ])
