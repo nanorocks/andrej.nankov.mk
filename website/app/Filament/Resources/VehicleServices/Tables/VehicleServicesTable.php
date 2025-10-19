@@ -5,15 +5,16 @@ namespace App\Filament\Resources\VehicleServices\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\ReplicateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\Summarizers\Sum;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\Summarizers\Count;
 
 class VehicleServicesTable
 {
@@ -74,6 +75,7 @@ class VehicleServicesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                ReplicateAction::make()
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
