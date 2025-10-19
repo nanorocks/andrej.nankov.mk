@@ -50,7 +50,8 @@ class VehicleServicesTable
                     ),
 
                 TextColumn::make('completed_at')
-                    ->dateTime()
+                    ->label('Completed')
+                    ->formatStateUsing(fn($state) => $state ? \Carbon\Carbon::parse($state)->format('Y-m-d') : null)
                     ->sortable()->summarize(Count::make()->label('Total Completed')),
             ])
             ->filters([
