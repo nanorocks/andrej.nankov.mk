@@ -39,4 +39,9 @@
         Contact
     </a>
 
+    <a href="https://support.nankov.mk"
+        class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+        Support Center
+    </a>
+
 </nav>
