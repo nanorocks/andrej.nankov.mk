@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Panel;
 use \App\Models\User;
 use Filament\PanelProvider;
+use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use App\Filament\Widgets\StatsOverview;
 use App\Filament\Widgets\TopTreeClicks;
@@ -50,6 +51,12 @@ class AdminPanelProvider extends PanelProvider
 
                 MostVisitedSocMediaChart::class,
                 PanAnalyticsWidget::class,
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Preview Website')
+                    ->url(fn(): string => route('home'))
+                    ->icon('heroicon-o-eye'),
             ])
             ->middleware([
                 EncryptCookies::class,

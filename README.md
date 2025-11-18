@@ -124,6 +124,7 @@ This is the personal website and portfolio of **Andrej Nankov** - a Fractional C
    - **Horizon Dashboard**: [http://localhost/horizon](http://localhost/horizon)
 5. Shiled install
    - https://filamentphp.com/plugins/bezhansalleh-shield
+   - `php artisan shield:setup`
    
 ### Local Development (Without Docker)
 
