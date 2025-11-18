@@ -33,6 +33,7 @@
         "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
         "ibex/crud-generator": "^2.1",
+        "laravel/boost": "^1.8",
         "laravel/breeze": "^2.3",
         "laravel/pail": "^1.1",
         "laravel/pint": "^1.24",
