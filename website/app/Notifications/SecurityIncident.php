@@ -71,7 +71,7 @@ class SecurityIncident extends Notification implements ShouldQueue
         $message .= "👤 *Email:* `{$email}`\n";
         $message .= "🕐 *Time:* {$timestamp}\n";
         $message .= "📝 *Details:* {$details}\n\n";
-        
+
         if (isset($this->incidentData['attempts'])) {
             $message .= "🔢 *Attempts:* {$this->incidentData['attempts']}\n";
         }
@@ -89,6 +89,7 @@ class SecurityIncident extends Notification implements ShouldQueue
         return TelegramMessage::create()
             ->to(config('services.telegram.chat_id'))
             ->content($message)
+            ->token(config('services.telegram.bot_token'))
             ->options([
                 'parse_mode' => 'Markdown',
                 'disable_web_page_preview' => true,
