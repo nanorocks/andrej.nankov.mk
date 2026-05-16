@@ -20,12 +20,13 @@ ok()    { echo -e "${GREEN}  ✓ $1${NC}"; }
 fail()  { echo -e "${RED}  ✗ $1${NC}"; exit 1; }
 
 # ── PHP path detection ───────────────────────────────────────
-# cPanel EasyApache paths to try in order of preference
+# Prefer the shell-resolved php (honours cPanel's per-account PHP version),
+# then fall back to known EasyApache paths.
 for candidate in \
+    "$(which php 2>/dev/null)" \
     "/opt/cpanel/ea-php84/root/usr/bin/php" \
     "/opt/cpanel/ea-php83/root/usr/bin/php" \
-    "/usr/local/bin/php" \
-    "$(which php 2>/dev/null)"; do
+    "/usr/local/bin/php"; do
     if [ -x "$candidate" ]; then
         PHP="$candidate"
         break
