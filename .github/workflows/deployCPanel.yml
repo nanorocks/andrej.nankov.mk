@@ -16,30 +16,50 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          # Use FTP_SERVER_IP (direct server IP, not domain) to bypass Cloudflare proxy.
-          # Cloudflare only forwards HTTP/HTTPS — FTP on port 21 will time out if you
-          # use the domain name. Find your server's IP in cPanel → Server Information.
+          # Direct server IP — bypasses Cloudflare proxy which blocks FTP port 21.
           server: ${{ secrets.FTP_SERVER_IP }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
+          security: loose
           exclude: |
             **/.git*
             **/.git*/**
-            **/node_modules/**
-            **/vendor/**
-            **/.env
-            **/.env.*
-            !**/.env.example
-            **/storage/logs/**
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
-            **/tests/**
-            **/*.test.*
-            **/phpunit.xml
-            **/.editorconfig
-            **/.vscode/**
-            **/docker-compose.yml
-            **/.docker/**
+
+            # Claude Code config & memory
+            .claude/**
+            CLAUDE.md
+
+            # Repo-level files not needed on server
+            deploy.sh
+            docker-compose.yml
+            .docker/**
+            .github/**
+            README.md
+            .commitsage
+
+            # Laravel: secrets & local config
+            website/.env
+            website/.env.local
+            website/.env.testing
+
+            # Laravel: generated / installed locally
+            website/vendor/**
+            website/node_modules/**
+            website/bootstrap/cache/**
+
+            # Laravel: runtime storage (never overwrite server logs/sessions)
+            website/storage/logs/**
+            website/storage/framework/cache/**
+            website/storage/framework/sessions/**
+            website/storage/framework/views/**
+
+            # Laravel: dev/test only
+            website/tests/**
+            website/phpunit.xml
+            website/.editorconfig
+            website/.vscode/**
+
+            # Vite dev server leftover
+            website/public/hot
