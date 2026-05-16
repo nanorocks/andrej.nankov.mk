@@ -21,16 +21,30 @@
     {!! seo() !!}
 
     {{-- Google Search Console verification --}}
-    @if(env('GOOGLE_SITE_VERIFICATION'))
-        <meta name="google-site-verification" content="{{ env('GOOGLE_SITE_VERIFICATION') }}">
+    @if (env('GOOGLE_SITE_VERIFICATION'))
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BJQ5LT0F3P"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', {{ env('GOOGLE_SITE_VERIFICATION') }});
+        </script>
     @endif
 
     {{-- Google Analytics 4 (only in production) --}}
-    @if(config('services.google_analytics.id') && app()->isProduction())
+    @if (config('services.google_analytics.id') && app()->isProduction())
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.id') }}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
             gtag('js', new Date());
             gtag('config', '{{ config('services.google_analytics.id') }}');
         </script>
@@ -200,15 +214,15 @@
             </div>
         </div>
     </div>
-{{-- PWA service worker registration --}}
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .catch(err => console.warn('SW registration failed:', err));
-        });
-    }
-</script>
+    {{-- PWA service worker registration --}}
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .catch(err => console.warn('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>
