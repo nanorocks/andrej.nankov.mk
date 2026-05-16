@@ -13,22 +13,20 @@ use Filament\Jetstream\JetstreamPlugin;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Widgets\PanAnalyticsWidget;
 use Illuminate\Session\Middleware\StartSession;
-use Tapp\FilamentMailLog\FilamentMailLogPlugin;
 use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
 use App\Filament\Widgets\MostVisitedSocMediaChart;
-use Caresome\FilamentAuthDesigner\Enums\AuthLayout;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
+use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
+use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Caresome\FilamentAuthDesigner\Enums\MediaDirection;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -83,14 +81,11 @@ class AdminPanelProvider extends PanelProvider
                     ->deleteAccount(condition: fn() => true)
                     ->profileInformation(condition: fn() => true)
                     ->logoutBrowserSessions(condition: fn() => true),
-                // FilamentDatabaseSchedulePlugin::make(),
                 FilamentLogViewer::make(),
-                // FilamentMailLogPlugin::make(),
-                  AuthDesignerPlugin::make()
-                    ->login(
-                        layout: AuthLayout::Panel,
-                        media: asset('https://laravel.com/assets/img/welcome/background.svg'),
-                        direction: MediaDirection::Left // or MediaDirection::Right
+                AuthDesignerPlugin::make()
+                    ->login(fn (AuthPageConfig $config) => $config
+                        ->media('https://laravel.com/assets/img/welcome/background.svg')
+                        ->mediaPosition(MediaPosition::Left)
                     )
             ]);
     }

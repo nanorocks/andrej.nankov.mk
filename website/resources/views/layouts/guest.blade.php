@@ -17,7 +17,7 @@
 
     {{-- Turnstile --}}
 
-    @turnstileScripts()
+    {{-- @turnstileScripts() --}}
 
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -145,11 +145,11 @@
     </script>
 </head>
 
-<body class="antialiased font-sans">
+<body class="font-sans antialiased">
     <canvas id="canvas"></canvas>
     <!-- The rest of your content overlays the canvas -->
-    <div class="bg-dark-50 text-black/50 bg-black text-white/50 m-0 p-">
-        <img id="background" class="absolute left-0 top-0 w-auto h-auto max-w-full max-h-full pointer-events-none z-0"
+    <div class="m-0 bg-black bg-dark-50 text-black/50 text-white/50 p-">
+        <img id="background" class="absolute top-0 left-0 z-0 w-auto h-auto max-w-full max-h-full pointer-events-none"
             src="https://laravel.com/assets/img/welcome/background.svg" style="object-fit: contain;" />
         <div
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
@@ -161,10 +161,10 @@
                         @endif
                     </div>
                 </header>
-                <div class="w-full max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+                <div class="w-full max-w-5xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
                     {{ $slot }}
 
-                    <footer class="py-16 text-center text-sm">
+                    <footer class="py-16 text-sm text-center">
                         Release v{{ Illuminate\Foundation\Application::VERSION }} - Environment v{{ PHP_VERSION }}
                         @yield('footer')
                     </footer>
