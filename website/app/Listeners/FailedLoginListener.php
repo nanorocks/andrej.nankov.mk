@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\Notifications\SecurityIncident;
+use App\Services\IpIntelligenceService;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -13,115 +14,118 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class FailedLoginListener
 {
-    /**
-     * Handle the event.
-     */
+    public function __construct(
+        private readonly IpIntelligenceService $intel,
+    ) {}
+
     public function handle(Failed $event): void
     {
-        $ip = request()->ip();
+        $ip    = request()->ip() ?? '0.0.0.0';
         $email = $event->credentials['email'] ?? null;
 
-        $this->trackFailedLogin($ip, $email);
-        $this->checkForBruteForceAttack($ip, $email);
+        $this->track($ip, $email);
+        $this->checkBruteForce($ip, $email);
     }
 
-    /**
-     * Track failed login attempts.
-     */
-    private function trackFailedLogin(string $ip, ?string $email): void
+    private function track(string $ip, ?string $email): void
     {
-        $ipKey = 'failed_login:ip:' . $ip;
-        $emailKey = $email ? 'failed_login:email:' . $email : null;
-        $decayMinutes = 15;
+        $decay = 15 * 60; // 15 minutes in seconds
 
-        // Track by IP
-        RateLimiter::hit($ipKey, $decayMinutes * 60);
+        RateLimiter::hit("failed_login:ip:{$ip}", $decay);
 
-        // Track by email if available
-        if ($emailKey) {
-            RateLimiter::hit($emailKey, $decayMinutes * 60);
+        if ($email) {
+            RateLimiter::hit("failed_login:email:{$email}", $decay);
         }
 
-        Log::info('Failed login attempt recorded', [
-            'ip' => $ip,
-            'email' => $email,
+        Log::info('Failed login attempt', [
+            'ip'         => $ip,
+            'email'      => $email,
             'user_agent' => request()->userAgent(),
+            'url'        => request()->fullUrl(),
         ]);
     }
 
-    /**
-     * Check for brute force attack patterns.
-     */
-    private function checkForBruteForceAttack(string $ip, ?string $email): void
+    private function checkBruteForce(string $ip, ?string $email): void
     {
-        $ipKey = 'failed_login:ip:' . $ip;
-        $emailKey = $email ? 'failed_login:email:' . $email : null;
-        $ipThreshold = 5; // 5 failed attempts per IP
-        $emailThreshold = 3; // 3 failed attempts per email
+        $ipAttempts    = RateLimiter::attempts("failed_login:ip:{$ip}");
+        $emailAttempts = $email ? RateLimiter::attempts("failed_login:email:{$email}") : 0;
 
-        $ipAttempts = RateLimiter::attempts($ipKey);
-        $emailAttempts = $emailKey ? RateLimiter::attempts($emailKey) : 0;
-
-        // Check IP-based brute force
-        if ($ipAttempts >= $ipThreshold) {
-            $this->reportBruteForceAttack($ip, $email, 'ip_based', $ipAttempts);
+        if ($ipAttempts >= 5) {
+            $this->report($ip, $email, 'ip_based', $ipAttempts);
         }
 
-        // Check email-based brute force
-        if ($emailAttempts >= $emailThreshold && $email) {
-            $this->reportBruteForceAttack($ip, $email, 'email_based', $emailAttempts);
+        if ($email && $emailAttempts >= 3) {
+            $this->report($ip, $email, 'email_based', $emailAttempts);
         }
     }
 
-    /**
-     * Report brute force attack.
-     */
-    private function reportBruteForceAttack(string $ip, ?string $email, string $type, int $attempts): void
+    private function report(string $ip, ?string $email, string $type, int $attempts): void
     {
-        $cacheKey = "reported_brute_force:{$type}:{$ip}:" . ($email ?: 'no-email');
+        // Dedup key: IP-based uses just IP; email-based scopes per victim email.
+        // Previously the key included email for IP-based too, which let attackers
+        // rotate emails to bypass the hourly dedup.
+        $cacheKey = $type === 'ip_based'
+            ? "reported_brute_force:ip:{$ip}"
+            : "reported_brute_force:email:{$ip}:{$email}";
 
-        // Only report once per hour to avoid spam
         if (Cache::has($cacheKey)) {
             return;
         }
 
         Cache::put($cacheKey, true, now()->addHour());
 
-        $incidentType = $type === 'ip_based' ? 'brute_force' : 'failed_login';
+        // Accumulate all emails targeted from this IP over the past 2 hours
+        $emailsKey       = "attack_emails:{$ip}";
+        $targetedEmails  = Cache::get($emailsKey, []);
+
+        if ($email && ! in_array($email, $targetedEmails, true)) {
+            $targetedEmails[] = $email;
+            Cache::put($emailsKey, $targetedEmails, now()->addHours(2));
+        }
+
+        $geo     = $this->intel->lookup($ip);
+        $pattern = count($targetedEmails) > 1
+            ? 'Credential stuffing (multiple accounts)'
+            : 'Brute force / dictionary (single account)';
+
+        $hostingCtx = $geo['is_proxy']   ? ' via VPN/Proxy'
+            : ($geo['is_hosting'] ? ' via Datacenter/Bot' : '');
+
+        $details = $type === 'ip_based'
+            ? "{$attempts} attempts from {$geo['country']}{$hostingCtx} — {$pattern}"
+            : "{$attempts} attempts on {$email} from {$geo['country']}{$hostingCtx}";
 
         $incidentData = [
-            'type' => $incidentType,
-            'ip' => $ip,
-            'email' => $email,
-            'user_agent' => request()->userAgent(),
-            'url' => request()->fullUrl(),
-            'attempts' => $attempts,
-            'timestamp' => now()->toISOString(),
-            'details' => $type === 'ip_based'
-                ? "Multiple failed login attempts from IP: {$attempts} attempts"
-                : "Multiple failed login attempts for email: {$attempts} attempts",
+            'type'             => $type === 'ip_based' ? 'brute_force' : 'failed_login',
+            'ip'               => $ip,
+            'email'            => $email,
+            'user_agent'       => request()->userAgent(),
+            'url'              => request()->fullUrl(),
+            'method'           => request()->method(),
+            'attempts'         => $attempts,
+            'timestamp'        => now()->toISOString(),
+            'details'          => $details,
+            'geo'              => $geo,
+            'pattern'          => $pattern,
+            'targeted_emails'  => $targetedEmails,
+            'threat_level'     => $this->intel->threatLevel($geo, $attempts),
         ];
 
         Log::warning('Brute force attack detected', $incidentData);
-
-        // Send notification
-        $this->sendSecurityNotification($incidentData);
+        $this->send($incidentData);
     }
 
-    /**
-     * Send security incident notification.
-     */
-    private function sendSecurityNotification(array $data): void
+    private function send(array $data): void
     {
         try {
             Notification::route('telegram', config('services.telegram.chat_id'))
                 ->route('slack', config('services.slack.webhook_url'))
                 ->route('mail', config('mail.security_email', config('mail.from.address')))
                 ->notify(new SecurityIncident($data));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Log::error('Failed to send security notification', [
                 'error' => $e->getMessage(),
-                'data' => $data,
+                'type'  => $data['type'] ?? 'unknown',
             ]);
         }
     }

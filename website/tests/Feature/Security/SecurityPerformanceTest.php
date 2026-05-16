@@ -32,7 +32,7 @@ class SecurityPerformanceTest extends TestCase
     public function middleware_performs_efficiently_under_load(): void
     {
         // Arrange
-        $middleware = new DetectBruteForce();
+        $middleware = app(DetectBruteForce::class);
         $iterations = 1000;
 
         // Act
@@ -67,7 +67,7 @@ class SecurityPerformanceTest extends TestCase
         // Arrange
         Notification::fake();
 
-        $listener = new FailedLoginListener();
+        $listener = app(FailedLoginListener::class);
         $iterations = 500;
 
         // Act
@@ -195,8 +195,8 @@ class SecurityPerformanceTest extends TestCase
     {
         // Arrange
         Notification::fake();
-        $middleware = new DetectBruteForce();
-        $listener = new FailedLoginListener();
+        $middleware = app(DetectBruteForce::class);
+        $listener = app(FailedLoginListener::class);
 
         // Act - Simulate concurrent attacks
         $startTime = microtime(true);
@@ -286,7 +286,7 @@ class SecurityPerformanceTest extends TestCase
         Notification::fake();
         RateLimiter::clear('failed_login:ip:192.168.1.1');
 
-        $listener = new FailedLoginListener();
+        $listener = app(FailedLoginListener::class);
         $expectedThreshold = 5;
 
         // Act

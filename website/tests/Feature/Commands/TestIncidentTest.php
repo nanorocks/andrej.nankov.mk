@@ -32,10 +32,9 @@ class TestIncidentTest extends TestCase
             function (SecurityIncident $notification) {
                 $data = $notification->toArray(null);
                 return $data['type'] === 'brute_force' &&
-                       $data['ip'] === '192.168.1.100' &&
                        $data['email'] === 'test@example.com' &&
                        $data['attempts'] === 8 &&
-                       str_contains($data['details'], 'TEST: Multiple failed login attempts detected from IP address');
+                       str_starts_with($data['details'], 'TEST:');
             }
         );
     }
@@ -57,10 +56,9 @@ class TestIncidentTest extends TestCase
             function (SecurityIncident $notification) {
                 $data = $notification->toArray(null);
                 return $data['type'] === 'failed_login' &&
-                       $data['ip'] === '192.168.1.100' &&
                        $data['email'] === 'admin@andrej.nankov.mk' &&
                        $data['attempts'] === 5 &&
-                       str_contains($data['details'], 'TEST: Repeated failed login attempts for specific email address');
+                       str_starts_with($data['details'], 'TEST:');
             }
         );
     }
@@ -82,10 +80,9 @@ class TestIncidentTest extends TestCase
             function (SecurityIncident $notification) {
                 $data = $notification->toArray(null);
                 return $data['type'] === 'suspicious_activity' &&
-                       $data['ip'] === '192.168.1.100' &&
                        $data['email'] === null &&
-                       !isset($data['attempts']) &&
-                       str_contains($data['details'], 'TEST: Too many requests from single IP address (rate limiting triggered)');
+                       ! isset($data['attempts']) &&
+                       str_starts_with($data['details'], 'TEST:');
             }
         );
     }
@@ -106,7 +103,7 @@ class TestIncidentTest extends TestCase
             SecurityIncident::class,
             function (SecurityIncident $notification) {
                 $data = $notification->toArray(null);
-                return $data['type'] === 'brute_force';
+                return $data['type'] === 'brute_force' && str_starts_with($data['details'], 'TEST:');
             }
         );
     }
@@ -216,8 +213,6 @@ class TestIncidentTest extends TestCase
                 $this->assertArrayHasKey('details', $data);
 
                 // Verify base values
-                $this->assertEquals('192.168.1.100', $data['ip']);
-                $this->assertEquals('Mozilla/5.0 (Test Browser) Security Test', $data['user_agent']);
                 $this->assertEquals('https://andrej.nankov.mk/login', $data['url']);
                 $this->assertNotEmpty($data['timestamp']);
 

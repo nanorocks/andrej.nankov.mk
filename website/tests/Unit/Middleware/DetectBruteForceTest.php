@@ -6,6 +6,7 @@ namespace Tests\Unit\Middleware;
 
 use App\Http\Middleware\DetectBruteForce;
 use App\Notifications\SecurityIncident;
+use App\Services\IpIntelligenceService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -21,7 +22,7 @@ class DetectBruteForceTest extends TestCase
     {
         parent::setUp();
 
-        $this->middleware = new DetectBruteForce();
+        $this->middleware = new DetectBruteForce(app(IpIntelligenceService::class));
 
         // Clear rate limiters and cache before each test
         RateLimiter::clear('suspicious_activity:192.168.1.1');

@@ -111,7 +111,7 @@ class SecurityIntegrationTest extends TestCase
     public function middleware_blocks_requests_after_rate_limit_exceeded(): void
     {
         // Arrange
-        $middleware = new DetectBruteForce();
+        $middleware = app(DetectBruteForce::class);
         
         // Hit the rate limit
         for ($i = 0; $i < 50; $i++) {
@@ -213,7 +213,7 @@ class SecurityIntegrationTest extends TestCase
 
         // Assert
         Log::shouldHaveReceived('info')
-            ->withArgs(fn ($message, $context = []) => $message === 'Failed login attempt recorded' && ($context['email'] ?? null) === '')
+            ->withArgs(fn ($message, $context = []) => $message === 'Failed login attempt' && ($context['email'] ?? null) === '')
             ->once();
     }
 
@@ -232,7 +232,7 @@ class SecurityIntegrationTest extends TestCase
             RateLimiter::hit('suspicious_activity:192.168.1.1', 60);
         }
         
-        $middleware = new DetectBruteForce();
+        $middleware = app(DetectBruteForce::class);
         $middleware->handle($request, function ($req) {
             return response('OK');
         });
@@ -263,7 +263,7 @@ class SecurityIntegrationTest extends TestCase
             RateLimiter::hit('suspicious_activity:192.168.1.1', 60);
         }
         
-        $middleware = new DetectBruteForce();
+        $middleware = app(DetectBruteForce::class);
         $middleware->handle($request, function ($req) {
             return response('OK');
         });
@@ -335,7 +335,7 @@ class SecurityIntegrationTest extends TestCase
             RateLimiter::hit('suspicious_activity:192.168.1.1', 60);
         }
         
-        $middleware = new DetectBruteForce();
+        $middleware = app(DetectBruteForce::class);
         $request = Request::create('https://andrej.nankov.mk/api/data', 'GET');
         $request->server->set('REMOTE_ADDR', '192.168.1.1');
         
@@ -378,7 +378,7 @@ class SecurityIntegrationTest extends TestCase
         }
         
         // Trigger the middleware to process the rate limit
-        $middleware = new DetectBruteForce();
+        $middleware = app(DetectBruteForce::class);
         $request = Request::create('https://andrej.nankov.mk/test', 'GET');
         $request->server->set('REMOTE_ADDR', $ip);
         $request->headers->set('User-Agent', 'Test Browser');

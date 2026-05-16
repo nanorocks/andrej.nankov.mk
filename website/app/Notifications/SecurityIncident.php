@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use App\Services\IpIntelligenceService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -17,14 +18,11 @@ class SecurityIncident extends Notification implements ShouldQueue
     use Queueable;
 
     public function __construct(
-        private array $incidentData
+        private readonly array $incidentData,
     ) {
         $this->onQueue('notifications');
     }
 
-    /**
-     * Get the notification's delivery channels.
-     */
     public function via(mixed $notifiable): array
     {
         $channels = ['mail'];
@@ -40,146 +38,270 @@ class SecurityIncident extends Notification implements ShouldQueue
         return $channels;
     }
 
-    /**
-     * Get the Telegram representation of the notification.
-     */
+    // -------------------------------------------------------------------------
+    // Telegram
+    // -------------------------------------------------------------------------
+
     public function toTelegram(mixed $notifiable): TelegramMessage
     {
-        $type = $this->incidentData['type'];
-        $ip = $this->incidentData['ip'];
-        $email = $this->incidentData['email'] ?? 'Unknown';
-        $timestamp = $this->incidentData['timestamp'];
-        $details = $this->incidentData['details'] ?? 'No additional details';
+        $d     = $this->incidentData;
+        $type  = $d['type'];
+        $ip    = $d['ip'];
+        $geo   = $d['geo'] ?? [];
+        $intel = app(IpIntelligenceService::class);
 
-        $emoji = match ($type) {
-            'brute_force' => '🚨',
-            'failed_login' => '⚠️',
+        $titleEmoji = match ($type) {
+            'brute_force'         => '🚨',
+            'failed_login'        => '⚠️',
             'suspicious_activity' => '🔍',
-            default => '🛡️'
+            default               => '🛡️',
         };
 
         $title = match ($type) {
-            'brute_force' => 'BRUTE FORCE ATTACK DETECTED',
-            'failed_login' => 'MULTIPLE FAILED LOGINS',
-            'suspicious_activity' => 'SUSPICIOUS ACTIVITY DETECTED',
-            default => 'SECURITY INCIDENT'
+            'brute_force'         => 'BRUTE FORCE ATTACK',
+            'failed_login'        => 'MULTIPLE FAILED LOGINS',
+            'suspicious_activity' => 'SUSPICIOUS ACTIVITY',
+            default               => 'SECURITY INCIDENT',
         };
 
-        $message = "{$emoji} *{$title}*\n\n";
-        $message .= "🌐 *Domain:* andrej.nankov.mk\n";
-        $message .= "📍 *IP Address:* `{$ip}`\n";
-        $message .= "👤 *Email:* `{$email}`\n";
-        $message .= "🕐 *Time:* {$timestamp}\n";
-        $message .= "📝 *Details:* {$details}\n\n";
+        $threatLevel = $d['threat_level'] ?? $intel->threatLevel($geo, (int) ($d['attempts'] ?? $d['requests_per_min'] ?? 0));
+        $levelEmoji  = match ($threatLevel) {
+            'CRITICAL' => '🔴',
+            'HIGH'     => '🟠',
+            'MEDIUM'   => '🟡',
+            default    => '🟢',
+        };
 
-        if (isset($this->incidentData['attempts'])) {
-            $message .= "🔢 *Attempts:* {$this->incidentData['attempts']}\n";
+        $flag = ! empty($geo['country_code']) ? $intel->flag($geo['country_code']) : '🏳️';
+
+        // ── Header ───────────────────────────────────────────────────────────
+        $msg  = "{$titleEmoji} <b>{$title}</b> — andrej.nankov.mk\n";
+        $msg .= "{$levelEmoji} Risk: <b>{$threatLevel}</b>\n";
+
+        // ── Origin ───────────────────────────────────────────────────────────
+        $msg .= "\n📍 <b>ORIGIN</b>\n";
+        $msg .= "IP: <code>" . e($ip) . "</code>\n";
+
+        if (! empty($geo['country'])) {
+            $loc = $intel->locationLine($geo);
+            $msg .= "Location: {$flag} {$loc}\n";
+
+            if (! empty($geo['timezone']) && $geo['timezone'] !== 'Unknown') {
+                $msg .= "Timezone: " . e($geo['timezone']) . "\n";
+            }
+
+            if (! empty($geo['isp']) && $geo['isp'] !== 'Unknown') {
+                $msg .= "ISP: " . e($geo['isp']) . "\n";
+            }
+
+            if (! empty($geo['asn']) && $geo['asn'] !== 'Unknown') {
+                $msg .= "ASN: " . e($geo['asn']) . "\n";
+            }
+
+            $tags = $intel->tags($geo);
+            if ($tags) {
+                $msg .= "Signals: " . implode(' · ', $tags) . "\n";
+            }
         }
 
-        if (isset($this->incidentData['user_agent'])) {
-            $userAgent = substr($this->incidentData['user_agent'], 0, 100);
-            $message .= "🌐 *User Agent:* `{$userAgent}`\n";
+        // ── Attack details ────────────────────────────────────────────────────
+        $msg .= "\n⚔️ <b>ATTACK</b>\n";
+
+        if (! empty($d['method']) && ! empty($d['url'])) {
+            $path = '/' . ltrim(parse_url($d['url'], PHP_URL_PATH) ?? '', '/');
+            $msg .= "Target: <code>" . e($d['method'] . ' ' . $path) . "</code>\n";
         }
 
-        $message .= "\n🛡️ *Recommended Actions:*\n";
-        $message .= "• Monitor IP address for further activity\n";
-        $message .= "• Consider blocking IP if pattern continues\n";
-        $message .= "• Review server logs for additional context\n";
+        if (! empty($d['email'])) {
+            $msg .= "Account: <code>" . e($d['email']) . "</code>\n";
+        }
+
+        if (! empty($d['attempts'])) {
+            $msg .= "Attempts: <b>" . (int) $d['attempts'] . "</b> (15-min window)\n";
+        }
+
+        if (! empty($d['requests_per_min'])) {
+            $msg .= "Rate: <b>" . (int) $d['requests_per_min'] . "</b> req/min\n";
+        }
+
+        $targetedEmails = $d['targeted_emails'] ?? [];
+        if (count($targetedEmails) > 1) {
+            $msg .= "Accounts targeted: <b>" . count($targetedEmails) . "</b>\n";
+        }
+
+        if (! empty($d['pattern'])) {
+            $msg .= "Pattern: " . e($d['pattern']) . "\n";
+        }
+
+        if (! empty($d['details'])) {
+            $msg .= "Note: " . e($d['details']) . "\n";
+        }
+
+        $time = date('d M Y H:i', strtotime($d['timestamp'])) . ' UTC';
+        $msg .= "Time: {$time}\n";
+
+        // ── User agent ────────────────────────────────────────────────────────
+        if (! empty($d['user_agent'])) {
+            $ua  = substr($d['user_agent'], 0, 80);
+            $msg .= "\n🖥️ <b>CLIENT</b>\n<code>" . e($ua) . (strlen($d['user_agent']) > 80 ? '…' : '') . "</code>\n";
+        }
+
+        // ── Investigation links ───────────────────────────────────────────────
+        $encodedIp = urlencode($ip);
+        $msg .= "\n🔗 <b>INVESTIGATE</b>\n";
+        $msg .= "<a href=\"https://www.abuseipdb.com/check/{$encodedIp}\">AbuseIPDB</a>";
+        $msg .= " · <a href=\"https://www.virustotal.com/gui/ip-address/{$encodedIp}\">VirusTotal</a>";
+        $msg .= " · <a href=\"https://ipinfo.io/{$encodedIp}\">IPInfo</a>";
 
         return TelegramMessage::create()
             ->to(config('services.telegram.chat_id'))
-            ->content($message)
+            ->content($msg)
             ->token(config('services.telegram.bot_token'))
             ->options([
-                'parse_mode' => 'Markdown',
+                'parse_mode'               => 'HTML',
                 'disable_web_page_preview' => true,
             ]);
     }
 
-    /**
-     * Get the Slack representation of the notification.
-     */
+    // -------------------------------------------------------------------------
+    // Slack
+    // -------------------------------------------------------------------------
+
     public function toSlack(mixed $notifiable): SlackMessage
     {
-        $type = $this->incidentData['type'];
-        $ip = $this->incidentData['ip'];
-        $email = $this->incidentData['email'] ?? 'Unknown';
+        $d    = $this->incidentData;
+        $type = $d['type'];
+        $geo  = $d['geo'] ?? [];
 
         $color = match ($type) {
-            'brute_force' => 'danger',
-            'failed_login' => 'warning',
+            'brute_force'         => 'danger',
+            'failed_login'        => 'warning',
             'suspicious_activity' => 'warning',
-            default => 'good'
+            default               => 'good',
         };
 
         $title = match ($type) {
-            'brute_force' => '🚨 Brute Force Attack Detected',
-            'failed_login' => '⚠️ Multiple Failed Logins',
+            'brute_force'         => '🚨 Brute Force Attack',
+            'failed_login'        => '⚠️ Multiple Failed Logins',
             'suspicious_activity' => '🔍 Suspicious Activity',
-            default => '🛡️ Security Incident'
+            default               => '🛡️ Security Incident',
         };
+
+        $fields = [
+            'Domain'       => 'andrej.nankov.mk',
+            'IP'           => $d['ip'],
+            'Location'     => ! empty($geo['city']) ? "{$geo['city']}, {$geo['country']}" : 'Unknown',
+            'ISP'          => $geo['isp'] ?? 'Unknown',
+            'Time'         => $d['timestamp'],
+            'Threat Level' => $d['threat_level'] ?? 'UNKNOWN',
+            'Details'      => $d['details'] ?? 'No details',
+        ];
+
+        if (! empty($d['email'])) {
+            $fields['Account'] = $d['email'];
+        }
+
+        if (! empty($d['attempts'])) {
+            $fields['Attempts'] = (string) $d['attempts'];
+        }
 
         return (new SlackMessage)
             ->from('Security Bot', ':shield:')
             ->to('#security')
-            ->attachment(function ($attachment) use ($title, $color, $ip, $email) {
+            ->attachment(function ($attachment) use ($title, $color, $fields) {
                 $attachment
                     ->title($title)
                     ->color($color)
-                    ->fields([
-                        'Domain' => 'andrej.nankov.mk',
-                        'IP Address' => $ip,
-                        'Email' => $email,
-                        'Time' => $this->incidentData['timestamp'],
-                        'Details' => $this->incidentData['details'] ?? 'No details',
-                    ])
-                    ->footer('Security Alert System')
+                    ->fields($fields)
+                    ->footer('Security Alert — andrej.nankov.mk')
                     ->timestamp(now());
             });
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
+    // -------------------------------------------------------------------------
+    // Mail
+    // -------------------------------------------------------------------------
+
     public function toMail(mixed $notifiable): MailMessage
     {
-        $type = $this->incidentData['type'];
-        $ip = $this->incidentData['ip'];
-        $email = $this->incidentData['email'] ?? 'Unknown';
+        $d    = $this->incidentData;
+        $type = $d['type'];
+        $geo  = $d['geo'] ?? [];
+        $ip   = $d['ip'];
 
         $subject = match ($type) {
-            'brute_force' => '[SECURITY ALERT] Brute Force Attack - andrej.nankov.mk',
-            'failed_login' => '[SECURITY ALERT] Multiple Failed Logins - andrej.nankov.mk',
-            'suspicious_activity' => '[SECURITY ALERT] Suspicious Activity - andrej.nankov.mk',
-            default => '[SECURITY ALERT] Security Incident - andrej.nankov.mk'
+            'brute_force'         => '[SECURITY ALERT] Brute Force Attack — andrej.nankov.mk',
+            'failed_login'        => '[SECURITY ALERT] Multiple Failed Logins — andrej.nankov.mk',
+            'suspicious_activity' => '[SECURITY ALERT] Suspicious Activity — andrej.nankov.mk',
+            default               => '[SECURITY ALERT] Security Incident — andrej.nankov.mk',
         };
 
-        return (new MailMessage)
+        $threatLevel = $d['threat_level'] ?? 'UNKNOWN';
+        $location    = ! empty($geo['city'])
+            ? "{$geo['city']}, {$geo['region']}, {$geo['country']}"
+            : 'Unknown';
+
+        $message = (new MailMessage)
             ->subject($subject)
             ->greeting('Security Alert!')
-            ->line("A security incident has been detected on andrej.nankov.mk")
-            ->line("**Incident Type:** " . ucwords(str_replace('_', ' ', $type)))
+            ->line('A security incident has been detected on **andrej.nankov.mk**.')
+            ->line('')
+            ->line('**── SUMMARY ──**')
+            ->line('**Type:** ' . ucwords(str_replace('_', ' ', $type)))
+            ->line("**Risk Level:** {$threatLevel}")
+            ->line('')
+            ->line('**── ORIGIN ──**')
             ->line("**IP Address:** {$ip}")
-            ->line("**Email:** {$email}")
-            ->line("**Time:** {$this->incidentData['timestamp']}")
-            ->line("**Details:** " . ($this->incidentData['details'] ?? 'No additional details'))
-            ->when(
-                isset($this->incidentData['attempts']),
-                fn($message) => $message->line("**Failed Attempts:** {$this->incidentData['attempts']}")
-            )
-            ->when(
-                isset($this->incidentData['user_agent']),
-                fn($message) => $message->line("**User Agent:** " . substr($this->incidentData['user_agent'], 0, 100))
-            )
-            ->line('Please review your server logs and take appropriate action if necessary.')
-            ->action('View Server Logs', url('/'))
+            ->line("**Location:** {$location}")
+            ->line('**ISP:** ' . ($geo['isp'] ?? 'Unknown'))
+            ->line('**ASN:** ' . ($geo['asn'] ?? 'Unknown'));
+
+        $tags = app(IpIntelligenceService::class)->tags($geo);
+        if ($tags) {
+            $message->line('**Signals:** ' . implode(', ', $tags));
+        }
+
+        $message->line('')->line('**── ATTACK ──**');
+
+        if (! empty($d['email'])) {
+            $message->line("**Target Account:** {$d['email']}");
+        }
+
+        if (! empty($d['attempts'])) {
+            $message->line("**Attempts:** {$d['attempts']} (15-min window)");
+        }
+
+        if (! empty($d['requests_per_min'])) {
+            $message->line("**Request Rate:** {$d['requests_per_min']} req/min");
+        }
+
+        $targetedEmails = $d['targeted_emails'] ?? [];
+        if (count($targetedEmails) > 1) {
+            $message->line('**Accounts Targeted:** ' . count($targetedEmails));
+        }
+
+        if (! empty($d['pattern'])) {
+            $message->line("**Pattern:** {$d['pattern']}");
+        }
+
+        if (! empty($d['user_agent'])) {
+            $message->line('**User Agent:** ' . substr($d['user_agent'], 0, 150));
+        }
+
+        return $message
+            ->line('')
+            ->line("**Time:** {$d['timestamp']}")
+            ->line('')
+            ->line('**Details:** ' . ($d['details'] ?? 'No additional details'))
+            ->action('Check on AbuseIPDB', "https://www.abuseipdb.com/check/{$ip}")
             ->line('This is an automated security alert from your Laravel application.')
-            ->salutation('Security Team - andrej.nankov.mk');
+            ->salutation('Security Team — andrej.nankov.mk');
     }
 
-    /**
-     * Get the array representation of the notification.
-     */
+    // -------------------------------------------------------------------------
+    // Array (stored notifications / tests)
+    // -------------------------------------------------------------------------
+
     public function toArray(mixed $notifiable): array
     {
         return $this->incidentData;

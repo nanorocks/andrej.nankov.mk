@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->appendToGroup('web', App\Http\Middleware\SecurityHeaders::class);
         $middleware->appendToGroup('web', App\Http\Middleware\DetectBruteForce::class);
     })
     ->withEvents(discover: [

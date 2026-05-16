@@ -6,6 +6,7 @@ namespace Tests\Unit\Listeners;
 
 use App\Listeners\FailedLoginListener;
 use App\Notifications\SecurityIncident;
+use App\Services\IpIntelligenceService;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class FailedLoginListenerTest extends TestCase
     {
         parent::setUp();
 
-        $this->listener = new FailedLoginListener();
+        // IpIntelligenceService returns local data for private IPs automatically in testing env
+        $this->listener = new FailedLoginListener(app(IpIntelligenceService::class));
 
         // Mock the global request
         $request = Request::create('https://andrej.nankov.mk/login', 'POST');
@@ -128,8 +130,8 @@ class FailedLoginListenerTest extends TestCase
 
         $event = new Failed('web', null, ['email' => 'test@example.com', 'password' => 'wrong']);
 
-        // Pre-populate cache to simulate already reported incident
-        cache()->put('reported_brute_force:ip_based:192.168.1.1:test@example.com', true, now()->addHour());
+        // Pre-populate cache to simulate already reported incident (new key format: ip-based uses just IP)
+        cache()->put('reported_brute_force:ip:192.168.1.1', true, now()->addHour());
 
         // Simulate threshold reached
         for ($i = 0; $i < 5; $i++) {
@@ -242,6 +244,9 @@ class FailedLoginListenerTest extends TestCase
                 $this->assertArrayHasKey('attempts', $data);
                 $this->assertArrayHasKey('timestamp', $data);
                 $this->assertArrayHasKey('details', $data);
+                $this->assertArrayHasKey('geo', $data);
+                $this->assertArrayHasKey('threat_level', $data);
+                $this->assertArrayHasKey('pattern', $data);
 
                 // Verify data accuracy
                 $this->assertEquals('brute_force', $data['type']);
@@ -250,7 +255,8 @@ class FailedLoginListenerTest extends TestCase
                 $this->assertEquals('Test Browser', $data['user_agent']);
                 $this->assertEquals('https://andrej.nankov.mk/login', $data['url']);
                 $this->assertEquals(6, $data['attempts']);
-                $this->assertStringContainsString('Multiple failed login attempts from IP: 6 attempts', $data['details']);
+                // Details now includes geo context (Local Network for private IPs in tests)
+                $this->assertStringContainsString('6 attempts from', $data['details']);
 
                 return true;
             }

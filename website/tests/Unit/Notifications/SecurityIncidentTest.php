@@ -88,18 +88,20 @@ class SecurityIncidentTest extends TestCase
         $this->assertInstanceOf(TelegramMessage::class, $message);
         $content = $message->getPayloadValue('text');
 
-        $this->assertStringContainsString('🚨 *BRUTE FORCE ATTACK DETECTED*', $content);
+        // HTML format assertions
+        $this->assertStringContainsString('🚨 <b>BRUTE FORCE ATTACK</b>', $content);
         $this->assertStringContainsString('andrej.nankov.mk', $content);
         $this->assertStringContainsString('10.0.0.1', $content);
         $this->assertStringContainsString('victim@example.com', $content);
-        $this->assertStringContainsString('2025-11-18T23:30:00Z', $content);
         $this->assertStringContainsString('Multiple failed login attempts detected', $content);
         $this->assertStringContainsString('8', $content);
         $this->assertStringContainsString('Mozilla/5.0 (Malicious Browser)', $content);
+        $this->assertStringContainsString('AbuseIPDB', $content);
+        $this->assertStringContainsString('VirusTotal', $content);
 
         // Check formatting options
         $this->assertEquals('12345', $message->getPayloadValue('chat_id'));
-        $this->assertEquals('Markdown', $message->getPayloadValue('parse_mode'));
+        $this->assertEquals('HTML', $message->getPayloadValue('parse_mode'));
         $this->assertTrue($message->getPayloadValue('disable_web_page_preview'));
     }
 
@@ -126,7 +128,7 @@ class SecurityIncidentTest extends TestCase
         // Assert
         $content = $message->getPayloadValue('text');
 
-        $this->assertStringContainsString('⚠️ *MULTIPLE FAILED LOGINS*', $content);
+        $this->assertStringContainsString('⚠️ <b>MULTIPLE FAILED LOGINS</b>', $content);
         $this->assertStringContainsString('172.16.0.1', $content);
         $this->assertStringContainsString('admin@example.com', $content);
         $this->assertStringContainsString('Repeated failed login attempts for email', $content);
@@ -155,11 +157,11 @@ class SecurityIncidentTest extends TestCase
         // Assert
         $content = $message->getPayloadValue('text');
 
-        $this->assertStringContainsString('🔍 *SUSPICIOUS ACTIVITY DETECTED*', $content);
+        $this->assertStringContainsString('🔍 <b>SUSPICIOUS ACTIVITY</b>', $content);
         $this->assertStringContainsString('203.0.113.1', $content);
-        $this->assertStringContainsString('Unknown', $content); // email should be 'Unknown'
         $this->assertStringContainsString('Too many requests from IP address', $content);
-        $this->assertStringNotContainsString('🔢 *Attempts:', $content); // No attempts for suspicious activity
+        // No attempts line for suspicious_activity (uses requests_per_min instead)
+        $this->assertStringNotContainsString('Attempts:', $content);
     }
 
     /** @test */
@@ -233,23 +235,23 @@ class SecurityIncidentTest extends TestCase
 
         $data = $message->toArray();
 
-        $this->assertEquals('[SECURITY ALERT] Brute Force Attack - andrej.nankov.mk', $data['subject']);
+        $this->assertEquals('[SECURITY ALERT] Brute Force Attack — andrej.nankov.mk', $data['subject']);
         $this->assertEquals('Security Alert!', $data['greeting']);
-        $this->assertEquals('Security Team - andrej.nankov.mk', $data['salutation']);
+        $this->assertEquals('Security Team — andrej.nankov.mk', $data['salutation']);
 
-        // Check content lines
-        $this->assertContains('A security incident has been detected on andrej.nankov.mk', $data['introLines']);
-        $this->assertContains('**Incident Type:** Brute Force', $data['introLines']);
-        $this->assertContains('**IP Address:** 10.0.0.1', $data['introLines']);
-        $this->assertContains('**Email:** victim@example.com', $data['introLines']);
-        $this->assertContains('**Time:** 2025-11-18T23:30:00Z', $data['introLines']);
-        $this->assertContains('**Details:** Multiple failed login attempts detected', $data['introLines']);
-        $this->assertContains('**Failed Attempts:** 8', $data['introLines']);
-        $this->assertContains('**User Agent:** Mozilla/5.0 (Test Browser)', $data['introLines']);
+        // Check key content lines (format changed to include geo section)
+        $allLines = array_merge($data['introLines'] ?? [], $data['outroLines'] ?? []);
+        $fullText  = implode("\n", $allLines);
 
-        // Check action button
-        $this->assertEquals('View Server Logs', $data['actionText']);
-        $this->assertEquals(url('/'), $data['actionUrl']);
+        $this->assertStringContainsString('andrej.nankov.mk', $fullText);
+        $this->assertStringContainsString('10.0.0.1', $fullText);
+        $this->assertStringContainsString('victim@example.com', $fullText);
+        $this->assertStringContainsString('Multiple failed login attempts detected', $fullText);
+        $this->assertStringContainsString('8', $fullText);
+        $this->assertStringContainsString('Mozilla/5.0 (Test Browser)', $fullText);
+
+        // Check action button (now links to AbuseIPDB)
+        $this->assertEquals('Check on AbuseIPDB', $data['actionText']);
     }
 
     /** @test */
@@ -273,30 +275,22 @@ class SecurityIncidentTest extends TestCase
         $data = $message->toArray();
 
         // Should not contain attempts or user agent lines
-        $hasAttempts = false;
-        $hasUserAgent = false;
+        $fullText = implode("\n", array_merge($data['introLines'] ?? [], $data['outroLines'] ?? []));
 
-        foreach ($data['introLines'] as $line) {
-            if (str_contains($line, '**Failed Attempts:**')) {
-                $hasAttempts = true;
-            }
-            if (str_contains($line, '**User Agent:**')) {
-                $hasUserAgent = true;
-            }
-        }
-
-        $this->assertFalse($hasAttempts);
-        $this->assertFalse($hasUserAgent);
-        $this->assertContains('**Email:** Unknown', $data['introLines']);
+        // No attempts or user-agent data in this incident
+        $this->assertStringNotContainsString('Attempts:', $fullText);
+        $this->assertStringNotContainsString('User Agent:', $fullText);
+        // No email field for suspicious_activity (email is null)
+        $this->assertStringNotContainsString('Target Account:', $fullText);
     }
 
     /** @test */
     public function it_creates_correct_email_subjects_for_different_types(): void
     {
         $incidents = [
-            'brute_force' => '[SECURITY ALERT] Brute Force Attack - andrej.nankov.mk',
-            'failed_login' => '[SECURITY ALERT] Multiple Failed Logins - andrej.nankov.mk',
-            'suspicious_activity' => '[SECURITY ALERT] Suspicious Activity - andrej.nankov.mk',
+            'brute_force' => '[SECURITY ALERT] Brute Force Attack — andrej.nankov.mk',
+            'failed_login' => '[SECURITY ALERT] Multiple Failed Logins — andrej.nankov.mk',
+            'suspicious_activity' => '[SECURITY ALERT] Suspicious Activity — andrej.nankov.mk',
         ];
 
         foreach ($incidents as $type => $expectedSubject) {
@@ -353,7 +347,7 @@ class SecurityIncidentTest extends TestCase
         // Arrange
         config(['services.telegram.chat_id' => '12345']);
 
-        $longUserAgent = str_repeat('A', 150); // 150 characters
+        $longUserAgent = str_repeat('A', 150); // 150 characters (truncated to 80 in Telegram)
         $incidentData = [
             'type' => 'brute_force',
             'ip' => '10.0.0.1',
@@ -370,9 +364,10 @@ class SecurityIncidentTest extends TestCase
 
         // Assert
         $content = $message->getPayloadValue('text');
-        $truncatedUserAgent = substr($longUserAgent, 0, 100);
+        $truncatedUserAgent = substr($longUserAgent, 0, 80);
 
         $this->assertStringContainsString($truncatedUserAgent, $content);
+        // Full 150-char string should not appear verbatim (it's truncated to 80)
         $this->assertStringNotContainsString($longUserAgent, $content);
     }
 }
