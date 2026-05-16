@@ -46,7 +46,7 @@ jobs:
             # Laravel: generated / installed locally
             website/vendor/**
             website/node_modules/**
-            website/bootstrap/cache/**
+            website/bootstrap/cache/*.php
 
             # Laravel: runtime storage (never overwrite server logs/sessions)
             website/storage/logs/**
