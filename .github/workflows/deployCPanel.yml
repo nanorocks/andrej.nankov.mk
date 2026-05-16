@@ -39,7 +39,6 @@ jobs:
             CLAUDE.md
 
             # Repo-level files not needed on server
-            deploy.sh
             docker-compose.yml
             .docker/**
             .github/**
