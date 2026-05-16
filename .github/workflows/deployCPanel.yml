@@ -48,11 +48,25 @@ jobs:
             website/node_modules/**
             website/bootstrap/cache/*.php
 
-            # Laravel: runtime storage (never overwrite server logs/sessions)
+            # Laravel: runtime storage — exclude content but allow .gitignore through
+            # so the directory structure is created on the server
             website/storage/logs/**
+            !website/storage/logs/.gitignore
+            website/storage/debugbar/**
+            !website/storage/debugbar/.gitignore
             website/storage/framework/cache/**
+            !website/storage/framework/cache/.gitignore
+            !website/storage/framework/cache/data/.gitignore
             website/storage/framework/sessions/**
+            !website/storage/framework/sessions/.gitignore
             website/storage/framework/views/**
+            !website/storage/framework/views/.gitignore
+            website/storage/framework/testing/**
+            !website/storage/framework/testing/.gitignore
+            website/storage/app/public/**
+            !website/storage/app/public/.gitignore
+            website/storage/app/private/**
+            !website/storage/app/private/.gitignore
 
             # Laravel: dev/test only
             website/tests/**
