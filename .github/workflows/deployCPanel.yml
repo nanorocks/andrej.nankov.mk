@@ -13,6 +13,24 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
+      - name: 🗂️ Ensure server directory structure
+        run: |
+          sudo apt-get install -y lftp -q
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:timeout 10;
+            open ftp://${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_SERVER_IP }};
+            mkdir -fp website/bootstrap/cache;
+            mkdir -fp website/storage/logs;
+            mkdir -fp website/storage/debugbar;
+            mkdir -fp website/storage/app/private;
+            mkdir -fp website/storage/app/public;
+            mkdir -fp website/storage/framework/cache/data;
+            mkdir -fp website/storage/framework/sessions;
+            mkdir -fp website/storage/framework/views;
+            mkdir -fp website/storage/framework/testing;
+          "
+
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
@@ -48,25 +66,15 @@ jobs:
             website/node_modules/**
             website/bootstrap/cache/*.php
 
-            # Laravel: runtime storage — exclude content but allow .gitignore through
-            # so the directory structure is created on the server
+            # Laravel: runtime storage (directories pre-created by lftp step above)
             website/storage/logs/**
-            !website/storage/logs/.gitignore
             website/storage/debugbar/**
-            !website/storage/debugbar/.gitignore
             website/storage/framework/cache/**
-            !website/storage/framework/cache/.gitignore
-            !website/storage/framework/cache/data/.gitignore
             website/storage/framework/sessions/**
-            !website/storage/framework/sessions/.gitignore
             website/storage/framework/views/**
-            !website/storage/framework/views/.gitignore
             website/storage/framework/testing/**
-            !website/storage/framework/testing/.gitignore
             website/storage/app/public/**
-            !website/storage/app/public/.gitignore
             website/storage/app/private/**
-            !website/storage/app/private/.gitignore
 
             # Laravel: dev/test only
             website/tests/**
