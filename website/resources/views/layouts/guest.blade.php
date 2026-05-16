@@ -23,7 +23,7 @@
     {{-- Google Search Console verification --}}
     @if (env('GOOGLE_SITE_VERIFICATION'))
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BJQ5LT0F3P"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_SITE_VERIFICATION') }}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
