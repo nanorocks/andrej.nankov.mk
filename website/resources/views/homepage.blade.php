@@ -8,29 +8,18 @@
         }
     @endphp
 
-    {{-- Page SEO --}}
-    @section('title', $homepage?->seo_title ?? 'Partnering with Startups & Companies | Fractional CTO, Project Consultant, Senior Engineer')
-    @section('meta')
-        <meta name="description" content="{{ $homepage?->seo_description }}">
-        <meta name="keywords" content="{{ $homepage?->seo_keywords }}">
-        <meta name="author" content="{{ $homepage?->seo_author }}">
-        <meta name="robots" content="{{ $homepage?->seo_robots }}">
-
-        <meta property="og:title" content="{{ $homepage?->og_title }}">
-        <meta property="og:description" content="{{ $homepage?->og_description }}">
-        <meta property="og:type" content="{{ $homepage?->og_type }}">
-        <meta property="og:url" content="{{ $homepage?->og_url ?? url()->current() }}">
-        <meta property="og:image" content="{{ $homepage?->og_image }}">
-        <meta property="og:image:alt" content="{{ $homepage?->og_image_alt }}">
-        <meta property="og:site_name" content="{{ $homepage?->og_site_name }}">
-
-        <meta name="twitter:card" content="{{ $homepage?->twitter_card }}">
-        <meta name="twitter:title" content="{{ $homepage?->twitter_title }}">
-        <meta name="twitter:description" content="{{ $homepage?->twitter_description }}">
-        <meta name="twitter:image" content="{{ $homepage?->twitter_image }}">
-        <meta name="twitter:image:alt" content="{{ $homepage?->twitter_image_alt }}">
-        <meta name="twitter:creator" content="{{ $homepage?->twitter_creator }}">
-    @endsection
+    {{-- Feed existing Page SEO fields into the laravel-seo package --}}
+    @php
+        seo(new \RalphJSmit\Laravel\SEO\Support\SEOData(
+            title: $homepage?->seo_title ?? 'Partnering with Startups & Companies | Fractional CTO, Startup Consultant, Senior Engineer',
+            description: $homepage?->seo_description,
+            image: $homepage?->og_image,
+            author: $homepage?->seo_author ?? 'Andrej Nankov',
+            robots: $homepage?->seo_robots,
+            url: url('/'),
+            twitter_username: $homepage?->twitter_creator,
+        ));
+    @endphp
 
     <div class="w-full p-6">
         <!-- Card -->

@@ -1,0 +1,44 @@
+{
+    "name": "Andrej Nankov",
+    "short_name": "Andrej Nankov",
+    "description": "Fractional CTO, Startup Consultant & Senior Engineer",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#232323",
+    "theme_color": "#232323",
+    "categories": ["portfolio", "technology", "business"],
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "About",
+            "url": "/about",
+            "description": "Learn about Andrej Nankov"
+        },
+        {
+            "name": "Get Started",
+            "url": "/get-started",
+            "description": "Start working together"
+        }
+    ],
+    "screenshots": []
+}

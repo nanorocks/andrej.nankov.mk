@@ -9,6 +9,7 @@ Route::get('/newsletter', [NewsletterController::class, 'showForm']);
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
 Route::view('/', 'homepage')->name('home');
+Route::view('/offline', 'offline')->name('offline');
 
 Route::view('/get-started', 'get-started')
     ->name('get.started');

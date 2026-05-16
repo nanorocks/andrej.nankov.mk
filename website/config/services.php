@@ -58,4 +58,8 @@ return [
         'secret' => env('TURNSTILE_SECRET_KEY'),
     ],
 
+    'google_analytics' => [
+        'id' => env('GOOGLE_ANALYTICS_ID'),
+    ],
+
 ];
