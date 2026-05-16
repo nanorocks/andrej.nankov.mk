@@ -13,6 +13,13 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
+      - name: 🔄 Reset FTP sync state (ensures directory structure is re-verified)
+        run: |
+          curl -s \
+            -u "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}" \
+            -Q "DELE .ftp-deploy-sync-state.json" \
+            "ftp://${{ secrets.FTP_SERVER_IP }}/" || true
+
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
