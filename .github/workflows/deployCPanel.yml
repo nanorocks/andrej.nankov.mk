@@ -1,19 +1,47 @@
+name: 🚀 Deploy website to cPanel
+
 on:
   push:
     branches:
       - main
-name: 🚀 Deploy website to cPanel
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.5
+        with:
+          # Use FTP_SERVER_IP (direct server IP, not domain) to bypass Cloudflare proxy.
+          # Cloudflare only forwards HTTP/HTTPS — FTP on port 21 will time out if you
+          # use the domain name. Find your server's IP in cPanel → Server Information.
+          server: ${{ secrets.FTP_SERVER_IP }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./website/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/vendor/**
+            **/.env
+            **/.env.*
+            !**/.env.example
+            **/storage/logs/**
+            **/storage/framework/cache/**
+            **/storage/framework/sessions/**
+            **/storage/framework/views/**
+            **/tests/**
+            **/*.test.*
+            **/phpunit.xml
+            **/.editorconfig
+            **/.vscode/**
+            **/docker-compose.yml
+            **/.docker/**
