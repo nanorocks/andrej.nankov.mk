@@ -21,7 +21,10 @@ class PageForm
                     ->schema([
                         Section::make('Main')
                             ->schema([
-                                TextInput::make('flag')->required(),
+                                TextInput::make('flag')
+                                    ->required()
+                                    ->disabled()
+                                    ->dehydrated(false),
                                 FileUpload::make('profile_image')
                                     ->image()
                                     ->disk('public')

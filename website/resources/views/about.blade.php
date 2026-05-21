@@ -35,8 +35,7 @@
 
             <div class="avatar mb-6">
                 <div class="w-28 rounded-full ring ring-red-500 ring-offset-0">
-                    <img src="{{ asset('storage/' . $about?->profile_image) ?? 'https://avatars.githubusercontent.com/u/18250654?v=4' }}"
-                        alt="Profile Photo">
+                    <x-profile-photo :src="$about?->profile_image" alt="Profile Photo" />
                 </div>
             </div>
             <h2 class="text-2xl font-semibold mb-2">{{ $about?->name }}</h2>

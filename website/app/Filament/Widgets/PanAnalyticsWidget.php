@@ -8,13 +8,10 @@ use App\Models\PanAnalytics;
 use Filament\Actions\Action;
 use Illuminate\Support\Number;
 use Filament\Widgets\TableWidget;
-use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 
 class PanAnalyticsWidget extends TableWidget
 {
-    use HasWidgetShield;
-
     protected int | string | array $columnSpan = 'full';
 
     // protected static ?int $sort = -9;

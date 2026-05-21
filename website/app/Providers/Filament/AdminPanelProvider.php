@@ -7,7 +7,11 @@ use \App\Models\User;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
+use App\Filament\Widgets\QuickEditPagesWidget;
+use App\Filament\Widgets\RecentSubscribersWidget;
+use App\Filament\Widgets\SeoHealthWidget;
 use App\Filament\Widgets\StatsOverview;
+use App\Filament\Widgets\SubscriberGrowthChart;
 use App\Filament\Widgets\TopTreeClicks;
 use Filament\Jetstream\JetstreamPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -17,10 +21,6 @@ use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
 use App\Filament\Widgets\MostVisitedSocMediaChart;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
-use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
-use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -41,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
             ->colors([
                 'primary' => Color::Red,
             ])
@@ -48,9 +49,12 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([])
             ->widgets([
+                QuickEditPagesWidget::class,
+                SubscriberGrowthChart::class,
+                RecentSubscribersWidget::class,
+                SeoHealthWidget::class,
                 StatsOverview::class,
                 TopTreeClicks::class,
-
                 MostVisitedSocMediaChart::class,
                 PanAnalyticsWidget::class,
             ])
@@ -74,19 +78,12 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])->plugins([
-                FilamentShieldPlugin::make(),
                 JetstreamPlugin::make()
                     ->configureUserModel(userModel: User::class)
                     ->profilePhoto(condition: fn() => true, disk: 'public')
-                    ->deleteAccount(condition: fn() => true)
                     ->profileInformation(condition: fn() => true)
                     ->logoutBrowserSessions(condition: fn() => true),
                 FilamentLogViewer::make(),
-                AuthDesignerPlugin::make()
-                    ->login(fn (AuthPageConfig $config) => $config
-                        ->media('https://laravel.com/assets/img/welcome/background.svg')
-                        ->mediaPosition(MediaPosition::Left)
-                    )
             ]);
     }
 }

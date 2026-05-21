@@ -52,4 +52,9 @@ class PageResource extends Resource
     {
         return 'Portfolio Website';
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 }

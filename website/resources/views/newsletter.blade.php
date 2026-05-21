@@ -37,8 +37,7 @@
         <div class="card-body items-center text-center">
             <div class="avatar">
                 <div class="w-28 rounded-full ring ring-red-500 ring-offset-0">
-                    <img src="{{ asset('storage/' . $newsletter?->profile_image) ?? 'https://avatars.githubusercontent.com/u/18250654?v=4' }}"
-                        alt="Profile Photo">
+                    <x-profile-photo :src="$newsletter?->profile_image" alt="Profile Photo" />
                 </div>
             </div>
             <h2 class="card-title mt-4 text-2xl font-bold">{{ $newsletter?->name }}</h2>
