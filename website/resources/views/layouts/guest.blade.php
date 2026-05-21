@@ -171,10 +171,12 @@
                 }
             }
 
-            canvas.addEventListener('mousemove', function(e) {
+            // Listen on window because the canvas has pointer-events: none,
+            // so mouse events never reach the canvas element itself.
+            window.addEventListener('mousemove', function(e) {
                 mouse.x = e.clientX;
                 mouse.y = e.clientY;
-            });
+            }, { passive: true });
 
             function tick() {
                 draw();
@@ -197,11 +199,7 @@
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="flex justify-center py-10">
-                    <div class="flex items-center space-x-2">
-                        @if (Route::has('login'))
-                            <livewire:welcome.navigation class="menu menu-horizontal" />
-                        @endif
-                    </div>
+                    @include('partials.site-nav')
                 </header>
                 <div class="w-full max-w-5xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
                     {{ $slot }}
@@ -223,10 +221,12 @@
             });
         }
     </script>
+    <script src="https://unpkg.com/feather-icons" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.feather) feather.replace();
+        });
+    </script>
 </body>
 
 </html>
-<script src="https://unpkg.com/feather-icons"></script>
-<script>
-    feather.replace();
-</script>

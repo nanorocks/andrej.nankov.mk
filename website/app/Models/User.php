@@ -2,25 +2,21 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Jetstream\InteractsWIthProfile;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasFactory;
     use InteractsWIthProfile;
-    use InteractsWithPasskeys;
     use Notifiable;
-    use HasRoles;
-    // use InteractsWithTeams;
-    // use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -75,5 +71,36 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function profilePhotoUrl(): Attribute
+    {
+        return Attribute::get(function (): string {
+            $path = $this->profile_photo_path;
+
+            if ($path && ! Str::startsWith($path, ['http://', 'https://'])) {
+                return Storage::disk($this->profilePhotoDisk())->url($path);
+            }
+
+            return $this->placeholderProfilePhotoUrl();
+        });
+    }
+
+    protected function placeholderProfilePhotoUrl(): string
+    {
+        $localPlaceholder = public_path('images/avatar-placeholder.svg');
+
+        if (is_file($localPlaceholder)) {
+            return asset('images/avatar-placeholder.svg');
+        }
+
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">'
+            . '<rect width="64" height="64" rx="32" fill="#1f2937"/>'
+            . '<g fill="#9ca3af">'
+            . '<circle cx="32" cy="24" r="11"/>'
+            . '<path d="M12 56c0-11.046 8.954-20 20-20s20 8.954 20 20v4H12v-4z"/>'
+            . '</g></svg>';
+
+        return 'data:image/svg+xml;base64,' . base64_encode($svg);
     }
 }

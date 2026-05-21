@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\DateTimePicker;
@@ -48,13 +47,6 @@ class UserForm
                     ->native(false)
                     ->nullable()
                     ->disabled(),
-
-                // Spatie roles (optional, since model uses HasRoles)
-                Select::make('roles')
-                    ->label('Roles')
-                    ->multiple()
-                    ->preload()
-                    ->relationship('roles', 'name'),
             ])
             ->columns(2);
     }
