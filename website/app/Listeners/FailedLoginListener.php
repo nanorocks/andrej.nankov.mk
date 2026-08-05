@@ -47,8 +47,8 @@ class FailedLoginListener
 
     private function checkBruteForce(string $ip, ?string $email): void
     {
-        $ipAttempts    = RateLimiter::attempts("failed_login:ip:{$ip}");
-        $emailAttempts = $email ? RateLimiter::attempts("failed_login:email:{$email}") : 0;
+        $ipAttempts    = (int) RateLimiter::attempts("failed_login:ip:{$ip}");
+        $emailAttempts = $email ? (int) RateLimiter::attempts("failed_login:email:{$email}") : 0;
 
         if ($ipAttempts >= 5) {
             $this->report($ip, $email, 'ip_based', $ipAttempts);

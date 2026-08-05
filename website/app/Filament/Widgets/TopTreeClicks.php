@@ -3,12 +3,9 @@
 namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
-use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class TopTreeClicks extends ChartWidget
 {
-    // use HasWidgetShield;
-
     protected ?string $heading = 'Top Tree Clicks';
 
     protected function getData(): array

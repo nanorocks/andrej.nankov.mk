@@ -17,7 +17,7 @@
         alt="Andrej Nankov"
         width="460"
         height="460"
-        class="h-full w-full object-cover"
+        class="object-cover w-full h-full"
         loading="{{ $priority ? 'eager' : 'lazy' }}"
         decoding="async"
         @if ($priority) fetchpriority="high" @endif

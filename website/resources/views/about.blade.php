@@ -23,19 +23,19 @@
 
             <div class="text-center sm:text-left">
                 <p class="public-kicker">About</p>
-                <h1 id="about-title" class="public-section-title mt-3">{{ $about->name }}</h1>
+                <h1 id="about-title" class="mt-3 public-section-title">{{ $about->name }}</h1>
                 <p class="mt-3 text-lg text-slate-300">{{ $about->title }}</p>
             </div>
         </div>
 
-        <div class="public-prose mx-auto mt-10 max-w-3xl">
+        <div class="max-w-3xl mx-auto mt-10 public-prose">
             {!! $about->content !!}
         </div>
 
         @if ($about->cv_url)
-            <div class="mt-10 flex justify-center">
-                <a href="{{ $about->cv_url }}" target="_blank" rel="noopener noreferrer" data-pan="Grab-CV" class="public-button-primary gap-2">
-                    <svg class="h-4 w-4 fill-none stroke-current" viewBox="0 0 24 24" aria-hidden="true">
+            <div class="flex justify-center mt-10">
+                <a href="{{ $about->cv_url }}" target="_blank" rel="noopener noreferrer" data-pan="Grab-CV" class="gap-2 public-button-primary">
+                    <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 20h14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     Download my CV

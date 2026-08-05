@@ -14,7 +14,7 @@ use Laravel\Paddle\Billable;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use Billable;
     use HasFactory;

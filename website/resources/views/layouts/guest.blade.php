@@ -60,9 +60,9 @@
 
     <div class="public-background" aria-hidden="true"></div>
 
-    <div class="relative isolate flex min-h-screen flex-col">
+    <div class="relative flex flex-col min-h-screen isolate">
         <header class="public-header">
-            <div class="public-container flex items-center justify-between gap-6 py-5">
+            <div class="flex items-center justify-between gap-6 py-5 public-container">
                 <a href="{{ route('home') }}" class="flex items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500" aria-label="Andrej Nankov — Home">
                     <span class="public-brand-mark" aria-hidden="true">
                         <img src="{{ asset('assets/avatars/personal_logo_notes_nankov.png') }}" alt="" width="48" height="48">
@@ -76,15 +76,15 @@
             </div>
         </header>
 
-        <main id="main-content" class="public-container flex w-full flex-1 items-center py-10 sm:py-14 lg:py-20">
+        <main id="main-content" class="flex items-center flex-1 w-full py-10 public-container sm:py-14 lg:py-20">
             {{ $slot }}
         </main>
 
         <footer class="public-footer">
-            <div class="public-container py-10 text-center">
+            <div class="py-10 text-center public-container">
                 <x-social-icons />
 
-                <div class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-slate-400">
+                <div class="flex flex-wrap items-center justify-center mt-6 text-sm gap-x-5 gap-y-2 text-slate-400">
                     <a href="https://github.com/sponsors/nanorocks" target="_blank" rel="noopener noreferrer" class="public-text-link">
                         Support my open-source work
                     </a>
@@ -106,6 +106,12 @@
                     .catch(error => console.warn('Service worker registration failed:', error));
             });
         }
+    </script>
+    <script src="https://unpkg.com/feather-icons" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.feather) feather.replace();
+        });
     </script>
 </body>
 

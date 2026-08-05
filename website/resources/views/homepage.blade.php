@@ -26,7 +26,7 @@
                 {!! $homepage->content !!}
             </div>
 
-            <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+            <div class="flex flex-col justify-center gap-3 mt-8 sm:flex-row lg:justify-start">
                 <a href="{{ route('get.started') }}" data-pan="Get-Started-Now" class="public-button-primary">
                     Start a conversation
                 </a>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="order-1 flex flex-col items-center lg:order-2">
+        <div class="flex flex-col items-center order-1 lg:order-2">
             <x-profile-photo priority />
             <p class="mt-5 text-lg font-bold text-white">{{ $homepage->name }}</p>
             <p class="mt-1 text-sm text-slate-400">Fractional CTO &amp; Senior Engineer</p>

@@ -9,10 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StorefrontController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {});
-
-Route::get('/newsletter', [NewsletterController::class, 'showForm']);
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::redirect('/login', '/admin/login')->name('login');
 
 Route::view('/', 'homepage')->name('home');
 Route::view('/offline', 'offline')->name('offline');
