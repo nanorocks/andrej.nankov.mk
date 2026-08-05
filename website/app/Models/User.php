@@ -2,23 +2,26 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Traits\HasRoles;
-use Filament\Models\Contracts\HasAvatar;
-use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser;
 use Filament\Jetstream\InteractsWIthProfile;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Paddle\Billable;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
 {
+    use Billable;
     use HasFactory;
-    use InteractsWIthProfile;
-    use InteractsWithPasskeys;
-    use Notifiable;
     use HasRoles;
+    use InteractsWithPasskeys;
+    use InteractsWIthProfile;
+    use Notifiable;
     // use InteractsWithTeams;
     // use HasApiTokens;
 
@@ -75,5 +78,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

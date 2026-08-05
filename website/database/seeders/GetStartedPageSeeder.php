@@ -9,7 +9,7 @@ class GetStartedPageSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('pages')->insert([
+        DB::table('pages')->insertOrIgnore([
             [
                 'flag' => 'get-started',
                 'profile_image' => 'https://avatars.githubusercontent.com/u/18250654?v=4',

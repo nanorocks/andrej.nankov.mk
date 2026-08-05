@@ -35,24 +35,20 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+<section class="auth-shell" aria-labelledby="verify-email-title">
+    <div class="auth-card text-center">
+        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-red-400/30 bg-red-500/10 text-2xl" aria-hidden="true">✉</div>
+        <p class="public-kicker mt-6">One last step</p>
+        <h1 id="verify-email-title" class="mt-3 text-3xl font-extrabold tracking-tight text-white">Verify your email</h1>
+        <p class="mx-auto mt-3 max-w-md leading-7 text-slate-400">Open the verification link we sent you to protect your purchases, order history, and downloads.</p>
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        @if (session('status') == 'verification-link-sent')
+            <div class="public-alert-success mt-6" role="status">A new verification link has been sent.</div>
+        @endif
+
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <button wire:click="sendVerification" type="button" class="public-button-primary" wire:loading.attr="disabled">Resend verification email</button>
+            <button wire:click="logout" type="button" class="public-button-secondary">Sign out</button>
         </div>
-    @endif
-
-    <div class="mt-4 flex items-center justify-between">
-        <x-primary-button wire:click="sendVerification">
-            {{ __('Resend Verification Email') }}
-        </x-primary-button>
-
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            {{ __('Log Out') }}
-        </button>
     </div>
-</div>
+</section>

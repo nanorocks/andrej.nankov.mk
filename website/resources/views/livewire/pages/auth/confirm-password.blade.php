@@ -33,30 +33,22 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+<section class="auth-shell" aria-labelledby="confirm-password-title">
+    <div class="auth-card">
+        <div class="auth-card-header">
+            <p class="public-kicker">Secure area</p>
+            <h1 id="confirm-password-title" class="mt-3 text-3xl font-extrabold tracking-tight text-white">Confirm your password</h1>
+            <p class="mt-3 leading-7 text-slate-400">Please confirm your password before continuing.</p>
+        </div>
+
+        <form wire:submit="confirmPassword" class="space-y-5">
+            <div>
+                <label for="password" class="auth-label">Password</label>
+                <input wire:model="password" id="password" class="public-form-input mt-2" type="password" name="password" required autofocus autocomplete="current-password">
+                <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-300" />
+            </div>
+
+            <button type="submit" class="public-button-primary w-full" wire:loading.attr="disabled">Confirm and continue</button>
+        </form>
     </div>
-
-    <form wire:submit="confirmPassword">
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password"
-                          id="password"
-                          class="block mt-1 w-full"
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</div>
+</section>

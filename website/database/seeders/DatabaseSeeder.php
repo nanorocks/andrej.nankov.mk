@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Page;
-use App\Models\SocialLink;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Nanorocks\DatabaseNewsletter\Facades\Newsletter;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,10 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Andrej Nankov',
-            'email' => 'andrejnankov@gmail.com',
-        ]);
+        if (! User::where('email', 'andrejnankov@gmail.com')->exists()) {
+            User::factory()->create([
+                'name' => 'Andrej Nankov',
+                'email' => 'andrejnankov@gmail.com',
+            ]);
+        }
 
         // call all seeders here
         $this->call([
@@ -27,6 +26,7 @@ class DatabaseSeeder extends Seeder
             HomePageSeeder::class,
             GetStartedPageSeeder::class,
             SocialLinksSeeder::class,
+            StoreProductSeeder::class,
         ]);
     }
 }

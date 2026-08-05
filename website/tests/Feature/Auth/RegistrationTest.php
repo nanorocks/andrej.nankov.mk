@@ -16,6 +16,8 @@ class RegistrationTest extends TestCase
 
         $response
             ->assertOk()
+            ->assertSee('Create your account')
+            ->assertSee('Track orders')
             ->assertSeeVolt('pages.auth.register');
     }
 

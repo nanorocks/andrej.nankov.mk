@@ -9,7 +9,7 @@ class HomePageSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('pages')->insert([
+        DB::table('pages')->insertOrIgnore([
             // ...existing about and newsletter records...
             [
                 'id' => 3,

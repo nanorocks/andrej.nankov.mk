@@ -1,55 +1,57 @@
-<div>
-    <nav class="-mx-3 flex flex-1 justify-center">
-        @auth
-            <a href="{{ route('filament.admin.home') }}"
-                class="rounded-md px-3 py-2 text-red-500 ring-1 ring-transparent transition hover:text-red/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-home">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
+<div class="flex items-center gap-2">
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+        @foreach ([
+            ['route' => 'home', 'label' => 'Home'],
+            ['route' => 'about', 'label' => 'About'],
+            ['route' => 'newsletter', 'label' => 'Newsletter'],
+            ['route' => 'shop.index', 'label' => 'Shop'],
+        ] as $item)
+            <a href="{{ route($item['route']) }}"
+                @if (request()->routeIs($item['route'])) aria-current="page" @endif
+                class="public-nav-link {{ request()->routeIs($item['route']) ? 'public-nav-link-active' : '' }}">
+                {{ $item['label'] }}
             </a>
-            @if (Route::has('register'))
-                <a href="{{ route('register') }}"
-                    class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    Register
-                </a>
-            @endif
-            {{-- <a href="{{ route('login') }}"
-            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-            Log in
-        </a> --}}
+        @endforeach
+
+        <a href="https://medium.com/@nanorocks" target="_blank" rel="noopener noreferrer" class="public-nav-link">Blog</a>
+        <a href="{{ route('get.started') }}" class="public-nav-cta">Let's talk</a>
+        <a href="{{ route('shop.cart') }}" class="public-cart-link" aria-label="Shopping cart with {{ app(\App\Support\ShoppingCart::class)->count() }} items">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.1a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L20.5 8H6.2M10 20h.01M17 20h.01" /></svg>
+            <span>{{ app(\App\Support\ShoppingCart::class)->count() }}</span>
+        </a>
+
+        @auth
+            <a href="{{ route('profile') }}" class="public-nav-link">Downloads</a>
+            @can('view_any_user')
+                <a href="{{ route('filament.admin.home') }}" class="public-nav-link" aria-label="Open administration panel">Admin</a>
+            @endcan
+        @else
+            <a href="{{ route('login') }}" class="public-nav-link">Sign in</a>
+            <a href="{{ route('register') }}" class="public-button-secondary px-4 py-2">Create account</a>
         @endauth
     </nav>
-    <nav class="-mx-3 flex flex-1 justify-end">
 
-        <a href="{{ route('home') }}"
-            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white flex items-center justify-center gap-2">
-            Home
-        </a>
-        <a href="{{ route('about') }}"
-            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-            About
-        </a>
-        <a href="https://medium.com/@nanorocks" target="_blank"
-            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-            Blog
-        </a>
-        <a href="{{ route('newsletter') }}"
-            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-            Newsletter
-        </a>
-
-        <a href="mailto:andrejnankov@gmail.com"
-            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-            Contact
-        </a>
-    </nav>
-    <nav class="-mx-3 flex flex-1 justify-center">
-        <a href="https://support.nankov.mk"
-            class="rounded-md px-3 py-2 text-red-500 ring-1 ring-transparent transition hover:text-red-500/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-red-500 dark:hover:text-red-500/80 dark:focus-visible:ring-white">
-            Support Center
-        </a>
-    </nav>
+    <details class="relative md:hidden">
+        <summary class="public-menu-button">Menu</summary>
+        <nav class="public-mobile-menu" aria-label="Mobile navigation">
+            <a href="{{ route('home') }}" @if (request()->routeIs('home')) aria-current="page" @endif>Home</a>
+            <a href="{{ route('about') }}" @if (request()->routeIs('about')) aria-current="page" @endif>About</a>
+            <a href="{{ route('newsletter') }}" @if (request()->routeIs('newsletter')) aria-current="page" @endif>Newsletter</a>
+            <a href="{{ route('shop.index') }}" @if (request()->routeIs('shop.*')) aria-current="page" @endif>Shop</a>
+            <a href="{{ route('shop.cart') }}">Cart ({{ app(\App\Support\ShoppingCart::class)->count() }})</a>
+            <a href="https://medium.com/@nanorocks" target="_blank" rel="noopener noreferrer">Blog</a>
+            <a href="{{ route('get.started') }}" @if (request()->routeIs('get.started')) aria-current="page" @endif>Let's talk</a>
+            <a href="mailto:andrejnankov@gmail.com">Contact</a>
+            <a href="https://support.nankov.mk" target="_blank" rel="noopener noreferrer">Support</a>
+            @auth
+                <a href="{{ route('profile') }}">My downloads</a>
+                @can('view_any_user')
+                    <a href="{{ route('filament.admin.home') }}">Admin</a>
+                @endcan
+            @else
+                <a href="{{ route('login') }}">Sign in</a>
+                <a href="{{ route('register') }}">Create account</a>
+            @endauth
+        </nav>
+    </details>
 </div>

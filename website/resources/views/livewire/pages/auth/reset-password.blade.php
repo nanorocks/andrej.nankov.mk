@@ -67,39 +67,34 @@ new #[Layout('layouts.guest')] class extends Component {
     }
 }; ?>
 
-<div>
-    <form wire:submit="resetPassword">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full text-white" type="email"
-                name="email" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<section class="auth-shell" aria-labelledby="new-password-title">
+    <div class="auth-card">
+        <div class="auth-card-header">
+            <p class="public-kicker">Account recovery</p>
+            <h1 id="new-password-title" class="mt-3 text-3xl font-extrabold tracking-tight text-white">Choose a new password</h1>
+            <p class="mt-3 leading-7 text-slate-400">Use a strong, unique password to protect your orders and downloads.</p>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full text-white" type="password"
-                name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <form wire:submit="resetPassword" class="space-y-5">
+            <div>
+                <label for="email" class="auth-label">Email address</label>
+                <input wire:model="email" id="email" class="public-form-input mt-2" type="email" name="email" required autofocus autocomplete="username">
+                <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-300" />
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <div>
+                <label for="password" class="auth-label">New password</label>
+                <input wire:model="password" id="password" class="public-form-input mt-2" type="password" name="password" required autocomplete="new-password">
+                <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-300" />
+            </div>
 
-            <x-text-input wire:model="password_confirmation" id="password_confirmation"
-                class="block mt-1 w-full text-white" type="password" name="password_confirmation" required
-                autocomplete="new-password" />
+            <div>
+                <label for="password_confirmation" class="auth-label">Confirm new password</label>
+                <input wire:model="password_confirmation" id="password_confirmation" class="public-form-input mt-2" type="password" name="password_confirmation" required autocomplete="new-password">
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-red-300" />
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</div>
+            <button type="submit" class="public-button-primary w-full" wire:loading.attr="disabled">Reset password</button>
+        </form>
+    </div>
+</section>

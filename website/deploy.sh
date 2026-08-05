@@ -80,6 +80,10 @@ step "Running database migrations"
 $PHP artisan migrate --force
 ok "Migrations done"
 
+step "Syncing storefront products"
+$PHP artisan db:seed --class=StoreProductSeeder --force
+ok "Storefront products synced"
+
 # ── 4. Storage symlink ───────────────────────────────────────
 step "Ensuring storage symlink"
 $PHP artisan storage:link --force 2>/dev/null || true
@@ -126,9 +130,11 @@ echo "  Next steps (if first deploy):"
 echo "  1. Add GOOGLE_ANALYTICS_ID=G-213784361 to .env"
 echo "  2. Add GOOGLE_SITE_VERIFICATION= to .env"
 echo "  3. Add Telegram / Slack / mail secrets to .env"
-echo "  4. Submit sitemap to Google Search Console:"
+echo "  4. Add Paddle credentials to .env and register this webhook:"
+echo "     https://andrej.nankov.mk/paddle/webhook"
+echo "  5. Submit sitemap to Google Search Console:"
 echo "     https://andrej.nankov.mk/sitemap.xml"
-echo "  5. Add cron in cPanel (Cron Jobs):"
+echo "  6. Add cron in cPanel (Cron Jobs):"
 echo "     * * * * * $PHP $(pwd)/artisan schedule:run >> /dev/null 2>&1"
 echo "============================================================"
 echo ""

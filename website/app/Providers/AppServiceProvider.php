@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\View\Components\SocialIcons;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -13,8 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Debugbar', Debugbar::class);
     }
 
     /**
@@ -23,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-        Blade::component('social-icons', \App\View\Components\SocialIcons::class);
+        Blade::component('social-icons', SocialIcons::class);
     }
 }

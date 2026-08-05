@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\DetectBruteForce;
+use App\Http\Middleware\SecurityHeaders;
 use App\Listeners\FailedLoginListener;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Foundation\Application;
@@ -15,8 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->appendToGroup('web', App\Http\Middleware\SecurityHeaders::class);
-        $middleware->appendToGroup('web', App\Http\Middleware\DetectBruteForce::class);
+        $middleware->validateCsrfTokens(except: ['paddle/*']);
+        $middleware->appendToGroup('web', SecurityHeaders::class);
+        $middleware->appendToGroup('web', DetectBruteForce::class);
     })
     ->withEvents(discover: [
         __DIR__.'/../app/Listeners',

@@ -33,27 +33,28 @@ new #[Layout('layouts.guest')] class extends Component {
     }
 }; ?>
 
-<div class="bg-base-900">
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<section class="auth-shell" aria-labelledby="forgot-password-title">
+    <div class="auth-card">
+        <div class="auth-card-header">
+            <p class="public-kicker">Account recovery</p>
+            <h1 id="forgot-password-title" class="mt-3 text-3xl font-extrabold tracking-tight text-white">Reset your password</h1>
+            <p class="mt-3 leading-7 text-slate-400">Enter your account email and we’ll send you a secure reset link.</p>
+        </div>
+
+        <x-auth-session-status class="public-alert-success mb-6" :status="session('status')" />
+
+        <form wire:submit="sendPasswordResetLink" class="space-y-5">
+            <div>
+                <label for="email" class="auth-label">Email address</label>
+                <input wire:model="email" id="email" class="public-form-input mt-2" type="email" name="email" required autofocus autocomplete="username" placeholder="you@example.com">
+                <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-300" />
+            </div>
+
+            <button type="submit" class="public-button-primary w-full" wire:loading.attr="disabled">Email reset link</button>
+        </form>
+
+        <p class="mt-7 border-t border-white/10 pt-6 text-center text-sm text-slate-400">
+            Remembered it? <a href="{{ route('login') }}" class="font-bold text-red-400 hover:text-red-300" wire:navigate>Return to sign in</a>
+        </p>
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form wire:submit="sendPasswordResetLink">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full text-white" type="email"
-                name="email" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</div>
+</section>

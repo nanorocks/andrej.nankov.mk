@@ -1,84 +1,34 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-red-400">Your account</p>
+        <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Welcome back, {{ auth()->user()->name }}</h1>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-12xl mx-auto sm:px-6 lg:px-12">
-                <div class="w-full">
-                    <div class="breadcrumbs text-sm pb-4">
-                        <ul>
-                            <li><a>Home</a></li>
-                            <li><a>Documents</a></li>
-                            <li>Add Document</li>
-                        </ul>
-                    </div>
+    <div class="grid gap-6 lg:grid-cols-3">
+        <section class="rounded-3xl border border-white/10 bg-[#12151a] p-7 shadow-2xl shadow-black/20 lg:col-span-2" aria-labelledby="dashboard-start-title">
+            <p class="public-kicker">Books &amp; games</p>
+            <h2 id="dashboard-start-title" class="mt-3 text-2xl font-extrabold text-white sm:text-3xl">Ideas you can put to work</h2>
+            <p class="mt-4 max-w-2xl leading-7 text-slate-400">
+                Browse practical e-books and original board games about software, startups, and thoughtful decision-making.
+            </p>
+            <a href="{{ route('shop.index') }}" class="public-button-primary mt-7">Explore the shop</a>
+        </section>
 
-                    <div class="stats shadow">
-                        <div class="stat">
-                            <div class="stat-figure text-secondary">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    class="inline-block h-8 w-8 stroke-current">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div class="stat-title">Downloads</div>
-                            <div class="stat-value">31K</div>
-                            <div class="stat-desc">Jan 1st - Feb 1st</div>
-                        </div>
-
-                        <div class="stat">
-                            <div class="stat-figure text-secondary">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    class="inline-block h-8 w-8 stroke-current">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                                </svg>
-                            </div>
-                            <div class="stat-title">New Users</div>
-                            <div class="stat-value">4,200</div>
-                            <div class="stat-desc">↗︎ 400 (22%)</div>
-                        </div>
-
-                        <div class="stat">
-                            <div class="stat-figure text-secondary">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    class="inline-block h-8 w-8 stroke-current">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                                </svg>
-                            </div>
-                            <div class="stat-title">New Registers</div>
-                            <div class="stat-value">1,200</div>
-                            <div class="stat-desc">↘︎ 90 (14%)</div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-
-        </div>
+        <section class="rounded-3xl border border-white/10 bg-[#12151a] p-7 shadow-2xl shadow-black/20" aria-labelledby="dashboard-downloads-title">
+            <p class="public-kicker">Your library</p>
+            <h2 id="dashboard-downloads-title" class="mt-3 text-xl font-extrabold text-white">Purchased e-books</h2>
+            <p class="mt-4 leading-7 text-slate-400">Download completed e-book purchases at any time from your profile.</p>
+            <a href="{{ route('profile') }}" class="public-button-secondary mt-7">View downloads</a>
+        </section>
     </div>
+
+    <section class="mt-6 rounded-3xl border border-white/10 bg-white/[0.03] p-7" aria-labelledby="dashboard-account-title">
+        <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 id="dashboard-account-title" class="text-lg font-bold text-white">Account details</h2>
+                <p class="mt-1 text-sm text-slate-400">Update your name, email, password, and download library.</p>
+            </div>
+            <a href="{{ route('profile') }}" class="public-text-link">Manage profile</a>
+        </div>
+    </section>
 </x-app-layout>

@@ -17,6 +17,8 @@ class AuthenticationTest extends TestCase
 
         $response
             ->assertOk()
+            ->assertSee('Welcome back')
+            ->assertSee('Create your account')
             ->assertSeeVolt('pages.auth.login');
     }
 

@@ -9,7 +9,7 @@ class PageSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('pages')->insert([
+        DB::table('pages')->insertOrIgnore([
             [
                 'id' => 1,
                 'flag' => 'about',
@@ -80,7 +80,7 @@ entrepreneurship stories, and exclusive resources you won\'t find anywhere else.
 <p class="mt-2">Whether you\'re a founder, developer, or just passionate about technology, this
 newsletter is designed to inspire and inform. I respect your inbox - no spam, just quality
 content.</p>
-<p class="mt-2 font-semibold text-red-400">Enter your email below to join!</p>',
+<p class="mt-2 font-semibold text-red-400">Enter your email     to join!</p>',
                 'cv_url' => null,
                 'is_published' => 1,
                 'include_seo_in_header' => 1,

@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-[#090b0e]">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- Favicons --}}
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-
-    {{-- PWA --}}
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#232323">
+
+    <meta name="theme-color" content="#090b0e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
 
-    {{-- SEO (ralphjsmit/laravel-seo) --}}
     {!! seo() !!}
 
-    {{-- Google Search Console verification --}}
     @if (env('GOOGLE_SITE_VERIFICATION'))
-        <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_SITE_VERIFICATION') }}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -30,13 +26,12 @@
             function gtag() {
                 dataLayer.push(arguments);
             }
-            gtag('js', new Date());
 
-            gtag('config', {{ env('GOOGLE_SITE_VERIFICATION') }});
+            gtag('js', new Date());
+            gtag('config', '{{ env('GOOGLE_SITE_VERIFICATION') }}');
         </script>
     @endif
 
-    {{-- Google Analytics 4 (only in production) --}}
     @if (config('services.google_analytics.id') && app()->isProduction())
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.id') }}"></script>
         <script>
@@ -45,188 +40,73 @@
             function gtag() {
                 dataLayer.push(arguments);
             }
+
             gtag('js', new Date());
             gtag('config', '{{ config('services.google_analytics.id') }}');
         </script>
     @endif
 
-    {{-- Page-level overrides (views can still push extra meta if needed) --}}
     @stack('meta')
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
 
-    {{-- Turnstile --}}
-
-    {{-- @turnstileScripts() --}}
-
-    <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            background: #232323;
-            opacity: 0.2;
-            pointer-events: none;
-        }
-
-        .cf-turnstile {
-            background: transparent !important;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var canvas = document.getElementById("canvas"),
-                ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            var stars = [],
-                FPS = 60,
-                x = 100,
-                mouse = {
-                    x: 0,
-                    y: 0
-                };
-
-            for (var i = 0; i < x; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 1 + 1,
-                    vx: Math.floor(Math.random() * 50) - 25,
-                    vy: Math.floor(Math.random() * 50) - 25
-                });
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.globalCompositeOperation = "lighter";
-
-                // Draw stars
-                for (var i = 0; i < stars.length; i++) {
-                    var s = stars[i];
-                    ctx.fillStyle = "#fff";
-                    ctx.beginPath();
-                    ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-                    ctx.fill();
-                    ctx.strokeStyle = 'black';
-                    ctx.stroke();
-                }
-
-                // Draw lines between close stars
-                for (var i = 0; i < stars.length; i++) {
-                    for (var j = i + 1; j < stars.length; j++) {
-                        var starI = stars[i];
-                        var starJ = stars[j];
-                        var dist = distance(starI, starJ);
-                        if (dist < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(starI.x, starI.y);
-                            ctx.lineTo(starJ.x, starJ.y);
-                            ctx.strokeStyle = "rgba(255,255,255," + (1 - dist / 120) + ")";
-                            ctx.lineWidth = 0.7;
-                            ctx.stroke();
-                        }
-                    }
-                }
-
-                // Draw lines from mouse to close stars
-                for (var i = 0; i < stars.length; i++) {
-                    var starI = stars[i];
-                    var dist = distance(mouse, starI);
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(starI.x, starI.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = "rgba(255,255,255,0.3)";
-                        ctx.lineWidth = 0.7;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            function distance(point1, point2) {
-                var xs = point2.x - point1.x;
-                var ys = point2.y - point1.y;
-                return Math.sqrt(xs * xs + ys * ys);
-            }
-
-            function update() {
-                for (var i = 0; i < stars.length; i++) {
-                    var s = stars[i];
-                    s.x += s.vx / FPS;
-                    s.y += s.vy / FPS;
-                    if (s.x < 0 || s.x > canvas.width) s.vx = -s.vx;
-                    if (s.y < 0 || s.y > canvas.height) s.vy = -s.vy;
-                }
-            }
-
-            canvas.addEventListener('mousemove', function(e) {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-
-            function tick() {
-                draw();
-                update();
-                requestAnimationFrame(tick);
-            }
-
-            tick();
-        });
-    </script>
+    @stack('head')
 </head>
 
-<body class="font-sans antialiased">
-    <canvas id="canvas"></canvas>
-    <!-- The rest of your content overlays the canvas -->
-    <div class="m-0 bg-black bg-dark-50 text-black/50 text-white/50 p-">
-        <img id="background" class="absolute top-0 left-0 z-0 w-auto h-auto max-w-full max-h-full pointer-events-none"
-            src="https://laravel.com/assets/img/welcome/background.svg" style="object-fit: contain;" />
-        <div
-            class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <header class="flex justify-center py-10">
-                    <div class="flex items-center space-x-2">
-                        @if (Route::has('login'))
-                            <livewire:welcome.navigation class="menu menu-horizontal" />
-                        @endif
-                    </div>
-                </header>
-                <div class="w-full max-w-5xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
-                    {{ $slot }}
+<body class="public-site min-h-screen bg-[#090b0e] font-sans text-slate-100 antialiased">
+    <a href="#main-content" class="public-skip-link">Skip to content</a>
 
-                    <footer class="py-16 text-sm text-center">
-                        Release v{{ Illuminate\Foundation\Application::VERSION }} - Environment v{{ PHP_VERSION }}
-                        @yield('footer')
-                    </footer>
-                </div>
+    <div class="public-background" aria-hidden="true"></div>
+
+    <div class="relative isolate flex min-h-screen flex-col">
+        <header class="public-header">
+            <div class="public-container flex items-center justify-between gap-6 py-5">
+                <a href="{{ route('home') }}" class="flex items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500" aria-label="Andrej Nankov — Home">
+                    <span class="public-brand-mark" aria-hidden="true">
+                        <img src="{{ asset('assets/avatars/personal_logo_notes_nankov.png') }}" alt="" width="48" height="48">
+                    </span>
+                    <span class="text-sm font-bold tracking-wide text-white">Andrej Nankov</span>
+                </a>
+
+                @if (Route::has('login'))
+                    <livewire:welcome.navigation />
+                @endif
             </div>
-        </div>
+        </header>
+
+        <main id="main-content" class="public-container flex w-full flex-1 items-center py-10 sm:py-14 lg:py-20">
+            {{ $slot }}
+        </main>
+
+        <footer class="public-footer">
+            <div class="public-container py-10 text-center">
+                <x-social-icons />
+
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-slate-400">
+                    <a href="https://github.com/sponsors/nanorocks" target="_blank" rel="noopener noreferrer" class="public-text-link">
+                        Support my open-source work
+                    </a>
+                    <span aria-hidden="true" class="text-slate-700">•</span>
+                    <a href="mailto:andrejnankov@gmail.com" class="public-text-link">Get in touch</a>
+                </div>
+
+                <p class="mt-6 text-xs text-slate-500">
+                    &copy; {{ now()->year }} Andrej Nankov. Built with care in Skopje.
+                </p>
+            </div>
+        </footer>
     </div>
-    {{-- PWA service worker registration --}}
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .catch(err => console.warn('SW registration failed:', err));
+                    .catch(error => console.warn('Service worker registration failed:', error));
             });
         }
     </script>
 </body>
 
 </html>
-<script src="https://unpkg.com/feather-icons"></script>
-<script>
-    feather.replace();
-</script>

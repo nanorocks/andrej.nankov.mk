@@ -28,7 +28,8 @@ class DetectBruteForce
         $ip  = $request->ip() ?? '0.0.0.0';
         $key = "suspicious_activity:{$ip}";
 
-        if (RateLimiter::tooManyAttempts($key, self::MAX_REQUESTS)) {
+        // Only enforce strict brute-force blocking in production
+        if (app()->environment('production') && RateLimiter::tooManyAttempts($key, self::MAX_REQUESTS)) {
             $this->report($ip, $request);
 
             return response()->json([
@@ -36,6 +37,7 @@ class DetectBruteForce
             ], 429);
         }
 
+        // Always record the attempt, even outside production, for metrics
         RateLimiter::hit($key, self::DECAY_SECONDS);
 
         return $next($request);

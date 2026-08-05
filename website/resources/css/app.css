@@ -1,3 +1,219 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .public-container {
+        @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    }
+
+    .public-header {
+        @apply border-b border-white/10 bg-[#090b0e]/95;
+    }
+
+    .public-brand-mark {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-black shadow-lg shadow-black/30;
+    }
+
+    .public-brand-mark img {
+        @apply h-full w-full object-cover;
+    }
+
+    .public-footer {
+        @apply border-t border-white/10 bg-[#090b0e]/80;
+    }
+
+    .public-skip-link {
+        @apply fixed left-4 top-4 z-50 -translate-y-24 rounded-lg bg-red-500 px-4 py-2 text-sm font-bold text-white focus:translate-y-0 focus:outline-none;
+    }
+
+    .public-nav-link {
+        @apply rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
+    }
+
+    .public-nav-link-active {
+        @apply bg-white/10 text-white;
+    }
+
+    .public-nav-cta,
+    .public-button-primary {
+        @apply inline-flex items-center justify-center rounded-xl bg-red-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-950/30 hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500;
+    }
+
+    .public-cart-link {
+        @apply inline-flex h-10 items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 text-sm font-bold text-white hover:border-red-500/50 hover:bg-red-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
+    }
+
+    .public-cart-link svg {
+        @apply h-4 w-4 fill-none stroke-current stroke-2;
+    }
+
+    .public-button-secondary {
+        @apply inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:border-white/30 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500;
+    }
+
+    .public-menu-button {
+        @apply cursor-pointer list-none rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
+    }
+
+    .public-mobile-menu {
+        @apply absolute right-0 top-12 z-40 flex w-52 flex-col rounded-2xl border border-white/10 bg-[#15181e] p-2 text-sm font-medium text-slate-200 shadow-2xl;
+    }
+
+    .public-mobile-menu a {
+        @apply rounded-lg px-4 py-3 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-500;
+    }
+
+    .public-mobile-menu a[aria-current='page'] {
+        @apply bg-white/10 text-white;
+    }
+
+    .public-panel {
+        @apply w-full rounded-3xl border border-white/10 bg-[#12151a]/90 p-6 shadow-2xl shadow-black/20 sm:p-10 lg:p-14;
+    }
+
+    .public-kicker {
+        @apply text-xs font-bold uppercase tracking-[0.22em] text-red-400;
+    }
+
+    .public-title {
+        @apply mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl;
+    }
+
+    .public-section-title {
+        @apply text-3xl font-extrabold tracking-tight text-white sm:text-4xl;
+    }
+
+    .public-lead {
+        @apply mt-5 text-lg leading-8 text-slate-300 sm:text-xl;
+    }
+
+    .public-profile-photo {
+        @apply shrink-0 overflow-hidden rounded-full border-4 border-[#1b1f26] shadow-[0_0_0_2px_rgba(239,68,68,0.9),0_24px_70px_rgba(0,0,0,0.45)];
+    }
+
+    .public-prose {
+        @apply prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-300 prose-p:leading-8 prose-li:text-slate-300 prose-strong:text-white prose-a:text-red-400 prose-a:no-underline hover:prose-a:text-red-300;
+    }
+
+    .public-prose p {
+        @apply my-5;
+    }
+
+    .public-prose ul,
+    .public-prose ol {
+        @apply my-6 space-y-3 pl-6;
+    }
+
+    .public-prose .text-center,
+    .public-prose .text-justify {
+        text-align: left !important;
+    }
+
+    .public-prose > :first-child,
+    .public-prose > div > :first-child {
+        margin-top: 0;
+    }
+
+    .public-prose > :last-child,
+    .public-prose > div > :last-child {
+        margin-bottom: 0;
+    }
+
+    .public-text-link {
+        @apply rounded text-slate-400 underline decoration-slate-700 underline-offset-4 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500;
+    }
+
+    .public-social-link {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 hover:border-red-500/60 hover:bg-red-500/10 hover:text-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
+    }
+
+    .public-social-link svg {
+        @apply h-4 w-4 fill-current;
+    }
+
+    .public-form-input {
+        @apply w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3 text-white placeholder:text-slate-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20;
+    }
+
+    .public-alert-success {
+        @apply mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-200;
+    }
+
+    .public-alert-error {
+        @apply mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200;
+    }
+
+    .auth-shell {
+        @apply mx-auto w-full max-w-xl;
+    }
+
+    .auth-card {
+        @apply rounded-3xl border border-white/10 bg-[#12151a]/95 p-6 shadow-2xl shadow-black/30 sm:p-9;
+    }
+
+    .auth-card-header {
+        @apply mb-7 border-b border-white/10 pb-7;
+    }
+
+    .auth-label {
+        @apply block text-sm font-semibold text-slate-200;
+    }
+
+    .store-product-card {
+        @apply relative overflow-hidden rounded-3xl border border-white/10 bg-[#12151a] shadow-2xl shadow-black/20;
+    }
+
+    .store-product-art {
+        @apply relative flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-white/10 bg-[#0d1015] p-8;
+    }
+
+    .store-coming-soon {
+        @apply absolute inset-0 z-10 flex items-center justify-center bg-[#090b0e]/75 p-6 text-center backdrop-blur-[2px];
+    }
+
+    .store-coming-soon span {
+        @apply rounded-full border border-red-400/40 bg-red-500/15 px-5 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-red-300;
+    }
+
+    .store-book-cover {
+        @apply flex h-48 w-36 rotate-[-4deg] flex-col justify-between rounded-r-lg border-l-[10px] border-red-950 bg-gradient-to-br from-red-500 to-red-800 p-5 text-white shadow-2xl;
+    }
+
+    .store-board-box {
+        @apply grid h-44 w-44 rotate-3 grid-cols-3 gap-2 rounded-2xl border-4 border-slate-200/80 bg-slate-100 p-5 shadow-2xl;
+    }
+
+    .store-board-box span {
+        @apply rounded-md;
+    }
+}
+
+.public-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 15% 5%, rgba(239, 68, 68, 0.13), transparent 30rem),
+        radial-gradient(circle at 85% 35%, rgba(71, 85, 105, 0.12), transparent 34rem),
+        #090b0e;
+}
+
+.public-site,
+.public-site *,
+.public-site *::before,
+.public-site *::after,
+.app-site,
+.app-site *,
+.app-site *::before,
+.app-site *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
+}
+
+.public-site details > summary::-webkit-details-marker,
+.app-site details > summary::-webkit-details-marker {
+    display: none;
+}

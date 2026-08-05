@@ -1,15 +1,17 @@
-const CACHE_NAME = 'andrej-nankov-v1';
+const CACHE_NAME = 'andrej-nankov-v3';
 
 const PRECACHE_URLS = [
     '/',
     '/about',
     '/get-started',
     '/newsletter',
+    '/shop',
     '/offline',
     '/manifest.json',
     '/favicon.ico',
     '/android-chrome-192x192.png',
     '/android-chrome-512x512.png',
+    '/assets/avatars/andrej-nankov-profile.png',
 ];
 
 // Install — pre-cache shell pages and assets
@@ -35,16 +37,28 @@ self.addEventListener('activate', event => {
 // Fetch strategy:
 //   - Static assets (JS/CSS/images): cache-first
 //   - HTML pages: network-first with offline fallback
-//   - API / admin routes: network-only
+//   - Private, transactional, API and admin routes: network-only
 self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
 
-    // Skip cross-origin requests and admin/horizon/api routes
+    const networkOnlyPaths = [
+        '/admin',
+        '/horizon',
+        '/api',
+        '/cart',
+        '/checkout',
+        '/profile',
+        '/downloads',
+        '/login',
+        '/register',
+        '/paddle',
+    ];
+
+    // Let the browser handle cross-origin and private/transactional requests.
     if (
         url.origin !== location.origin ||
-        url.pathname.startsWith('/admin') ||
-        url.pathname.startsWith('/horizon') ||
-        url.pathname.startsWith('/api')
+        event.request.method !== 'GET' ||
+        networkOnlyPaths.some(path => url.pathname.startsWith(path))
     ) {
         return;
     }

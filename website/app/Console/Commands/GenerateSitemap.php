@@ -48,14 +48,21 @@ class GenerateSitemap extends Command
                 ->setLastModificationDate(now())
         );
 
+        $sitemap->add(
+            Url::create(url('/shop'))
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+                ->setPriority(0.7)
+                ->setLastModificationDate(now())
+        );
+
         // Published pages
         Page::where('is_published', true)->each(function (Page $page) use ($sitemap) {
             $route = match ($page->flag) {
-                'homepage'   => url('/'),
-                'about'      => url('/about'),
+                'homepage' => url('/'),
+                'about' => url('/about'),
                 'get-started' => url('/get-started'),
                 'newsletter' => url('/newsletter'),
-                default      => null,
+                default => null,
             };
 
             if ($route) {
@@ -69,7 +76,7 @@ class GenerateSitemap extends Command
         $sitemap->writeToFile(public_path('sitemap.xml'));
 
         $this->info('✅ sitemap.xml written to public/sitemap.xml');
-        $this->line('Submit it to Google Search Console: ' . url('/sitemap.xml'));
+        $this->line('Submit it to Google Search Console: '.url('/sitemap.xml'));
 
         return self::SUCCESS;
     }
