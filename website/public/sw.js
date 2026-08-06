@@ -1,4 +1,4 @@
-const CACHE_NAME = 'andrej-nankov-v3';
+const CACHE_NAME = 'andrej-nankov-v5';
 
 const PRECACHE_URLS = [
     '/',
@@ -6,6 +6,11 @@ const PRECACHE_URLS = [
     '/get-started',
     '/newsletter',
     '/shop',
+    '/privacy',
+    '/cookies',
+    '/terms',
+    '/refunds',
+    '/shipping',
     '/offline',
     '/favicon.ico',
     '/android-chrome-192x192.png',
@@ -59,6 +64,7 @@ self.addEventListener('fetch', event => {
         '/cart',
         '/checkout',
         '/profile',
+        '/orders',
         '/downloads',
         '/login',
         '/register',
@@ -78,8 +84,11 @@ self.addEventListener('fetch', event => {
         event.respondWith(
             fetch(request)
                 .then(response => {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+                    if (response.ok) {
+                        const clone = response.clone();
+                        caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+                    }
+
                     return response;
                 })
                 .catch(() =>

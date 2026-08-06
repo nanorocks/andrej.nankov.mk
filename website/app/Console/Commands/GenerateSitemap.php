@@ -55,6 +55,15 @@ class GenerateSitemap extends Command
                 ->setLastModificationDate(now())
         );
 
+        foreach (['privacy', 'cookies', 'terms', 'refunds', 'shipping'] as $legalPage) {
+            $sitemap->add(
+                Url::create(url('/'.$legalPage))
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
+                    ->setPriority(0.3)
+                    ->setLastModificationDate(now())
+            );
+        }
+
         // Published pages
         Page::where('is_published', true)->each(function (Page $page) use ($sitemap) {
             $route = match ($page->flag) {

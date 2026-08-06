@@ -151,10 +151,16 @@ class StorefrontTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->get(route('profile'))
+            ->get(route('orders.index'))
             ->assertOk()
             ->assertSee('Order #'.$order->id)
             ->assertSee('Completed')
+            ->assertSee($product->name)
+            ->assertSee(route('downloads.show', $product));
+
+        $this->actingAs($user)
+            ->get(route('profile'))
+            ->assertOk()
             ->assertSee($product->name)
             ->assertSee(route('downloads.show', $product));
 

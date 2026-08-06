@@ -11,12 +11,6 @@ class ProfileController extends Controller
 {
     public function __invoke(Request $request): View
     {
-        $orders = $request->user()
-            ->orders()
-            ->with('items.product')
-            ->latest()
-            ->get();
-
         $downloads = Product::query()
             ->where('type', Product::TYPE_EBOOK)
             ->whereHas('orderItems.order', fn ($query) => $query
@@ -25,6 +19,11 @@ class ProfileController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('profile', compact('downloads', 'orders'));
+        $transactions = $request->user()
+            ->transactions()
+            ->latest('billed_at')
+            ->get();
+
+        return view('profile', compact('downloads', 'transactions'));
     }
 }

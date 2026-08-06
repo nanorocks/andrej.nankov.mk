@@ -44,12 +44,20 @@
         </main>
 
         <footer class="public-footer">
-            <div class="public-container flex flex-col gap-2 py-7 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div class="public-container flex flex-col gap-4 py-7 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
                 <p>&copy; {{ now()->year }} Andrej Nankov.</p>
-                <a href="{{ route('shop.index') }}" class="public-text-link">Board games &amp; e-books</a>
+                <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer navigation">
+                    <a href="{{ route('shop.index') }}" class="public-text-link">Shop</a>
+                    <a href="{{ route('orders.index') }}" class="public-text-link">Orders</a>
+                    <a href="{{ route('legal.privacy') }}" class="public-text-link">Privacy</a>
+                    <a href="{{ route('legal.terms') }}" class="public-text-link">Terms</a>
+                    <button type="button" data-cookie-settings class="public-text-link">Cookie choices</button>
+                </nav>
             </div>
         </footer>
     </div>
+
+    @include('partials.cookie-consent')
 </body>
 
 </html>

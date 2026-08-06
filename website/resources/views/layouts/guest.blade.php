@@ -18,32 +18,8 @@
 
     {!! seo() !!}
 
-    @if (env('GOOGLE_SITE_VERIFICATION'))
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_SITE_VERIFICATION') }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-
-            gtag('js', new Date());
-            gtag('config', '{{ env('GOOGLE_SITE_VERIFICATION') }}');
-        </script>
-    @endif
-
-    @if (config('services.google_analytics.id') && app()->isProduction())
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.id') }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-
-            gtag('js', new Date());
-            gtag('config', '{{ config('services.google_analytics.id') }}');
-        </script>
+    @if (config('services.google.site_verification'))
+        <meta name="google-site-verification" content="{{ config('services.google.site_verification') }}">
     @endif
 
     @stack('meta')
@@ -92,12 +68,23 @@
                     <a href="mailto:andrejnankov@gmail.com" class="public-text-link">Get in touch</a>
                 </div>
 
+                <nav class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500" aria-label="Legal information">
+                    <a href="{{ route('legal.privacy') }}" class="public-text-link">Privacy</a>
+                    <a href="{{ route('legal.cookies') }}" class="public-text-link">Cookies</a>
+                    <a href="{{ route('legal.terms') }}" class="public-text-link">Terms</a>
+                    <a href="{{ route('legal.refunds') }}" class="public-text-link">Refunds</a>
+                    <a href="{{ route('legal.shipping') }}" class="public-text-link">Shipping</a>
+                    <button type="button" data-cookie-settings class="public-text-link">Cookie choices</button>
+                </nav>
+
                 <p class="mt-6 text-xs text-slate-500">
                     &copy; {{ now()->year }} Andrej Nankov. Built with care in Skopje.
                 </p>
             </div>
         </footer>
     </div>
+
+    @include('partials.cookie-consent')
 
     <script>
         if ('serviceWorker' in navigator) {

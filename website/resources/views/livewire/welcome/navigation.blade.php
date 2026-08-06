@@ -21,7 +21,8 @@
         </a>
 
         @auth
-            <a href="{{ route('profile') }}" class="public-nav-link">Downloads</a>
+            <a href="{{ route('orders.index') }}" class="public-nav-link {{ request()->routeIs('orders.*') ? 'public-nav-link-active' : '' }}">Orders</a>
+            <a href="{{ route('profile') }}" class="public-nav-link">Profile</a>
             @if (auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
                 <a href="{{ route('filament.admin.home') }}" class="public-nav-link" aria-label="Open administration panel">Admin</a>
             @endif
@@ -44,7 +45,8 @@
             <a href="mailto:andrejnankov@gmail.com">Contact</a>
             <a href="https://support.nankov.mk" target="_blank" rel="noopener noreferrer">Support</a>
             @auth
-                <a href="{{ route('profile') }}">My downloads</a>
+                <a href="{{ route('orders.index') }}">My orders</a>
+                <a href="{{ route('profile') }}">Profile &amp; downloads</a>
                 @if (auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
                     <a href="{{ route('filament.admin.home') }}">Admin</a>
                 @endif

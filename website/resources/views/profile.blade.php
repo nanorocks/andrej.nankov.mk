@@ -7,45 +7,32 @@
 
     <div class="py-12">
         <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
-            <section class="rounded-3xl border border-white/10 bg-[#12151a] p-5 shadow-2xl shadow-black/20 sm:p-8" aria-labelledby="orders-title">
+            <section class="rounded-3xl border border-white/10 bg-[#12151a] p-5 shadow-2xl shadow-black/20 sm:p-8" aria-labelledby="transactions-title">
                 <div class="flex flex-col gap-3 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <p class="public-kicker">Purchase history</p>
-                        <h2 id="orders-title" class="mt-2 text-2xl font-extrabold text-white">My orders</h2>
+                        <p class="public-kicker">Billing record</p>
+                        <h2 id="transactions-title" class="mt-2 text-2xl font-extrabold text-white">Payment transactions</h2>
                     </div>
-                    <a href="{{ route('shop.index') }}" class="public-text-link text-sm">Continue shopping</a>
+                    <a href="{{ route('orders.index') }}" class="public-text-link text-sm">View order history</a>
                 </div>
 
-                @if ($orders->isEmpty())
+                @if ($transactions->isEmpty())
                     <div class="py-10 text-center">
-                        <p class="font-semibold text-white">No orders yet</p>
-                        <p class="mt-2 text-sm text-slate-400">Your one-time purchases will appear here.</p>
+                        <p class="font-semibold text-white">No payment transactions yet</p>
+                        <p class="mt-2 text-sm text-slate-400">Completed Paddle payments will appear here.</p>
                     </div>
                 @else
                     <div class="divide-y divide-white/10">
-                        @foreach ($orders as $order)
-                            <article class="py-6">
-                                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                                    <div>
-                                        <div class="flex flex-wrap items-center gap-3">
-                                            <h3 class="font-bold text-white">Order #{{ $order->id }}</h3>
-                                            <span class="rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-wider {{ $order->isCompleted() ? 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300' : 'border-amber-400/30 bg-amber-500/10 text-amber-200' }}">
-                                                {{ $order->isCompleted() ? 'Completed' : 'Processing' }}
-                                            </span>
-                                        </div>
-                                        <p class="mt-2 text-sm text-slate-500">Placed {{ $order->created_at->format('M j, Y') }}</p>
-                                    </div>
-                                    <p class="text-lg font-extrabold text-white">{{ number_format($order->total / 100, 2) }} {{ $order->currency }}</p>
+                        @foreach ($transactions as $transaction)
+                            <article class="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="font-semibold text-white">{{ $transaction->paddle_id }}</p>
+                                    <p class="mt-1 text-sm text-slate-500">Billed {{ $transaction->billed_at->format('M j, Y') }}</p>
                                 </div>
-
-                                <ul class="mt-5 space-y-2" aria-label="Items in order {{ $order->id }}">
-                                    @foreach ($order->items as $item)
-                                        <li class="flex items-center justify-between gap-4 rounded-xl bg-white/[0.04] px-4 py-3 text-sm">
-                                            <span class="text-slate-300">{{ $item->product_name }} <span class="text-slate-600">× {{ $item->quantity }}</span></span>
-                                            <span class="shrink-0 font-semibold text-slate-200">{{ number_format(($item->unit_price * $item->quantity) / 100, 2) }} {{ $order->currency }}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                <div class="sm:text-right">
+                                    <p class="font-bold text-white">{{ number_format(((int) $transaction->total) / 100, 2) }} {{ strtoupper($transaction->currency) }}</p>
+                                    <p class="mt-1 text-xs font-bold uppercase tracking-wider text-emerald-300">{{ $transaction->status }}</p>
+                                </div>
                             </article>
                         @endforeach
                     </div>
