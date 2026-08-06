@@ -9,8 +9,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StorefrontController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/login', '/admin/login')->name('login');
-
 Route::view('/', 'homepage')->name('home');
 Route::view('/offline', 'offline')->name('offline');
 
@@ -22,6 +20,9 @@ Route::view('/about', 'about')
 
 Route::view('/newsletter', 'newsletter')
     ->name('newsletter');
+
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->name('newsletter.subscribe');
 
 Route::get('/shop', StorefrontController::class)->name('shop.index');
 Route::get('/cart', [CartController::class, 'index'])->name('shop.cart');
