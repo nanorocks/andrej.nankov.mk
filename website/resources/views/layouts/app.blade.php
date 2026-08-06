@@ -22,15 +22,15 @@
     <a href="#main-content" class="public-skip-link">Skip to content</a>
     <div class="public-background" aria-hidden="true"></div>
 
-    <div class="relative isolate flex min-h-screen flex-col">
+    <div class="relative flex flex-col min-h-screen isolate">
         <header class="public-header">
-            <div class="public-container flex min-h-20 items-center justify-between gap-5 py-4">
+            <div class="flex items-center justify-between gap-5 py-4 public-container min-h-20">
                 <a href="{{ route('home') }}" class="flex items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500" aria-label="Andrej Nankov — Home">
                     <span class="public-brand-mark" aria-hidden="true">
                         <img src="{{ asset('assets/avatars/personal_logo_notes_nankov.png') }}" alt="" width="48" height="48">
                     </span>
                     <span class="hidden leading-tight sm:block">
-                        <span class="block text-sm font-bold tracking-wide text-white">Andrej Nankov</span>
+                        <span class="block text-sm font-bold tracking-wide text-white">MSc. Andrej Nankov</span>
                         <span class="block text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">Customer account</span>
                     </span>
                 </a>
@@ -41,16 +41,16 @@
 
         @isset($header)
             <section class="border-b border-white/10 bg-white/[0.02]">
-                <div class="public-container py-6">{{ $header }}</div>
+                <div class="py-6 public-container">{{ $header }}</div>
             </section>
         @endisset
 
-        <main id="main-content" class="public-container w-full flex-1 py-8 sm:py-12">
+        <main id="main-content" class="flex-1 w-full py-8 public-container sm:py-12">
             {{ $slot }}
         </main>
 
         <footer class="public-footer">
-            <div class="public-container flex flex-col gap-4 py-7 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex flex-col gap-4 text-sm public-container py-7 text-slate-500 sm:flex-row sm:items-center sm:justify-between">
                 <p>&copy; {{ now()->year }} Andrej Nankov.</p>
                 <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer navigation">
                     <a href="{{ route('shop.index') }}" class="public-text-link">Shop</a>

@@ -44,7 +44,7 @@
                         <img src="{{ asset('assets/avatars/personal_logo_notes_nankov.png') }}" alt="" width="48" height="48">
                     </span>
                     <span class="leading-tight">
-                        <span class="block text-sm font-bold tracking-wide text-white">Andrej Nankov</span>
+                        <span class="block text-sm font-bold tracking-wide text-white">MSc. Andrej Nankov</span>
                         <span class="hidden text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 sm:block">Fractional CTO</span>
                     </span>
                 </a>
@@ -71,7 +71,7 @@
                     <a href="mailto:andrejnankov@gmail.com" class="public-text-link">Get in touch</a>
                 </div>
 
-                <nav class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500" aria-label="Legal information">
+                <nav class="flex flex-wrap items-center justify-center mt-6 text-xs gap-x-5 gap-y-2 text-slate-500" aria-label="Legal information">
                     <a href="{{ route('about') }}" class="public-text-link">About</a>
                     <a href="{{ route('newsletter') }}" class="public-text-link">Newsletter</a>
                     <a href="https://medium.com/@nanorocks" target="_blank" rel="noopener noreferrer" class="public-text-link">Writing</a>
