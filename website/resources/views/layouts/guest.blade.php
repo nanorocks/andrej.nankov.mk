@@ -94,12 +94,6 @@
             });
         }
     </script>
-    <script src="https://unpkg.com/feather-icons" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.feather) feather.replace();
-        });
-    </script>
 </body>
 
 </html>

@@ -20,7 +20,12 @@ new class extends Component {
         <a href="{{ route('shop.index') }}" class="public-nav-link">Shop</a>
         <a href="{{ route('orders.index') }}" class="public-nav-link {{ request()->routeIs('orders.*') ? 'public-nav-link-active' : '' }}" @if (request()->routeIs('orders.*')) aria-current="page" @endif>Orders</a>
         <a href="{{ route('shop.cart') }}" class="public-cart-link" aria-label="Shopping cart with {{ app(\App\Support\ShoppingCart::class)->count() }} items">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.1a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L20.5 8H6.2M10 20h.01M17 20h.01" /></svg>
+            {{-- Lucide: shopping-cart --}}
+            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 6H5.12" />
+            </svg>
             <span>{{ app(\App\Support\ShoppingCart::class)->count() }}</span>
         </a>
     </nav>

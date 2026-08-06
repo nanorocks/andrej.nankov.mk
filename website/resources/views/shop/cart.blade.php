@@ -26,7 +26,14 @@
 
         @if ($items->isEmpty())
             <div class="py-16 text-center">
-                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl" aria-hidden="true">🛒</div>
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300" aria-hidden="true">
+                    {{-- Lucide: shopping-cart --}}
+                    <svg class="h-7 w-7 fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1" />
+                        <circle cx="19" cy="21" r="1" />
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57L22 6H5.12" />
+                    </svg>
+                </div>
                 <h2 class="mt-6 text-xl font-bold text-white">Your cart is empty</h2>
                 <p class="mt-2 text-slate-400">The first products are coming soon.</p>
                 <a href="{{ route('shop.index') }}" class="public-button-primary mt-7">Browse products</a>
