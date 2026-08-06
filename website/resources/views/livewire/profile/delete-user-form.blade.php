@@ -23,13 +23,14 @@ new class extends Component
     }
 }; ?>
 
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-base-content">
+<section class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+    <header class="max-w-3xl">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-red-300">Danger zone</p>
+        <h2 class="mt-2 text-xl font-extrabold text-white">
             {{ __('Delete Account') }}
         </h2>
 
-        <p class="mt-1 text-sm text-base-content/70">
+        <p class="mt-2 text-sm leading-6 text-slate-400">
             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
         </p>
     </header>
@@ -37,37 +38,34 @@ new class extends Component
     <button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-        class="btn btn-error"
+        class="inline-flex shrink-0 items-center justify-center rounded-xl border border-red-400/30 bg-red-500/10 px-5 py-3 text-sm font-bold text-red-200 hover:border-red-400/60 hover:bg-red-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
     >
         {{ __('Delete Account') }}
     </button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
-        <form wire:submit="deleteUser" class="p-6 bg-base-100">
-            <h2 class="text-lg font-medium text-base-content">
+        <form wire:submit="deleteUser" class="bg-[#12151a] p-6 sm:p-8">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-red-300">Permanent action</p>
+            <h2 class="mt-2 text-xl font-extrabold text-white">
                 {{ __('Are you sure you want to delete your account?') }}
             </h2>
 
-            <p class="mt-1 text-sm text-base-content/70">
+            <p class="mt-3 text-sm leading-6 text-slate-400">
                 {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
             </p>
 
             <div class="mt-6">
-                <label class="form-control w-full max-w-xs">
-                    <div class="label">
-                        <span class="label-text">{{ __('Password') }}</span>
-                    </div>
+                <label class="block">
+                    <span class="auth-label">{{ __('Password') }}</span>
                     <input
                         wire:model="password"
                         id="password"
                         name="password"
                         type="password"
                         placeholder="Enter your password"
-                        class="input input-bordered w-full max-w-xs"
+                        class="public-form-input mt-2"
                     />
-                    <div class="label">
-                        <span class="label-text-alt text-error">{{ $errors->first('password') }}</span>
-                    </div>
+                    @error('password') <span class="mt-2 block text-sm text-red-300">{{ $message }}</span> @enderror
                 </label>
             </div>
 
@@ -75,14 +73,14 @@ new class extends Component
                 <button
                     type="button"
                     x-on:click="$dispatch('close')"
-                    class="btn btn-secondary"
+                    class="public-button-secondary"
                 >
                     {{ __('Cancel') }}
                 </button>
 
                 <button
                     type="submit"
-                    class="btn btn-error"
+                    class="inline-flex items-center justify-center rounded-xl bg-red-500 px-5 py-3 text-sm font-bold text-white hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
                 >
                     {{ __('Delete Account') }}
                 </button>

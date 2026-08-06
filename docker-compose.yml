@@ -45,6 +45,14 @@ services:
     ports:
       - 6379:6379
 
+  mailpit:
+    container_name: andrej-mailpit
+    image: axllent/mailpit:latest
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+
   database-client:
     container_name: andrej-adminer
     image: adminer

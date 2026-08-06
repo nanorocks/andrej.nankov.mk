@@ -40,6 +40,18 @@
         @apply inline-flex items-center justify-center rounded-xl bg-red-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-950/30 hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500;
     }
 
+    .public-shop-cta {
+        @apply inline-flex items-center justify-center rounded-xl bg-red-500 px-4 py-2.5 text-sm font-extrabold text-white shadow-lg shadow-red-950/30 hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
+    }
+
+    .public-shop-cta-active {
+        @apply bg-red-400;
+    }
+
+    .public-account-link {
+        @apply ml-1 rounded-lg px-3 py-2 text-sm font-semibold text-slate-400 hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
+    }
+
     .public-cart-link {
         @apply inline-flex h-10 items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 text-sm font-bold text-white hover:border-red-500/50 hover:bg-red-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500;
     }

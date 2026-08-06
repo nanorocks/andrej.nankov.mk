@@ -7,7 +7,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Andrej Nankov') }}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet">
 
@@ -26,7 +29,10 @@
                     <span class="public-brand-mark" aria-hidden="true">
                         <img src="{{ asset('assets/avatars/personal_logo_notes_nankov.png') }}" alt="" width="48" height="48">
                     </span>
-                    <span class="hidden text-sm font-bold tracking-wide text-white sm:inline">Andrej Nankov</span>
+                    <span class="hidden leading-tight sm:block">
+                        <span class="block text-sm font-bold tracking-wide text-white">Andrej Nankov</span>
+                        <span class="block text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">Customer account</span>
+                    </span>
                 </a>
 
                 <livewire:layout.navigation />

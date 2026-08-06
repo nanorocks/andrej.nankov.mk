@@ -1,4 +1,4 @@
-const CACHE_NAME = 'andrej-nankov-v5';
+const CACHE_NAME = 'andrej-nankov-v6';
 
 const PRECACHE_URLS = [
     '/',

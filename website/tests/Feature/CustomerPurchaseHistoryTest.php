@@ -62,6 +62,22 @@ class CustomerPurchaseHistoryTest extends TestCase
             ->assertDontSee('txn_other_456');
     }
 
+    public function test_customer_profile_uses_the_public_design_system(): void
+    {
+        $customer = User::factory()->create();
+
+        $this->actingAs($customer)
+            ->get(route('profile'))
+            ->assertOk()
+            ->assertSee('Customer account')
+            ->assertSee('Profile &amp; downloads', false)
+            ->assertSee('public-form-input', false)
+            ->assertSee('public-button-primary', false)
+            ->assertDontSee('bg-base-100', false)
+            ->assertDontSee('btn btn-primary', false)
+            ->assertDontSee('x-transition', false);
+    }
+
     private function createOrder(User $user, Product $product, string $name): Order
     {
         $order = $user->orders()->create([

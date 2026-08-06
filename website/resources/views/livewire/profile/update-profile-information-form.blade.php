@@ -62,56 +62,47 @@ new class extends Component {
 }; ?>
 <section>
     <header>
-        <h2 class="text-lg font-medium text-base-content">
+        <p class="public-kicker">Account details</p>
+        <h2 class="mt-2 text-xl font-extrabold text-white">
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-sm text-base-content/70">
+        <p class="mt-2 text-sm leading-6 text-slate-400">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="space-y-0">
+    <form wire:submit="updateProfileInformation" class="mt-7 space-y-5">
         <div>
-            <label class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">{{ __('Name') }}</span>
-                </div>
+            <label class="block">
+                <span class="auth-label">{{ __('Name') }}</span>
                 <input type="text" wire:model="name" id="name" name="name" placeholder="Type your name"
-                    class="input input-bordered w-full max-w-xs" required autofocus autocomplete="name" />
-                <div class="label">
-                    <span class="label-text-alt text-error">{{ $errors->first('name') }}</span>
-                    <span class="label-text-alt"></span>
-                </div>
+                    class="public-form-input mt-2" required autofocus autocomplete="name" />
+                @error('name') <span class="mt-2 block text-sm text-red-300">{{ $message }}</span> @enderror
             </label>
         </div>
 
         <div>
-            <label class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">{{ __('Email') }}</span>
-                </div>
+            <label class="block">
+                <span class="auth-label">{{ __('Email') }}</span>
                 <input type="email" wire:model="email" id="email" name="email" placeholder="Type your email"
-                    class="input input-bordered w-full max-w-xs" required autocomplete="username" />
-                <div class="label">
-                    <span class="label-text-alt text-error">{{ $errors->first('email') }}</span>
-                    <span class="label-text-alt"></span>
-                </div>
+                    class="public-form-input mt-2" required autocomplete="username" />
+                @error('email') <span class="mt-2 block text-sm text-red-300">{{ $message }}</span> @enderror
             </label>
 
             @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
                 <div>
-                    <p class="mt-2 text-sm text-base-content/70">
+                    <p class="mt-3 rounded-xl border border-amber-400/20 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100">
                         {{ __('Your email address is unverified.') }}
 
                         <button wire:click.prevent="sendVerification"
-                            class="rounded-md text-sm text-primary underline hover:text-primary/80 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                            class="font-semibold text-amber-300 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-500">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-success">
+                        <p class="mt-3 text-sm font-semibold text-emerald-300">
                             {{ __('A new verification link has been sent to your email address.') }}
                         </p>
                     @endif
@@ -119,10 +110,10 @@ new class extends Component {
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+        <div class="flex items-center gap-4 pt-1">
+            <button type="submit" class="public-button-primary">{{ __('Save changes') }}</button>
 
-            <x-action-message class="me-3 text-success" on="profile-updated">
+            <x-action-message class="text-sm font-semibold text-emerald-300" on="profile-updated">
                 {{ __('Saved.') }}
             </x-action-message>
         </div>

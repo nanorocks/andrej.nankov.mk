@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Database\Seeders\GetStartedPageSeeder;
 use Database\Seeders\HomePageSeeder;
 use Database\Seeders\PageSeeder;
@@ -81,5 +82,23 @@ class PublicPagesTest extends TestCase
             ->assertSee(route('newsletter.subscribe'))
             ->assertSee('name="email"', false)
             ->assertSee('Subscribe');
+    }
+
+    public function test_signed_in_header_shows_customer_identity_and_menu(): void
+    {
+        $customer = User::factory()->create([
+            'name' => 'Test Customer',
+            'email' => 'customer@example.test',
+        ]);
+
+        $this->actingAs($customer)
+            ->get('/')
+            ->assertOk()
+            ->assertSee('Test Customer')
+            ->assertSee('customer@example.test')
+            ->assertSee(route('orders.index'))
+            ->assertSee(route('profile'))
+            ->assertSee(route('logout'))
+            ->assertSee('assets/avatars/andrej-nankov-profile.png', false);
     }
 }

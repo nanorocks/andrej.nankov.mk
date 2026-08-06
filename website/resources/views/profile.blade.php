@@ -1,12 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="text-xl font-semibold leading-tight text-white">
-            {{ __('Profile & purchases') }}
-        </h1>
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="public-kicker">Customer account</p>
+                <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-white">Profile &amp; downloads</h1>
+                <p class="mt-2 text-sm text-slate-400">Manage your details, security, purchases, and digital products.</p>
+            </div>
+            <a href="{{ route('shop.index') }}" class="public-shop-cta">Shop products</a>
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="space-y-6">
             <section class="rounded-3xl border border-white/10 bg-[#12151a] p-5 shadow-2xl shadow-black/20 sm:p-8" aria-labelledby="transactions-title">
                 <div class="flex flex-col gap-3 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
                     <div>
@@ -39,54 +43,44 @@
                 @endif
             </section>
 
-            <section class="p-4 sm:p-8 bg-base-100 shadow sm:rounded-lg" aria-labelledby="downloads-title">
-                <div class="max-w-3xl">
-                    <h2 id="downloads-title" class="text-xl font-semibold text-base-content">My downloads</h2>
-                    <p class="mt-1 text-sm text-base-content/70">Your purchased e-books are available here whenever you need them.</p>
+            <section class="rounded-3xl border border-white/10 bg-[#12151a] p-5 shadow-2xl shadow-black/20 sm:p-8" aria-labelledby="downloads-title">
+                <div class="border-b border-white/10 pb-6">
+                    <p class="public-kicker">Digital library</p>
+                    <h2 id="downloads-title" class="mt-2 text-2xl font-extrabold text-white">My downloads</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-400">Your purchased e-books remain available from this account.</p>
+                </div>
 
                     @if ($downloads->isEmpty())
-                        <div class="mt-5 rounded-xl border border-base-300 bg-base-200/50 p-5">
-                            <p class="font-medium text-base-content">No e-books yet</p>
-                            <p class="mt-1 text-sm text-base-content/70">Purchased e-books will appear after Paddle confirms payment.</p>
-                            <a href="{{ route('shop.index') }}" class="btn btn-primary btn-sm mt-4">Visit the shop</a>
+                        <div class="py-10 text-center">
+                            <p class="font-semibold text-white">No e-books yet</p>
+                            <p class="mt-2 text-sm text-slate-400">Purchased e-books appear after Paddle confirms payment.</p>
+                            <a href="{{ route('shop.index') }}" class="public-button-secondary mt-6">Browse e-books</a>
                         </div>
                     @else
-                        <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                        <div class="mt-6 grid gap-4 sm:grid-cols-2">
                             @foreach ($downloads as $product)
-                                <article class="rounded-xl border border-base-300 p-5">
-                                    <p class="font-semibold text-base-content">{{ $product->name }}</p>
-                                    <p class="mt-2 text-sm leading-6 text-base-content/70">{{ $product->description }}</p>
-                                    <a href="{{ route('downloads.show', $product) }}" class="btn btn-primary btn-sm mt-4">Download PDF</a>
+                                <article class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                                    <p class="font-bold text-white">{{ $product->name }}</p>
+                                    <p class="mt-2 text-sm leading-6 text-slate-400">{{ $product->description }}</p>
+                                    <a href="{{ route('downloads.show', $product) }}" class="public-button-primary mt-5">Download PDF</a>
                                 </article>
                             @endforeach
                         </div>
                     @endif
-                </div>
             </section>
 
-            <div class="p-4 sm:p-8 bg-base-100 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-xl">
-                        <livewire:profile.update-profile-information-form />
-                    </div>
+            <div class="grid gap-6 lg:grid-cols-2">
+                <div class="rounded-3xl border border-white/10 bg-[#12151a] p-5 shadow-2xl shadow-black/20 sm:p-8">
+                    <livewire:profile.update-profile-information-form />
+                </div>
+
+                <div class="rounded-3xl border border-white/10 bg-[#12151a] p-5 shadow-2xl shadow-black/20 sm:p-8">
+                    <livewire:profile.update-password-form />
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-base-100 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-xl">
-                        <livewire:profile.update-password-form />
-                    </div>
-                </div>
+            <div class="rounded-3xl border border-red-500/20 bg-red-500/[0.04] p-5 sm:p-8">
+                <livewire:profile.delete-user-form />
             </div>
-
-            <div class="p-4 sm:p-8 bg-base-100 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-xl">
-                        <livewire:profile.delete-user-form />
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </x-app-layout>
