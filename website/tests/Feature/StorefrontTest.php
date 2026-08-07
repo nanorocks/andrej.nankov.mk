@@ -37,7 +37,8 @@ class StorefrontTest extends TestCase
             ->assertSee('The Practical Systems Playbook')
             ->assertSee('Coming soon')
             ->assertSee('assets/avatars/personal_logo_notes_nankov.png', false)
-            ->assertSee('Visit Andrej Nankov on Medium');
+            ->assertSee('Visit Andrej Nankov on Medium')
+            ->assertSee('https://medium.com/@nanorocks', false);
     }
 
     public function test_coming_soon_products_cannot_be_added_to_the_cart(): void
@@ -162,10 +163,10 @@ class StorefrontTest extends TestCase
             ->get(route('profile'))
             ->assertOk()
             ->assertSee($product->name)
-            ->assertSee(route('downloads.show', $product));
+            ->assertSee('method="POST" action="'.route('downloads.show', $product).'"', false);
 
         $this->actingAs($user)
-            ->get(route('downloads.show', $product))
+            ->post(route('downloads.show', $product))
             ->assertDownload($product->slug.'.pdf');
     }
 
@@ -173,12 +174,56 @@ class StorefrontTest extends TestCase
     {
         Storage::fake('local');
 
-        $user = User::factory()->create();
+        $owner = User::factory()->create();
+        $otherUser = User::factory()->create();
         $product = Product::where('slug', 'practical-systems-playbook')->firstOrFail();
         Storage::disk('local')->put($product->download_path, 'example ebook');
 
-        $this->actingAs($user)
-            ->get(route('downloads.show', $product))
+        $order = $owner->orders()->create([
+            'status' => Order::STATUS_COMPLETED,
+            'total' => $product->price,
+            'currency' => $product->currency,
+            'completed_at' => now(),
+        ]);
+        $order->items()->create([
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'paddle_price_id' => 'pri_test_ebook',
+            'quantity' => 1,
+            'unit_price' => $product->price,
+        ]);
+
+        $this->actingAs($otherUser)
+            ->post(route('downloads.show', $product))
             ->assertNotFound();
+
+        $this->get(route('downloads.show', $product))->assertStatus(405);
+    }
+
+    public function test_an_unverified_owner_can_download_a_purchased_ebook_from_their_library(): void
+    {
+        Storage::fake('local');
+
+        $user = User::factory()->unverified()->create();
+        $product = Product::where('slug', 'practical-systems-playbook')->firstOrFail();
+        Storage::disk('local')->put($product->download_path, 'example ebook');
+
+        $order = $user->orders()->create([
+            'status' => Order::STATUS_COMPLETED,
+            'total' => $product->price,
+            'currency' => $product->currency,
+            'completed_at' => now(),
+        ]);
+        $order->items()->create([
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'paddle_price_id' => 'pri_test_ebook',
+            'quantity' => 1,
+            'unit_price' => $product->price,
+        ]);
+
+        $this->actingAs($user)
+            ->post(route('downloads.show', $product))
+            ->assertDownload($product->slug.'.pdf');
     }
 }

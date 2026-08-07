@@ -73,9 +73,27 @@ class CustomerPurchaseHistoryTest extends TestCase
             ->assertSee('Profile &amp; downloads', false)
             ->assertSee('public-form-input', false)
             ->assertSee('public-button-primary', false)
+            ->assertSee('id="delete_account_password"', false)
+            ->assertSee('placeholder="Enter your current password"', false)
+            ->assertSee('z-[70]', false)
+            ->assertSee('relative z-10', false)
             ->assertDontSee('bg-base-100', false)
             ->assertDontSee('btn btn-primary', false)
             ->assertDontSee('x-transition', false);
+    }
+
+    public function test_owner_can_render_account_navigation_with_admin_link(): void
+    {
+        $owner = User::factory()->create([
+            'email' => 'andrejnankov@gmail.com',
+            'email_verified_at' => now(),
+        ]);
+
+        $this->actingAs($owner)
+            ->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Administration')
+            ->assertSee(url('/admin'));
     }
 
     private function createOrder(User $user, Product $product, string $name): Order

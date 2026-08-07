@@ -59,11 +59,13 @@ new class extends Component
                     <span class="auth-label">{{ __('Password') }}</span>
                     <input
                         wire:model="password"
-                        id="password"
-                        name="password"
+                        id="delete_account_password"
+                        name="delete_account_password"
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Enter your current password"
                         class="public-form-input mt-2"
+                        autocomplete="current-password"
+                        required
                     />
                     @error('password') <span class="mt-2 block text-sm text-red-300">{{ $message }}</span> @enderror
                 </label>

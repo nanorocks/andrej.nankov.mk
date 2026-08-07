@@ -30,7 +30,7 @@ new class extends Component {
     <details class="relative">
         <summary class="flex cursor-pointer list-none items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-2 py-1.5 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">
             <span class="overflow-hidden bg-black border-2 rounded-full h-9 w-9 border-red-500/80" aria-hidden="true">
-                <img src="{{ asset('assets/avatars/andrej-nankov-profile.png') }}" alt="" width="40" height="40" class="object-cover w-full h-full">
+                <img src="{{ auth()->user()->profile_photo_url }}" alt="" width="40" height="40" class="object-cover w-full h-full">
             </span>
             <span class="hidden truncate max-w-32 sm:inline">{{ auth()->user()->name }}</span>
             <span class="text-slate-500" aria-hidden="true">&#9662;</span>
@@ -43,7 +43,7 @@ new class extends Component {
             <a class="lg:hidden" href="{{ route('shop.cart') }}">Cart ({{ app(\App\Support\ShoppingCart::class)->count() }})</a>
             <a href="{{ route('profile') }}">Profile &amp; downloads</a>
             @if (auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
-                <a href="{{ route('filament.admin.home') }}">Administration</a>
+                <a href="{{ \Filament\Facades\Filament::getPanel('admin')->getUrl() }}">Administration</a>
             @endif
             <a href="{{ route('home') }}">View website</a>
             <button type="button" wire:click="logout" class="px-4 py-3 text-left text-red-300 rounded-lg hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-500">

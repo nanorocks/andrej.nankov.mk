@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\SocialLink;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SocialLinksSeeder extends Seeder
 {
@@ -22,7 +21,7 @@ class SocialLinksSeeder extends Seeder
             ],
             [
                 'name' => 'Medium',
-                'url' => 'https://medium.com/nanorocks',
+                'url' => 'https://medium.com/@nanorocks',
                 'icon' => 'book-open',
                 'active' => true,
             ],
@@ -48,7 +47,7 @@ class SocialLinksSeeder extends Seeder
 
         foreach ($links as $link) {
             SocialLink::updateOrCreate(
-                ['url' => $link['url']],
+                ['name' => $link['name']],
                 $link
             );
         }

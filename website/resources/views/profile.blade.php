@@ -62,7 +62,10 @@
                                 <article class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                                     <p class="font-bold text-white">{{ $product->name }}</p>
                                     <p class="mt-2 text-sm leading-6 text-slate-400">{{ $product->description }}</p>
-                                    <a href="{{ route('downloads.show', $product) }}" class="public-button-primary mt-5">Download PDF</a>
+                                    <form method="POST" action="{{ route('downloads.show', $product) }}" class="mt-5">
+                                        @csrf
+                                        <button type="submit" class="public-button-primary">Download PDF</button>
+                                    </form>
                                 </article>
                             @endforeach
                         </div>

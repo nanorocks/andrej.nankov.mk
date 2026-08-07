@@ -86,6 +86,16 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Get a stable generated avatar until the user uploads a profile photo.
+     */
+    protected function defaultProfilePhotoUrl(): string
+    {
+        $identifier = hash('sha256', mb_strtolower(trim($this->email)));
+
+        return "https://robohash.org/{$identifier}.png?size=256x256";
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->email === 'andrejnankov@gmail.com';

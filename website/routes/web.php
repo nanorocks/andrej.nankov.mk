@@ -40,10 +40,11 @@ Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('shop
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('shop.checkout');
     Route::get('/checkout/{order}/success', [CheckoutController::class, 'success'])->name('shop.checkout.success');
-    Route::get('/downloads/{product}', EbookDownloadController::class)
-        ->middleware('throttle:20,1')
-        ->name('downloads.show');
 });
+
+Route::post('/downloads/{product}', EbookDownloadController::class)
+    ->middleware(['auth', 'throttle:20,1'])
+    ->name('downloads.show');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

@@ -15,7 +15,7 @@ class PageSeeder extends Seeder
                 'flag' => 'about',
                 'profile_image' => 'pages/01K4YGCMYHZRYQ601TY2VYC9EN.png',
                 'name' => 'Andrej Nankov',
-                'title' => 'Software Engineer | M.Sc. | YOE +7',
+                'title' => 'Software Engineer | M.Sc. | YOE +8',
                 'role' => null,
                 'headline' => null,
                 'intro' => null,
@@ -26,7 +26,7 @@ My work is guided by <span class="font-semibold text-red-400">Discipline</span>,
 <span class="font-semibold text-red-400">Focus</span>.
 </li>
 </ul>
-<p>I partner with startups and companies to turn complex ideas into reliable, scalable software solutions. With over 7 years of hands-on experience in <span class="font-semibold">FinTech, E-commerce, Telecommunications, and Digital Transformation</span>, I bring a mix of technical expertise and strategic guidance to every project.</p>
+<p>I partner with startups and companies to turn complex ideas into reliable, scalable software solutions. With over 8 years of hands-on experience in <span class="font-semibold">FinTech, E-commerce, Telecommunications, and Digital Transformation</span>, I bring a mix of technical expertise and strategic guidance to every project.</p>
 <p>I specialize in <span class="font-semibold">technical consulting, system architecture, and hands-on development</span>. From planning and design to deployment and optimization, I help teams make the right decisions early, avoid costly mistakes, and deliver software that truly works for their business.</p>
 <p>My expertise spans both frontend and backend development, with experience across the JavaScript, PHP, and Java ecosystems. I enjoy creating clean, efficient code, implementing best practices like SOLID principles and design patterns, and mentoring teams to grow.</p>
 <p>Beyond client work, I share knowledge through writing, blogging, and content creation about software engineering, finance, and technology trends. I’m also passionate about exploring new places and documenting my travels through video content.</p>

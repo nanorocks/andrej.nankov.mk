@@ -91,6 +91,8 @@ class PublicPagesTest extends TestCase
             'email' => 'customer@example.test',
         ]);
 
+        $avatarUrl = 'https://robohash.org/'.hash('sha256', 'customer@example.test').'.png?size=256x256';
+
         $this->actingAs($customer)
             ->get('/')
             ->assertOk()
@@ -99,6 +101,6 @@ class PublicPagesTest extends TestCase
             ->assertSee(route('orders.index'))
             ->assertSee(route('profile'))
             ->assertSee(route('logout'))
-            ->assertSee('assets/avatars/andrej-nankov-profile.png', false);
+            ->assertSee($avatarUrl, false);
     }
 }

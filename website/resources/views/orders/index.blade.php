@@ -45,7 +45,10 @@
                                     <div class="flex shrink-0 items-center gap-4">
                                         <span class="font-semibold text-slate-200">{{ number_format(($item->unit_price * $item->quantity) / 100, 2) }} {{ $order->currency }}</span>
                                         @if ($order->isCompleted() && $item->product?->type === \App\Models\Product::TYPE_EBOOK)
-                                            <a href="{{ route('downloads.show', $item->product) }}" class="public-text-link font-semibold">Download</a>
+                                            <form method="POST" action="{{ route('downloads.show', $item->product) }}">
+                                                @csrf
+                                                <button type="submit" class="public-text-link font-semibold">Download</button>
+                                            </form>
                                         @endif
                                     </div>
                                 </li>

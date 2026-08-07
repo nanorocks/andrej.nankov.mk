@@ -26,7 +26,7 @@
             <details class="relative ml-1">
                 <summary class="flex cursor-pointer list-none items-center gap-2 rounded-xl border border-white/10 bg-white/5 py-1.5 pl-1.5 pr-3 text-sm font-semibold text-white hover:border-white/20 hover:bg-white/[0.08] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">
                     <span class="h-8 w-8 overflow-hidden rounded-full border border-red-500/70 bg-black" aria-hidden="true">
-                        <img src="{{ asset('assets/avatars/andrej-nankov-profile.png') }}" alt="" width="32" height="32" class="h-full w-full object-cover">
+                        <img src="{{ auth()->user()->profile_photo_url }}" alt="" width="32" height="32" class="h-full w-full object-cover">
                     </span>
                     <span class="max-w-28 truncate">{{ auth()->user()->name }}</span>
                     <span class="text-xs text-slate-500" aria-hidden="true">&#9662;</span>
@@ -40,7 +40,7 @@
                     <a href="{{ route('orders.index') }}">My orders</a>
                     <a href="{{ route('profile') }}">Profile &amp; downloads</a>
                     @if (auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
-                        <a href="{{ route('filament.admin.home') }}">Administration</a>
+                        <a href="{{ \Filament\Facades\Filament::getPanel('admin')->getUrl() }}">Administration</a>
                     @endif
                     <a href="{{ route('logout') }}" class="text-red-300">Sign out</a>
                 </nav>
@@ -68,7 +68,7 @@
                 <a href="{{ route('orders.index') }}">My orders</a>
                 <a href="{{ route('profile') }}">Profile &amp; downloads</a>
                 @if (auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
-                    <a href="{{ route('filament.admin.home') }}">Administration</a>
+                    <a href="{{ \Filament\Facades\Filament::getPanel('admin')->getUrl() }}">Administration</a>
                 @endif
                 <a href="{{ route('logout') }}" class="text-red-300">Sign out</a>
             @else

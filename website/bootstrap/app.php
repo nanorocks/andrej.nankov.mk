@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // cPanel, Cloudflare and local ngrok terminate HTTPS before forwarding
+        // the request to Laravel. Trust their forwarded scheme/host so secure
+        // Filament and Livewire URLs are not downgraded to HTTP.
+        $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: ['paddle/*']);
         $middleware->appendToGroup('web', SecurityHeaders::class);
         $middleware->appendToGroup('web', DetectBruteForce::class);
