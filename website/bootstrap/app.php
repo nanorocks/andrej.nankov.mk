@@ -1,13 +1,9 @@
 <?php
 
-use App\Http\Middleware\DetectBruteForce;
 use App\Http\Middleware\SecurityHeaders;
-use App\Listeners\FailedLoginListener;
-use Illuminate\Auth\Events\Failed;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Support\Facades\Event;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,7 +19,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: ['paddle/*']);
         $middleware->appendToGroup('web', SecurityHeaders::class);
-        $middleware->appendToGroup('web', DetectBruteForce::class);
     })
     ->withEvents(discover: [
         __DIR__.'/../app/Listeners',
@@ -31,6 +26,4 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })
-    ->booting(function () {
-        Event::listen(Failed::class, FailedLoginListener::class);
-    })->create();
+    ->create();
