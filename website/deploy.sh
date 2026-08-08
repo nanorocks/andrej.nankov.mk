@@ -1,140 +1,278 @@
 #!/usr/bin/env bash
-# ============================================================
-# Production deploy script — andrej.nankov.mk
-# Run this from the Laravel root on the server (public_html/)
-# after files have been uploaded via FTP.
-#
-# Usage: bash deploy.sh
-# ============================================================
 
-set -e
+# Guarded cPanel deployment for andrej.nankov.mk.
+# Usage: bash deploy.sh production|staging [--yes] [--dry-run]
 
-# ── Colours ─────────────────────────────────────────────────
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
+set -Eeuo pipefail
 
-step()  { echo -e "\n${YELLOW}▶ $1${NC}"; }
-ok()    { echo -e "${GREEN}  ✓ $1${NC}"; }
-fail()  { echo -e "${RED}  ✗ $1${NC}"; exit 1; }
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
+readonly RED='\033[0;31m'
+readonly NC='\033[0m'
 
-# ── PHP path detection ───────────────────────────────────────
-# Prefer the shell-resolved php (honours cPanel's per-account PHP version),
-# then fall back to known EasyApache paths.
-for candidate in \
-    "$(which php 2>/dev/null)" \
-    "/opt/cpanel/ea-php84/root/usr/bin/php" \
-    "/opt/cpanel/ea-php83/root/usr/bin/php" \
-    "/usr/local/bin/php"; do
-    if [ -x "$candidate" ]; then
-        PHP="$candidate"
-        break
-    fi
+TARGET="${1:-}"
+shift || true
+
+ASSUME_YES=false
+DRY_RUN=false
+
+for argument in "$@"; do
+    case "$argument" in
+        --yes) ASSUME_YES=true ;;
+        --dry-run) DRY_RUN=true ;;
+        *) printf '%bUnknown option: %s%b\n' "$RED" "$argument" "$NC" >&2; exit 2 ;;
+    esac
 done
 
-[ -z "$PHP" ] && fail "PHP not found. Set PHP= manually at the top of this script."
+case "$TARGET" in
+    production)
+        readonly BRANCH='main'
+        readonly REPOSITORY_ROOT='/home/nankovmk/public_html/cicd_projects/nankov.mk'
+        readonly HEALTH_URL='https://andrej.nankov.mk/'
+        ;;
+    staging)
+        readonly BRANCH='develop'
+        readonly REPOSITORY_ROOT='/home/nankovmk/public_html/cicd_projects/stage.nankov.mk'
+        readonly HEALTH_URL='https://stage.nankov.mk/'
+        ;;
+    *)
+        printf 'Usage: %s production|staging [--yes] [--dry-run]\n' "$0" >&2
+        exit 2
+        ;;
+esac
 
-# ── Composer path detection ──────────────────────────────────
-for candidate in \
-    "$HOME/bin/composer" \
-    "/usr/local/bin/composer" \
-    "$(which composer 2>/dev/null)"; do
-    if [ -x "$candidate" ]; then
-        COMPOSER="$candidate"
-        break
+readonly APPLICATION_ROOT="$REPOSITORY_ROOT/website"
+readonly REMOTE='origin'
+readonly SEEDERS=(
+    'Database\Seeders\PageSeeder'
+    'Database\Seeders\HomePageSeeder'
+    'Database\Seeders\GetStartedPageSeeder'
+    'Database\Seeders\SocialLinksSeeder'
+    'Database\Seeders\StoreProductSeeder'
+)
+
+step() { printf '\n%b▶ %s%b\n' "$YELLOW" "$1" "$NC"; }
+ok() { printf '%b  ✓ %s%b\n' "$GREEN" "$1" "$NC"; }
+fail() { printf '%b  ✗ %s%b\n' "$RED" "$1" "$NC" >&2; return 1; }
+
+if $DRY_RUN; then
+    printf 'Target:           %s\n' "$TARGET"
+    printf 'Branch:           %s\n' "$BRANCH"
+    printf 'Repository root:  %s\n' "$REPOSITORY_ROOT"
+    printf 'Application root: %s\n' "$APPLICATION_ROOT"
+    printf 'Health URL:       %s\n' "$HEALTH_URL"
+    exit 0
+fi
+
+PHASE='preflight'
+MAINTENANCE_ACTIVE=false
+CANDIDATE_PARENT=''
+CANDIDATE_REPOSITORY=''
+PREVIOUS_COMMIT='not recorded'
+
+cleanup_candidate() {
+    if [[ -n "$CANDIDATE_REPOSITORY" && -d "$CANDIDATE_REPOSITORY" ]]; then
+        git -C "$REPOSITORY_ROOT" worktree remove --force "$CANDIDATE_REPOSITORY" >/dev/null 2>&1 || true
     fi
+
+    if [[ -n "$CANDIDATE_PARENT" && -d "$CANDIDATE_PARENT" ]]; then
+        rmdir "$CANDIDATE_PARENT" >/dev/null 2>&1 || true
+    fi
+}
+
+handle_error() {
+    local exit_code=$?
+    trap - ERR INT TERM
+    cleanup_candidate
+
+    printf '\n%bDeployment failed during: %s%b\n' "$RED" "$PHASE" "$NC" >&2
+    printf 'Previous live commit: %s\n' "$PREVIOUS_COMMIT" >&2
+
+    if $MAINTENANCE_ACTIVE; then
+        printf '%bThe application remains in maintenance mode to avoid serving an inconsistent release.%b\n' "$YELLOW" "$NC" >&2
+        printf 'After resolving the problem, bring it online with:\n  cd %q && %q artisan up\n' "$APPLICATION_ROOT" "${PHP_BIN:-php}" >&2
+    fi
+
+    exit "$exit_code"
+}
+
+trap handle_error ERR INT TERM
+
+step 'Checking server prerequisites'
+for command_name in git php composer node npm curl mktemp sha256sum; do
+    command -v "$command_name" >/dev/null 2>&1 || fail "$command_name is required but was not found."
 done
 
-[ -z "$COMPOSER" ] && fail "Composer not found. Install it or set COMPOSER= manually."
+readonly PHP_BIN="$(command -v php)"
+readonly COMPOSER_BIN="$(command -v composer)"
+readonly NPM_BIN="$(command -v npm)"
 
-# ── Sanity check ─────────────────────────────────────────────
-[ ! -f "artisan" ] && fail "artisan not found. Run this script from the Laravel root (public_html/)."
+"$PHP_BIN" -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' \
+    || fail "PHP 8.2 or newer is required; found $($PHP_BIN -r 'echo PHP_VERSION;')."
 
-echo ""
-echo "============================================================"
-echo "  🚀  andrej.nankov.mk — Production Deploy"
-echo "============================================================"
-echo "  PHP:      $PHP ($($PHP -r 'echo PHP_VERSION;'))"
-echo "  Composer: $COMPOSER"
-echo "  Dir:      $(pwd)"
-echo "============================================================"
+[[ -d "$REPOSITORY_ROOT/.git" ]] || fail "Git repository not found at $REPOSITORY_ROOT."
+[[ -f "$APPLICATION_ROOT/artisan" ]] || fail "Laravel artisan file not found at $APPLICATION_ROOT."
+[[ -f "$APPLICATION_ROOT/.env" ]] || fail "Missing $APPLICATION_ROOT/.env. Create it manually before deployment."
+[[ -w "$APPLICATION_ROOT/storage" ]] || fail "$APPLICATION_ROOT/storage is not writable."
+[[ -w "$APPLICATION_ROOT/bootstrap/cache" ]] || fail "$APPLICATION_ROOT/bootstrap/cache is not writable."
 
-# ── 1. Maintenance mode on ───────────────────────────────────
-step "Enabling maintenance mode"
-$PHP artisan down --retry=15 --secret="deploy-secret" 2>/dev/null || true
-ok "Maintenance mode active"
+actual_root="$(git -C "$REPOSITORY_ROOT" rev-parse --show-toplevel)"
+[[ "$actual_root" == "$REPOSITORY_ROOT" ]] || fail "Expected repository root $REPOSITORY_ROOT, found $actual_root."
 
-# ── 2. Composer dependencies ─────────────────────────────────
-step "Installing Composer dependencies (production)"
-$COMPOSER install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction \
-    --prefer-dist \
-    --quiet
-ok "Dependencies installed"
+current_branch="$(git -C "$REPOSITORY_ROOT" branch --show-current)"
+[[ "$current_branch" == "$BRANCH" ]] || fail "$TARGET must be on branch $BRANCH; currently on ${current_branch:-detached HEAD}."
 
-# ── 3. Migrations ────────────────────────────────────────────
-step "Running database migrations"
-$PHP artisan migrate --force
-ok "Migrations done"
+[[ -z "$(git -C "$REPOSITORY_ROOT" status --porcelain --untracked-files=no)" ]] \
+    || fail 'The server has tracked file changes. Commit or restore them before deploying.'
 
-step "Syncing storefront products"
-$PHP artisan db:seed --class=StoreProductSeeder --force
-ok "Storefront products synced"
+PREVIOUS_COMMIT="$(git -C "$REPOSITORY_ROOT" rev-parse HEAD)"
+ENV_CHECKSUM="$(sha256sum "$APPLICATION_ROOT/.env" | awk '{print $1}')"
+ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;') and Node $(node --version)"
 
-# ── 4. Storage symlink ───────────────────────────────────────
-step "Ensuring storage symlink"
-$PHP artisan storage:link --force 2>/dev/null || true
-ok "Storage linked"
+step "Fetching $REMOTE/$BRANCH"
+git -C "$REPOSITORY_ROOT" fetch --prune "$REMOTE" "$BRANCH"
+readonly RELEASE_COMMIT="$(git -C "$REPOSITORY_ROOT" rev-parse "$REMOTE/$BRANCH")"
+ok "Candidate commit: $RELEASE_COMMIT"
 
-# ── 5. Filament upgrade ──────────────────────────────────────
-step "Upgrading Filament assets"
-$PHP artisan filament:upgrade
-ok "Filament upgraded"
+PHASE='candidate validation'
+step 'Creating isolated candidate release'
+CANDIDATE_PARENT="$(mktemp -d "${TMPDIR:-/tmp}/nankov-deploy-${TARGET}.XXXXXX")"
+CANDIDATE_REPOSITORY="$CANDIDATE_PARENT/repository"
+git -C "$REPOSITORY_ROOT" worktree add --detach "$CANDIDATE_REPOSITORY" "$RELEASE_COMMIT"
+readonly CANDIDATE_APPLICATION="$CANDIDATE_REPOSITORY/website"
+install -m 600 "$APPLICATION_ROOT/.env" "$CANDIDATE_APPLICATION/.env"
 
-# ── 6. Sitemap ───────────────────────────────────────────────
-step "Generating sitemap"
-$PHP artisan sitemap:generate
-ok "sitemap.xml generated"
+step 'Installing candidate PHP dependencies'
+(
+    cd "$CANDIDATE_APPLICATION"
+    "$COMPOSER_BIN" install --prefer-dist --no-interaction --optimize-autoloader
+)
 
-# ── 7. Optimise ──────────────────────────────────────────────
-step "Caching config / routes / views"
-$PHP artisan config:cache
-$PHP artisan route:cache
-$PHP artisan view:cache
-$PHP artisan event:cache
-ok "Application optimised"
+step 'Installing and building candidate frontend assets'
+(
+    cd "$CANDIDATE_APPLICATION"
+    "$NPM_BIN" ci --no-audit --no-fund
+    "$NPM_BIN" run build
+)
 
-# ── 8. Queue restart ─────────────────────────────────────────
-step "Restarting queue workers"
-$PHP artisan queue:restart
-ok "Queue workers signalled to restart"
+step 'Running candidate test suite'
+(
+    cd "$CANDIDATE_APPLICATION"
+    "$PHP_BIN" artisan test
+    "$PHP_BIN" artisan config:clear
+    "$PHP_BIN" artisan route:list >/dev/null
+)
+ok 'Candidate dependencies, build, tests, and application boot passed'
 
-# ── 9. Permissions ───────────────────────────────────────────
-step "Setting directory permissions"
-chmod -R 775 storage bootstrap/cache 2>/dev/null || true
-ok "Permissions set"
+if [[ "$TARGET" == 'production' ]] && ! $ASSUME_YES; then
+    printf '\nDeploy tested commit %s to PRODUCTION? Type production to continue: ' "$RELEASE_COMMIT"
+    read -r confirmation
+    [[ "$confirmation" == 'production' ]] || fail 'Production deployment cancelled.'
+fi
 
-# ── 10. Maintenance mode off ─────────────────────────────────
-step "Bringing application back online"
-$PHP artisan up
-ok "Application is live ✅"
+PHASE='maintenance mode'
+step 'Enabling maintenance mode'
+(
+    cd "$APPLICATION_ROOT"
+    "$PHP_BIN" artisan down --retry=15
+)
+MAINTENANCE_ACTIVE=true
+ok 'Maintenance mode enabled'
 
-echo ""
-echo "============================================================"
-echo "  ✅  Deploy complete!"
-echo ""
-echo "  Next steps (if first deploy):"
-echo "  1. Add GOOGLE_ANALYTICS_ID=G-213784361 to .env"
-echo "  2. Add GOOGLE_SITE_VERIFICATION= to .env"
-echo "  3. Add Telegram / Slack / mail secrets to .env"
-echo "  4. Add Paddle credentials to .env and register this webhook:"
-echo "     https://andrej.nankov.mk/paddle/webhook"
-echo "  5. Submit sitemap to Google Search Console:"
-echo "     https://andrej.nankov.mk/sitemap.xml"
-echo "  6. Add cron in cPanel (Cron Jobs):"
-echo "     * * * * * $PHP $(pwd)/artisan schedule:run >> /dev/null 2>&1"
-echo "============================================================"
-echo ""
+PHASE='source update'
+step "Fast-forwarding $BRANCH to the tested commit"
+git -C "$REPOSITORY_ROOT" merge --ff-only "$RELEASE_COMMIT"
+[[ "$(git -C "$REPOSITORY_ROOT" rev-parse HEAD)" == "$RELEASE_COMMIT" ]] \
+    || fail 'Live checkout does not match the tested commit.'
+[[ -f "$APPLICATION_ROOT/.env" ]] || fail '.env disappeared during source update.'
+[[ "$(sha256sum "$APPLICATION_ROOT/.env" | awk '{print $1}')" == "$ENV_CHECKSUM" ]] \
+    || fail '.env changed during deployment; stopping immediately.'
+ok 'Source updated and .env preserved'
+
+PHASE='production dependencies'
+step 'Installing production PHP dependencies'
+(
+    cd "$APPLICATION_ROOT"
+    "$COMPOSER_BIN" install \
+        --no-dev \
+        --prefer-dist \
+        --optimize-autoloader \
+        --no-interaction
+)
+
+step 'Installing and building production frontend assets'
+(
+    cd "$APPLICATION_ROOT"
+    "$NPM_BIN" ci --no-audit --no-fund
+    "$NPM_BIN" run build
+)
+
+PHASE='database migration'
+step 'Clearing stale caches and running migrations'
+(
+    cd "$APPLICATION_ROOT"
+    "$PHP_BIN" artisan optimize:clear
+    "$PHP_BIN" artisan migrate --force
+)
+ok 'Database migrations completed'
+
+PHASE='database seeders'
+step 'Running approved idempotent seeders'
+for seeder in "${SEEDERS[@]}"; do
+    (
+        cd "$APPLICATION_ROOT"
+        "$PHP_BIN" artisan db:seed --class="$seeder" --force
+    )
+done
+ok 'Approved seeders completed'
+
+PHASE='application finalization'
+step 'Finalizing Laravel assets and caches'
+(
+    cd "$APPLICATION_ROOT"
+    "$PHP_BIN" artisan storage:link --force
+    "$PHP_BIN" artisan filament:upgrade
+    "$PHP_BIN" artisan sitemap:generate
+    "$PHP_BIN" artisan config:cache
+    "$PHP_BIN" artisan route:cache
+    "$PHP_BIN" artisan view:cache
+    "$PHP_BIN" artisan event:cache
+    "$PHP_BIN" artisan queue:restart
+    "$PHP_BIN" artisan horizon:terminate >/dev/null 2>&1 || true
+)
+
+find "$APPLICATION_ROOT/storage" "$APPLICATION_ROOT/bootstrap/cache" -type d -exec chmod 775 {} +
+find "$APPLICATION_ROOT/storage" "$APPLICATION_ROOT/bootstrap/cache" -type f -exec chmod 664 {} +
+
+[[ "$(sha256sum "$APPLICATION_ROOT/.env" | awk '{print $1}')" == "$ENV_CHECKSUM" ]] \
+    || fail '.env changed during application finalization.'
+ok 'Application finalized and .env checksum verified'
+
+PHASE='bringing application online'
+step 'Disabling maintenance mode'
+(
+    cd "$APPLICATION_ROOT"
+    "$PHP_BIN" artisan up
+)
+MAINTENANCE_ACTIVE=false
+
+PHASE='HTTP health check'
+step "Checking $HEALTH_URL"
+if ! curl --fail --location --silent --show-error --max-time 30 "$HEALTH_URL" >/dev/null; then
+    (
+        cd "$APPLICATION_ROOT"
+        "$PHP_BIN" artisan down --retry=15
+    )
+    MAINTENANCE_ACTIVE=true
+    fail 'Health check failed; application returned to maintenance mode.'
+fi
+
+cleanup_candidate
+trap - ERR INT TERM
+
+printf '\n%bDeployment complete%b\n' "$GREEN" "$NC"
+printf 'Environment: %s\n' "$TARGET"
+printf 'Branch:      %s\n' "$BRANCH"
+printf 'Previous:    %s\n' "$PREVIOUS_COMMIT"
+printf 'Deployed:    %s\n' "$RELEASE_COMMIT"
+printf 'Health URL:  %s\n' "$HEALTH_URL"

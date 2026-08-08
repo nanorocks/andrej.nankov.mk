@@ -48,19 +48,19 @@ class PublicPagesTest extends TestCase
         $this->get('/offline')->assertOk();
     }
 
-    public function test_dashboard_route_is_gone(): void
+    public function test_dashboard_requires_authentication(): void
     {
-        $this->get('/dashboard')->assertNotFound();
+        $this->get('/dashboard')->assertRedirect(route('login'));
     }
 
-    public function test_profile_route_is_gone(): void
+    public function test_profile_requires_authentication(): void
     {
-        $this->get('/profile')->assertNotFound();
+        $this->get('/profile')->assertRedirect(route('login'));
     }
 
-    public function test_logout_standalone_route_is_gone(): void
+    public function test_logout_requires_authentication(): void
     {
-        $this->get('/logout')->assertNotFound();
+        $this->get('/logout')->assertRedirect(route('login'));
     }
 
     public function test_admin_redirects_guests_to_filament_login(): void

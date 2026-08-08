@@ -47,8 +47,17 @@ class AdminPasswordResetTest extends TestCase
 
     public function test_authenticated_admin_reaches_panel(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email' => 'andrejnankov@gmail.com',
+            'email_verified_at' => now(),
+        ]);
 
-        $this->actingAs($user)->get('/admin')->assertOk();
+        $this->actingAs($user)
+            ->get('/admin')
+            ->assertRedirect('/admin/dashboard');
+
+        $this->actingAs($user)
+            ->get('/admin/dashboard')
+            ->assertOk();
     }
 }
