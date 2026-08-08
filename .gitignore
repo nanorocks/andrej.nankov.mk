@@ -2,3 +2,11 @@
 .DS_Store
 .idea
 .commitsage
+
+# cPanel and legacy FTP deployment metadata
+.ftp-deploy-sync-state.json
+.ftpquota
+beckup/
+
+# Web-server runtime logs
+website/public/error_log
