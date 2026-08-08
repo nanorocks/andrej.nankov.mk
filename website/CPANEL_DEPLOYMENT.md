@@ -81,9 +81,11 @@ must be able to read the GitHub repository.
 
 The deployment script automatically adds cPanel EasyApache Node.js (or an
 account-level nvm installation) to `PATH`, because cPanel Git deployment tasks
-run in a non-interactive shell. If preflight still reports that `node` is
-missing, install a supported Node.js package in WHM/EasyApache or ask the host
-to enable it for the account before retrying the deployment.
+run in a non-interactive shell. When Node.js is unavailable, deployment uses
+the version-controlled Vite assets in `public/build` and verifies that every
+manifest entry exists. Always run `npm run build` and commit the resulting
+assets when frontend sources change. When Node.js is available on the server,
+the deployment continues to install and rebuild frontend dependencies there.
 
 ## Deploy manually
 

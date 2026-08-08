@@ -80,6 +80,42 @@ configure_node_path() {
     done
 }
 
+validate_frontend_assets() {
+    local application_root="$1"
+    local manifest="$application_root/public/build/manifest.json"
+
+    [[ -s "$manifest" ]] || fail "Missing compiled Vite manifest: $manifest"
+
+    "$PHP_BIN" -r '
+        $root = $argv[1];
+        $manifest = json_decode(
+            file_get_contents($root . "/public/build/manifest.json"),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        if ($manifest === []) {
+            fwrite(STDERR, "Vite manifest is empty.\n");
+            exit(1);
+        }
+
+        foreach ($manifest as $entry) {
+            $assets = array_merge(
+                isset($entry["file"]) ? [$entry["file"]] : [],
+                $entry["css"] ?? []
+            );
+
+            foreach ($assets as $asset) {
+                if (!is_file($root . "/public/build/" . $asset)) {
+                    fwrite(STDERR, "Missing compiled Vite asset: " . $asset . "\n");
+                    exit(1);
+                }
+            }
+        }
+    ' "$application_root"
+}
+
 if $DRY_RUN; then
     printf 'Target:           %s\n' "$TARGET"
     printf 'Branch:           %s\n' "$BRANCH"
@@ -125,14 +161,22 @@ trap handle_error ERR INT TERM
 
 step 'Checking server prerequisites'
 configure_node_path
-for command_name in git php composer node npm curl mktemp sha256sum; do
+for command_name in git php composer curl mktemp sha256sum; do
     command -v "$command_name" >/dev/null 2>&1 || fail "$command_name is required but was not found."
 done
 
 readonly PHP_BIN="$(command -v php)"
 readonly COMPOSER_BIN="$(command -v composer)"
-readonly NODE_BIN="$(command -v node)"
-readonly NPM_BIN="$(command -v npm)"
+
+if command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1; then
+    readonly NODE_BIN="$(command -v node)"
+    readonly NPM_BIN="$(command -v npm)"
+    readonly BUILD_FRONTEND=true
+else
+    readonly NODE_BIN=''
+    readonly NPM_BIN=''
+    readonly BUILD_FRONTEND=false
+fi
 
 "$PHP_BIN" -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' \
     || fail "PHP 8.2 or newer is required; found $($PHP_BIN -r 'echo PHP_VERSION;')."
@@ -154,7 +198,12 @@ current_branch="$(git -C "$REPOSITORY_ROOT" branch --show-current)"
 
 PREVIOUS_COMMIT="$(git -C "$REPOSITORY_ROOT" rev-parse HEAD)"
 ENV_CHECKSUM="$(sha256sum "$APPLICATION_ROOT/.env" | awk '{print $1}')"
-ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;') and Node $($NODE_BIN --version)"
+if $BUILD_FRONTEND; then
+    ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;') and Node $($NODE_BIN --version)"
+else
+    validate_frontend_assets "$APPLICATION_ROOT"
+    ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;'); using committed Vite assets"
+fi
 
 step "Fetching $REMOTE/$BRANCH"
 git -C "$REPOSITORY_ROOT" fetch --prune "$REMOTE" "$BRANCH"
@@ -176,11 +225,16 @@ step 'Installing candidate PHP dependencies'
 )
 
 step 'Installing and building candidate frontend assets'
-(
-    cd "$CANDIDATE_APPLICATION"
-    "$NPM_BIN" ci --no-audit --no-fund
-    "$NPM_BIN" run build
-)
+if $BUILD_FRONTEND; then
+    (
+        cd "$CANDIDATE_APPLICATION"
+        "$NPM_BIN" ci --no-audit --no-fund
+        "$NPM_BIN" run build
+    )
+else
+    validate_frontend_assets "$CANDIDATE_APPLICATION"
+    ok 'Committed candidate frontend assets passed validation'
+fi
 
 step 'Running candidate test suite'
 (
@@ -228,11 +282,16 @@ step 'Installing production PHP dependencies'
 )
 
 step 'Installing and building production frontend assets'
-(
-    cd "$APPLICATION_ROOT"
-    "$NPM_BIN" ci --no-audit --no-fund
-    "$NPM_BIN" run build
-)
+if $BUILD_FRONTEND; then
+    (
+        cd "$APPLICATION_ROOT"
+        "$NPM_BIN" ci --no-audit --no-fund
+        "$NPM_BIN" run build
+    )
+else
+    validate_frontend_assets "$APPLICATION_ROOT"
+    ok 'Committed production frontend assets passed validation'
+fi
 
 PHASE='database migration'
 step 'Clearing stale caches and running migrations'
