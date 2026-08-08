@@ -55,6 +55,31 @@ step() { printf '\n%b▶ %s%b\n' "$YELLOW" "$1" "$NC"; }
 ok() { printf '%b  ✓ %s%b\n' "$GREEN" "$1" "$NC"; }
 fail() { printf '%b  ✗ %s%b\n' "$RED" "$1" "$NC" >&2; return 1; }
 
+configure_node_path() {
+    local node_directory
+
+    if command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1; then
+        return
+    fi
+
+    # cPanel does not add EasyApache's Node.js directory to the PATH used by
+    # Git deployment tasks, even when Node.js is installed on the server.
+    for node_directory in \
+        /opt/cpanel/ea-nodejs24/bin \
+        /opt/cpanel/ea-nodejs22/bin \
+        /opt/cpanel/ea-nodejs20/bin \
+        /opt/cpanel/ea-nodejs18/bin \
+        /opt/cpanel/ea-nodejs16/bin \
+        "$HOME"/.nvm/versions/node/*/bin
+    do
+        if [[ -x "$node_directory/node" && -x "$node_directory/npm" ]]; then
+            PATH="$node_directory:$PATH"
+            export PATH
+            return
+        fi
+    done
+}
+
 if $DRY_RUN; then
     printf 'Target:           %s\n' "$TARGET"
     printf 'Branch:           %s\n' "$BRANCH"
@@ -99,12 +124,14 @@ handle_error() {
 trap handle_error ERR INT TERM
 
 step 'Checking server prerequisites'
+configure_node_path
 for command_name in git php composer node npm curl mktemp sha256sum; do
     command -v "$command_name" >/dev/null 2>&1 || fail "$command_name is required but was not found."
 done
 
 readonly PHP_BIN="$(command -v php)"
 readonly COMPOSER_BIN="$(command -v composer)"
+readonly NODE_BIN="$(command -v node)"
 readonly NPM_BIN="$(command -v npm)"
 
 "$PHP_BIN" -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' \
@@ -127,7 +154,7 @@ current_branch="$(git -C "$REPOSITORY_ROOT" branch --show-current)"
 
 PREVIOUS_COMMIT="$(git -C "$REPOSITORY_ROOT" rev-parse HEAD)"
 ENV_CHECKSUM="$(sha256sum "$APPLICATION_ROOT/.env" | awk '{print $1}')"
-ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;') and Node $(node --version)"
+ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;') and Node $($NODE_BIN --version)"
 
 step "Fetching $REMOTE/$BRANCH"
 git -C "$REPOSITORY_ROOT" fetch --prune "$REMOTE" "$BRANCH"
