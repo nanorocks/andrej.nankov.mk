@@ -178,8 +178,8 @@ else
     readonly BUILD_FRONTEND=false
 fi
 
-"$PHP_BIN" -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' \
-    || fail "PHP 8.2 or newer is required; found $($PHP_BIN -r 'echo PHP_VERSION;')."
+"$PHP_BIN" -r 'exit(version_compare(PHP_VERSION, "8.4.0", ">=") ? 0 : 1);' \
+    || fail "PHP 8.4 or newer is required; found $($PHP_BIN -r 'echo PHP_VERSION;')."
 
 [[ -d "$REPOSITORY_ROOT/.git" ]] || fail "Git repository not found at $REPOSITORY_ROOT."
 [[ -f "$APPLICATION_ROOT/artisan" ]] || fail "Laravel artisan file not found at $APPLICATION_ROOT."
