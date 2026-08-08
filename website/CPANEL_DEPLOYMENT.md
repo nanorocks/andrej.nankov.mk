@@ -62,7 +62,24 @@ deploy-nankov production --dry-run
 deploy-nankov staging --dry-run
 ```
 
-## Deploy
+## GitHub Actions deployment
+
+Production can be triggered over the cPanel HTTPS API when inbound SSH is not
+available. The repository includes `.cpanel.yml` and
+`.github/workflows/deployCPanel.yml`. The workflow asks cPanel to update
+the existing production repository from `main`; cPanel then runs the same
+guarded production deployment documented below.
+
+In cPanel, create an API token for the `nankovmk` account. Store it in the
+GitHub repository as an Actions secret named `CPANEL_TOKEN`. Never commit the
+token or paste it into workflow files. The workflow runs on pushes to `main`
+and can also be started manually from the GitHub Actions page.
+
+The cPanel-managed repository must already exist at
+`/home/nankovmk/public_html/cicd_projects/nankov.mk` and its configured remote
+must be able to read the GitHub repository.
+
+## Deploy manually
 
 Deploy staging:
 

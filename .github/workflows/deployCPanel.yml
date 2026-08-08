@@ -1,86 +1,33 @@
-name: 🚀 Deploy website to cPanel
+name: Deploy production to cPanel
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
+concurrency:
+  group: production-cpanel-deployment
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  deploy:
+    name: Deploy production
     runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 30
+
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-
-      - name: 🗂️ Ensure server directory structure
-        run: |
-          sudo apt-get install -y lftp -q
-          lftp -c "
-            set ftp:ssl-allow no;
-            set net:timeout 10;
-            open ftp://${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_SERVER_IP }};
-            mkdir -fp website/bootstrap/cache;
-            mkdir -fp website/storage/logs;
-            mkdir -fp website/storage/debugbar;
-            mkdir -fp website/storage/app/private;
-            mkdir -fp website/storage/app/public;
-            mkdir -fp website/storage/framework/cache/data;
-            mkdir -fp website/storage/framework/sessions;
-            mkdir -fp website/storage/framework/views;
-            mkdir -fp website/storage/framework/testing;
-          "
-
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      - name: Trigger cPanel pull and guarded deployment
+        uses: pinkasey/cpanel-deploy-action@5165cf7b6c553654ce1efba26cc8ed20e1ea47d8 # v1.2.5
         with:
-          # Direct server IP — bypasses Cloudflare proxy which blocks FTP port 21.
-          server: ${{ secrets.FTP_SERVER_IP }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          security: loose
-          exclude: |
-            **/.git*
-            **/.git*/**
-
-            # Claude Code config & memory
-            .claude/**
-            CLAUDE.md
-
-            # Repo-level files not needed on server
-            docker-compose.yml
-            .docker/**
-            .github/**
-            README.md
-            .commitsage
-
-            # Laravel: secrets & local config
-            website/.env
-            website/.env.local
-            website/.env.testing
-
-            # Laravel: generated / installed locally
-            website/vendor/**
-            website/node_modules/**
-            website/bootstrap/cache/*.php
-
-            # Laravel: runtime storage (directories pre-created by lftp step above)
-            website/storage/logs/**
-            website/storage/debugbar/**
-            website/storage/framework/cache/**
-            website/storage/framework/sessions/**
-            website/storage/framework/views/**
-            website/storage/framework/testing/**
-            website/storage/app/public/**
-            website/storage/app/private/**
-
-            # Laravel: dev/test only
-            website/tests/**
-            website/phpunit.xml
-            website/.editorconfig
-            website/.vscode/**
-
-            # Vite dev server leftover
-            website/public/hot
+          hostname: https://lu-shared04.cpanelplatform.com
+          cPanelApiPort: 2083
+          cpanel_username: nankovmk
+          cpanel_token: ${{ secrets.CPANEL_TOKEN }}
+          repository_root: /home/nankovmk/public_html/cicd_projects/nankov.mk
+          updateRepository: true
+          branch: main
