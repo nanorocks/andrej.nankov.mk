@@ -6,13 +6,14 @@ namespace Tests\Feature\Security;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SecurityTestSuite extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function complete_security_test_suite_runs_successfully(): void
     {
         // This test ensures all security components work together

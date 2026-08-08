@@ -9,13 +9,14 @@ use App\Notifications\SecurityIncident;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class TestIncidentTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_can_test_brute_force_incident(): void
     {
         // Arrange
@@ -39,7 +40,7 @@ class TestIncidentTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_can_test_failed_login_incident(): void
     {
         // Arrange
@@ -63,7 +64,7 @@ class TestIncidentTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_can_test_suspicious_activity_incident(): void
     {
         // Arrange
@@ -87,7 +88,7 @@ class TestIncidentTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_defaults_to_brute_force_when_no_type_provided(): void
     {
         // Arrange
@@ -108,7 +109,7 @@ class TestIncidentTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_rejects_invalid_incident_types(): void
     {
         // Act
@@ -125,7 +126,7 @@ class TestIncidentTest extends TestCase
         Notification::assertNothingSent();
     }
 
-    /** @test */
+    #[Test]
     public function it_displays_success_message_with_channel_information(): void
     {
         // Arrange
@@ -150,7 +151,7 @@ class TestIncidentTest extends TestCase
         $this->assertStringContainsString('php artisan queue:work', $output);
     }
 
-    /** @test */
+    #[Test]
     public function it_shows_only_configured_channels_in_output(): void
     {
         // Arrange
@@ -172,7 +173,7 @@ class TestIncidentTest extends TestCase
         $this->assertStringNotContainsString('💬 Check your Slack channel', $output);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_notification_failures_gracefully(): void
     {
         // Arrange
@@ -189,7 +190,7 @@ class TestIncidentTest extends TestCase
         $this->assertStringContainsString('❌ Failed to send test notification', $output);
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_correct_test_data_structure(): void
     {
         // Arrange
@@ -224,7 +225,7 @@ class TestIncidentTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_uses_correct_notification_routes(): void
     {
         // Arrange
@@ -245,7 +246,7 @@ class TestIncidentTest extends TestCase
         Notification::assertSentOnDemand(SecurityIncident::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_different_data_for_each_incident_type(): void
     {
         // Arrange
@@ -283,7 +284,7 @@ class TestIncidentTest extends TestCase
         $this->assertArrayNotHasKey('attempts', $results['suspicious_activity']);
     }
 
-    /** @test */
+    #[Test]
     public function it_provides_helpful_output_formatting(): void
     {
         // Arrange
@@ -302,7 +303,7 @@ class TestIncidentTest extends TestCase
         $this->assertMatchesRegularExpression('/Note:.*php artisan queue:work/', $output);
     }
 
-    /** @test */
+    #[Test]
     public function it_maintains_consistent_test_data_across_calls(): void
     {
         // Arrange
