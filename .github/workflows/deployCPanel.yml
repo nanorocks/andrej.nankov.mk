@@ -22,12 +22,96 @@ jobs:
 
     steps:
       - name: Trigger cPanel pull and guarded deployment
-        uses: pinkasey/cpanel-deploy-action@5165cf7b6c553654ce1efba26cc8ed20e1ea47d8 # v1.2.5
-        with:
-          hostname: https://lu-shared04.cpanelplatform.com
-          cPanelApiPort: 2083
-          cpanel_username: nankovmk
-          cpanel_token: ${{ secrets.CPANEL_TOKEN }}
-          repository_root: /home/nankovmk/public_html/cicd_projects/nankov.mk
-          updateRepository: true
-          branch: main
+        shell: bash
+        env:
+          CPANEL_BASE_URL: https://lu-shared04.cpanelplatform.com:2083/execute
+          CPANEL_USERNAME: nankovmk
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+          REPOSITORY_ROOT: /home/nankovmk/public_html/cicd_projects/nankov.mk
+        run: |
+          set -Eeuo pipefail
+
+          cpanel_get() {
+            local endpoint="$1"
+            shift
+            local body http_code response
+
+            response="$(curl --silent --show-error \
+              --get \
+              --header "Authorization: cpanel ${CPANEL_USERNAME}:${CPANEL_TOKEN}" \
+              --header 'Accept: application/json' \
+              --write-out $'\n%{http_code}' \
+              "${CPANEL_BASE_URL}/${endpoint}" \
+              "$@")"
+
+            http_code="${response##*$'\n'}"
+            body="${response%$'\n'*}"
+
+            if [[ ! "$http_code" =~ ^2 ]]; then
+              printf 'cPanel API request failed: %s (HTTP %s)\n' "$endpoint" "$http_code" >&2
+              jq . <<<"$body" >&2 2>/dev/null || printf '%s\n' "$body" >&2
+              return 1
+            fi
+
+            printf '%s' "$body"
+          }
+
+          require_success() {
+            local operation="$1"
+            local response="$2"
+
+            if ! jq -e '.status == 1' >/dev/null <<<"$response"; then
+              printf 'cPanel operation failed: %s\n' "$operation" >&2
+              jq . <<<"$response" >&2
+              return 1
+            fi
+          }
+
+          echo 'Updating the cPanel Git repository'
+          update_response="$(cpanel_get VersionControl/update \
+            --data-urlencode "repository_root=${REPOSITORY_ROOT}" \
+            --data-urlencode 'branch=main')"
+          require_success 'VersionControl/update' "$update_response"
+
+          echo 'Starting the cPanel deployment task'
+          create_response="$(cpanel_get VersionControlDeployment/create \
+            --data-urlencode "repository_root=${REPOSITORY_ROOT}")"
+          require_success 'VersionControlDeployment/create' "$create_response"
+
+          task_id="$(jq -er '.task_id // .data.task_id // empty' <<<"$create_response")"
+          if [[ -z "$task_id" ]]; then
+            echo 'cPanel did not return a deployment task ID:' >&2
+            jq . <<<"$create_response" >&2
+            exit 1
+          fi
+
+          echo "Waiting for cPanel deployment task ${task_id}"
+          for ((attempt = 1; attempt <= 300; attempt++)); do
+            poll_response="$(cpanel_get VersionControlDeployment/retrieve)"
+            require_success 'VersionControlDeployment/retrieve' "$poll_response"
+
+            task="$(jq -c --arg task_id "$task_id" \
+              '.data[]? | select((.task_id | tostring) == $task_id)' \
+              <<<"$poll_response")"
+
+            if [[ -z "$task" ]]; then
+              sleep 1
+              continue
+            fi
+
+            if jq -e '.timestamps.succeeded != null' >/dev/null <<<"$task"; then
+              echo 'cPanel deployment completed successfully'
+              exit 0
+            fi
+
+            if jq -e '.timestamps.failed != null' >/dev/null <<<"$task"; then
+              echo 'cPanel deployment task failed:' >&2
+              jq . <<<"$task" >&2
+              exit 1
+            fi
+
+            sleep 1
+          done
+
+          echo 'Timed out waiting for the cPanel deployment task' >&2
+          exit 1
