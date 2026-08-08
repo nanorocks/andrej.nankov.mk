@@ -69,6 +69,8 @@ requests from dynamic GitHub-hosted runner addresses. The workflow in
 `.github/workflows/deployCPanel.yml` installs dependencies, runs the Laravel
 tests, builds Vite assets, prepares production Composer dependencies, and then
 incrementally synchronizes the `website` directory on every push to `main`.
+The application and its locked dependencies require PHP 8.4 or newer; select
+PHP 8.4 for the domain in cPanel before the first FTPS deployment.
 
 Create a dedicated FTP account in **cPanel → Files → FTP Accounts**. Scope its
 directory to the application root exactly:
@@ -92,20 +94,19 @@ authentication files, tests, or Node dependencies. Never enable the action's
 `dangerous-clean-slate` option.
 
 FTPS cannot execute server commands. After a deployment containing database
-migrations or cache-sensitive changes, run the application finalization
-commands from cPanel Terminal:
+migrations or cache-sensitive changes, run the guarded application finalizer
+from cPanel Terminal:
 
 ```bash
 cd /home/nankovmk/public_html/cicd_projects/nankov.mk/website
-php artisan optimize:clear
-php artisan migrate --force
-php artisan storage:link --force
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan event:cache
-php artisan queue:restart
+bash scripts/finalize-ftp-deployment.sh
 ```
+
+The finalizer checks PHP, `.env`, Composer dependencies, and writable runtime
+directories before enabling maintenance mode. It runs migrations, rebuilds
+Laravel caches and generated assets, restarts queue workers, and brings the
+site online. If a command fails after maintenance mode begins, it intentionally
+leaves the application offline and prints the recovery command.
 
 The workflow also supports a manual run from **GitHub → Actions → Deploy
 production to cPanel over FTPS → Run workflow**.
