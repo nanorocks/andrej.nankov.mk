@@ -62,30 +62,53 @@ deploy-nankov production --dry-run
 deploy-nankov staging --dry-run
 ```
 
-## GitHub Actions deployment
+## GitHub Actions deployment over FTPS
 
-Production can be triggered over the cPanel HTTPS API when inbound SSH is not
-available. The repository includes `.cpanel.yml` and
-`.github/workflows/deployCPanel.yml`. The workflow asks cPanel to update
-the existing production repository from `main`; cPanel then runs the same
-guarded production deployment documented below.
+Production is deployed over explicit FTPS because Imunify360 blocks cPanel API
+requests from dynamic GitHub-hosted runner addresses. The workflow in
+`.github/workflows/deployCPanel.yml` installs dependencies, runs the Laravel
+tests, builds Vite assets, prepares production Composer dependencies, and then
+incrementally synchronizes the `website` directory on every push to `main`.
 
-In cPanel, create an API token for the `nankovmk` account. Store it in the
-GitHub repository as an Actions secret named `CPANEL_TOKEN`. Never commit the
-token or paste it into workflow files. The workflow runs on pushes to `main`
-and can also be started manually from the GitHub Actions page.
+Create a dedicated FTP account in **cPanel → Files → FTP Accounts**. Scope its
+directory to the application root exactly:
 
-The cPanel-managed repository must already exist at
-`/home/nankovmk/public_html/cicd_projects/nankov.mk` and its configured remote
-must be able to read the GitHub repository.
+```text
+/home/nankovmk/public_html/cicd_projects/nankov.mk/website
+```
 
-The deployment script automatically adds cPanel EasyApache Node.js (or an
-account-level nvm installation) to `PATH`, because cPanel Git deployment tasks
-run in a non-interactive shell. When Node.js is unavailable, deployment uses
-the version-controlled Vite assets in `public/build` and verifies that every
-manifest entry exists. Always run `npm run build` and commit the resulting
-assets when frontend sources change. When Node.js is available on the server,
-the deployment continues to install and rebuild frontend dependencies there.
+Do not use the main cPanel account. In the GitHub repository, open **Settings →
+Environments → production → Environment secrets** and create:
+
+- `FTP_SERVER`: the TLS hostname shown by **Configure FTP Client**, without
+  `ftp://` and preferably matching the server certificate.
+- `FTP_USERNAME`: the complete dedicated FTP username shown by cPanel.
+- `FTP_PASSWORD`: the dedicated account's strong password.
+
+The workflow uses explicit FTPS on port 21. Its remote directory is `/` because
+the FTP account itself is jailed to the Laravel application root. It never
+uploads or deletes `.env`, runtime `storage`, the public storage link, local
+authentication files, tests, or Node dependencies. Never enable the action's
+`dangerous-clean-slate` option.
+
+FTPS cannot execute server commands. After a deployment containing database
+migrations or cache-sensitive changes, run the application finalization
+commands from cPanel Terminal:
+
+```bash
+cd /home/nankovmk/public_html/cicd_projects/nankov.mk/website
+php artisan optimize:clear
+php artisan migrate --force
+php artisan storage:link --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+php artisan queue:restart
+```
+
+The workflow also supports a manual run from **GitHub → Actions → Deploy
+production to cPanel over FTPS → Run workflow**.
 
 ## Deploy manually
 
