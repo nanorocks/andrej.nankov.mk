@@ -47,11 +47,11 @@ jobs:
           composer install --no-interaction --prefer-dist
           npm ci --no-audit --no-fund
 
-      - name: Run tests
-        run: php artisan test
-
       - name: Build production assets
         run: npm run build
+
+      - name: Run tests
+        run: php artisan test
 
       - name: Prepare production PHP dependencies
         run: |
