@@ -8,13 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $teams = config('permission.teams');
-        $tableNames = config('permission.table_names');
-        $columnNames = config('permission.column_names');
+        $teams = config('permission.teams', false);
+        $tableNames = config('permission.table_names', [
+            'roles' => 'roles',
+            'permissions' => 'permissions',
+            'model_has_permissions' => 'model_has_permissions',
+            'model_has_roles' => 'model_has_roles',
+            'role_has_permissions' => 'role_has_permissions',
+        ]);
+        $columnNames = config('permission.column_names', [
+            'role_pivot_key' => null,
+            'permission_pivot_key' => null,
+            'model_morph_key' => 'model_id',
+            'team_foreign_key' => 'team_id',
+        ]);
         $pivotRole = $columnNames['role_pivot_key'] ?? 'role_id';
         $pivotPermission = $columnNames['permission_pivot_key'] ?? 'permission_id';
-
-        throw_if(empty($tableNames), 'Permission configuration is not loaded.');
 
         $permissionTables = [
             $tableNames['permissions'],
@@ -28,8 +37,8 @@ return new class extends Migration
         // migration was committed. Adopt that schema without overwriting it.
         if (collect($permissionTables)->every(fn (string $table): bool => Schema::hasTable($table))) {
             app('cache')
-                ->store(config('permission.cache.store') !== 'default' ? config('permission.cache.store') : null)
-                ->forget(config('permission.cache.key'));
+                ->store(config('permission.cache.store', 'default') !== 'default' ? config('permission.cache.store') : null)
+                ->forget(config('permission.cache.key', 'spatie.permission.cache'));
 
             return;
         }
@@ -102,13 +111,19 @@ return new class extends Migration
         });
 
         app('cache')
-            ->store(config('permission.cache.store') !== 'default' ? config('permission.cache.store') : null)
-            ->forget(config('permission.cache.key'));
+            ->store(config('permission.cache.store', 'default') !== 'default' ? config('permission.cache.store') : null)
+            ->forget(config('permission.cache.key', 'spatie.permission.cache'));
     }
 
     public function down(): void
     {
-        $tableNames = config('permission.table_names');
+        $tableNames = config('permission.table_names', [
+            'roles' => 'roles',
+            'permissions' => 'permissions',
+            'model_has_permissions' => 'model_has_permissions',
+            'model_has_roles' => 'model_has_roles',
+            'role_has_permissions' => 'role_has_permissions',
+        ]);
 
         Schema::dropIfExists($tableNames['role_has_permissions']);
         Schema::dropIfExists($tableNames['model_has_roles']);
