@@ -79,6 +79,12 @@ The cPanel-managed repository must already exist at
 `/home/nankovmk/public_html/cicd_projects/nankov.mk` and its configured remote
 must be able to read the GitHub repository.
 
+The deployment script automatically adds cPanel EasyApache Node.js (or an
+account-level nvm installation) to `PATH`, because cPanel Git deployment tasks
+run in a non-interactive shell. If preflight still reports that `node` is
+missing, install a supported Node.js package in WHM/EasyApache or ask the host
+to enable it for the account before retrying the deployment.
+
 ## Deploy manually
 
 Deploy staging:
