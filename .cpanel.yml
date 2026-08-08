@@ -1,0 +1,4 @@
+---
+deployment:
+  tasks:
+    - /usr/bin/env bash /home/nankovmk/public_html/cicd_projects/nankov.mk/website/deploy.sh production --yes
