@@ -16,30 +16,38 @@ class CmsPagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    private function owner(): User
+    {
+        return User::factory()->create([
+            'email' => 'andrejnankov@gmail.com',
+            'email_verified_at' => now(),
+        ]);
+    }
+
     public function test_authenticated_admin_can_reach_homepage_editor(): void
     {
-        $this->actingAs(User::factory()->create())
+        $this->actingAs($this->owner())
             ->get('/admin/homepage')
             ->assertOk();
     }
 
     public function test_authenticated_admin_can_reach_about_editor(): void
     {
-        $this->actingAs(User::factory()->create())
+        $this->actingAs($this->owner())
             ->get('/admin/about')
             ->assertOk();
     }
 
     public function test_authenticated_admin_can_reach_newsletter_editor(): void
     {
-        $this->actingAs(User::factory()->create())
+        $this->actingAs($this->owner())
             ->get('/admin/newsletter')
             ->assertOk();
     }
 
     public function test_authenticated_admin_can_reach_get_started_editor(): void
     {
-        $this->actingAs(User::factory()->create())
+        $this->actingAs($this->owner())
             ->get('/admin/get-started')
             ->assertOk();
     }
@@ -53,7 +61,7 @@ class CmsPagesTest extends TestCase
 
     public function test_save_updates_existing_homepage_row_by_flag(): void
     {
-        $user = User::factory()->create();
+        $user = $this->owner();
         $existing = Page::create([
             'flag' => 'homepage',
             'name' => 'Old Name',
@@ -71,7 +79,7 @@ class CmsPagesTest extends TestCase
 
     public function test_save_creates_row_on_first_visit_for_each_flag(): void
     {
-        $user = User::factory()->create();
+        $user = $this->owner();
         $this->assertSame(0, Page::count());
 
         foreach ([Homepage::class, About::class, Newsletter::class, GetStarted::class] as $page) {
@@ -86,8 +94,8 @@ class CmsPagesTest extends TestCase
 
     public function test_dashboard_renders_with_all_widgets(): void
     {
-        $this->actingAs(User::factory()->create())
-            ->get('/admin')
+        $this->actingAs($this->owner())
+            ->get('/admin/dashboard')
             ->assertOk();
     }
 }
