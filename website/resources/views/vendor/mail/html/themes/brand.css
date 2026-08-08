@@ -1,0 +1,283 @@
+/* Andrej Nankov email theme */
+
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    background-color: #090b0e;
+    color: #cbd5e1;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+p,
+ul,
+ol,
+blockquote {
+    line-height: 1.6;
+    text-align: left;
+}
+
+a {
+    color: #fb7185;
+}
+
+a img {
+    border: none;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
+    margin-top: 0;
+    text-align: left;
+}
+
+h2 {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 0;
+    text-align: left;
+}
+
+h3 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 0;
+    text-align: left;
+}
+
+p {
+    color: #cbd5e1;
+    font-size: 16px;
+    margin-top: 0;
+}
+
+p.sub {
+    font-size: 12px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.wrapper {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #090b0e;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.content {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.header {
+    padding: 32px 0 24px;
+    text-align: center;
+}
+
+.header .brand-link {
+    color: #ffffff;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.logo {
+    border: 2px solid #ef4444;
+    border-radius: 9999px;
+    display: block;
+    height: 72px;
+    margin: 0 auto 12px;
+    object-fit: cover;
+    width: 72px;
+}
+
+.brand-name {
+    color: #ffffff;
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+
+.brand-tagline {
+    color: #fb7185;
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #090b0e;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.inner-body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    background-color: #12151a;
+    border: 1px solid #2a3039;
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .35);
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+    width: 570px;
+}
+
+.inner-body a {
+    word-break: break-word;
+}
+
+.content-cell {
+    max-width: 100vw;
+    padding: 40px;
+}
+
+.subcopy {
+    border-top: 1px solid #2a3039;
+    margin-top: 30px;
+    padding-top: 24px;
+}
+
+.subcopy p {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.footer {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 570px;
+}
+
+.footer .content-cell {
+    padding: 24px 32px 36px;
+}
+
+.footer p,
+.footer a {
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+}
+
+.table table {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #334155;
+    color: #ffffff;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.table td {
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.action {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    float: none;
+    margin: 30px auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.button {
+    -webkit-text-size-adjust: none;
+    border-radius: 10px;
+    color: #ffffff !important;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.button-blue,
+.button-primary,
+.button-green,
+.button-success,
+.button-red,
+.button-error {
+    background-color: #ef4444;
+    border-bottom: 12px solid #ef4444;
+    border-left: 22px solid #ef4444;
+    border-right: 22px solid #ef4444;
+    border-top: 12px solid #ef4444;
+}
+
+.panel {
+    border-left: 4px solid #ef4444;
+    margin: 24px 0;
+}
+
+.panel-content {
+    background-color: #1b1f26;
+    color: #cbd5e1;
+    padding: 18px;
+}
+
+.panel-content p {
+    color: #cbd5e1;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.break-all {
+    word-break: break-all;
+}

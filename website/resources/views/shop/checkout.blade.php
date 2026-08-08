@@ -15,5 +15,6 @@
         </x-paddle-button>
 
         <p class="mt-5 text-xs text-slate-500">One-time purchase. No subscription.</p>
+        <a href="{{ route('shop.cart') }}" class="public-text-link mt-6 inline-block text-sm">Back to cart</a>
     </section>
 </x-guest-layout>

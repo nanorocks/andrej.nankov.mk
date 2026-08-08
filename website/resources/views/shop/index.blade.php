@@ -44,7 +44,7 @@
                         @endif
                     </div>
 
-                    <div class="p-6 sm:p-8">
+                    <div class="store-product-content">
                         <div class="flex items-start justify-between gap-5">
                             <div>
                                 <p class="public-kicker">{{ $product->type === \App\Models\Product::TYPE_EBOOK ? 'E-book' : 'Board game' }}</p>
@@ -55,15 +55,23 @@
 
                         <p class="mt-4 leading-7 text-slate-400">{{ $product->description }}</p>
 
+                        @if ($product->type === \App\Models\Product::TYPE_BOARD_GAME)
+                            <p class="mt-4 inline-flex rounded-full border border-amber-400/25 bg-amber-400/10 px-3 py-1 text-xs font-bold text-amber-200">
+                                Hard-copy product · Delivery in North Macedonia only
+                            </p>
+                        @endif
+
                         @if ($product->isPurchasable())
-                            <form method="POST" action="{{ route('shop.cart.store', $product) }}" class="mt-6">
+                            <form method="POST" action="{{ route('shop.cart.store', $product) }}" class="store-product-action">
                                 @csrf
                                 <button class="public-button-primary w-full" type="submit">Add to cart</button>
                             </form>
                         @else
-                            <button class="mt-6 w-full cursor-not-allowed rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-slate-500" type="button" disabled>
-                                Not available yet
-                            </button>
+                            <div class="store-product-action">
+                                <button class="w-full cursor-not-allowed rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-slate-500" type="button" disabled>
+                                    Not available yet
+                                </button>
+                            </div>
                         @endif
                     </div>
                 </article>

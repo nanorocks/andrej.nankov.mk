@@ -39,6 +39,10 @@
                 <a href="{{ route('shop.index') }}" class="public-button-primary mt-7">Browse products</a>
             </div>
         @else
+            @php
+                $requiresShipping = $items->contains(fn (array $item) => $item['product']->type === \App\Models\Product::TYPE_BOARD_GAME);
+            @endphp
+
             <div class="divide-y divide-white/10">
                 @foreach ($items as $item)
                     <article class="grid gap-5 py-7 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
@@ -65,21 +69,69 @@
                 @endforeach
             </div>
 
-            <div class="mt-6 flex flex-col items-stretch justify-between gap-6 rounded-2xl border border-white/10 bg-black/20 p-6 sm:flex-row sm:items-center">
-                <div>
-                    <p class="text-sm text-slate-400">Total</p>
-                    <p class="mt-1 text-3xl font-extrabold text-white">{{ number_format($total / 100, 2) }} {{ $items->first()['product']->currency }}</p>
-                </div>
-
+            <div class="mt-6 rounded-2xl border border-white/10 bg-black/20 p-6">
                 @auth
                     <form method="POST" action="{{ route('shop.checkout') }}">
                         @csrf
-                        <button type="submit" class="public-button-primary w-full sm:w-auto">Continue to secure checkout</button>
+
+                        @if ($requiresShipping)
+                            <div class="mb-7 border-b border-white/10 pb-7">
+                                <p class="public-kicker">Physical delivery</p>
+                                <h2 class="mt-2 text-xl font-extrabold text-white">Delivery address</h2>
+                                <p class="mt-2 text-sm leading-6 text-amber-200">Startup Signals is a hard-copy product. Delivery is currently available only within North Macedonia.</p>
+
+                                <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                                    <div class="sm:col-span-2">
+                                        <label for="shipping_name" class="public-form-label">Full name</label>
+                                        <input id="shipping_name" name="shipping_name" value="{{ old('shipping_name', $deliveryAddress['shipping_name'] ?? auth()->user()->name) }}" autocomplete="name" class="public-form-input mt-2 w-full" required>
+                                    </div>
+                                    <div>
+                                        <label for="shipping_phone" class="public-form-label">Phone number</label>
+                                        <input id="shipping_phone" name="shipping_phone" value="{{ old('shipping_phone', $deliveryAddress['shipping_phone'] ?? '') }}" autocomplete="tel" class="public-form-input mt-2 w-full" required>
+                                    </div>
+                                    <div>
+                                        <label for="shipping_postal_code" class="public-form-label">Postal code</label>
+                                        <input id="shipping_postal_code" name="shipping_postal_code" value="{{ old('shipping_postal_code', $deliveryAddress['shipping_postal_code'] ?? '') }}" autocomplete="postal-code" class="public-form-input mt-2 w-full" required>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label for="shipping_address_line_1" class="public-form-label">Street and house/apartment number</label>
+                                        <input id="shipping_address_line_1" name="shipping_address_line_1" value="{{ old('shipping_address_line_1', $deliveryAddress['shipping_address_line_1'] ?? '') }}" autocomplete="address-line1" class="public-form-input mt-2 w-full" required>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label for="shipping_address_line_2" class="public-form-label">Additional address details <span class="text-slate-500">(optional)</span></label>
+                                        <input id="shipping_address_line_2" name="shipping_address_line_2" value="{{ old('shipping_address_line_2', $deliveryAddress['shipping_address_line_2'] ?? '') }}" autocomplete="address-line2" class="public-form-input mt-2 w-full">
+                                    </div>
+                                    <div>
+                                        <label for="shipping_city" class="public-form-label">City</label>
+                                        <input id="shipping_city" name="shipping_city" value="{{ old('shipping_city', $deliveryAddress['shipping_city'] ?? '') }}" autocomplete="address-level2" class="public-form-input mt-2 w-full" required>
+                                    </div>
+                                    <div>
+                                        <label for="shipping_country_display" class="public-form-label">Country</label>
+                                        <input id="shipping_country_display" value="North Macedonia" class="public-form-input mt-2 w-full opacity-80" disabled>
+                                        <input type="hidden" name="shipping_country" value="MK">
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="flex flex-col items-stretch justify-between gap-6 sm:flex-row sm:items-center">
+                            <div>
+                                <p class="text-sm text-slate-400">Total</p>
+                                <p class="mt-1 text-3xl font-extrabold text-white">{{ number_format($total / 100, 2) }} {{ $items->first()['product']->currency }}</p>
+                            </div>
+                            <button type="submit" class="public-button-primary w-full sm:w-auto">Continue to secure checkout</button>
+                        </div>
                     </form>
                 @else
-                    <div class="flex flex-col gap-2 sm:items-end">
-                        <a href="{{ route('login') }}" class="public-button-primary">Sign in to checkout</a>
-                        <a href="{{ route('register') }}" class="public-text-link text-center text-xs">New here? Create an account</a>
+                    <div class="flex flex-col items-stretch justify-between gap-6 sm:flex-row sm:items-center">
+                        <div>
+                            <p class="text-sm text-slate-400">Total</p>
+                            <p class="mt-1 text-3xl font-extrabold text-white">{{ number_format($total / 100, 2) }} {{ $items->first()['product']->currency }}</p>
+                        </div>
+                        <div class="flex flex-col gap-2 sm:items-end">
+                            <a href="{{ route('login') }}" class="public-button-primary">Sign in to checkout</a>
+                            <a href="{{ route('register') }}" class="public-text-link text-center text-xs">New here? Create an account</a>
+                        </div>
                     </div>
                 @endauth
             </div>

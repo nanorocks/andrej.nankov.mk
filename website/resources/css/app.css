@@ -173,7 +173,15 @@
     }
 
     .store-product-card {
-        @apply relative overflow-hidden rounded-3xl border border-white/10 bg-[#12151a] shadow-2xl shadow-black/20;
+        @apply relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#12151a] shadow-2xl shadow-black/20;
+    }
+
+    .store-product-content {
+        @apply flex flex-1 flex-col p-6 sm:p-8;
+    }
+
+    .store-product-action {
+        @apply mt-auto pt-6;
     }
 
     .store-product-art {

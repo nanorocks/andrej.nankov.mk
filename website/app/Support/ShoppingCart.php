@@ -10,6 +10,8 @@ class ShoppingCart
 {
     private const SESSION_KEY = 'shop.cart';
 
+    private const DELIVERY_ADDRESS_SESSION_KEY = 'shop.delivery_address';
+
     public function add(Product $product, int $quantity = 1): void
     {
         if (! $product->isPurchasable()) {
@@ -48,7 +50,22 @@ class ShoppingCart
 
     public function clear(): void
     {
-        session()->forget(self::SESSION_KEY);
+        session()->forget([
+            self::SESSION_KEY,
+            self::DELIVERY_ADDRESS_SESSION_KEY,
+        ]);
+    }
+
+    /** @param array<string, string|null> $address */
+    public function rememberDeliveryAddress(array $address): void
+    {
+        session()->put(self::DELIVERY_ADDRESS_SESSION_KEY, $address);
+    }
+
+    /** @return array<string, string|null> */
+    public function deliveryAddress(): array
+    {
+        return session()->get(self::DELIVERY_ADDRESS_SESSION_KEY, []);
     }
 
     public function items(): Collection

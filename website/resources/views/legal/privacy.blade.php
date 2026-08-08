@@ -4,14 +4,14 @@
     <h2>Data I collect</h2>
     <ul>
         <li><strong>Account data:</strong> your name, email address, encrypted password, and email-verification status.</li>
-        <li><strong>Order data:</strong> purchased items, price, currency, order status, and the Paddle transaction reference.</li>
+        <li><strong>Order and delivery data:</strong> purchased items, price, currency, order status, Paddle transaction reference, and—only for physical products—the recipient name, phone number, and North Macedonian delivery address.</li>
         <li><strong>Communications:</strong> information you send through forms or email, and newsletter subscription details.</li>
         <li><strong>Technical data:</strong> IP address, browser and device information, security logs, and cookie preferences.</li>
         <li><strong>Optional analytics:</strong> aggregated usage information only after you allow analytics cookies.</li>
     </ul>
 
     <h2>Why I use your data</h2>
-    <p>I process data to provide accounts and downloads, fulfil purchases, answer requests, protect the website, meet tax and accounting duties, and send requested newsletters. The legal bases may be performance of a contract, consent, compliance with a legal obligation, or a legitimate interest such as service security.</p>
+    <p>I process data to provide accounts and downloads, collect payment, deliver physical purchases, show delivery progress, answer requests, protect the website, meet tax and accounting duties, and send requested newsletters. The legal bases may be performance of a contract, consent, compliance with a legal obligation, or a legitimate interest such as service security.</p>
 
     <h2>Payments and service providers</h2>
     <p>Paddle acts as Merchant of Record for store payments and handles payment details, billing, applicable taxes, and buyer-facing payment support under its own privacy terms. I do not receive or store your full card number. Hosting, email, anti-abuse, and optional analytics providers may process only the data needed to deliver their services.</p>

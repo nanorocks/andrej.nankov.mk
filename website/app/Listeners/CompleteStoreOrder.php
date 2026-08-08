@@ -29,6 +29,9 @@ class CompleteStoreOrder
                 'currency' => $event->transaction->currency,
                 'paddle_transaction_id' => $event->transaction->paddle_id,
                 'completed_at' => now(),
+                'delivery_status' => $order->requires_shipping
+                    ? Order::DELIVERY_READY_TO_SHIP
+                    : null,
             ]);
         });
     }

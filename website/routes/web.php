@@ -39,7 +39,10 @@ Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('shop
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('shop.checkout');
+    Route::get('/checkout/{order}/status', [CheckoutController::class, 'status'])->name('shop.checkout.status');
     Route::get('/checkout/{order}/success', [CheckoutController::class, 'success'])->name('shop.checkout.success');
+    Route::post('/orders/{order}/checkout', [CheckoutController::class, 'retry'])->name('orders.checkout');
+    Route::delete('/orders/{order}', [CheckoutController::class, 'cancel'])->name('orders.cancel');
 });
 
 Route::post('/downloads/{product}', EbookDownloadController::class)

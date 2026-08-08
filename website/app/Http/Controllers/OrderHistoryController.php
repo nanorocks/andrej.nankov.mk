@@ -12,8 +12,8 @@ class OrderHistoryController extends Controller
         $orders = $request->user()
             ->orders()
             ->with('items.product')
-            ->latest()
-            ->get();
+            ->latest('id')
+            ->paginate(5);
 
         return view('orders.index', compact('orders'));
     }

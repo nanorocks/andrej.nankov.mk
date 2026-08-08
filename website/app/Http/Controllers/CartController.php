@@ -15,6 +15,7 @@ class CartController extends Controller
         return view('shop.cart', [
             'items' => $cart->items(),
             'total' => $cart->total(),
+            'deliveryAddress' => $cart->deliveryAddress(),
         ]);
     }
 
