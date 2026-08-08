@@ -66,9 +66,9 @@ deploy-nankov staging --dry-run
 
 Production is deployed over explicit FTPS because Imunify360 blocks cPanel API
 requests from dynamic GitHub-hosted runner addresses. The workflow in
-`.github/workflows/deployCPanel.yml` installs dependencies, runs the Laravel
-tests, builds Vite assets, prepares production Composer dependencies, and then
-incrementally synchronizes the `website` directory on every push to `main`.
+`.github/workflows/deployCPanel.yml` installs CI dependencies, runs the Laravel
+tests, builds Vite assets, and then incrementally synchronizes the `website`
+directory on every push to `main`.
 The application and its locked dependencies require PHP 8.4 or newer; select
 PHP 8.4 for the domain in cPanel before the first FTPS deployment.
 
@@ -90,8 +90,8 @@ Environments → production → Environment secrets** and create:
 The workflow uses explicit FTPS on port 21. Its remote directory is `/` because
 the FTP account itself is jailed to the Laravel application root. It never
 uploads or deletes `.env`, runtime `storage`, the public storage link, local
-authentication files, tests, or Node dependencies. Never enable the action's
-`dangerous-clean-slate` option.
+authentication files, tests, Node dependencies, or Composer's `vendor`
+directory. Never enable the action's `dangerous-clean-slate` option.
 
 FTPS cannot execute server commands. After a deployment containing database
 migrations or cache-sensitive changes, run the guarded application finalizer
@@ -102,11 +102,13 @@ cd /home/nankovmk/public_html/cicd_projects/nankov.mk/website
 bash scripts/finalize-ftp-deployment.sh
 ```
 
-The finalizer checks PHP, `.env`, Composer dependencies, and writable runtime
-directories before enabling maintenance mode. It runs migrations, rebuilds
-Laravel caches and generated assets, restarts queue workers, and brings the
-site online. If a command fails after maintenance mode begins, it intentionally
-leaves the application offline and prints the recovery command.
+The finalizer checks PHP, Composer, `.env`, and writable runtime directories.
+It enables maintenance mode when an existing `vendor` installation can boot
+Laravel, installs the exact locked production dependencies with Composer, runs
+migrations, rebuilds Laravel caches and generated assets, restarts queue
+workers, and brings the site online. If a command fails after maintenance mode
+begins, it intentionally leaves the application offline and prints the
+recovery command.
 
 The workflow also supports a manual run from **GitHub → Actions → Deploy
 production to cPanel over FTPS → Run workflow**.

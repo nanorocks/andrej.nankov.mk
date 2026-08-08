@@ -38,19 +38,22 @@ handle_error() {
 trap handle_error ERR INT TERM
 
 step 'Checking Laravel deployment prerequisites'
-for command_name in php; do
+for command_name in php composer; do
     command -v "$command_name" >/dev/null 2>&1 \
         || fail "$command_name is required but was not found."
 done
 
 readonly PHP_BIN="$(command -v php)"
+readonly COMPOSER_BIN="$(command -v composer)"
 
 [[ -f "$APPLICATION_ROOT/artisan" ]] \
     || fail "Laravel artisan file not found at $APPLICATION_ROOT."
 [[ -f "$APPLICATION_ROOT/.env" ]] \
     || fail "Missing $APPLICATION_ROOT/.env."
-[[ -f "$APPLICATION_ROOT/vendor/autoload.php" ]] \
-    || fail 'Composer dependencies are missing from vendor.'
+[[ -f "$APPLICATION_ROOT/composer.json" ]] \
+    || fail "Missing $APPLICATION_ROOT/composer.json."
+[[ -f "$APPLICATION_ROOT/composer.lock" ]] \
+    || fail "Missing $APPLICATION_ROOT/composer.lock."
 [[ -w "$APPLICATION_ROOT/storage" ]] \
     || fail "$APPLICATION_ROOT/storage is not writable."
 [[ -w "$APPLICATION_ROOT/bootstrap/cache" ]] \
@@ -60,14 +63,32 @@ readonly PHP_BIN="$(command -v php)"
     || fail "PHP 8.4 or newer is required; found $($PHP_BIN -r 'echo PHP_VERSION;')."
 ok "Preflight passed with PHP $($PHP_BIN -r 'echo PHP_VERSION;')"
 
-PHASE='maintenance mode'
-step 'Enabling maintenance mode'
+if [[ -f "$APPLICATION_ROOT/vendor/autoload.php" ]]; then
+    PHASE='maintenance mode'
+    step 'Enabling maintenance mode'
+    (
+        cd "$APPLICATION_ROOT"
+        "$PHP_BIN" artisan down --retry=15
+    )
+    MAINTENANCE_ACTIVE=true
+    ok 'Maintenance mode enabled'
+else
+    step 'Skipping maintenance command because vendor is not installed yet'
+fi
+
+PHASE='production dependencies'
+step 'Installing locked production Composer dependencies'
 (
     cd "$APPLICATION_ROOT"
-    "$PHP_BIN" artisan down --retry=15
+    "$COMPOSER_BIN" install \
+        --no-dev \
+        --no-interaction \
+        --prefer-dist \
+        --optimize-autoloader
 )
-MAINTENANCE_ACTIVE=true
-ok 'Maintenance mode enabled'
+[[ -f "$APPLICATION_ROOT/vendor/autoload.php" ]] \
+    || fail 'Composer completed without creating vendor/autoload.php.'
+ok 'Production Composer dependencies installed'
 
 PHASE='database migration'
 step 'Clearing stale caches and running migrations'

@@ -9,11 +9,12 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SecurityIncidentTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_determines_correct_channels_with_all_services_configured(): void
     {
         // Arrange
@@ -38,7 +39,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertCount(3, $channels);
     }
 
-    /** @test */
+    #[Test]
     public function it_excludes_channels_when_services_not_configured(): void
     {
         // Arrange
@@ -63,7 +64,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertCount(1, $channels);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_telegram_message_for_brute_force(): void
     {
         // Arrange
@@ -105,7 +106,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertTrue($message->getPayloadValue('disable_web_page_preview'));
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_telegram_message_for_failed_login(): void
     {
         // Arrange
@@ -135,7 +136,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertStringContainsString('5', $content);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_telegram_message_for_suspicious_activity(): void
     {
         // Arrange
@@ -164,7 +165,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertStringNotContainsString('Attempts:', $content);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_slack_message_for_brute_force(): void
     {
         // Arrange
@@ -185,7 +186,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertInstanceOf(SlackMessage::class, $message);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_slack_message_with_different_colors(): void
     {
         // Test different incident types have different colors
@@ -211,7 +212,7 @@ class SecurityIncidentTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_email_message_for_brute_force(): void
     {
         // Arrange
@@ -254,7 +255,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertEquals('Check on AbuseIPDB', $data['actionText']);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_email_without_optional_fields(): void
     {
         // Arrange
@@ -284,7 +285,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertStringNotContainsString('Target Account:', $fullText);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_correct_email_subjects_for_different_types(): void
     {
         $incidents = [
@@ -308,7 +309,7 @@ class SecurityIncidentTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_correct_array_representation(): void
     {
         // Arrange
@@ -330,7 +331,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertEquals($incidentData, $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_is_queued_properly(): void
     {
         // Arrange
@@ -341,7 +342,7 @@ class SecurityIncidentTest extends TestCase
         $this->assertEquals('notifications', $incident->queue);
     }
 
-    /** @test */
+    #[Test]
     public function it_truncates_long_user_agent_in_telegram(): void
     {
         // Arrange
