@@ -1,4 +1,4 @@
-name: Deploy production to cPanel
+name: Deploy production to cPanel over FTPS
 
 on:
   workflow_dispatch:
@@ -15,103 +15,75 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy production
+    name: Build, test, and deploy production
     runs-on: ubuntu-latest
     environment: production
     timeout-minutes: 30
 
+    defaults:
+      run:
+        working-directory: website
+
     steps:
-      - name: Trigger cPanel pull and guarded deployment
-        shell: bash
-        env:
-          CPANEL_BASE_URL: https://lu-shared04.cpanelplatform.com:2083/execute
-          CPANEL_USERNAME: nankovmk
-          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
-          REPOSITORY_ROOT: /home/nankovmk/public_html/cicd_projects/nankov.mk
+      - name: Check out the release
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+          coverage: none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install dependencies
         run: |
-          set -Eeuo pipefail
+          composer install --no-interaction --prefer-dist
+          npm ci --no-audit --no-fund
 
-          cpanel_get() {
-            local endpoint="$1"
-            shift
-            local body http_code response
+      - name: Run tests
+        run: php artisan test
 
-            response="$(curl --silent --show-error \
-              --get \
-              --header "Authorization: cpanel ${CPANEL_USERNAME}:${CPANEL_TOKEN}" \
-              --header 'Accept: application/json' \
-              --write-out $'\n%{http_code}' \
-              "${CPANEL_BASE_URL}/${endpoint}" \
-              "$@")"
+      - name: Build production assets
+        run: npm run build
 
-            http_code="${response##*$'\n'}"
-            body="${response%$'\n'*}"
+      - name: Prepare production PHP dependencies
+        run: |
+          composer install \
+            --no-dev \
+            --no-interaction \
+            --prefer-dist \
+            --optimize-autoloader
 
-            if [[ ! "$http_code" =~ ^2 ]]; then
-              printf 'cPanel API request failed: %s (HTTP %s)\n' "$endpoint" "$http_code" >&2
-              jq . <<<"$body" >&2 2>/dev/null || printf '%s\n' "$body" >&2
-              return 1
-            fi
-
-            printf '%s' "$body"
-          }
-
-          require_success() {
-            local operation="$1"
-            local response="$2"
-
-            if ! jq -e '.status == 1' >/dev/null <<<"$response"; then
-              printf 'cPanel operation failed: %s\n' "$operation" >&2
-              jq . <<<"$response" >&2
-              return 1
-            fi
-          }
-
-          echo 'Updating the cPanel Git repository'
-          update_response="$(cpanel_get VersionControl/update \
-            --data-urlencode "repository_root=${REPOSITORY_ROOT}" \
-            --data-urlencode 'branch=main')"
-          require_success 'VersionControl/update' "$update_response"
-
-          echo 'Starting the cPanel deployment task'
-          create_response="$(cpanel_get VersionControlDeployment/create \
-            --data-urlencode "repository_root=${REPOSITORY_ROOT}")"
-          require_success 'VersionControlDeployment/create' "$create_response"
-
-          task_id="$(jq -er '.task_id // .data.task_id // empty' <<<"$create_response")"
-          if [[ -z "$task_id" ]]; then
-            echo 'cPanel did not return a deployment task ID:' >&2
-            jq . <<<"$create_response" >&2
-            exit 1
-          fi
-
-          echo "Waiting for cPanel deployment task ${task_id}"
-          for ((attempt = 1; attempt <= 300; attempt++)); do
-            poll_response="$(cpanel_get VersionControlDeployment/retrieve)"
-            require_success 'VersionControlDeployment/retrieve' "$poll_response"
-
-            task="$(jq -c --arg task_id "$task_id" \
-              '.data[]? | select((.task_id | tostring) == $task_id)' \
-              <<<"$poll_response")"
-
-            if [[ -z "$task" ]]; then
-              sleep 1
-              continue
-            fi
-
-            if jq -e '.timestamps.succeeded != null' >/dev/null <<<"$task"; then
-              echo 'cPanel deployment completed successfully'
-              exit 0
-            fi
-
-            if jq -e '.timestamps.failed != null' >/dev/null <<<"$task"; then
-              echo 'cPanel deployment task failed:' >&2
-              jq . <<<"$task" >&2
-              exit 1
-            fi
-
-            sleep 1
-          done
-
-          echo 'Timed out waiting for the cPanel deployment task' >&2
-          exit 1
+      - name: Deploy application over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
+          local-dir: ./website/
+          server-dir: /
+          timeout: 120000
+          log-level: standard
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/.env
+            **/.env.*
+            **/auth.json
+            **/node_modules/**
+            **/tests/**
+            **/.phpunit.cache/**
+            **/database/database.sqlite
+            **/public/hot
+            **/public/storage
+            **/storage/**
