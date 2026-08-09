@@ -211,6 +211,24 @@ upload_file() {
         "${CPANEL_BASE_URL}/execute/Fileman/upload_files"
 }
 
+save_file_content() {
+    local local_file="$1"
+    local remote_directory="$2"
+    local remote_name="$3"
+
+    # Use a POST body so environment contents never appear in a URL or API
+    # access log. Unlike upload_files, save_file_content replaces an existing
+    # file, which is required when rotating the stage environment.
+    curl --config "$CURL_CONFIG" \
+        --data-urlencode "dir=${remote_directory}" \
+        --data-urlencode "file=${remote_name}" \
+        --data-urlencode "content@${local_file}" \
+        --data-urlencode 'from_charset=UTF-8' \
+        --data-urlencode 'to_charset=UTF-8' \
+        --data-urlencode 'fallback=0' \
+        "${CPANEL_BASE_URL}/execute/Fileman/save_file_content"
+}
+
 remote_file_exists() {
     local path="$1"
     uapi_get 'Fileman/get_file_information' \
@@ -366,7 +384,7 @@ ok 'Artifact extracted'
 
 if [[ -n "$ENV_FILE" ]]; then
     step 'Uploading stage environment file'
-    env_payload="$(upload_file "$ENV_FILE" "$REMOTE_APP" '.env')"
+    env_payload="$(save_file_content "$ENV_FILE" "$REMOTE_APP" '.env')"
     printf '%s' "$env_payload" | assert_uapi_success
     chmod_payload="$(api2_fileop 'chmod' "${REMOTE_APP_REL}/.env" '' '0600')"
     printf '%s' "$chmod_payload" | assert_api2_success
