@@ -46,8 +46,13 @@ return static function (string $expectedRevision, string $expectedHost): array {
         $run('down', ['--retry' => 15]);
         $maintenanceActive = true;
 
-        $run('optimize:clear');
+        // On the first deployment the database-backed cache tables do not
+        // exist until the initial migration has run. The gateway already
+        // removes stale bootstrap cache files before Laravel boots, so it is
+        // safe to migrate first and clear application caches immediately
+        // afterwards.
         $run('migrate', ['--force' => true]);
+        $run('optimize:clear');
         $run('db:seed', ['--force' => true]);
         $run('storage:link', ['--force' => true]);
         $run('filament:upgrade');
@@ -83,4 +88,3 @@ return static function (string $expectedRevision, string $expectedHost): array {
         ];
     }
 };
-
