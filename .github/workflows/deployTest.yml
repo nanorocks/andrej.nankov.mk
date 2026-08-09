@@ -52,8 +52,8 @@ jobs:
       - name: Deploy application over FTPS
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
         with:
-          server:  ${{ secrets.FTP_SERVER_TEST }}
-          username: ${{ secrets.FTP_USERNAME_TEST }}
+          server: lu-shared04.cpanelplatform.com
+          username: admin@test.nankov.mk
           password: ${{ secrets.FTP_PASSWORD_TEST }}
           port: 21
           protocol: ftps
