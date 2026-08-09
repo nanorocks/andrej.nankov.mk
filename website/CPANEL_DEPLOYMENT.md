@@ -119,8 +119,8 @@ Pushes to `develop` are built, tested, and deployed by
 `.github/workflows/deployTest.yml` to the dedicated test FTP account using
 explicit FTPS on port 21.
 
-In GitHub, create the **test** environment under **Settings → Environments →
-test**, then add these environment secrets:
+In GitHub, open **Settings → Secrets and variables → Actions**, then add these
+repository secrets:
 
 - `FTP_SERVER_TEST`: the TLS hostname shown by **Configure FTP Client**
 - `FTP_USERNAME_TEST`: the complete dedicated test FTP username
@@ -128,6 +128,11 @@ test**, then add these environment secrets:
 
 The test FTP account must be jailed to the test Laravel application root
 because the workflow deploys to `/`.
+
+The `_TEST` suffix keeps these credentials separate from production. The test
+workflow deliberately does not bind the job to a GitHub Environment, so the
+repository secrets are available to pushes on `develop` without environment
+branch-policy restrictions.
 
 The test workflow can also be run manually from **GitHub → Actions → Deploy
 test to cPanel over FTPS → Run workflow**. The same exclusions and server-side
