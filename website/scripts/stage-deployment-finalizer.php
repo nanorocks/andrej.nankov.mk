@@ -63,12 +63,23 @@ return static function (string $expectedRevision, string $expectedHost): array {
         $run('event:cache');
         $run('queue:restart');
 
-        $horizonExitCode = Artisan::call('horizon:terminate');
-        $steps[] = [
-            'command' => 'horizon:terminate',
-            'exit_code' => $horizonExitCode,
-            'output' => trim(Artisan::output()),
-        ];
+        if (array_key_exists('horizon:terminate', Artisan::all())) {
+            $horizonExitCode = Artisan::call('horizon:terminate');
+            $steps[] = [
+                'command' => 'horizon:terminate',
+                'exit_code' => $horizonExitCode,
+                'output' => trim(Artisan::output()),
+            ];
+        } else {
+            // Horizon registers its commands only for console requests. The
+            // cPanel finalizer deliberately runs through a web gateway because
+            // shared hosting does not expose a shell API.
+            $steps[] = [
+                'command' => 'horizon:terminate',
+                'exit_code' => null,
+                'output' => 'Skipped: unavailable in the cPanel web finalizer.',
+            ];
+        }
 
         $run('up');
         $maintenanceActive = false;
