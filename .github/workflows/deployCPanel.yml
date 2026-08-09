@@ -78,5 +78,3 @@ jobs:
             **/.phpunit.cache/**
             **/database/database.sqlite
             **/public/hot
-            **/public/storage
-            **/storage/**
