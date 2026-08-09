@@ -73,7 +73,7 @@ jobs:
             **/.env.*
             **/auth.json
             **/node_modules/**
-            **/vendor/**
+            vendor/**
             **/tests/**
             **/.phpunit.cache/**
             **/database/database.sqlite
