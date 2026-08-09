@@ -359,7 +359,20 @@ git -C "$SCRIPT_DIR" archive "$REVISION:website" | tar -xf - -C "$BUILD_DIR"
     find bootstrap/cache -mindepth 1 ! -name '.gitignore' -exec rm -rf -- {} +
     find storage -type f ! -name '.gitignore' -delete
     printf '%s\n' "$REVISION" > REVISION
+
+    # The script-wide umask protects temporary credentials, but cPanel's web
+    # server must be able to read application files and .htaccess. Normalize
+    # the release before zipping; the uploaded .env is reset to 0600 below.
+    find . -type d -exec chmod 0755 {} +
+    find . -type f -exec chmod 0644 {} +
+    chmod 0755 artisan
 )
+
+readonly HEALTH_ASSET="$(php -r '
+    $manifest = json_decode((string) file_get_contents($argv[1]), true);
+    echo $manifest["resources/js/app.js"]["file"] ?? "";
+' "$BUILD_DIR/public/build/manifest.json")"
+[[ -n "$HEALTH_ASSET" ]] || fail 'Unable to resolve the built JavaScript asset for health checks.'
 
 ARCHIVE_NAME="stage-${REVISION}.zip"
 readonly ARCHIVE_PATH="$TEMP_DIR/$ARCHIVE_NAME"
@@ -437,6 +450,15 @@ REMOTE_ARCHIVE_PENDING=false
 ok 'Archive moved to cPanel Trash'
 
 step 'Verifying stage deployment'
-curl --fail --silent --show-error --max-time 30 "https://${STAGE_DOMAIN}/up" >/dev/null
-curl --fail --silent --show-error --max-time 30 "https://${STAGE_DOMAIN}/" >/dev/null
+readonly HEALTH_QUERY="deploy=${REVISION}"
+readonly HEALTH_CURL_ARGS=(
+    --fail
+    --silent
+    --show-error
+    --max-time 30
+    --header 'Cache-Control: no-cache'
+)
+curl "${HEALTH_CURL_ARGS[@]}" "https://${STAGE_DOMAIN}/up?${HEALTH_QUERY}" >/dev/null
+curl "${HEALTH_CURL_ARGS[@]}" "https://${STAGE_DOMAIN}/about?${HEALTH_QUERY}" >/dev/null
+curl "${HEALTH_CURL_ARGS[@]}" "https://${STAGE_DOMAIN}/build/${HEALTH_ASSET}?${HEALTH_QUERY}" >/dev/null
 ok "Stage deployment ${REVISION:0:12} is healthy at https://${STAGE_DOMAIN}/"
