@@ -52,20 +52,6 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-      - name: Validate test deployment secrets
-        working-directory: .
-        env:
-          FTP_SERVER_TEST: ${{ secrets.FTP_SERVER_TEST }}
-          FTP_USERNAME_TEST: ${{ secrets.FTP_USERNAME_TEST }}
-          FTP_PASSWORD_TEST: ${{ secrets.FTP_PASSWORD_TEST }}
-        run: |
-          for secret_name in FTP_SERVER_TEST FTP_USERNAME_TEST FTP_PASSWORD_TEST; do
-            if [ -z "${!secret_name}" ]; then
-              echo "::error::Missing repository secret: ${secret_name}"
-              exit 1
-            fi
-          done
-
       - name: Deploy application over FTPS
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
         with:

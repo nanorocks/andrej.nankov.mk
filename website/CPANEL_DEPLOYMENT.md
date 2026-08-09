@@ -122,9 +122,11 @@ explicit FTPS on port 21.
 In GitHub, open **Settings → Secrets and variables → Actions**, then add these
 repository secrets:
 
-- `FTP_SERVER_TEST`: the TLS hostname shown by **Configure FTP Client**
 - `FTP_USERNAME_TEST`: the complete dedicated test FTP username
 - `FTP_PASSWORD_TEST`: the dedicated test FTP account password
+
+The workflow connects to `lu-shared04.cpanelplatform.com`, the TLS hostname
+presented by the FTP server certificate.
 
 The test FTP account must be jailed to the test Laravel application root
 because the workflow deploys to `/`.
