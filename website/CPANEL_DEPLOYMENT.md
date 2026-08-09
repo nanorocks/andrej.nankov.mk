@@ -1,168 +1,103 @@
 # cPanel deployment
 
-The deployment is run manually from cPanel Terminal. It fetches `main` for production and `develop` for staging, validates the exact remote commit in an isolated Git worktree, and only updates the live checkout after the candidate passes Composer installation, the frontend build, the Laravel tests, and an application boot check.
+## Environment map
 
-## Security first
+| Environment | Branch | Deployment | Application root |
+| --- | --- | --- | --- |
+| Production | `main` | GitHub Actions over FTPS | `/home/nankovmk/public_html/cicd_projects/nankov.mk` |
+| Test | `develop` | GitHub Actions over FTPS | FTP account jail |
+| Stage | `stage` | Local `deploy-stage.sh` over cPanel API | `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk` |
 
-Any SSH private key or passphrase that has been copied into chat, email, or a screenshot is compromised. Deauthorize and delete it from cPanel, remove it from GitHub deploy keys, and do not use it.
-
-Generate a dedicated cPanel-to-GitHub RSA 4096 key called `github_nankov_deploy`. It may have no passphrase so the manual deploy command can run unattended, but it must remain a read-only GitHub deploy key scoped only to `nanorocks/andrej.nankov.mk`. Do not authorize this key for inbound cPanel SSH and never display or copy the private key.
-
-Add only its `.pub` value in GitHub under **Repository settings → Deploy keys**, with write access disabled. Configure `/home/nankovmk/.ssh/config`:
-
-```sshconfig
-Host github-nankov
-    HostName github.com
-    User git
-    IdentityFile /home/nankovmk/.ssh/github_nankov_deploy
-    IdentitiesOnly yes
-```
-
-Verify GitHub's host fingerprint against GitHub's official documentation before accepting it, then test with `ssh -T github-nankov`.
-
-## Repository setup
-
-Production uses:
-
-- Repository: `/home/nankovmk/public_html/cicd_projects/nankov.mk`
-- Laravel: `/home/nankovmk/public_html/cicd_projects/nankov.mk/website`
-- Document root: `/home/nankovmk/public_html/cicd_projects/nankov.mk/website/public`
-- Branch: `main`
-
-Staging uses:
-
-- Repository: `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk`
-- Laravel: `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk/website`
-- Document root: `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk/website/public`
-- Branch: `develop`
-
-Create `develop` from `main` in GitHub before cloning staging. Configure the Git remote in both checkouts as:
+The stage domain document root must be:
 
 ```text
-git@github-nankov:nanorocks/andrej.nankov.mk.git
+/home/nankovmk/public_html/cicd_projects/stage.nankov.mk/public
 ```
 
-The deployment refuses to create or modify `.env`. Create `website/.env` manually before the first deployment and set it to mode `600`. Production and staging must use different application keys, databases, cache prefixes, session cookies, queue data, mail settings, and Paddle environments.
+## Instant local stage deployment
 
-## Install the command
+Run the repository-root `deploy-stage.sh` command from a clean, pushed
+`stage` branch. It refuses any other branch and verifies that local `HEAD`
+exactly matches `origin/stage`.
 
-From the production Laravel directory:
+The command performs the complete release process:
+
+1. authenticates to cPanel using a temporary API token;
+2. verifies or provisions `stage.nankov.mk` with the correct document root;
+3. validates that the stage environment cannot use test or production-like
+   settings;
+4. creates an isolated Git archive, installs locked dependencies, builds Vite
+   assets, and runs the Laravel test suite locally with a 512 MB PHP memory
+   limit;
+5. packages the exact production Composer dependencies and compiled assets;
+6. uploads and extracts the artifact through cPanel's file APIs;
+7. runs migrations, idempotent seeders, storage linking, cache rebuilding,
+   sitemap generation, and worker restarts through a random-token-protected,
+   single-use deployment gateway; and
+8. removes temporary server files and verifies `/up` and `/` over HTTPS.
+
+The cPanel API does not provide general shell execution. The single-use PHP
+gateway is therefore required to boot Laravel and invoke the audited Artisan
+commands. It accepts only an authenticated `POST` on the stage hostname and
+deletes itself after the request.
+
+### First deployment
+
+Create a temporary cPanel API token, then let the command provision a unique
+stage database and a local, Git-ignored environment file:
 
 ```bash
-chmod 700 deploy.sh scripts/install-cpanel-deployer.sh
-bash scripts/install-cpanel-deployer.sh
+read -rsp 'cPanel token: ' CPANEL_API_TOKEN; export CPANEL_API_TOKEN; echo
+./deploy-stage.sh --provision --bootstrap-env website/.env.stage.local
+unset CPANEL_API_TOKEN
 ```
 
-If needed, add `~/bin` to `PATH` as instructed by the installer.
+`website/.env.stage.local` is mode `0600` and ignored by Git. Keep it in a
+secure local backup because it contains the generated database password and
+application key. The generated environment uses:
 
-Validate the fixed mappings without deploying:
+- `APP_ENV=staging` and `APP_DEBUG=false`;
+- `APP_URL=https://stage.nankov.mk`;
+- an isolated cPanel database and database user;
+- stage-specific session and cache namespaces;
+- log-only mail; and
+- Paddle sandbox mode.
+
+If an independently managed environment file already exists, use it instead:
 
 ```bash
-deploy-nankov production --dry-run
-deploy-nankov staging --dry-run
+./deploy-stage.sh --provision --env-file /absolute/path/to/stage.env
 ```
 
-## GitHub Actions deployment over FTPS
+It must pass the same isolation checks. In particular, the database and user
+names must include `stage` or `stg`, and the session cookie and cache prefix
+must be stage-specific.
 
-Production is deployed over explicit FTPS because Imunify360 blocks cPanel API
-requests from dynamic GitHub-hosted runner addresses. The workflow in
-`.github/workflows/deployCPanel.yml` installs CI dependencies, runs the Laravel
-tests, builds Vite assets, and then incrementally synchronizes the `website`
-directory on every push to `main`.
-The application and its locked dependencies require PHP 8.4 or newer; select
-PHP 8.4 for the domain in cPanel before the first FTPS deployment.
+### Later deployments
 
-Create a dedicated FTP account in **cPanel → Files → FTP Accounts**. Scope its
-directory to the application root exactly:
-
-```text
-/home/nankovmk/public_html/cicd_projects/nankov.mk/website
-```
-
-Do not use the main cPanel account. In the GitHub repository, open **Settings →
-Environments → production → Environment secrets** and create:
-
-- `FTP_SERVER`: the TLS hostname shown by **Configure FTP Client**, without
-  `ftp://` and preferably matching the server certificate.
-- `FTP_USERNAME`: the complete dedicated FTP username shown by cPanel.
-- `FTP_PASSWORD`: the dedicated account's strong password.
-
-The workflow uses explicit FTPS on port 21. Its remote directory is `/` because
-the FTP account itself is jailed to the Laravel application root. It never
-uploads or deletes `.env`, runtime `storage`, the public storage link, local
-authentication files, tests, Node dependencies, or Composer's `vendor`
-directory. Never enable the action's `dangerous-clean-slate` option.
-
-FTPS cannot execute server commands. After a deployment containing database
-migrations or cache-sensitive changes, run the guarded application finalizer
-from cPanel Terminal:
+The remote `.env` is preserved, so a normal stage release is:
 
 ```bash
-cd /home/nankovmk/public_html/cicd_projects/nankov.mk/website
-bash scripts/finalize-ftp-deployment.sh
+read -rsp 'cPanel token: ' CPANEL_API_TOKEN; export CPANEL_API_TOKEN; echo
+./deploy-stage.sh
+unset CPANEL_API_TOKEN
 ```
 
-The finalizer checks PHP, Composer, `.env`, and writable runtime directories.
-It enables maintenance mode when an existing `vendor` installation can boot
-Laravel, installs the exact locked production dependencies with Composer, runs
-migrations, rebuilds Laravel caches and generated assets, restarts queue
-workers, and brings the site online. If a command fails after maintenance mode
-begins, it intentionally leaves the application offline and prints the
-recovery command.
+The token is read from the environment or prompted without echo and is never
+written into the repository. Revoke temporary cPanel API tokens after use.
 
-The workflow also supports a manual run from **GitHub → Actions → Deploy
-production to cPanel over FTPS → Run workflow**.
+## Production and test GitHub Actions
 
-### Test environment
+`.github/workflows/deployCPanel.yml` deploys `main` to production, while
+`.github/workflows/deployTest.yml` deploys `develop` to test. Both build and
+test the Laravel application before using explicit FTPS on port 21. Their FTP
+accounts must be jailed to their intended application roots.
 
-Pushes to `develop` are built, tested, and deployed by
-`.github/workflows/deployTest.yml` to the dedicated test FTP account using
-explicit FTPS on port 21.
+The workflows intentionally preserve `.env`, runtime storage, Composer
+`vendor`, and other server-only files. FTPS cannot run Artisan commands; after
+a production or test release containing migrations or cache-sensitive changes,
+run the guarded `website/scripts/finalize-ftp-deployment.sh` from cPanel
+Terminal in that application's root.
 
-In GitHub, open **Settings → Environments → test**, then add
-`FTP_PASSWORD_TEST` as an environment secret.
-
-The workflow connects to `lu-shared04.cpanelplatform.com`, the TLS hostname
-presented by the FTP server certificate, using the dedicated account
-`admin@test.nankov.mk`.
-
-The test FTP account must be jailed to the test Laravel application root
-because the workflow deploys to `/`.
-
-The `_TEST` suffix and `test` Environment keep this password separate from
-production.
-
-The test workflow can also be run manually from **GitHub → Actions → Deploy
-test to cPanel over FTPS → Run workflow**. The same exclusions and server-side
-finalization requirements described for production apply to test deployments.
-
-## Deploy manually
-
-Deploy staging:
-
-```bash
-deploy-nankov staging
-```
-
-Deploy production (requires typing `production` to confirm):
-
-```bash
-deploy-nankov production
-```
-
-`--yes` skips the production confirmation and should be reserved for an already controlled automation context.
-
-The script uses `composer install` and `npm ci`; it never updates dependency versions during deployment. Add future production-safe seeders to the explicit `SEEDERS` array in `deploy.sh`. Every listed seeder must be idempotent.
-
-If a failure occurs after maintenance mode begins, the site intentionally remains unavailable rather than serving a partially deployed release. The error output identifies the failed phase and prints the command needed to bring the application online after the problem is resolved. Database migrations are never rolled back automatically; take a cPanel database backup before production releases containing migrations.
-
-## Cron and queues
-
-Create a separate scheduler cron for each environment:
-
-```cron
-* * * * * cd /home/nankovmk/public_html/cicd_projects/nankov.mk/website && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
-* * * * * cd /home/nankovmk/public_html/cicd_projects/stage.nankov.mk/website && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
-```
-
-Use cPanel-supported Supervisor or Horizon for long-running workers when available. Otherwise configure separate locked cron workers for production and staging. The deploy script signals both Laravel queue workers and Horizon to restart after a successful release.
+Never commit cPanel tokens, FTP passwords, `.env` files, private keys, or
+`auth.json`.
