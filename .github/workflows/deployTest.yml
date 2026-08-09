@@ -1,22 +1,23 @@
-name: Deploy test to cPanel over FTPS
+name: Deploy production to cPanel over FTPS
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - develop
+      - main
 
 concurrency:
   group: test-cpanel-deployment
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    name: Build, test, and deploy test
+    name: Build, test, and deploy production
     runs-on: ubuntu-latest
+    environment: production
     timeout-minutes: 30
 
     defaults:
@@ -24,7 +25,7 @@ jobs:
         working-directory: website
 
     steps:
-      - name: Check out the test release
+      - name: Check out the release
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Set up PHP
@@ -46,7 +47,7 @@ jobs:
           composer install --no-interaction --prefer-dist
           npm ci --no-audit --no-fund
 
-      - name: Build test assets
+      - name: Build production assets
         run: npm run build
 
       - name: Run tests
@@ -55,7 +56,7 @@ jobs:
       - name: Deploy application over FTPS
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
         with:
-          server: lu-shared04.cpanelplatform.com
+          server: ${{ secrets.FTP_SERVER_TEST }}
           username: ${{ secrets.FTP_USERNAME_TEST }}
           password: ${{ secrets.FTP_PASSWORD_TEST }}
           port: 21
