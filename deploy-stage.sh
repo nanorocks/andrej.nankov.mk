@@ -378,7 +378,10 @@ upload_payload="$(upload_file "$ARCHIVE_PATH" "$REMOTE_APP" "$ARCHIVE_NAME")"
 printf '%s' "$upload_payload" | assert_uapi_success
 REMOTE_ARCHIVE_PENDING=true
 
-extract_payload="$(api2_fileop 'extract' "${REMOTE_APP_REL}/${ARCHIVE_NAME}" "$REMOTE_APP_REL")"
+# For extract, cPanel resolves a relative destination beneath the archive's
+# directory. Use the absolute application root to avoid a duplicated
+# public_html/cicd_projects/... path inside the application.
+extract_payload="$(api2_fileop 'extract' "${REMOTE_APP_REL}/${ARCHIVE_NAME}" "$REMOTE_APP")"
 printf '%s' "$extract_payload" | assert_api2_success
 ok 'Artifact extracted'
 
