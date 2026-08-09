@@ -1,0 +1,80 @@
+name: Deploy test to cPanel over FTPS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+concurrency:
+  group: test-cpanel-deployment
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build, test, and deploy test
+    runs-on: ubuntu-latest
+    environment: test
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        working-directory: website
+
+    steps:
+      - name: Check out the test release
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          composer install --no-interaction --prefer-dist
+          npm ci --no-audit --no-fund
+
+      - name: Build test assets
+        run: npm run build
+
+      - name: Run tests
+        run: php artisan test
+
+      - name: Deploy application over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ftp.nankov.mk
+          username: admin@test.velogs.app
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
+          local-dir: ./website/
+          server-dir: /
+          timeout: 120000
+          log-level: standard
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/.env
+            **/.env.*
+            **/auth.json
+            **/node_modules/**
+            **/vendor/**
+            **/tests/**
+            **/.phpunit.cache/**
+            **/database/database.sqlite
+            **/public/hot

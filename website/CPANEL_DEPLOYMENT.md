@@ -113,6 +113,22 @@ recovery command.
 The workflow also supports a manual run from **GitHub → Actions → Deploy
 production to cPanel over FTPS → Run workflow**.
 
+### Test environment
+
+Pushes to `develop` are built, tested, and deployed by
+`.github/workflows/deployTest.yml` to the FTP account
+`admin@test.velogs.app` on `ftp.nankov.mk` using explicit FTPS on port 21.
+
+In GitHub, create the **test** environment under **Settings → Environments →
+test**, then add the account password as the environment secret
+`FTP_PASSWORD`. The server and dedicated test username are non-secret workflow
+configuration. The test FTP account must be jailed to the test Laravel
+application root because the workflow deploys to `/`.
+
+The test workflow can also be run manually from **GitHub → Actions → Deploy
+test to cPanel over FTPS → Run workflow**. The same exclusions and server-side
+finalization requirements described for production apply to test deployments.
+
 ## Deploy manually
 
 Deploy staging:
