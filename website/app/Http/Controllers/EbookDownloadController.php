@@ -25,6 +25,7 @@ class EbookDownloadController extends Controller
         return Storage::disk('local')->download(
             $product->download_path,
             $product->slug.'.pdf',
+            ['Content-Type' => 'application/pdf'],
         );
     }
 }

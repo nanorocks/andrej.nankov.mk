@@ -30,7 +30,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = self::faker();
+        $faker = self::$fakerGenerator ??= FakerFactory::create();
 
         return [
             'name' => 'Andrej',
