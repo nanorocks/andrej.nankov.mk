@@ -30,11 +30,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = self::$fakerGenerator ??= FakerFactory::create();
+        // $faker = self::$fakerGenerator ??= FakerFactory::create();
 
         return [
-            'name' => $faker->name(),
-            'email' => $faker->unique()->safeEmail(),
+            'name' => 'Andrej',
+            'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('secret'),
             'two_factor_secret' => null,
