@@ -31,9 +31,9 @@ Production uses:
 
 Staging uses:
 
-- Repository: `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk`
-- Laravel: `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk/website`
-- Document root: `/home/nankovmk/public_html/cicd_projects/stage.nankov.mk/website/public`
+- Repository: `/home/nankovmk/public_html/cicd_projects/test.nankov.mk`
+- Laravel: `/home/nankovmk/public_html/cicd_projects/test.nankov.mk/website`
+- Document root: `/home/nankovmk/public_html/cicd_projects/test.nankov.mk/website/public`
 - Branch: `develop`
 
 Create `develop` from `main` in GitHub before cloning staging. Configure the Git remote in both checkouts as:
@@ -43,6 +43,30 @@ git@github-nankov:nanorocks/andrej.nankov.mk.git
 ```
 
 The deployment refuses to create or modify `.env`. Create `website/.env` manually before the first deployment and set it to mode `600`. Production and staging must use different application keys, databases, cache prefixes, session cookies, queue data, mail settings, and Paddle environments.
+
+For production Paddle checkout, set these values in the production `website/.env`
+before running the finalizer:
+
+```dotenv
+PADDLE_SANDBOX=false
+PADDLE_CLIENT_SIDE_TOKEN=live_...
+PADDLE_API_KEY=<production Paddle API key>
+PADDLE_WEBHOOK_SECRET=<secret from the active Paddle notification destination>
+PADDLE_LIVE_EBOOK_PRICE_ID=pri_01kzj76fhansrpmth540272hzs
+PADDLE_WEBHOOK_IP_ALLOWLIST=true
+PADDLE_IPS_ENDPOINT=https://api.paddle.com/ips
+```
+
+The live price ID above is the active EUR price for the production catalog item.
+After deploying the application, run the production-only catalog seeder from the
+production Laravel directory:
+
+```bash
+PADDLE_LIVE_EBOOK_PRICE_ID=pri_01kzj76fhansrpmth540272hzs php artisan db:seed --class=LiveStoreProductSeeder --force
+```
+
+Never run this seeder against staging; staging must retain sandbox Paddle keys
+and sandbox price IDs.
 
 ## Install the command
 
@@ -139,7 +163,7 @@ Create a separate scheduler cron for each environment:
 
 ```cron
 * * * * * cd /home/nankovmk/public_html/cicd_projects/nankov.mk/website && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
-* * * * * cd /home/nankovmk/public_html/cicd_projects/stage.nankov.mk/website && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /home/nankovmk/public_html/cicd_projects/test.nankov.mk/website && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
 ```
 
 Use cPanel-supported Supervisor or Horizon for long-running workers when available. Otherwise configure separate locked cron workers for production and staging. The deploy script signals both Laravel queue workers and Horizon to restart after a successful release.

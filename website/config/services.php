@@ -59,6 +59,12 @@ return [
         'secret' => env('TURNSTILE_SECRET_KEY'),
     ],
 
+    'paddle' => [
+        'enforce_webhook_ip_allowlist' => env('PADDLE_WEBHOOK_IP_ALLOWLIST', true),
+        'ips_endpoint' => env('PADDLE_IPS_ENDPOINT', 'https://api.paddle.com/ips'),
+        'ip_allowlist_refresh_seconds' => env('PADDLE_IP_ALLOWLIST_REFRESH_SECONDS', 3600),
+    ],
+
     'google_analytics' => [
         'id' => env('GOOGLE_ANALYTICS_ID'),
     ],

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AllowPaddleWebhookIps;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Filament and Livewire URLs are not downgraded to HTTP.
         $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: ['paddle/*']);
+        $middleware->append(AllowPaddleWebhookIps::class);
         $middleware->appendToGroup('web', SecurityHeaders::class);
     })
     ->withEvents(discover: [
