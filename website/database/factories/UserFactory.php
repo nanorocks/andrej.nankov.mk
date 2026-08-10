@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Faker\Factory as FakerFactory;
+use Faker\Generator;
 use Filament\Jetstream\Jetstream;
 use Filament\Jetstream\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -14,6 +16,8 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    private static ?Generator $fakerGenerator = null;
+
     /**
      * The current password being used by the factory.
      */
@@ -26,9 +30,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = self::$fakerGenerator ??= FakerFactory::create();
+
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => $faker->name(),
+            'email' => $faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('secret'),
             'two_factor_secret' => null,
