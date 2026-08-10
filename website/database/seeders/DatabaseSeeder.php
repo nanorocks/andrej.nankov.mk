@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,12 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (! User::where('email', 'andrejnankov@gmail.com')->exists()) {
-            User::factory()->create([
+        User::firstOrCreate(
+            ['email' => 'andrejnankov@gmail.com'],
+            [
                 'name' => 'Andrej Nankov',
-                'email' => 'andrejnankov@gmail.com',
-            ]);
-        }
+                'email_verified_at' => now(),
+                // Production installs exclude Faker. Generate a non-login
+                // password and use the password-reset flow for first access.
+                'password' => Hash::make(Str::password(40)),
+            ],
+        );
 
         // call all seeders here
         $this->call([
