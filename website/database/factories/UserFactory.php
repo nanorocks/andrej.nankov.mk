@@ -34,7 +34,7 @@ class UserFactory extends Factory
 
         return [
             'name' => 'Andrej',
-            'email' => fake()->unique()->safeEmail(),
+            'email' => 'andrejnankov@gmail.com',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('secret'),
             'two_factor_secret' => null,
